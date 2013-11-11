@@ -1,0 +1,15 @@
+## Interface: 50400
+## Title: CraftBuster
+## Author: Lord Vashtal
+## Version: 0.0.97.50400
+## X-Date: 2013-11-01
+## Notes: Provides versatile functionality for various interface bars
+## SavedVariables: CraftBusterOptions
+## DefaultState: Enabled
+## LoadOnDemand: 0
+CraftBuster.xml
+CraftBuster_Locales.xml
+CraftBuster_SkillFrame.xml
+CraftBuster_BusterFrame.xml
+CraftBuster_MiniMap.xml
+CraftBuster_Modules.xml
