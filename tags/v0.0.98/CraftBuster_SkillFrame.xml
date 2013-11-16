@@ -1,0 +1,244 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+	<Script file="CraftBuster_SkillFrame.lua"/>
+
+	<Button name="CraftBuster_Skill_ButtonTemplate" inherits="SecureHandlerStateTemplate,SecureActionButtonTemplate" frameStrata="LOW" enableMouse="true" virtual="true" hidden="true">
+		<Size>
+			<AbsDimension x="18" y="18"/>
+		</Size>
+		<Layers>
+			<Layer level="ARTWORK">
+				<Texture name="$parentIcon" alphaMode="BLEND"/>
+			</Layer>
+		</Layers>
+		<PushedTexture file="Interface\Buttons\UI-Quickslot-Depress"/>
+		<HighlightTexture alphaMode="ADD" file="Interface\Buttons\ButtonHilight-Square"/>
+		<Scripts>
+			<OnEnter>
+				GameTooltip_SetDefaultAnchor(GameTooltip, self);
+				GameTooltip:SetSpellByID(self.spell_id);
+				GameTooltip:Show();
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide();
+			</OnLeave>
+		</Scripts>
+	</Button>
+
+	<StatusBar name="CraftBuster_Skill_BarTemplate" inherits="SecureHandlerStateTemplate,SecureActionButtonTemplate" minValue="0" maxValue="1" frameStrata="LOW" virtual="true">
+		<Size x="224" y="18" />
+		<Backdrop bgFile="Interface\PaperDollInfoFrame\UI-Character-Skills-Bar" tile="false">
+			<EdgeSize>
+				<AbsValue val="0"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="32"/>
+			</TileSize>
+			<BackgroundInsets>
+				<AbsInset left="0" right="0" top="0" bottom="0"/>
+			</BackgroundInsets>
+		</Backdrop>
+		<BarTexture name="$parentBar" urgency="5" file="Interface\PaperDollInfoFrame\UI-Character-Skills-Bar"/>
+		<BarColor r="0.0" g="0.7" b="0.0" a="1.0" />
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentText" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="CENTER" relativeTo="$parent" relativePoint="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="1" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parent_buster" inherits="CraftBuster_Skill_ButtonTemplate" hidden="true">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPLEFT" x="-3" y="0"/>
+				</Anchors>
+			</Button>
+			<Button name="$parent_spell_1" inherits="CraftBuster_Skill_ButtonTemplate" hidden="true">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPRIGHT" x="3" y="0"/>
+				</Anchors>
+			</Button>
+			<Button name="$parent_spell_2" inherits="CraftBuster_Skill_ButtonTemplate" hidden="true">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent_spell_1" relativePoint="TOPRIGHT" x="0" y="0"/>
+				</Anchors>
+			</Button>
+		</Frames>
+	</StatusBar>
+
+	<Frame name="CraftBuster_Skill_MoverFrame" inherits="SecureHandlerBaseTemplate,SecureHandlerStateTemplate" parent="UIParent" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" hidden="false">
+		<Size>
+			<AbsDimension x="234" y="10"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" relativeTo="UIParent"/>
+		</Anchors>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parent_Texture" file="Interface\AddOns\CraftBuster\Images\CraftBuster_Mover">
+					<Size>
+						<AbsDimension x="234" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="$parentLabel" inherits="GameFontHighlight" text="Professions">
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parent_ConfigMenu" inherits="SecureHandlerClickTemplate,SecureActionButtonTemplate" hidden="false">
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="8" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\CraftBuster\Images\CraftBuster_Mover_Menu" />
+				<Scripts>
+					<OnClick>
+						securecall("CraftBuster_Config_Show");
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parent_CollapseFrame" inherits="SecureHandlerClickTemplate,SecureActionButtonTemplate" hidden="false">
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-16" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\CraftBuster\Images\CraftBuster_Mover_Collapse" />
+				<Scripts>
+					<OnClick>
+						securecall("CraftBuster_SkillFrame_Collapse_OnClick");
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parent_CloseFrame" inherits="SecureHandlerClickTemplate,SecureActionButtonTemplate" hidden="false">
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent_CollapseFrame" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-2" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\CraftBuster\Images\CraftBuster_Mover_Close"/>
+				<Scripts>
+					<OnClick>
+						securecall("CraftBuster_SkillFrame_Close_OnClick");
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				self:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnDragStart>
+				self.dragging = true;
+				self:StartMoving();
+			</OnDragStart>
+			<OnDragStop>
+				self.dragging = false;
+				self:StopMovingOrSizing();
+			</OnDragStop>
+			<OnUpdate>
+				if (self.dragging) then
+					CraftBuster_SkillFrame_OnDrag();
+				end
+			</OnUpdate>
+		</Scripts>
+	</Frame>
+
+	<Frame name="CraftBuster_SkillFrame" inherits="SecureHandlerBaseTemplate,SecureHandlerStateTemplate" parent="UIParent" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" hidden="false">
+		<Size>
+			<AbsDimension x="234" y="28"/>
+		</Size>
+		<Anchors>
+			<Anchor point="TOPLEFT" relativeTo="CraftBuster_Skill_MoverFrame" relativePoint="BOTTOMLEFT">
+				<Offset>
+					<AbsDimension x="0" y="2"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="Interface\TutorialFrame\TutorialFrameBackground" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+			<BackgroundInsets>
+				<AbsInset left="5" right="5" top="5" bottom="5"/>
+			</BackgroundInsets>
+		</Backdrop>
+		<Frames>
+			<StatusBar name="$parent_skill_1" inherits="CraftBuster_Skill_BarTemplate" hidden="true">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="5" y="-5"/>
+				</Anchors>
+			</StatusBar>
+			<StatusBar name="$parent_skill_2" inherits="CraftBuster_Skill_BarTemplate" hidden="true">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="5" y="-5"/>
+				</Anchors>
+			</StatusBar>
+			<StatusBar name="$parent_cooking" inherits="CraftBuster_Skill_BarTemplate" hidden="true">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="5" y="-5"/>
+				</Anchors>
+			</StatusBar>
+			<StatusBar name="$parent_first_aid" inherits="CraftBuster_Skill_BarTemplate" hidden="true">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="5" y="-5"/>
+				</Anchors>
+			</StatusBar>
+			<StatusBar name="$parent_fishing" inherits="CraftBuster_Skill_BarTemplate" hidden="true">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="5" y="-5"/>
+				</Anchors>
+			</StatusBar>
+			<StatusBar name="$parent_archaeology" inherits="CraftBuster_Skill_BarTemplate" hidden="true">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="5" y="-5"/>
+				</Anchors>
+			</StatusBar>
+			<StatusBar name="$parent_lockpicking" inherits="CraftBuster_Skill_BarTemplate" hidden="true">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="5" y="-5"/>
+				</Anchors>
+			</StatusBar>
+		</Frames>
+	</Frame>
+</Ui>
