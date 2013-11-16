@@ -35,7 +35,14 @@ if (GetLocale() == "enUS") then
 	CBL["CONFIG_SHOW_MINIMAP"] = "Show Minimap Button";
 	CBL["CONFIG_SHOW_TRACKER"] = "Show Tracker";
 	CBL["CONFIG_EXPAND_TRACKER"] = "Expand Tracker";
-	CBL["CONFIG_POSITION_TRACKER"] = "Position Tracker";
+	CBL["CONFIG_TRACKER_POSITION"] = "Tracker Position";
+	CBL["CONFIG_BUSTER_POSITION"] = "Buster Position";
+	CBL["CONFIG_POSITION_X"] = "X:";
+	CBL["CONFIG_POSITION_Y"] = "Y:";
+	CBL["CONFIG_POSITION_POINT"] = "Point:";
+	CBL["CONFIG_POSITION_RELATIVE_POINT"] = "Relative To:";
+	CBL["CONFIG_POSITION_SET"] = "SET";
+	CBL["CONFIG_POSITIONS_RESET"] = "Reset Positions";
 
 	CBL["MINIMAP_HOVER_LINE1"] = CBG_CLR_WHITE .. "Left button to " .. CBG_CLR_LIGHTGREEN .. "Drag";
 	CBL["MINIMAP_HOVER_LINE2"] = CBG_CLR_WHITE .. "Left-click for " .. CBG_CLR_OFFBLUE .. "Toggle Menu";
