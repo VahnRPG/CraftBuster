@@ -176,7 +176,7 @@ function CraftBuster_BusterFrame_ScrollFrame_Update()
 			local item_data = bust_items[index];
 
 			local spell_name = GetSpellInfo(saved_spell_id);
-			local item_name, item_link,_,_,_,_,_,_,_,item_texture = GetItemInfo(item_data.item_id);
+			local item_name,item_link,_,_,_,_,_,_,_,item_texture = GetItemInfo(item_data.item_id);
 			SetItemButtonTexture(button_frame, item_texture);
 			SetItemButtonCount(button_frame, item_data.total);
 			button_frame.spell_id = saved_spell_id;

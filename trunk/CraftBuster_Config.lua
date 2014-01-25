@@ -28,7 +28,9 @@ local tooltips = {};
 local professions = {};
 local bustables = {};
 local show_minimap_button, show_tracker, expand_tracker;
+local show_gatherer, expand_gatherer, show_zone_nodes, show_skillup_nodes;
 local position_x, position_y, position_point, position_relative_point;
+local gatherer_position_x, gatherer_position_y, gatherer_position_point, gatherer_position_relative_point;
 local buster_position_x, buster_position_y, buster_position_point, buster_position_relative_point;
 
 local config_frame = CreateFrame("Frame", config_frame_name, InterfaceOptionsFramePanelContainer);
@@ -157,6 +159,55 @@ child_tracker_frame:SetScript("OnShow", function(child_tracker_frame)
 end);
 InterfaceOptions_AddCategory(child_tracker_frame);
 
+local child_gatherer_frame = CreateFrame("Frame", config_frame_name .. "Gatherer", config_frame);
+child_gatherer_frame.name = "Gatherer";
+child_gatherer_frame.parent = config_frame.name;
+child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
+	local count = 0;
+
+	local title_label = child_gatherer_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
+	title_label:SetPoint("TOPLEFT", 16, -16);
+	title_label:SetText(CBG_MOD_NAME .. " - " .. child_gatherer_frame.name);
+
+	show_gatherer = CreateFrame("CheckButton", config_frame_name .. "Gatherer", child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
+	show_gatherer:SetPoint("TOPLEFT", title_label, "BOTTOMLEFT", 0, -20);
+	_G[show_gatherer:GetName() .. "Text"]:SetText(CBL["CONFIG_SHOW_GATHERER"]);
+	show_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show);
+	show_gatherer:SetScript("OnClick", function(self, button)
+		CraftBuster_MiniMap_SetShowGatherer(self, _, _, self:GetChecked());
+	end);
+
+	expand_gatherer = CreateFrame("CheckButton", config_frame_name .. "ExpandGatherer", child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
+	expand_gatherer:SetPoint("TOPLEFT", show_gatherer, "BOTTOMLEFT", 0, 0);
+	_G[expand_gatherer:GetName() .. "Text"]:SetText(CBL["CONFIG_EXPAND_GATHERER"]);
+	expand_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.state == "expanded");
+	expand_gatherer:SetScript("OnClick", function(self, button)
+		CraftBuster_GatherFrame_Collapse_OnClick();
+	end);
+
+	--Track Professions
+	local show_nodes_label = child_gatherer_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
+	show_nodes_label:SetPoint("TOPLEFT", expand_gatherer, "BOTTOMLEFT", 0, -24);
+	show_nodes_label:SetText(CBL["CONFIG_TITLE_SHOW_NODES"]);
+
+	show_zone_nodes = CreateFrame("CheckButton", config_frame_name .. "ShowZoneNodes", child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
+	show_zone_nodes:SetPoint("TOPLEFT", show_nodes_label, "BOTTOMLEFT", 0, 0);
+	_G[show_zone_nodes:GetName() .. "Text"]:SetText(CBL["CONFIG_SHOW_ZONE_NODES"]);
+	show_zone_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_zone_nodes);
+	show_zone_nodes:SetScript("OnClick", function(self, button)
+		CraftBuster_MiniMap_SetShowZoneNodes(self, _, _, self:GetChecked());
+	end);
+
+	show_skillup_nodes = CreateFrame("CheckButton", config_frame_name .. "ShowSkillUpZones", child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
+	show_skillup_nodes:SetPoint("TOPLEFT", show_zone_nodes, "BOTTOMLEFT", 0, 0);
+	_G[show_skillup_nodes:GetName() .. "Text"]:SetText(CBL["CONFIG_SHOW_SKILLUP_NODES"]);
+	show_skillup_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_skill_nodes);
+	show_skillup_nodes:SetScript("OnClick", function(self, button)
+		CraftBuster_MiniMap_SetSkillUpNodes(self, _, _, self:GetChecked());
+	end);
+end);
+InterfaceOptions_AddCategory(child_gatherer_frame);
+
 local child_positioning_frame = CreateFrame("Frame", config_frame_name .. "Positions", config_frame);
 child_positioning_frame.name = "Positioning";
 child_positioning_frame.parent = config_frame.name;
@@ -258,9 +309,102 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	UIDropDownMenu_JustifyText(position_relative_point, "LEFT");
 	UIDropDownMenu_SetSelectedValue(position_relative_point, CraftBusterOptions[CraftBusterEntry].skills_frame.position.relative_point);
 	
+	--Gatherer Position
+	local gatherer_position_label = child_positioning_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
+	gatherer_position_label:SetPoint("TOPLEFT", position_label, "BOTTOMLEFT", 0, -100);
+	gatherer_position_label:SetText(CBL["CONFIG_GATHERER_POSITION"]);
+	
+	local gatherer_position_x_label = child_positioning_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
+	gatherer_position_x_label:SetPoint("TOPLEFT", gatherer_position_label, "BOTTOMLEFT", 10, -10);
+	gatherer_position_x_label:SetText(CBL["CONFIG_POSITION_X"]);
+	
+	gatherer_position_x = CreateFrame("EditBox", "GathererPositionX", child_positioning_frame, "InputBoxTemplate");
+	gatherer_position_x:SetPoint("TOPLEFT", gatherer_position_x_label, "TOPRIGHT", 10, 0);
+	gatherer_position_x:SetSize(64, 16);
+	gatherer_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.x, 2));
+	gatherer_position_x:SetAutoFocus(false);
+	gatherer_position_x:SetFontObject(ChatFontNormal);
+	gatherer_position_x:SetCursorPosition(0);
+
+	local set_gatherer_position_x = CreateFrame("Button", "SetGathererPositionX", child_positioning_frame, "UIPanelButtonTemplate");
+	set_gatherer_position_x:SetPoint("TOPLEFT", gatherer_position_x, "TOPRIGHT", 10, 2);
+	set_gatherer_position_x:SetText(CBL["CONFIG_POSITION_SET"]);
+	set_gatherer_position_x:SetSize(48, 20);
+	set_gatherer_position_x:SetScript("OnClick", function()
+		CraftBusterOptions[CraftBusterEntry].gather_frame.position.x = round(gatherer_position_x:GetText(), 2);
+		CraftBuster_GatherFrame_UpdatePosition();
+	end);
+	
+	local gatherer_position_y_label = child_positioning_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
+	gatherer_position_y_label:SetPoint("TOPLEFT", gatherer_position_x, "TOPRIGHT", 120, 0);
+	gatherer_position_y_label:SetText(CBL["CONFIG_POSITION_Y"]);
+	
+	gatherer_position_y = CreateFrame("EditBox", "GathererPositionY", child_positioning_frame, "InputBoxTemplate");
+	gatherer_position_y:SetPoint("TOPLEFT", gatherer_position_y_label, "TOPRIGHT", 10, 0);
+	gatherer_position_y:SetSize(64, 16);
+	gatherer_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.y, 2));
+	gatherer_position_y:SetAutoFocus(false);
+	gatherer_position_y:SetFontObject(ChatFontNormal);
+	gatherer_position_y:SetCursorPosition(0);
+
+	local set_gatherer_position_y = CreateFrame("Button", "SetGathererPositionY", child_positioning_frame, "UIPanelButtonTemplate");
+	set_gatherer_position_y:SetPoint("TOPLEFT", gatherer_position_y, "TOPRIGHT", 10, 2);
+	set_gatherer_position_y:SetText(CBL["CONFIG_POSITION_SET"]);
+	set_gatherer_position_y:SetSize(48, 20);
+	set_gatherer_position_y:SetScript("OnClick", function()
+		CraftBusterOptions[CraftBusterEntry].gather_frame.position.y = round(gatherer_position_y:GetText(), 2);
+		CraftBuster_GatherFrame_UpdatePosition();
+	end);
+	
+	local gatherer_position_point_label = child_positioning_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
+	gatherer_position_point_label:SetPoint("TOPLEFT", gatherer_position_x_label, "BOTTOMLEFT", 0, -20);
+	gatherer_position_point_label:SetText(CBL["CONFIG_POSITION_POINT"]);
+
+	gatherer_position_point = CreateFrame("Frame", "SetGathererPoint", child_positioning_frame, "UIDropDownMenuTemplate");
+	gatherer_position_point:SetPoint("TOPLEFT", gatherer_position_point_label, "TOPRIGHT", 0, 2);
+	UIDropDownMenu_Initialize(gatherer_position_point, function()
+		local points = { "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT", "CENTER" };
+		for i, point in pairs(points) do
+			local info = UIDropDownMenu_CreateInfo();
+			info.text = point;
+			info.value = point;
+			info.func = function(self)
+				CraftBusterOptions[CraftBusterEntry].gather_frame.position.point = self.value;
+				UIDropDownMenu_SetSelectedValue(gatherer_position_point, self.value);
+				CraftBuster_GatherFrame_UpdatePosition();
+			end
+			UIDropDownMenu_AddButton(info);
+		end
+	end);
+	UIDropDownMenu_JustifyText(gatherer_position_point, "LEFT");
+	UIDropDownMenu_SetSelectedValue(gatherer_position_point, CraftBusterOptions[CraftBusterEntry].gather_frame.position.point);
+	
+	local gatherer_position_relative_point_label = child_positioning_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
+	gatherer_position_relative_point_label:SetPoint("TOPLEFT", gatherer_position_y_label, "BOTTOMLEFT", 0, -20);
+	gatherer_position_relative_point_label:SetText(CBL["CONFIG_POSITION_RELATIVE_POINT"]);
+
+	gatherer_position_relative_point = CreateFrame("Frame", "SetGathererRelativePoint", child_positioning_frame, "UIDropDownMenuTemplate");
+	gatherer_position_relative_point:SetPoint("TOPLEFT", gatherer_position_relative_point_label, "TOPRIGHT", 0, 2);
+	UIDropDownMenu_Initialize(gatherer_position_relative_point, function()
+		local points = { "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT", "CENTER" };
+		for i, point in pairs(points) do
+			local info = UIDropDownMenu_CreateInfo();
+			info.text = point;
+			info.value = point;
+			info.func = function(self)
+				CraftBusterOptions[CraftBusterEntry].gather_frame.position.point = self.value;
+				UIDropDownMenu_SetSelectedValue(gatherer_position_relative_point, self.value);
+				CraftBuster_GatherFrame_UpdatePosition();
+			end
+			UIDropDownMenu_AddButton(info);
+		end
+	end);
+	UIDropDownMenu_JustifyText(gatherer_position_relative_point, "LEFT");
+	UIDropDownMenu_SetSelectedValue(gatherer_position_relative_point, CraftBusterOptions[CraftBusterEntry].gather_frame.position.relative_point);
+	
 	--Buster Tracker Position
 	local buster_position_label = child_positioning_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
-	buster_position_label:SetPoint("TOPLEFT", position_label, "BOTTOMLEFT", 0, -100);
+	buster_position_label:SetPoint("TOPLEFT", gatherer_position_label, "BOTTOMLEFT", 0, -100);
 	buster_position_label:SetText(CBL["CONFIG_BUSTER_POSITION"]);
 	
 	local buster_position_x_label = child_positioning_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
@@ -358,12 +502,18 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	reset_position:SetSize(160, 24);
 	reset_position:SetScript("OnClick", function() 
 		CraftBuster_SkillFrame_ResetPosition();
+		CraftBuster_GatherFrame_ResetPosition();
 		CraftBuster_BusterFrame_ResetPosition();
 
 		position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.x, 2));
 		position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.y, 2));
 		UIDropDownMenu_SetSelectedValue(position_point, CraftBusterOptions[CraftBusterEntry].skills_frame.position.point);
 		UIDropDownMenu_SetSelectedValue(position_relative_point, CraftBusterOptions[CraftBusterEntry].skills_frame.position.relative_point);
+
+		gatherer_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.x, 2));
+		gatherer_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.y, 2));
+		UIDropDownMenu_SetSelectedValue(gatherer_position_point, CraftBusterOptions[CraftBusterEntry].gather_frame.position.point);
+		UIDropDownMenu_SetSelectedValue(gatherer_position_relative_point, CraftBusterOptions[CraftBusterEntry].gather_frame.position.relative_point);
 
 		buster_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.x, 2));
 		buster_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.y, 2));
@@ -433,8 +583,16 @@ local function updateFields()
 		end
 	end
 
+	show_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show);
+	expand_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.state == "expanded");
+	show_zone_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_zone_nodes);
+	show_skillup_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_skill_nodes);
+
 	position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.x, 2));
 	position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.y, 2));
+
+	gatherer_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.x, 2));
+	gatherer_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.y, 2));
 
 	buster_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.x, 2));
 	buster_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.y, 2));

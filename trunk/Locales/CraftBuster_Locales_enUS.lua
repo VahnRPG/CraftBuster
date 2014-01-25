@@ -29,13 +29,20 @@ if (GetLocale() == "enUS") then
 	CBL["LBL_GREY"] = "Grey";
 
 	CBL["CONFIG_TITLE_TRACK_PROFESSION"] = "Track Professions";
+	CBL["CONFIG_TITLE_TRACK_GATHERING"] = "Gathering Info";
 	CBL["CONFIG_TITLE_TOOLTIP_INFO"] = "Display Tooltip Info";
 	CBL["CONFIG_TITLE_BUSTER_ICON"] = "Show Buster Icon";
+	CBL["CONFIG_TITLE_SHOW_NODES"] = "Show Nodes";
 	CBL["CONFIG_TITLE_OTHER"] = "Other";
 	CBL["CONFIG_SHOW_MINIMAP"] = "Show Minimap Button";
 	CBL["CONFIG_SHOW_TRACKER"] = "Show Tracker";
 	CBL["CONFIG_EXPAND_TRACKER"] = "Expand Tracker";
 	CBL["CONFIG_TRACKER_POSITION"] = "Tracker Position";
+	CBL["CONFIG_SHOW_GATHERER"] = "Show Gatherer";
+	CBL["CONFIG_SHOW_ZONE_NODES"] = "Show Zone Nodes";
+	CBL["CONFIG_SHOW_SKILLUP_NODES"] = "Show Skill-Up Nodes";
+	CBL["CONFIG_EXPAND_GATHERER"] = "Expand Gatherer";
+	CBL["CONFIG_GATHERER_POSITION"] = "Gatherer Position";
 	CBL["CONFIG_BUSTER_POSITION"] = "Buster Position";
 	CBL["CONFIG_POSITION_X"] = "X:";
 	CBL["CONFIG_POSITION_Y"] = "Y:";
@@ -58,6 +65,10 @@ if (GetLocale() == "enUS") then
 	CBL["SKILL_INSC_PIGMENTS"] = "Pigments";
 	CBL["SKILL_INSC_INKS"] = "Inks";
 	CBL["SKILL_INSC_HERBS"] = "Herbs";
+
+	-- "Found in Zone" Localization
+	CBL["SKILL_MINE_ZONE"] = CBG_CLR_ORANGE .. "Mined in Zones: |r";
+	CBL["SKILL_HERB_ZONE"] = CBG_CLR_ORANGE .. "Gathered in Zones: |r";
 
 	-- Buster Spell Localization
 	CBL["BUSTER_SPELL_TOOLTIP_APPEND"] = CBG_CLR_WHITE .. " - " .. CBG_CLR_OFFBLUE .. "Buster";

@@ -577,7 +577,6 @@ local function CraftBuster_Module_Inscription_AddMillingInfo(frame, item_link)
 					found = true;
 				end
 				frame:AddLine(output_txt);
-				frame:Show();
 			end
 		end
 	end

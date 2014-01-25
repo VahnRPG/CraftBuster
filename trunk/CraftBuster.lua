@@ -20,7 +20,9 @@ function CraftBuster_OnLoad(self)
 	self:RegisterEvent("PLAYER_LEVEL_UP");
 	self:RegisterEvent("CHAT_MSG_SKILL");
 	self:RegisterEvent("SKILL_LINES_CHANGED");
+	self:RegisterEvent("ZONE_CHANGED_NEW_AREA");
 	self:RegisterEvent("PLAYER_REGEN_ENABLED");
+	self:RegisterEvent("GET_ITEM_INFO_RECEIVED");
 
 	SlashCmdList["CBUSTER"] = function(msg)
 		CraftBuster_Command(msg);
@@ -34,6 +36,8 @@ function CraftBuster_OnEvent(self, event, ...)
 			CraftBuster_InitSettings();
 			CraftBuster_MiniMap_Init();
 			CraftBuster_UpdateSkills();
+			CraftBuster_UpdateZone();
+
 			self:UnregisterEvent(event);
 			CraftBusterInit = true;
 		end
@@ -44,20 +48,18 @@ function CraftBuster_OnEvent(self, event, ...)
 		--if (not InCombatLockdown()) then
 			CraftBuster_UpdateSkills();
 		--end
+	elseif (CraftBusterInit and event == "ZONE_CHANGED_NEW_AREA") then
+		CraftBuster_UpdateZone();
 	elseif (CraftBusterInit and event == "PLAYER_REGEN_ENABLED") then
 		CraftBuster_ProcessLeaveCombatCommands();
+	elseif (CraftBusterInit and event == "GET_ITEM_INFO_RECEIVED") then
+		CraftBuster_GatherFrame_Update();
 	end
 end
 
 function CraftBuster_Command(cmd)
 	cmd = string.lower(cmd);
 
-	--[[for index, data in ipairs(CBG_SLASH_CMDS) do
-		if (string.match(cmd, data[1])) then
-			matches = string.match(cmd, data[1]);
-			data[2](matches);
-		end
-	end]]--
 	if (cmd == "help") then
 		for i = 1, CBL["HELP_LINES"] do
 			DEFAULT_CHAT_FRAME:AddMessage(CBL["HELP" .. i]);
@@ -136,6 +138,22 @@ function CraftBuster_InitSettings(reset)
 			CraftBusterOptions[CraftBusterEntry].skills_frame.bars.lockpicking = true;
 		end
 	end
+	if (not CraftBusterOptions[CraftBusterEntry].gather_frame) then
+		CraftBusterOptions[CraftBusterEntry].gather_frame = {};
+		CraftBusterOptions[CraftBusterEntry].gather_frame.show = true;
+		CraftBusterOptions[CraftBusterEntry].gather_frame.position = {
+			point = "TOPLEFT",
+			relative_point = "TOPLEFT",
+			x = 490,
+			y = -330,
+		};
+		CraftBusterOptions[CraftBusterEntry].gather_frame.state = "expanded";
+		CraftBusterOptions[CraftBusterEntry].gather_frame.show_zone_nodes = true;
+		CraftBusterOptions[CraftBusterEntry].gather_frame.show_skill_nodes = true;
+	end
+	if (not CraftBusterOptions[CraftBusterEntry].zone_limit) then
+		CraftBusterOptions[CraftBusterEntry].zone_limit = 10;
+	end
 	if (not CraftBusterOptions[CraftBusterEntry].buster_frame) then
 		CraftBusterOptions[CraftBusterEntry].buster_frame = {};
 		CraftBusterOptions[CraftBusterEntry].buster_frame.show = true;
@@ -197,6 +215,7 @@ function CraftBuster_RegisterModule(module_id, module_name, module_options)
 		CraftBuster_Modules[module_id].bustable_type = nil;
 		CraftBuster_Modules[module_id].bustable_function = nil;
 		CraftBuster_Modules[module_id].sort_function = nil;
+		CraftBuster_Modules[module_id].gather_function = nil;
 		CraftBuster_Modules[module_id].node_function = nil;
 		CraftBuster_Modules[module_id].action_function = nil;
 		CraftBuster_Modules[module_id].tradeskill_function = nil;
@@ -230,6 +249,9 @@ function CraftBuster_RegisterModule(module_id, module_name, module_options)
 	end
 	if (module_options.sort_function) then
 		CraftBuster_Modules[module_id].sort_function = module_options.sort_function;
+	end
+	if (module_options.gather_function) then
+		CraftBuster_Modules[module_id].gather_function = module_options.gather_function;
 	end
 	if (module_options.node_function) then
 		CraftBuster_Modules[module_id].node_function = module_options.node_function;
@@ -269,7 +291,7 @@ function CraftBuster_UpdateSkills()
 	for skill, index in pairs(skills) do
 		if (index) then
 			local skill_name, skill_texture, skill_level, skill_max_level, skill_num_spells, _, skill_id, skill_bonus = GetProfessionInfo(index);
-			--echo("Here " .. skill .. ", " .. index .. ": " .. skill_name .. ", " .. skill_level);
+			--echo("Here " .. skill .. ", " .. index .. ": " .. skill_name .. ", " .. skill_level .. " - " .. skill_id);
 			if (not CraftBusterOptions[CraftBusterEntry].skills[skill] or (CraftBusterOptions[CraftBusterEntry].skills[skill].id ~= skill_id)) then
 				CraftBusterOptions[CraftBusterEntry].skills[skill] = {};
 				CraftBusterOptions[CraftBusterEntry].skills[skill].index = index;
@@ -286,6 +308,7 @@ function CraftBuster_UpdateSkills()
 			CraftBuster_HandleSkill(skill);
 		end
 	end
+
 	local _, player_class = UnitClass("player");
 	if (player_class == "ROGUE") then
 		local index = CBT_SKILL_PICK;
@@ -311,8 +334,26 @@ function CraftBuster_UpdateSkills()
 		CraftBusterOptions[CraftBusterEntry].skills[skill].num_spells = 1;
 		CraftBuster_HandleSkill(skill);
 	end
+
 	CraftBuster_SkillFrame_Update(skills);
 	CraftBuster_SkillFrame_UpdatePosition();
+	CraftBuster_UpdateZone();
+end
+
+function CraftBuster_UpdateZone()
+	CraftBuster_GatherFrame_Reset();
+	local zone = GetRealZoneText();
+	if (zone ~= nil) then
+		if (CraftBuster_Modules and next(CraftBuster_Modules)) then
+			for module_id, module_data in sortedpairs(CraftBuster_Modules) do
+				if (module_data.gather_function ~= nil) then
+					module_data.gather_function(zone);
+				end
+			end
+		end
+	end
+	CraftBuster_GatherFrame_Update();
+	CraftBuster_GatherFrame_UpdatePosition();
 end
 
 function CraftBuster_AddLeaveCombatCommand(function_name, ...)
@@ -382,6 +423,25 @@ function CraftBuster_HandleSkill(skill)
 			CraftBuster_Modules[skill_data.id].action_function(skill_data);
 		end
 	end
+end
+
+function CraftBuster_GetSkillLevel(skill_id)
+	local skills = {
+		[0] = "skill_1",
+		[1] = "skill_2",
+		[2] = "cooking",
+		[3] = "first_aid",
+		[4] = "fishing",
+		[5] = "archaeology",
+		[6] = "lockpicking",
+	};
+	for i, skill in pairs(skills) do
+		if (CraftBusterOptions[CraftBusterEntry].skills[skill] ~= nil and (CraftBusterOptions[CraftBusterEntry].skills[skill].id == skill_id)) then
+			return CraftBusterOptions[CraftBusterEntry].skills[skill].level;
+		end
+	end
+
+	return nil;
 end
 
 function CraftBuster_GetProfessionLevel(max_level)
