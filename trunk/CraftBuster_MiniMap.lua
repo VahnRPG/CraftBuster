@@ -6,8 +6,8 @@ end
 
 function CraftBuster_MiniMap_OnClick(self, button, down)
 	if (button == "LeftButton") then
-		ToggleDropDownMenu(1, nil, CraftBuster_MiniMapButtonDropDown, "CraftBuster_MiniMapButton", 0, -5);
-		PlaySound("igMainMenuOptionCheckBoxOn");
+		--ToggleDropDownMenu(1, nil, CraftBuster_MiniMapButtonDropDown, "CraftBuster_MiniMapButton", 0, -5);
+		--PlaySound("igMainMenuOptionCheckBoxOn");
 	elseif (button == "RightButton") then
 		CraftBuster_Config_Show();
 	end
@@ -81,6 +81,12 @@ function CraftBuster_MiniMap_SetShowGatherer(self, id, unused, checked)
 	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
 end
 
+function CraftBuster_MiniMap_SetAutoHideGatherer(self, id, unused, checked)
+	CraftBusterOptions[CraftBusterEntry].gather_frame.auto_hide = checked;
+	CraftBuster_UpdateZone();
+	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+end
+
 function CraftBuster_MiniMap_SetShowZoneNodes(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].gather_frame.show_zone_nodes = checked;
 	CraftBuster_UpdateZone();
@@ -111,6 +117,12 @@ function CraftBuster_MiniMap_SetBuster(self, id, unused, checked)
 	if (saved_skills ~= nil) then
 		CraftBuster_SkillFrame_Update(saved_skills);
 	end
+	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+end
+
+function CraftBuster_MiniMap_SetProfessionGather(self, id, unused, checked)
+	CraftBusterOptions[CraftBusterEntry].modules[id].show_gather = checked;
+	CraftBuster_UpdateZone();
 	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
 end
 
@@ -270,7 +282,7 @@ function CraftBuster_MiniMap_OnEnter()
 	GameTooltip:SetOwner(CraftBuster_MiniMapFrame, "ANCHOR_LEFT");
 	GameTooltip:AddLine(CBG_CLR_MOD_COLOR .. CBG_MOD_NAME);
 	GameTooltip:AddLine(CBL["MINIMAP_HOVER_LINE1"]);
-	GameTooltip:AddLine(CBL["MINIMAP_HOVER_LINE2"]);
+	--GameTooltip:AddLine(CBL["MINIMAP_HOVER_LINE2"]);
 	GameTooltip:AddLine(CBL["MINIMAP_HOVER_LINE3"]);
 	GameTooltip:Show();
 end

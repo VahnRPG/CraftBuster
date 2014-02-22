@@ -36,7 +36,7 @@ local function CraftBuster_Module_Skinning_HandleNode(line_one, line_two, line_t
 
 	line_one =  gsub(gsub(line_one, "|c........", ""), "|r", "");
 	for node_name, item_id in sortedpairs(SKILL_NODES) do
-		if (string.find(line_one, node_name) ~= nil) then
+		if (string.find(line_one, node_name, 1, true) ~= nil) then
 			if (line_three ~= nil and line_three == "Skinnable") then
 				--echo(SKILL_NAME .. " Found: " .. node_name);
 				CraftBuster_Module_Skinning_UpdateTooltip();

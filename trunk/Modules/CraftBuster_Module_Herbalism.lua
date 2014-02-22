@@ -651,7 +651,7 @@ local function CraftBuster_Module_Herbalism_HandleGather(zone_name)
 	local found = false;
 	for node_name, node_data in sortedpairs(SKILL_NODES) do
 		for _,zone in sortedpairs(node_data.zones) do
-			if (string.find(zone, zone_name) ~= nil) then
+			if (string.find(zone, zone_name, 1, true) ~= nil) then
 				local rank = node_data["rank"];
 				gather_data["zones"][rank] = {
 					["item_id"] = node_data["item_id"],
@@ -674,8 +674,8 @@ local function CraftBuster_Module_Herbalism_HandleGather(zone_name)
 			end
 		end
 	end
-
-	if (found) then
+	
+	if (CraftBusterOptions[CraftBusterEntry].modules[SKILL_ID].show_gather and found) then
 		CraftBuster_GatherFrame_AddGather(gather_data);
 	end
 end
@@ -683,7 +683,7 @@ end
 local function CraftBuster_Module_Herbalism_HandleNode(line_one, line_two, line_three)
 	line_one =  gsub(gsub(line_one, "|c........", ""), "|r", "");
 	for node_name, node_data in sortedpairs(SKILL_NODES) do
-		if (string.find(line_one, node_name) ~= nil and SKILL_NODES[node_name] ~= nil) then
+		if (string.find(line_one, node_name, 1, true) ~= nil and SKILL_NODES[node_name] ~= nil) then
 			GameTooltip:AddLine(CBL["NODE_MSG"] .. ORANGE_FONT_COLOR_CODE .. " " .. node_data["node_levels"][1] .. YELLOW_FONT_COLOR_CODE .. " " .. node_data["node_levels"][2] .. GREEN_FONT_COLOR_CODE .. " " .. node_data["node_levels"][3] .. GRAY_FONT_COLOR_CODE .. " " .. node_data["node_levels"][4]);
 			GameTooltip:Show();
 			return true;

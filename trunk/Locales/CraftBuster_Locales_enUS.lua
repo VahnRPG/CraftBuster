@@ -33,6 +33,7 @@ if (GetLocale() == "enUS") then
 	CBL["CONFIG_TITLE_TOOLTIP_INFO"] = "Display Tooltip Info";
 	CBL["CONFIG_TITLE_BUSTER_ICON"] = "Show Buster Icon";
 	CBL["CONFIG_TITLE_SHOW_NODES"] = "Show Nodes";
+	CBL["CONFIG_TITLE_SHOW_PROFESSION_GATHERS"] = "Show Profession Gathers";
 	CBL["CONFIG_TITLE_OTHER"] = "Other";
 	CBL["CONFIG_SHOW_MINIMAP"] = "Show Minimap Button";
 	CBL["CONFIG_SHOW_TRACKER"] = "Show Tracker";
@@ -42,6 +43,7 @@ if (GetLocale() == "enUS") then
 	CBL["CONFIG_SHOW_ZONE_NODES"] = "Show Zone Nodes";
 	CBL["CONFIG_SHOW_SKILLUP_NODES"] = "Show Skill-Up Nodes";
 	CBL["CONFIG_EXPAND_GATHERER"] = "Expand Gatherer";
+	CBL["CONFIG_AUTOHIDE_GATHERER"] = "Auto-Hide Gatherer";
 	CBL["CONFIG_GATHERER_POSITION"] = "Gatherer Position";
 	CBL["CONFIG_BUSTER_POSITION"] = "Buster Position";
 	CBL["CONFIG_POSITION_X"] = "X:";
@@ -52,7 +54,7 @@ if (GetLocale() == "enUS") then
 	CBL["CONFIG_POSITIONS_RESET"] = "Reset Positions";
 
 	CBL["MINIMAP_HOVER_LINE1"] = CBG_CLR_WHITE .. "Left button to " .. CBG_CLR_LIGHTGREEN .. "Drag";
-	CBL["MINIMAP_HOVER_LINE2"] = CBG_CLR_WHITE .. "Left-click for " .. CBG_CLR_OFFBLUE .. "Toggle Menu";
+	--CBL["MINIMAP_HOVER_LINE2"] = CBG_CLR_WHITE .. "Left-click for " .. CBG_CLR_OFFBLUE .. "Toggle Menu";
 	CBL["MINIMAP_HOVER_LINE3"] = CBG_CLR_WHITE .. "Right-click for " .. CBG_CLR_OFFBLUE .. "Config";
 
 	CBL["NODE_MSG"] = CBG_CLR_OFFBLUE .. "Gather Levels: |r";

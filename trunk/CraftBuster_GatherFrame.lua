@@ -94,6 +94,9 @@ function CraftBuster_GatherFrame_Update()
 				CraftBuster_Gather_MoverFrame_CollapseFrame:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Collapse");
 				CraftBuster_GatherFrame:SetHeight(15 + ((count + padding) * 20));
 				CraftBuster_GatherFrame:Show();
+			elseif (CraftBusterOptions[CraftBusterEntry].gather_frame.auto_hide) then
+				CraftBuster_Gather_MoverFrame:Hide();
+				CraftBuster_GatherFrame:Hide();
 			else
 				CraftBuster_GatherFrameNoneFound:Show();
 				CraftBuster_Gather_MoverFrame:Show();

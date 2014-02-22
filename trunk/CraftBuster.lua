@@ -1,3 +1,5 @@
+local DB_VERSION = 0.01;
+
 CraftBusterOptions = {};
 CraftBusterPlayer = nil;
 CraftBusterPlayerLevel = nil;
@@ -150,6 +152,7 @@ function CraftBuster_InitSettings(reset)
 		CraftBusterOptions[CraftBusterEntry].gather_frame.state = "expanded";
 		CraftBusterOptions[CraftBusterEntry].gather_frame.show_zone_nodes = true;
 		CraftBusterOptions[CraftBusterEntry].gather_frame.show_skill_nodes = true;
+		CraftBusterOptions[CraftBusterEntry].gather_frame.auto_hide = true;
 	end
 	if (not CraftBusterOptions[CraftBusterEntry].zone_limit) then
 		CraftBusterOptions[CraftBusterEntry].zone_limit = 10;
@@ -180,6 +183,7 @@ function CraftBuster_InitSettings(reset)
 			if (not CraftBusterOptions[CraftBusterEntry].modules[module_id]) then
 				CraftBusterOptions[CraftBusterEntry].modules[module_id] = {};
 				CraftBusterOptions[CraftBusterEntry].modules[module_id].show_tooltips = true;
+				CraftBusterOptions[CraftBusterEntry].modules[module_id].show_gather = true;
 				CraftBusterOptions[CraftBusterEntry].modules[module_id].show_buster = true;
 			end
 		end
@@ -190,11 +194,24 @@ function CraftBuster_InitSettings(reset)
 	if (not CraftBusterOptions[CraftBusterEntry].bustables) then
 		CraftBusterOptions[CraftBusterEntry].bustables = {};
 	end
-	if (not CraftBusterOptions[CraftBusterEntry].misc_options) then
-		CraftBusterOptions[CraftBusterEntry].misc_options = {};
-	end
+
+	CraftBuster_InitVersionSettings();
 
 	DEFAULT_CHAT_FRAME:AddMessage(CBG_CLR_MOD_COLOR .. CBG_MOD_NAME .. " (v" .. CBG_VERSION .. " - Last Updated: " .. CBG_LAST_UPDATED .. ")");
+end
+
+function CraftBuster_InitVersionSettings()
+	if (not CraftBusterOptions[CraftBusterEntry].db_version or CraftBusterOptions[CraftBusterEntry].db_version < 0.01) then
+		CraftBusterOptions[CraftBusterEntry].gather_frame.auto_hide = true;
+
+		if (CraftBuster_Modules and next(CraftBuster_Modules)) then
+			for module_id, module_data in sortedpairs(CraftBuster_Modules) do
+				CraftBusterOptions[CraftBusterEntry].modules[module_id].show_gather = true;
+			end
+		end
+	end
+
+	CraftBusterOptions[CraftBusterEntry].db_version = DB_VERSION;
 end
 
 function CraftBuster_RegisterModule(module_id, module_name, module_options)
@@ -435,9 +452,11 @@ function CraftBuster_GetSkillLevel(skill_id)
 		[5] = "archaeology",
 		[6] = "lockpicking",
 	};
+
 	for i, skill in pairs(skills) do
-		if (CraftBusterOptions[CraftBusterEntry].skills[skill] ~= nil and (CraftBusterOptions[CraftBusterEntry].skills[skill].id == skill_id)) then
-			return CraftBusterOptions[CraftBusterEntry].skills[skill].level;
+		local skill_data = CraftBusterOptions[CraftBusterEntry].skills[skill];
+		if (skill_data ~= nil and skill_data.id == skill_id) then
+			return (skill_data.level + skill_data.bonus);
 		end
 	end
 

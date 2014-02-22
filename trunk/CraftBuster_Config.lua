@@ -27,8 +27,9 @@ end
 local tooltips = {};
 local professions = {};
 local bustables = {};
+local profession_gathers = {};
 local show_minimap_button, show_tracker, expand_tracker;
-local show_gatherer, expand_gatherer, show_zone_nodes, show_skillup_nodes;
+local show_gatherer, expand_gatherer, auto_hide_gatherer, show_zone_nodes, show_skillup_nodes;
 local position_x, position_y, position_point, position_relative_point;
 local gatherer_position_x, gatherer_position_y, gatherer_position_point, gatherer_position_relative_point;
 local buster_position_x, buster_position_y, buster_position_point, buster_position_relative_point;
@@ -185,9 +186,17 @@ child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
 		CraftBuster_GatherFrame_Collapse_OnClick();
 	end);
 
-	--Track Professions
+	auto_hide_gatherer = CreateFrame("CheckButton", config_frame_name .. "AutoHideGatherer", child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
+	auto_hide_gatherer:SetPoint("TOPLEFT", expand_gatherer, "BOTTOMLEFT", 0, 0);
+	_G[auto_hide_gatherer:GetName() .. "Text"]:SetText(CBL["CONFIG_AUTOHIDE_GATHERER"]);
+	auto_hide_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.auto_hide);
+	auto_hide_gatherer:SetScript("OnClick", function(self, button)
+		CraftBuster_MiniMap_SetAutoHideGatherer(self, _, _, self:GetChecked());
+	end);
+
+	--Show Nodes
 	local show_nodes_label = child_gatherer_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
-	show_nodes_label:SetPoint("TOPLEFT", expand_gatherer, "BOTTOMLEFT", 0, -24);
+	show_nodes_label:SetPoint("TOPLEFT", auto_hide_gatherer, "BOTTOMLEFT", 0, -24);
 	show_nodes_label:SetText(CBL["CONFIG_TITLE_SHOW_NODES"]);
 
 	show_zone_nodes = CreateFrame("CheckButton", config_frame_name .. "ShowZoneNodes", child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
@@ -205,6 +214,29 @@ child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
 	show_skillup_nodes:SetScript("OnClick", function(self, button)
 		CraftBuster_MiniMap_SetSkillUpNodes(self, _, _, self:GetChecked());
 	end);
+	
+	--Show Professions Gather
+	local professions_label = child_gatherer_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
+	professions_label:SetPoint("TOPLEFT", show_skillup_nodes, "BOTTOMLEFT", 0, -24);
+
+	if (CraftBuster_Modules and next(CraftBuster_Modules)) then
+		professions_label:SetText(CBL["CONFIG_TITLE_SHOW_PROFESSION_GATHERS"]);
+		
+		count = 0;
+		for module_id, module_data in sortedpairs(CraftBuster_Modules) do
+			if (module_data.gather_function) then
+				profession_gathers[module_id] = CreateFrame("CheckButton", config_frame_name .. "ProfessionGathers" .. module_id, child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
+				profession_gathers[module_id]:SetPoint("TOPLEFT", professions_label, "BOTTOMLEFT", 0, -20 * count);
+				_G[profession_gathers[module_id]:GetName() .. "Text"]:SetText(CraftBuster_Modules[module_id].name);
+				profession_gathers[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_gather);
+				profession_gathers[module_id]:SetScript("OnClick", function(self, button)
+					CraftBuster_MiniMap_SetProfessionGather(self, module_id, _, self:GetChecked());
+				end);
+
+				count = count + 1;
+			end
+		end
+	end
 end);
 InterfaceOptions_AddCategory(child_gatherer_frame);
 
@@ -580,11 +612,15 @@ local function updateFields()
 			if (module_data.bustable_spell) then
 				bustables[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_buster);
 			end
+			if (module_data.gather_function) then
+				profession_gathers[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_gather);
+			end
 		end
 	end
 
 	show_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show);
 	expand_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.state == "expanded");
+	auto_hide_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.auto_hide);
 	show_zone_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_zone_nodes);
 	show_skillup_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_skill_nodes);
 
