@@ -1,9 +1,7 @@
 -------------------------------------------------------------------------------
--- CraftBuster Localization
+-- CraftBuster enUS Localization
 -------------------------------------------------------------------------------
-local LOCALE = GetLocale();
-
-if (GetLocale() == "enUS") then
+--if (GetLocale() == "enUS") then
 	CBL["SKILL_BLCK"] = "Blacksmithing";
 	CBL["SKILL_LTHR"] = "Leatherworking";
 	CBL["SKILL_ALCH"] = "Alchemy";
@@ -85,10 +83,4 @@ if (GetLocale() == "enUS") then
 	CBL["TRADESKILL_NUMLINES"] = 1;
 	CBL["TRADESKILL_LINE1"] = CBG_CLR_WHITE .. "List relevant items in bags";
 	--CBL["TRADESKILL_LINE2"] = CBG_CLR_WHITE .. "fasdfadsfadsf";
-
-	-- Help Localization
-	CBL["HELP_LINES"] = 3;
-	CBL["HELP1"] = "Help Line 1";
-	CBL["HELP2"] = "Help Line 2";
-	CBL["HELP3"] = "Help Line 3";
-end
+--end
