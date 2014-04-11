@@ -1,8 +1,8 @@
 ## Interface: 50400
 ## Title: CraftBuster
 ## Author: Lord Vashtal
-## Version: 0.1.02.50400
-## X-Date: 2014-02-23
+## Version: 0.1.03.50400
+## X-Date: 2014-04-10
 ## Notes: Provides versatile functionality for various interface bars
 ## SavedVariables: CraftBusterOptions
 ## DefaultState: Enabled
