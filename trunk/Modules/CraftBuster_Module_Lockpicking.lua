@@ -26,6 +26,8 @@ local PICK_BOXES = {
 	["45986"] = "Tiny Titanium Lockbox",
 	["63349"] = "Flame-Scarred Junkbox",
 	["68729"] = "Elementium Lockbox",
+	["88567"] = "Ghost Iron Lockbox",
+	["88165"] = "Vine-Cracked Junkbox",
 };
 
 local function CraftBuster_Module_Lockpicking_GetBustables()
