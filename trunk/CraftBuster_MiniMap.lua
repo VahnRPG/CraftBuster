@@ -280,7 +280,7 @@ end
 
 function CraftBuster_MiniMap_OnEnter()
 	GameTooltip:SetOwner(CraftBuster_MiniMapFrame, "ANCHOR_LEFT");
-	GameTooltip:AddLine(CBG_CLR_MOD_COLOR .. CBG_MOD_NAME);
+	GameTooltip:AddLine(CBG_MOD_COLOR .. CBG_MOD_NAME);
 	GameTooltip:AddLine(CBL["MINIMAP_HOVER_LINE1"]);
 	--GameTooltip:AddLine(CBL["MINIMAP_HOVER_LINE2"]);
 	GameTooltip:AddLine(CBL["MINIMAP_HOVER_LINE3"]);

@@ -32,11 +32,13 @@ function CraftBuster_OnLoad(self)
 end
 
 function CraftBuster_OnEvent(self, event, ...)
+	local arg1 = ...;
 	--echo("Here: " .. event);
 	if (event == "ADDON_LOADED") then
 		if (CraftBuster_InitPlayer()) then
 			CraftBuster_InitSettings();
 			CraftBuster_MiniMap_Init();
+			CraftBuster_MapIcons_Init();
 			CraftBuster_UpdateSkills();
 			CraftBuster_UpdateZone();
 
@@ -175,6 +177,13 @@ function CraftBuster_InitSettings(reset)
 		CraftBusterOptions[CraftBusterEntry].minimap.position = 310;
 		CraftBuster_MiniMap_Init();
 	end
+	if (not CraftBusterOptions[CraftBusterEntry].map_icons) then
+		CraftBusterOptions[CraftBusterEntry].map_icons = {};
+		CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map = true;
+		CraftBusterOptions[CraftBusterEntry].map_icons.show_mini_map = true;
+		CraftBusterOptions[CraftBusterEntry].map_icons.show_trainers = true;
+		CraftBusterOptions[CraftBusterEntry].map_icons.show_stations = true;
+	end
 	if (not CraftBusterOptions[CraftBusterEntry].modules) then
 		CraftBusterOptions[CraftBusterEntry].modules = {};
 	end
@@ -197,7 +206,7 @@ function CraftBuster_InitSettings(reset)
 
 	CraftBuster_InitVersionSettings();
 
-	DEFAULT_CHAT_FRAME:AddMessage(CBG_CLR_MOD_COLOR .. CBG_MOD_NAME .. " (v" .. CBG_VERSION .. " - Last Updated: " .. CBG_LAST_UPDATED .. ")");
+	DEFAULT_CHAT_FRAME:AddMessage(CBG_MOD_COLOR .. CBG_MOD_NAME .. " (v" .. CBG_VERSION .. " - Last Updated: " .. CBG_LAST_UPDATED .. ")");
 end
 
 function CraftBuster_InitVersionSettings()

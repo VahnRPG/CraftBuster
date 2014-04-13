@@ -37,6 +37,10 @@ function CraftBuster_SkillFrame_Update(skills)
 								skill_num_spells = 1;
 								skill_id = index;
 							end
+							if (not skill_level) then
+								echo("Here2: " .. index);
+								echo("Here: " .. skill_name);
+							end
 
 							local skill_bonus_text = "";
 							if (skill_bonus ~= nil and skill_bonus > 0) then
