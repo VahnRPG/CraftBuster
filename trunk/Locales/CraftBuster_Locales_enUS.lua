@@ -2,23 +2,27 @@
 -- CraftBuster enUS Localization
 -------------------------------------------------------------------------------
 --if (GetLocale() == "enUS") then
-	CBL["SKILL_BLCK"] = "Blacksmithing";
-	CBL["SKILL_LTHR"] = "Leatherworking";
-	CBL["SKILL_ALCH"] = "Alchemy";
-	CBL["SKILL_HERB"] = "Herbalism";
-	CBL["SKILL_MINE"] = "Mining";
-	CBL["SKILL_TAIL"] = "Tailoring";
-	CBL["SKILL_ENGN"] = "Engineering";
-	CBL["SKILL_ENCH"] = "Enchanting";
-	CBL["SKILL_SKIN"] = "Skinning";
-	CBL["SKILL_JEWL"] = "Jewelcrafting";
-	CBL["SKILL_INSC"] = "Inscription";
-	CBL["SKILL_COOK"] = "Cooking";
-	CBL["SKILL_FRST"] = "First Aid";
-	CBL["SKILL_FISH"] = "Fishing";
-	CBL["SKILL_ARCH"] = "Archaeology";
-	-- Rogue Only
-	CBL["SKILL_PICK"] = "Lockpicking";
+	--Primary
+	CBL[CBT_SKILL_ALCH] = "Alchemy";
+	CBL[CBT_SKILL_BLCK] = "Blacksmithing";
+	CBL[CBT_SKILL_ENCH] = "Enchanting";
+	CBL[CBT_SKILL_ENGN] = "Engineering";
+	CBL[CBT_SKILL_HERB] = "Herbalism";
+	CBL[CBT_SKILL_INSC] = "Inscription";
+	CBL[CBT_SKILL_JEWL] = "Jewelcrafting";
+	CBL[CBT_SKILL_LTHR] = "Leatherworking";
+	CBL[CBT_SKILL_MINE] = "Mining";
+	CBL[CBT_SKILL_SKIN] = "Skinning";
+	CBL[CBT_SKILL_TAIL] = "Tailoring";
+	--Secondary
+	CBL[CBT_SKILL_ARCH] = "Archaeology";
+	CBL[CBT_SKILL_COOK] = "Cooking";
+	CBL[CBT_SKILL_FRST] = "First Aid";
+	CBL[CBT_SKILL_FISH] = "Fishing";
+	--Rogue Only
+	CBL[CBT_SKILL_PICK] = "Lockpicking";
+
+	CBL["SKILL_ALL_PROFESSIONS"] = "All Professions";
 
 	CBL["LBL_RED"] = "Red";
 	CBL["LBL_ORANGE"] = "Orange";
@@ -34,6 +38,13 @@
 	CBL["CONFIG_TITLE_SHOW_PROFESSION_GATHERS"] = "Show Profession Gathers";
 	CBL["CONFIG_TITLE_OTHER"] = "Other";
 	CBL["CONFIG_SHOW_MINIMAP"] = "Show Minimap Button";
+	CBL["CONFIG_SHOW_WORLD_MAP_ICONS"] = "Show World Map Icons";
+	CBL["CONFIG_SHOW_MINIMAP_ICONS"] = "Show Minimap Icons";
+	CBL["CONFIG_TITLE_TRAINER_MAP_ICONS"] = "Trainer Map Icons";
+	CBL["CONFIG_TITLE_STATION_MAP_ICONS"] = "Station Map Icons";
+	CBL["CONFIG_MAP_ICON_" .. CBL[CBT_SKILL_BLCK]] = "Anvil";
+	CBL["CONFIG_MAP_ICON_" .. CBL[CBT_SKILL_MINE]] = "Forge";
+	CBL["CONFIG_MAP_ICON_" .. CBL[CBT_SKILL_TAIL]] = "Tailoring";
 	CBL["CONFIG_SHOW_TRACKER"] = "Show Tracker";
 	CBL["CONFIG_EXPAND_TRACKER"] = "Expand Tracker";
 	CBL["CONFIG_TRACKER_POSITION"] = "Tracker Position";
@@ -55,7 +66,11 @@
 	--CBL["MINIMAP_HOVER_LINE2"] = CBG_CLR_WHITE .. "Left-click for " .. CBG_CLR_OFFBLUE .. "Toggle Menu";
 	CBL["MINIMAP_HOVER_LINE3"] = CBG_CLR_WHITE .. "Right-click for " .. CBG_CLR_OFFBLUE .. "Config";
 
+	CBL["MAPICON_TITLE_TRAINER"] = CBG_CLR_OFFBLUE .. "Trainer: ";
+	CBL["MAPICON_TITLE_STATION"] = CBG_CLR_OFFBLUE .. "Station: ";
+
 	CBL["NODE_MSG"] = CBG_CLR_OFFBLUE .. "Gather Levels: |r";
+	CBL["TRAINER_ACTION"] = "Visit your %s trainer to learn %s proficiency";
 	CBL["ORANGE_ACTION"] = "%sReaching level %d you can now gather from '%s' nodes.";
 	CBL["YELLOW_ACTION"] = "%s'%s' has turned yellow at level %s";
 	CBL["GREEN_ACTION"] = "%s'%s' has turned green at level %s";

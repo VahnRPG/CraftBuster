@@ -1,10 +1,6 @@
 local saved_skills;
 
 function CraftBuster_SkillFrame_Update(skills)
-	if (InCombatLockdown()) then
-		CraftBuster_AddLeaveCombatCommand("CraftBuster_SkillFrame_Update", skills);
-		return;
-	end
 	local _, player_class = UnitClass("player");
 	local player_level = UnitLevel("player");
 	saved_skills = skills;
@@ -146,10 +142,6 @@ function CraftBuster_SkillFrame_Update(skills)
 end
 
 function CraftBuster_SkillFrame_Collapse_OnClick()
-	if (InCombatLockdown()) then
-		CraftBuster_AddLeaveCombatCommand("CraftBuster_SkillFrame_Collapse_OnClick");
-		return;
-	end
 	if (CraftBuster_SkillFrame:IsShown()) then
 		CraftBuster_SkillFrame:Hide();
 		CraftBusterOptions[CraftBusterEntry].skills_frame.state = "collapsed";
@@ -163,10 +155,6 @@ function CraftBuster_SkillFrame_Collapse_OnClick()
 end
 
 function CraftBuster_SkillFrame_Close_OnClick()
-	if (InCombatLockdown()) then
-		CraftBuster_AddLeaveCombatCommand("CraftBuster_SkillFrame_Close_OnClick");
-		return;
-	end
 	CraftBuster_Skill_MoverFrame:Hide();
 	CraftBuster_SkillFrame:Hide();
 	if (not CraftBuster_Skill_MoverFrame:IsShown()) then
@@ -184,10 +172,6 @@ function CraftBuster_SkillFrame_OnDrag()
 end
 
 function CraftBuster_SkillFrame_UpdatePosition()
-	if (InCombatLockdown()) then
-		CraftBuster_AddLeaveCombatCommand("CraftBuster_SkillFrame_UpdatePosition");
-		return;
-	end
 	local position = CraftBusterOptions[CraftBusterEntry].skills_frame.position;
 	CraftBuster_Skill_MoverFrame:ClearAllPoints();
 	CraftBuster_Skill_MoverFrame:SetPoint(position.point, nil, position.relative_point, position.x, position.y);

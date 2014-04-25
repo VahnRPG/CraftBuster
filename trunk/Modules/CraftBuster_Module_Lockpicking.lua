@@ -1,6 +1,6 @@
-local SKILL_NAME = "Lockpicking";
-local SKILL_SHORT_CODE = "pick";
 local SKILL_ID = CBT_SKILL_PICK;
+local SKILL_NAME = CBL[CBT_SKILL_PICK];
+local SKILL_SHORT_CODE = "pick";
 local SKILL_SPELL_1ID = 1804;		--Lockpicking
 local SKILL_BUST_SPELLID = 1804;
 

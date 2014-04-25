@@ -1,12 +1,14 @@
 ## Interface: 50400
 ## Title: CraftBuster
 ## Author: Lord Vashtal
-## Version: 0.1.03.50400
-## X-Date: 2014-04-10
+## Version: 0.1.07.50400
+## X-Date: 2014-04-24
 ## Notes: Provides versatile functionality for various interface bars
 ## SavedVariables: CraftBusterOptions
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
+Libs\Astrolabe\Load.xml
+
 CraftBuster.xml
 CraftBuster_Locales.xml
 CraftBuster_SkillFrame.xml
@@ -14,5 +16,3 @@ CraftBuster_GatherFrame.xml
 CraftBuster_BusterFrame.xml
 CraftBuster_MiniMap.xml
 CraftBuster_Modules.xml
-
-Libs\Astrolabe\Load.xml

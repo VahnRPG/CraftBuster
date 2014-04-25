@@ -24,7 +24,7 @@
 		</Scripts>
 	</Button>
 
-	<StatusBar name="CraftBuster_Skill_BarTemplate" inherits="SecureHandlerStateTemplate,SecureActionButtonTemplate" minValue="0" maxValue="1" frameStrata="LOW" virtual="true">
+	<StatusBar name="CraftBuster_Skill_BarTemplate" minValue="0" maxValue="1" frameStrata="LOW" virtual="true">
 		<Size x="224" y="18" />
 		<Backdrop bgFile="Interface\PaperDollInfoFrame\UI-Character-Skills-Bar" tile="false">
 			<EdgeSize>
@@ -76,7 +76,7 @@
 		</Frames>
 	</StatusBar>
 
-	<Frame name="CraftBuster_Skill_MoverFrame" inherits="SecureHandlerBaseTemplate,SecureHandlerStateTemplate" parent="UIParent" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" hidden="false">
+	<Frame name="CraftBuster_Skill_MoverFrame" parent="UIParent" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" hidden="false">
 		<Size>
 			<AbsDimension x="234" y="10"/>
 		</Size>
@@ -111,7 +111,7 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name="$parent_ConfigMenu" inherits="SecureHandlerClickTemplate,SecureActionButtonTemplate" hidden="false">
+			<Button name="$parent_ConfigMenu" hidden="false">
 				<Size>
 					<AbsDimension x="16" y="16"/>
 				</Size>
@@ -129,7 +129,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="$parent_CollapseFrame" inherits="SecureHandlerClickTemplate,SecureActionButtonTemplate" hidden="false">
+			<Button name="$parent_CollapseFrame" hidden="false">
 				<Size>
 					<AbsDimension x="16" y="16"/>
 				</Size>
@@ -147,7 +147,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="$parent_CloseFrame" inherits="SecureHandlerClickTemplate,SecureActionButtonTemplate" hidden="false">
+			<Button name="$parent_CloseFrame" hidden="false">
 				<Size>
 					<AbsDimension x="16" y="16"/>
 				</Size>
@@ -186,7 +186,7 @@
 		</Scripts>
 	</Frame>
 
-	<Frame name="CraftBuster_SkillFrame" inherits="SecureHandlerBaseTemplate,SecureHandlerStateTemplate" parent="UIParent" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" hidden="false">
+	<Frame name="CraftBuster_SkillFrame" parent="UIParent" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" hidden="false">
 		<Size>
 			<AbsDimension x="234" y="28"/>
 		</Size>

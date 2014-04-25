@@ -1,298 +1,94 @@
 local astrolabe = DongleStub("Astrolabe-1.0");
 
-local MAP_ICONS = {
-	["trainers"] = {
-		["blacksmithing"] = {
-			["horde"] = {
+local SKILL_ALL_PROFESSIONS_TRAINERS_MAP_ICONS = {
+	[30] = {		--Elwynn Forest
+			["Alliance"] = {
+				[47384] = { ["name"] = "Lien Farner", ["floor"] = 0, ["pos"] = { 42, 67 } },
 			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["leatherworking"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["alchemy"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["herbalism"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["mining"] = {
-			["horde"] = {
-				["Gizzik Oregrab"] = {
-					["id"] = 52170,
-					["map_id"] = 321,		--Orgrimmar
-					["floor"] = 1,
-					["pos"] = { 36.0, 82.8 },
-				},
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["tailoring"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["engineering"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["enchanting"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["skinning"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["jewelcrafting"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["inscription"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["cooking"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["first aid"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["fishing"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["archaeology"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
 	},
-	["stations"] = {
-		["blacksmithing"] = {
-			["horde"] = {
+	[27] = {		--Dun Morogh
+			["Alliance"] = {
+				[47396] = { ["name"] = "Wembil Taskwidget", ["floor"] = 0, ["pos"] = { 53.8, 52 } },
 			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["leatherworking"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["alchemy"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["herbalism"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["mining"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["tailoring"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["engineering"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["enchanting"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["skinning"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["jewelcrafting"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["inscription"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["cooking"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["first aid"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["fishing"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
-		["archaeology"] = {
-			["horde"] = {
-			},
-			["alliance"] = {
-			},
-			["neutral"] = {
-			},
-		},
 	},
-};
-
-local MAP_ICON_TEXTURES = {
-	["trainers"] = {
-		["blacksmithing"] = "",
-		["leatherworking"] = "",
-		["alchemy"] = "",
-		["herbalism"] = "",
-		["mining"] = "Interface\\AddOns\\CraftBuster\\Images\\MapIcon-Trainer-Mining",
-		["tailoring"] = "",
-		["engineering"] = "",
-		["enchanting"] = "",
-		["skinning"] = "",
-		["jewelcrafting"] = "",
-		["inscription"] = "",
-		["cooking"] = "",
-		["first aid"] = "",
-		["fishing"] = "",
-		["archaeology"] = "",
+	[41] = {		--Teldrassil
+			["Alliance"] = {
+				[47420] = { ["name"] = "Iranis Shadebloom", ["floor"] = 0, ["pos"] = { 56, 52.2 } },
+			},
 	},
-	["stations"] = {
-		["blacksmithing"] = "",
-		["leatherworking"] = "",
-		["alchemy"] = "",
-		["herbalism"] = "",
-		["mining"] = "Interface\\AddOns\\CraftBuster\\Images\\MapIcon-Station-Mining",
-		["tailoring"] = "",
-		["engineering"] = "",
-		["enchanting"] = "",
-		["skinning"] = "",
-		["jewelcrafting"] = "",
-		["inscription"] = "",
-		["cooking"] = "",
-		["first aid"] = "",
-		["fishing"] = "",
-		["archaeology"] = "",
+	[464] = {		--Azuremyst Isle
+			["Alliance"] = {
+				[47431] = { ["name"] = "Valn", ["floor"] = 0, ["pos"] = { 48.6, 52.2 } },
+			},
+	},
+	[611] = {		--Gilneas City
+			["Alliance"] = {
+				[50247] = { ["name"] = "Jack \"All-Trades\" Derrington", ["floor"] = 0, ["pos"] = { 37.2, 37.4 } },
+			},
+	},
+	[20] = {		--Tirisfal Glades
+			["Horde"] = {
+				[47400] = { ["name"] = "Nedric Sallow", ["floor"] = 0, ["pos"] = { 61, 51 } },
+				[48619] = { ["name"] = "Therisa Sallow", ["floor"] = 0, ["pos"] = { 44.4, 53 } },
+			},
+	},
+	[4] = {		--Durotar
+			["Horde"] = {
+				[47418] = { ["name"] = "Runda", ["floor"] = 0, ["pos"] = { 52.8, 42 } },
+			},
+	},
+	[9] = {		--Mulgore
+			["Horde"] = {
+				[47419] = { ["name"] = "Lalum Darkmane", ["floor"] = 0, ["pos"] = { 46.4, 57.6 } },
+			},
+	},
+	[462] = {		--Eversong Woods
+			["Horde"] = {
+				[47421] = { ["name"] = "Saren", ["floor"] = 0, ["pos"] = { 48.8, 46.8 } },
+			},
+	},
+	[808] = {		--The Wandering Isle
+			["Neutral"] = {
+				[57620] = { ["name"] = "Whittler Dewei", ["floor"] = 0, ["pos"] = { 63, 41.4 } },
+				[65043] = { ["name"] = "Elder Oakpaw", ["floor"] = 0, ["pos"] = { 50.4, 58.6 } },
+			},
 	},
 };
 
 local CACHED_ICONS = {};
 
+local tooltip = CreateFrame("GameTooltip", "CraftBuster_MapIcons_Tooltip", nil, "GameTooltipTemplate");
 local last_update = 0;
+local HAS_TOMTOM = false;
+
+local function CraftBuster_MapIcons_SetTooltipText(icon_data, floor_label)
+	if (icon_data.icon_type == "trainers") then
+		tooltip:SetText(CBL["MAPICON_TITLE_TRAINER"]);
+	elseif (icon_data.icon_type == "stations") then
+		tooltip:SetText(CBL["MAPICON_TITLE_STATION"]);
+	end
+
+	local x1, x2, y1, y2 = unpack(MAP_ICON_TEXTURES[icon_data.icon_type][icon_data.module_id]);
+	--local icon_texture = "|TInterface\\AddOns\\CraftBuster\\Images\\CraftBuster_MapIcons:0:0:0:0:64:64:" .. x1 .. ":" .. x2 .. ":" .. y1 .. ":" .. y2 .. "|t";
+
+	local profession_label = CBL[icon_data.module_id];
+	if (icon_data.module_id == "all") then
+		profession_label = CBL["SKILL_ALL_PROFESSIONS"];
+	end
+
+	tooltip:AddLine(floor_label .. CBG_CLR_WHITE .. icon_data.npc_data["name"] .. " - " .. profession_label);
+end
+
+local function CraftBuster_MapIcons_Minimap_OnEvent(self, event, ...)
+	if (event == "PLAYER_ENTERING_WORLD") then
+		if (not self.icon_data.label) then
+			return;
+		end
+
+		local icon_data = self.icon_data;
+		astrolabe:PlaceIconOnMinimap(self, icon_data.map_id, icon_data.npc_data["floor"], (icon_data.npc_data["pos"][1] / 100), (icon_data.npc_data["pos"][2] / 100));
+	end
+end
 
 local function CraftBuster_MapIcons_Minimap_OnUpdate(self, elapsed)
 	local dist, x, y = astrolabe:GetDistanceToIcon(self);
@@ -309,54 +105,147 @@ local function CraftBuster_MapIcons_Minimap_OnUpdate(self, elapsed)
 
 	last_update = 0;
 
-	if (not self.disabled) then
-		local icon_on_edge = astrolabe:IsIconOnEdge(self);
-		if (icon_on_edge) then
-			self.icon:Hide();
+	local show = false;
+	if (not astrolabe:IsIconOnEdge(self)) then
+		show = true;
+	end
+
+	if (show) then
+		self.icon:Show();
+	else
+		self.icon:Hide();
+	end
+end
+
+local function CraftBuster_MapIcons_Minimap_OnEnter(self, event, ...)
+	if (not self.icon_data.label) then
+		return;
+	end
+
+	if (self.icon:IsShown()) then
+		if (UIParent:IsVisible()) then
+			tooltip:SetParent(UIParent);
 		else
-			self.icon:Show();
+			tooltip:SetParent(self);
 		end
+		tooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT");
+
+		local floor_label = "";
+		local _, floor = astrolabe:GetCurrentPlayerPosition();
+		if (floor < self.icon_data.npc_data["floor"]) then
+			floor_label = "|TInterface\\Minimap\\Minimap-PositionArrows:0:0:0:0:16:32:0:16:0:16|t";
+		elseif (floor > self.icon_data.npc_data["floor"]) then
+			floor_label = "|TInterface\\Minimap\\Minimap-PositionArrows:0:0:0:0:16:32:0:16:16:32|t";
+		end
+
+		CraftBuster_MapIcons_SetTooltipText(self.icon_data, floor_label);
+
+		tooltip:Show();
+	end
+end
+
+local function CraftBuster_MapIcons_Minimap_OnLeave(self)
+	if (not self.icon_data.label) then
+		return;
+	end
+
+	if (self.icon:IsShown()) then
+		tooltip:Hide();
+	end
+end
+
+local function CraftBuster_MapIcons_Minimap_OnClick(self, button, down)
+	if (not self.icon_data.label) then
+		return;
+	end
+
+	if (self.icon:IsShown() and (self.icon_data.map_id ~= GetCurrentMapAreaID())) then
+		echo("Minimap OnClick: " .. self.icon_data.label);
 	end
 end
 
 local function CraftBuster_MapIcons_World_OnEvent(self, event, ...)
 	if (event == "WORLD_MAP_UPDATE") then
-		if (not self.icon_data.label) then
+		if (not self.icon_data.label or not CraftBusterEntry) then
 			return;
 		end
 
+		local show = false;
 		local icon_data = self.icon_data;
-		if (icon_data.worldmap_icon_frame and CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map and not self.disabled) then
-			local x,y = astrolabe:PlaceIconOnWorldMap(CraftBuster_MapIcons_Overlay, self, icon_data.npc_data["map_id"], icon_data.npc_data["floor"], (icon_data.npc_data["pos"][1] / 100), (icon_data.npc_data["pos"][2] / 100));
+		if (icon_data.worldmap_icon_frame and CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map) then
+			--echo("Here1: " .. icon_data.label .. " - " .. icon_data.map_id .. " == " .. GetCurrentMapAreaID() .. " -> " .. astrolabe:GetNumFloors(icon_data.map_id));
+			if (icon_data.map_id == GetCurrentMapAreaID()) then
+				local x,y = astrolabe:PlaceIconOnWorldMap(CraftBuster_MapIcons_Overlay, self, icon_data.map_id, icon_data.npc_data["floor"], (icon_data.npc_data["pos"][1] / 100), (icon_data.npc_data["pos"][2] / 100));
 
-			if (x and y and (0 < x and x <= 1) and (0 < y and y <= 1)) then
-				self:Show();
-			else
-				self:Hide();
+				if (x and y and (0 < x and x <= 1) and (0 < y and y <= 1)) then
+					show = true;
+				end
 			end
+		end
+
+		if (show) then
+			self:Show();
 		else
 			self:Hide();
 		end
 	end
 end
 
-local function CraftBuster_CreateMapIcon(icon_type, profession, side, npc_name, npc_data)
-	local label = icon_type .. ":" .. profession .. "-" .. side .. "-" .. npc_name;
+local function CraftBuster_MapIcons_World_OnEnter(self, event, ...)
+	if (self.icon:IsShown()) then
+		if (UIParent:IsVisible()) then
+			tooltip:SetParent(UIParent);
+		else
+			tooltip:SetParent(self);
+		end
+		tooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT");
 
+		local floor_label = "";
+		local floor = GetCurrentMapDungeonLevel();
+		if (floor < self.icon_data.npc_data["floor"]) then
+			floor_label = "|TInterface\\Minimap\\Minimap-PositionArrows:0:0:0:0:16:32:0:16:0:16|t";
+		elseif (floor > self.icon_data.npc_data["floor"]) then
+			floor_label = "|TInterface\\Minimap\\Minimap-PositionArrows:0:0:0:0:16:32:0:16:16:32|t";
+		end
+		CraftBuster_MapIcons_SetTooltipText(self.icon_data, floor_label);
+
+		tooltip:Show();
+	end
+end
+
+local function CraftBuster_MapIcons_World_OnLeave(self)
+	if (self.icon:IsShown()) then
+		tooltip:Hide();
+	end
+end
+
+local function CraftBuster_MapIcons_World_OnClick(self, button, down)
+	if (self.icon:IsShown()) then
+		echo("World OnClick: " .. self.icon_data.label);
+	end
+end
+
+local function CraftBuster_CreateMapIcon(map_id, icon_type, module_id, side, npc_id, npc_data)
+	local label = map_id .. "_" .. icon_type .. "_" .. module_id .. "_" .. side .. "_" .. npc_id;
+
+	local x1, x2, y1, y2 = unpack(CBG_MAP_ICON_TEXTURES[icon_type][module_id]);
 	local minimap_icon_frame = CreateFrame("Button", nil, Minimap);
 	minimap_icon_frame:SetHeight(20);
 	minimap_icon_frame:SetWidth(20);
 	minimap_icon_frame:RegisterForClicks("RightButtonUp");
+	minimap_icon_frame:RegisterEvent("PLAYER_ENTERING_WORLD");
+	minimap_icon_frame:SetScript("OnEvent", CraftBuster_MapIcons_Minimap_OnEvent);
 	minimap_icon_frame:SetScript("OnUpdate", CraftBuster_MapIcons_Minimap_OnUpdate);
-	--minimap_icon_frame:SetScript("OnEnter", CraftBuster_MapIcons_Minimap_OnEnter);
-	--minimap_icon_frame:SetScript("OnLeave", CraftBuster_MapIcons_Minimap_OnLeave);
-	--minimap_icon_frame:SetScript("OnClick", CraftBuster_MapIcons_Minimap_OnClick);
+	minimap_icon_frame:SetScript("OnEnter", CraftBuster_MapIcons_Minimap_OnEnter);
+	minimap_icon_frame:SetScript("OnLeave", CraftBuster_MapIcons_Minimap_OnLeave);
+	minimap_icon_frame:SetScript("OnClick", CraftBuster_MapIcons_Minimap_OnClick);
 
 	minimap_icon_frame.icon = minimap_icon_frame:CreateTexture("BACKGROUND");
-	minimap_icon_frame.icon:SetTexture(MAP_ICON_TEXTURES[icon_type][profession]);
 	minimap_icon_frame.icon:SetPoint("CENTER", 0, 0);
-	minimap_icon_frame.icon:SetHeight(12);
-	minimap_icon_frame.icon:SetWidth(12);
+	minimap_icon_frame.icon:SetTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_MapIcons");
+	minimap_icon_frame.icon:SetTexCoord(x1, x2, y1, y2);
+	minimap_icon_frame.icon:SetHeight(16);
+	minimap_icon_frame.icon:SetWidth(16);
 
 	if (not CraftBuster_MapIcons_Overlay) then
 		local overlay = CreateFrame("Frame", "CraftBuster_MapIcons_Overlay", WorldMapButton);
@@ -364,25 +253,27 @@ local function CraftBuster_CreateMapIcon(icon_type, profession, side, npc_name, 
 	end
 
 	local worldmap_icon_frame = CreateFrame("Button", nil, CraftBuster_MapIcons_Overlay)
-	worldmap_icon_frame:SetHeight(12);
-	worldmap_icon_frame:SetWidth(12);
+	worldmap_icon_frame:SetHeight(14);
+	worldmap_icon_frame:SetWidth(14);
 	worldmap_icon_frame:RegisterForClicks("RightButtonUp");
 	worldmap_icon_frame:RegisterEvent("WORLD_MAP_UPDATE");
 	worldmap_icon_frame:SetScript("OnEvent", CraftBuster_MapIcons_World_OnEvent);
-	--worldmap_icon_frame:SetScript("OnEnter", CraftBuster_MapIcons_World_OnEnter);
-	--worldmap_icon_frame:SetScript("OnLeave", CraftBuster_MapIcons_World_OnLeave);
-	--worldmap_icon_frame:SetScript("OnClick", CraftBuster_MapIcons_World_OnClick);
+	worldmap_icon_frame:SetScript("OnEnter", CraftBuster_MapIcons_World_OnEnter);
+	worldmap_icon_frame:SetScript("OnLeave", CraftBuster_MapIcons_World_OnLeave);
+	worldmap_icon_frame:SetScript("OnClick", CraftBuster_MapIcons_World_OnClick);
 
 	worldmap_icon_frame.icon = worldmap_icon_frame:CreateTexture("ARTWORK");
 	worldmap_icon_frame.icon:SetAllPoints();
-	worldmap_icon_frame.icon:SetTexture(MAP_ICON_TEXTURES[icon_type][profession]);
+	worldmap_icon_frame.icon:SetTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_MapIcons");
+	worldmap_icon_frame.icon:SetTexCoord(x1, x2, y1, y2);
 
 	local icon = {};
 	icon.label = label;
+	icon.map_id = map_id;
 	icon.icon_type = icon_type;
-	icon.profession = profession;
+	icon.module_id = module_id;
 	icon.side = side;
-	icon.npc_name = npc_name;
+	icon.npc_id = npc_id;
 	icon.npc_data = npc_data;
 	icon.minimap_icon_frame = minimap_icon_frame;
 	icon.worldmap_icon_frame = worldmap_icon_frame;
@@ -390,36 +281,80 @@ local function CraftBuster_CreateMapIcon(icon_type, profession, side, npc_name, 
 	icon.minimap_icon_frame.icon_data = icon;
 	icon.worldmap_icon_frame.icon_data = icon;
 	CACHED_ICONS[label] = icon;
+
+	astrolabe:PlaceIconOnMinimap(icon.minimap_icon_frame, icon.map_id, icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
+	astrolabe:PlaceIconOnWorldMap(CraftBuster_MapIcons_Overlay, icon.worldmap_icon_frame, icon.map_id, icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
 end
 
-function CraftBuster_MapIcons_Init()
-	local map_icon_cfg = CraftBusterOptions[CraftBusterEntry].map_icons;
+function CraftBuster_MapIcons_RegisterInit()
+	CraftBuster_MapIcons_RegisterModule("all", SKILL_ALL_PROFESSIONS_TRAINERS_MAP_ICONS, "trainers");
+end
 
-	for icon_type, type_data in sortedpairs(MAP_ICONS) do
-		if ((icon_type == "trainers" and map_icon_cfg.show_trainers) or (icon_type == "stations" and map_icon_cfg.show_stations)) then
-			for profession, profession_data in sortedpairs(type_data) do
-				for side, side_data in sortedpairs(profession_data) do
-					for npc_name, npc_data in sortedpairs(side_data) do
-						CraftBuster_CreateMapIcon(icon_type, profession, side, npc_name, npc_data);
-					end
-				end
+function CraftBuster_MapIcons_RegisterModule(module_id, map_icons, icon_type)
+	for map_id, map_data in pairs(map_icons) do
+		for side, side_data in sortedpairs(map_data) do
+			for npc_id, npc_data in sortedpairs(side_data) do
+				CraftBuster_CreateMapIcon(map_id, icon_type, module_id, side, npc_id, npc_data);
 			end
 		end
 	end
+end
 
-	CraftBuster_MapIcons_Update();
+function CraftBuster_MapIcons_Init()
+	local _, _, _, enabled = GetAddOnInfo("TomTom");
+	if (enabled) then
+		HAS_TOMTOM = true;
+	end
 end
 
 function CraftBuster_MapIcons_Update()
 	local map_icon_cfg = CraftBusterOptions[CraftBusterEntry].map_icons;
+	local current_map_id = GetCurrentMapAreaID();
+	local player_side = UnitFactionGroup("player");
 
-	for cache_id, icon in sortedpairs(CACHED_ICONS) do
-		if (map_icon_cfg.show_mini_map) then
-			astrolabe:PlaceIconOnMinimap(icon.minimap_icon_frame, icon.npc_data["map_id"], icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
+	for label, icon in sortedpairs(CACHED_ICONS) do
+		local show_map_icons = true;
+		if (icon.module_id == "all") then
+			show_map_icons = true;
+		elseif (icon.icon_type == "trainers") then
+			show_map_icons = CraftBusterOptions[CraftBusterEntry].modules[icon.module_id].show_trainer_map_icons;
+		elseif (icon.icon_type == "stations") then
+			show_map_icons = CraftBusterOptions[CraftBusterEntry].modules[icon.module_id].show_station_map_icons;
 		end
 
-		if (map_icon_cfg.show_world_map) then
-			astrolabe:PlaceIconOnWorldMap(CraftBuster_MapIcons_Overlay, icon.worldmap_icon_frame, icon.npc_data["map_id"], icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
+		if ((icon.side == player_side or icon.side == "Neutral") and show_map_icons) then
+			if (map_icon_cfg.show_mini_map and current_map_id == icon.map_id) then
+				icon.minimap_icon_frame:Show();
+				icon.minimap_icon_frame.icon:Show();
+				icon.minimap_icon_frame:SetScript("OnUpdate", CraftBuster_MapIcons_Minimap_OnUpdate);
+			else
+				icon.minimap_icon_frame:Hide();
+				icon.minimap_icon_frame.icon:Hide();
+				icon.minimap_icon_frame:SetScript("OnUpdate", nil);
+			end
+
+			if (map_icon_cfg.show_world_map) then
+				icon.worldmap_icon_frame:Show();
+				icon.worldmap_icon_frame.icon:Show();
+				icon.worldmap_icon_frame:RegisterEvent("WORLD_MAP_UPDATE");
+			else
+				icon.worldmap_icon_frame:Hide();
+				icon.worldmap_icon_frame.icon:Hide();
+				icon.worldmap_icon_frame:UnregisterEvent("WORLD_MAP_UPDATE");
+			end
+		else
+			icon.minimap_icon_frame:Hide();
+			icon.minimap_icon_frame.icon:Hide();
+			icon.minimap_icon_frame:SetScript("OnUpdate", nil);
+
+			icon.worldmap_icon_frame:Hide();
+			icon.worldmap_icon_frame.icon:Hide();
+			icon.worldmap_icon_frame:UnregisterEvent("WORLD_MAP_UPDATE");
 		end
 	end
+end
+
+function CraftBuster_MapIcons_DisplayPosition()
+	local map_id, floor, x, y = astrolabe:GetCurrentPlayerPosition();
+	echo("Map: " .. GetMapNameByID(map_id) .. " (" .. map_id .. "), Floor: " .. floor .. " -> " .. round(x * 100, 1) .. ", " .. round(y * 100, 1));
 end

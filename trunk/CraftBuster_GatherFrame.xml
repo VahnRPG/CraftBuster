@@ -1,7 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
 	<Script file="CraftBuster_GatherFrame.lua"/>
 
-	<Frame name="CraftBuster_Gather_BarTemplate" inherits="SecureHandlerBaseTemplate,SecureHandlerStateTemplate" frameStrata="LOW" virtual="true">
+	<Frame name="CraftBuster_Gather_BarTemplate" frameStrata="LOW" virtual="true">
 		<Size x="280" y="18" />
 		<Layers>
 			<Layer level="ARTWORK">
@@ -57,7 +57,7 @@
 		</Frames>
 	</Frame>
 
-	<Frame name="CraftBuster_Gather_MoverFrame" inherits="SecureHandlerBaseTemplate,SecureHandlerStateTemplate" parent="UIParent" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" hidden="false">
+	<Frame name="CraftBuster_Gather_MoverFrame" parent="UIParent" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" hidden="false">
 		<Size>
 			<AbsDimension x="320" y="10"/>
 		</Size>
@@ -92,7 +92,7 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name="$parent_ConfigMenu" inherits="SecureHandlerClickTemplate,SecureActionButtonTemplate" hidden="false">
+			<Button name="$parent_ConfigMenu" hidden="false">
 				<Size>
 					<AbsDimension x="16" y="16"/>
 				</Size>
@@ -110,7 +110,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="$parent_CollapseFrame" inherits="SecureHandlerClickTemplate,SecureActionButtonTemplate" hidden="false">
+			<Button name="$parent_CollapseFrame" hidden="false">
 				<Size>
 					<AbsDimension x="16" y="16"/>
 				</Size>
@@ -128,7 +128,7 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="$parent_CloseFrame" inherits="SecureHandlerClickTemplate,SecureActionButtonTemplate" hidden="false">
+			<Button name="$parent_CloseFrame" hidden="false">
 				<Size>
 					<AbsDimension x="16" y="16"/>
 				</Size>
@@ -167,7 +167,7 @@
 		</Scripts>
 	</Frame>
 
-	<Frame name="CraftBuster_GatherFrame" inherits="SecureHandlerBaseTemplate,SecureHandlerStateTemplate" parent="UIParent" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" hidden="false">
+	<Frame name="CraftBuster_GatherFrame" parent="UIParent" frameStrata="LOW" toplevel="true" enableMouse="true" movable="true" hidden="false">
 		<Size>
 			<AbsDimension x="320" y="28"/>
 		</Size>

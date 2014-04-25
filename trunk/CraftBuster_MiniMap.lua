@@ -67,6 +67,18 @@ function CraftBuster_MiniMapDropDownButton_BusterIsActive(button)
 	return false;
 end
 
+function CraftBuster_MiniMap_SetShowWorldMapIcons(self, id, unused, checked)
+	CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map = checked;
+	CraftBuster_UpdateZone();
+	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+end
+
+function CraftBuster_MiniMap_SetShowMiniMapIcons(self, id, unused, checked)
+	CraftBusterOptions[CraftBusterEntry].map_icons.show_mini_map = checked;
+	CraftBuster_UpdateZone();
+	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+end
+
 function CraftBuster_MiniMap_SetShowTracking(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].skills_frame.show = checked;
 	if (saved_skills ~= nil) then
@@ -109,6 +121,18 @@ end
 
 function CraftBuster_MiniMap_SetTooltip(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].modules[id].show_tooltips = checked;
+	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+end
+
+function CraftBuster_MiniMap_SetTrainerMapIcons(self, id, unused, checked)
+	CraftBusterOptions[CraftBusterEntry].modules[id].show_trainer_map_icons = checked;
+	CraftBuster_UpdateZone();
+	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+end
+
+function CraftBuster_MiniMap_SetStationMapIcons(self, id, unused, checked)
+	CraftBusterOptions[CraftBusterEntry].modules[id].show_station_map_icons = checked;
+	CraftBuster_UpdateZone();
 	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
 end
 

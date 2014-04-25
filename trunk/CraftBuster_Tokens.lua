@@ -19,7 +19,7 @@ CBT_SKILL_FRST = 129;	--First Aid
 CBT_SKILL_FISH = 356;	--Fishing
 CBT_SKILL_ARCH = 794;	--Archaeology
 --Rogue-only
-CBT_SKILL_PICK = 1804	--Lockpicking
+CBT_SKILL_PICK = 1804;	--Lockpicking
 
 CBT_NEXT_LEVEL = "Next Level";
 CBT_RED = "red";

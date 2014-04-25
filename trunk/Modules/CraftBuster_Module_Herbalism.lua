@@ -1,9 +1,188 @@
-local SKILL_NAME = CBL["SKILL_HERB"];
+local SKILL_ID = CBT_SKILL_HERB;
+local SKILL_NAME = CBL[CBT_SKILL_HERB];
 local SKILL_SHORT_CODE = "herb";
 local SKILL_TYPE = CBG_SKILL_GATHER;
-local SKILL_ID = CBT_SKILL_HERB;
 local SKILL_SPELL_1ID = 81708;		--Lifeblood
 local SKILL_ACTIONS = {};
+local SKILL_TRAINER_MAP_ICONS = {
+	[36] = {		--Redridge Mountains
+			["Alliance"] = {
+				[812] = { ["name"] = "Alma Jainrose", ["floor"] = 0, ["pos"] = { 22, 42.2 } },
+			},
+	},
+	[30] = {		--Elwynn Forest
+			["Alliance"] = {
+				[1218] = { ["name"] = "Herbalist Pomeroy", ["floor"] = 0, ["pos"] = { 39.8, 48.4 } },
+			},
+	},
+	[40] = {		--Wetlands
+			["Alliance"] = {
+				[1458] = { ["name"] = "Telurinon Moonshadow", ["floor"] = 0, ["pos"] = { 11.2, 52 } },
+			},
+	},
+	[35] = {		--Loch Modan
+			["Alliance"] = {
+				[1473] = { ["name"] = "Kali Healtouch", ["floor"] = 0, ["pos"] = { 36.4, 48.4 } },
+			},
+	},
+	[41] = {		--Teldrassil
+			["Alliance"] = {
+				[3604] = { ["name"] = "Malorne Bladeleaf", ["floor"] = 0, ["pos"] = { 57, 53 } },
+			},
+	},
+	[381] = {		--Darnassus
+			["Alliance"] = {
+				[4204] = { ["name"] = "Firodren Mooncaller", ["floor"] = 0, ["pos"] = { 49, 69 } },
+			},
+	},
+	[141] = {		--Dustwallow Marsh
+			["Alliance"] = {
+				[4898] = { ["name"] = "Brant Jasperbloom", ["floor"] = 0, ["pos"] = { 64, 47.6 } },
+			},
+	},
+	[341] = {		--Ironforge
+			["Alliance"] = {
+				[5137] = { ["name"] = "Reyna Stonebranch", ["floor"] = 0, ["pos"] = { 55.4, 58.4 } },
+			},
+	},
+	[301] = {		--Stormwind City
+			["Alliance"] = {
+				[5566] = { ["name"] = "Tannysa", ["floor"] = 0, ["pos"] = { 54.4, 83.4 } },
+			},
+	},
+	[471] = {		--The Exodar
+			["Alliance"] = {
+				[16736] = { ["name"] = "Cemmorhan", ["floor"] = 0, ["pos"] = { 27.6, 62.6 } },
+			},
+	},
+	[476] = {		--Bloodmyst Isle
+			["Alliance"] = {
+				[17434] = { ["name"] = "Morae", ["floor"] = 0, ["pos"] = { 53.2, 57.6 } },
+			},
+	},
+	[464] = {		--Azuremyst Isle
+			["Alliance"] = {
+				[17983] = { ["name"] = "Heur", ["floor"] = 0, ["pos"] = { 48.2, 51.4 } },
+			},
+	},
+	[465] = {		--Hellfire Peninsula
+			["Alliance"] = {
+				[18776] = { ["name"] = "Rorelien", ["floor"] = 0, ["pos"] = { 53.6, 65.8 } },
+			},
+			["Horde"] = {
+				[18748] = { ["name"] = "Ruak Stronghorn", ["floor"] = 0, ["pos"] = { 52.2, 36.2 } },
+			},
+	},
+	[491] = {		--Howling Fjord
+			["Alliance"] = {
+				[26910] = { ["name"] = "Fayin Whisperleaf", ["floor"] = 0, ["pos"] = { 58.8, 63 } },
+			},
+			["Horde"] = {
+				[26958] = { ["name"] = "Marjory Kains", ["floor"] = 0, ["pos"] = { 78.4, 28.4 } },
+			},
+	},
+	[486] = {		--Borean Tundra
+			["Alliance"] = {
+				[26994] = { ["name"] = "Kirea Moondancer", ["floor"] = 0, ["pos"] = { 57.8, 71.8 } },
+			},
+			["Horde"] = {
+				[26974] = { ["name"] = "Tansy Wildmane", ["floor"] = 0, ["pos"] = { 42, 53.6 } },
+			},
+	},
+	[806] = {		--The Jade Forest
+			["Alliance"] = {
+				[67025] = { ["name"] = "Orchard Keeper Li Mei", ["floor"] = 0, ["pos"] = { 45.4, 86 } },
+			},
+			["Horde"] = {
+				[55523] = { ["name"] = "Shokia", ["floor"] = 0, ["pos"] = { 31.8, 22.2 } },
+				[56340] = { ["name"] = "Shokia", ["floor"] = 0, ["pos"] = { 28.2, 47 } },
+				[56838] = { ["name"] = "Shokia", ["floor"] = 0, ["pos"] = { 28.4, 51.8 } },
+				[66980] = { ["name"] = "Grower Miao", ["floor"] = 0, ["pos"] = { 27.8, 15.4 } },
+			},
+	},
+	[20] = {		--Tirisfal Glades
+			["Horde"] = {
+				[2114] = { ["name"] = "Faruza", ["floor"] = 0, ["pos"] = { 59.4, 52 } },
+				[33996] = { ["name"] = "William Saldean", ["floor"] = 0, ["pos"] = { 61.2, 52 } },
+			},
+	},
+	[24] = {		--Hillsbrad Foothills
+			["Horde"] = {
+				[2390] = { ["name"] = "Aranae Venomblood", ["floor"] = 0, ["pos"] = { 57.2, 47.4 } },
+			},
+	},
+	[37] = {		--Northern Stranglethorn
+			["Horde"] = {
+				[2856] = { ["name"] = "Angrun", ["floor"] = 0, ["pos"] = { 38.4, 48.4 } },
+			},
+	},
+	[362] = {		--Thunder Bluff
+			["Horde"] = {
+				[3013] = { ["name"] = "Komin Winterhoof", ["floor"] = 0, ["pos"] = { 49.4, 39.4 } },
+			},
+	},
+	[4] = {		--Durotar
+			["Horde"] = {
+				[3185] = { ["name"] = "Mishiki", ["floor"] = 0, ["pos"] = { 55.6, 75.2 } },
+			},
+	},
+	[382] = {		--Undercity
+			["Horde"] = {
+				[4614] = { ["name"] = "Martha Alliestar", ["floor"] = 0, ["pos"] = { 54.4, 49.8 } },
+			},
+	},
+	[121] = {		--Feralas
+			["Horde"] = {
+				[8146] = { ["name"] = "Ruw", ["floor"] = 0, ["pos"] = { 76, 43.4 } },
+			},
+	},
+	[462] = {		--Eversong Woods
+			["Horde"] = {
+				[16367] = { ["name"] = "Botanist Tyniarrel", ["floor"] = 0, ["pos"] = { 37.4, 71.8 } },
+			},
+	},
+	[480] = {		--Silvermoon City
+			["Horde"] = {
+				[16644] = { ["name"] = "Botanist Nathera", ["floor"] = 0, ["pos"] = { 67.4, 18 } },
+			},
+	},
+	[321] = {		--Orgrimmar
+			["Horde"] = {
+				[46741] = { ["name"] = "Muraga", ["floor"] = 1, ["pos"] = { 54.4, 50.4 } },
+			},
+	},
+	[673] = {		--The Cape of Stranglethorn
+			["Neutral"] = {
+				[908] = { ["name"] = "Flora Silverwind", ["floor"] = 0, ["pos"] = { 42, 74.4 } },
+			},
+	},
+	[241] = {		--Moonglade
+			["Neutral"] = {
+				[12025] = { ["name"] = "Malvor", ["floor"] = 0, ["pos"] = { 45.6, 46.8 } },
+			},
+	},
+	[504] = {		--Dalaran
+			["Neutral"] = {
+				[28704] = { ["name"] = "Dorothy Egan", ["floor"] = 1, ["pos"] = { 43.4, 34.4 } },
+			},
+	},
+	[481] = {		--Shattrath City
+			["Neutral"] = {
+				[33639] = { ["name"] = "Botanist Alaenra", ["floor"] = 0, ["pos"] = { 38.4, 71.4 } },
+				[33678] = { ["name"] = "Jijia", ["floor"] = 0, ["pos"] = { 37.8, 29.6 } },
+			},
+	},
+	[807] = {		--Valley of the Four Winds
+			["Neutral"] = {
+				[65877] = { ["name"] = "Han Flowerbloom", ["floor"] = 0, ["pos"] = { 53.6, 51.2 } },
+			},
+	},
+	[809] = {		--Kun-Lai Summit
+			["Neutral"] = {
+				[66355] = { ["name"] = "Master Marshall", ["floor"] = 0, ["pos"] = { 50.4, 42.2 } },
+			},
+	},
+};
 local SKILL_NODES = {
 	--vanilla
 	["Peacebloom"] = {
@@ -712,6 +891,7 @@ local function CraftBuster_Module_Herbalism_OnLoad()
 	CraftBuster_Module_Herbalism_BuildActions();
 	local module_options = {
 		skill_type = CBG_SKILL_GATHER,
+		trainer_map_icons = SKILL_TRAINER_MAP_ICONS,
 		spell_1 = SKILL_SPELL_1ID,
 		tooltip_info = true,
 		gather_function = CraftBuster_Module_Herbalism_HandleGather,

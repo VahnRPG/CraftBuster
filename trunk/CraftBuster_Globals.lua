@@ -33,6 +33,62 @@ CBG_SKILL_PLY_LEVELS = {
 	[8] = { 80, 80 },		--Zen Master
 };
 
+CBG_MAP_ICON_TEXTURES = {
+	["trainers"] = {
+		--first row
+		[CBT_SKILL_ALCH] = { 0, 0.125, 0, 0.125 },
+		[CBT_SKILL_ARCH] = { 0.125, 0.25, 0, 0.125 },
+		[CBT_SKILL_BLCK] = { 0.25, 0.375, 0, 0.125 },
+		[CBT_SKILL_COOK] = { 0.375, 0.5, 0, 0.125 },
+		[CBT_SKILL_ENCH] = { 0.5, 0.625, 0, 0.125 },
+		[CBT_SKILL_ENGN] = { 0.625, 0.75, 0, 0.125 },
+		[CBT_SKILL_FRST] = { 0.75, 0.875, 0, 0.125 },
+		[CBT_SKILL_FISH] = { 0.875, 1, 0, 0.125 },
+		--second row
+		[CBT_SKILL_HERB] = { 0, 0.125, 0.125, 0.25 },
+		[CBT_SKILL_INSC] = { 0.125, 0.25, 0.125, 0.25 },
+		[CBT_SKILL_JEWL] = { 0.25, 0.375, 0.125, 0.25 },
+		[CBT_SKILL_LTHR] = { 0.375, 0.5, 0.125, 0.25 },
+		[CBT_SKILL_MINE] = { 0.5, 0.625, 0.125, 0.25 },
+		[CBT_SKILL_SKIN] = { 0.625, 0.75, 0.125, 0.25 },
+		[CBT_SKILL_TAIL] = { 0.75, 0.875, 0.125, 0.25 },
+		--profession
+		["all"] = { 0, 0.0625, 0.375, 0.4375 },
+	},
+	["stations"] = {
+		--first row
+		[CBT_SKILL_ALCH] = { 0, 0.125, 0.5, 0.625 },
+		[CBT_SKILL_BLCK] = { 0.125, 0.25, 0.5, 0.625 },
+		[CBT_SKILL_ENCH] = { 0.25, 0.375,  0.5, 0.625 },
+		[CBT_SKILL_INSC] = { 0.375, 0.5, 0.5, 0.625 },
+		[CBT_SKILL_JEWL] = { 0.5, 0.625, 0.5, 0.625 },
+		[CBT_SKILL_MINE] = { 0.625, 0.75, 0.5, 0.625 },
+		[CBT_SKILL_TAIL] = { 0.75, 0.875, 0.5, 0.625 },
+	},
+};
+
+CBG_SORTED_SKILLS = {
+	--Primary
+	[1] = CBT_SKILL_ALCH,	--Alchemy
+	[2] = CBT_SKILL_BLCK,	--Blacksmithing
+	[3] = CBT_SKILL_ENCH,	--Enchanting
+	[4] = CBT_SKILL_ENGN,	--Engineering
+	[5] = CBT_SKILL_HERB,	--Herbalism
+	[6] = CBT_SKILL_INSC,	--Inscription
+	[7] = CBT_SKILL_JEWL,	--Jewelcrafting
+	[8] = CBT_SKILL_LTHR,	--Leatherworking
+	[9] = CBT_SKILL_MINE,	--Mining
+	[10] = CBT_SKILL_SKIN,	--Skinning
+	[11] = CBT_SKILL_TAIL,	--Tailoring
+	--Secondary
+	[12] = CBT_SKILL_ARCH,	--Archaeology
+	[13] = CBT_SKILL_COOK,	--Cooking
+	[14] = CBT_SKILL_FRST,	--First Aid
+	[15] = CBT_SKILL_FISH,	--Fishing
+	--Rogue-only
+	[16] = CBT_SKILL_PICK,	--Lockpicking
+};
+
 -------------------------------------------------------------------------------
 -- Colors
 -------------------------------------------------------------------------------

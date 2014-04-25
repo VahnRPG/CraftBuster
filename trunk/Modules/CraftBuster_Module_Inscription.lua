@@ -1,12 +1,109 @@
-local SKILL_NAME = CBL["SKILL_INSC"];
+local SKILL_ID = CBT_SKILL_INSC;
+local SKILL_NAME = CBL[CBT_SKILL_INSC];
 local SKILL_SHORT_CODE = "insc";
 local SKILL_TYPE = CBG_SKILL_NORMAL;
-local SKILL_ID = CBT_SKILL_INSC;
 local SKILL_SPELL_1ID = 45357;		--Inscription
 local SKILL_SPELL_2ID = 51005;		--Milling
 local SKILL_BUST_SPELLID = 51005;
 local SKILL_ACTIONS = {};
-
+local SKILL_TRAINER_MAP_ICONS = {
+	[491] = {		--Howling Fjord
+			["Alliance"] = {
+				[26916] = { ["name"] = "Mindri Dinkles", ["floor"] = 0, ["pos"] = { 58.2, 62.4 } },
+			},
+			["Horde"] = {
+				[26959] = { ["name"] = "Booker Kells", ["floor"] = 0, ["pos"] = { 79.4, 29.2 } },
+			},
+	},
+	[486] = {		--Borean Tundra
+			["Alliance"] = {
+				[26995] = { ["name"] = "Tink Brightbolt", ["floor"] = 0, ["pos"] = { 57.6, 71.6 } },
+			},
+			["Horde"] = {
+				[26977] = { ["name"] = "Adelene Sunlance", ["floor"] = 0, ["pos"] = { 41.2, 53.8 } },
+			},
+	},
+	[301] = {		--Stormwind City
+			["Alliance"] = {
+				[30713] = { ["name"] = "Catarina Stanford", ["floor"] = 0, ["pos"] = { 49.6, 74 } },
+			},
+	},
+	[381] = {		--Darnassus
+			["Alliance"] = {
+				[30715] = { ["name"] = "Feyden Darkin", ["floor"] = 0, ["pos"] = { 56.6, 31.4 } },
+			},
+	},
+	[471] = {		--The Exodar
+			["Alliance"] = {
+				[30716] = { ["name"] = "Thoth", ["floor"] = 0, ["pos"] = { 39.8, 38.8 } },
+			},
+	},
+	[341] = {		--Ironforge
+			["Alliance"] = {
+				[30717] = { ["name"] = "Elise Brightletter", ["floor"] = 0, ["pos"] = { 60.4, 44.4 } },
+			},
+	},
+	[465] = {		--Hellfire Peninsula
+			["Alliance"] = {
+				[30721] = { ["name"] = "Michael Schwan", ["floor"] = 0, ["pos"] = { 53.8, 65.4 } },
+			},
+			["Horde"] = {
+				[30722] = { ["name"] = "Neferatti", ["floor"] = 0, ["pos"] = { 52.2, 36 } },
+			},
+	},
+	[141] = {		--Dustwallow Marsh
+			["Alliance"] = {
+				[53415] = { ["name"] = "Theoden Manners", ["floor"] = 0, ["pos"] = { 66, 49.6 } },
+			},
+	},
+	[362] = {		--Thunder Bluff
+			["Horde"] = {
+				[30709] = { ["name"] = "Poshken Hardbinder", ["floor"] = 0, ["pos"] = { 28.4, 20.4 } },
+			},
+	},
+	[480] = {		--Silvermoon City
+			["Horde"] = {
+				[30710] = { ["name"] = "Zantasia", ["floor"] = 0, ["pos"] = { 69.2, 23.6 } },
+			},
+	},
+	[382] = {		--Undercity
+			["Horde"] = {
+				[30711] = { ["name"] = "Margaux Parchley", ["floor"] = 0, ["pos"] = { 61, 58.2 } },
+			},
+	},
+	[321] = {		--Orgrimmar
+			["Horde"] = {
+				[46716] = { ["name"] = "Nerog", ["floor"] = 1, ["pos"] = { 55.2, 55.8 } },
+			},
+	},
+	[504] = {		--Dalaran
+			["Neutral"] = {
+				[28702] = { ["name"] = "Professor Pallin", ["floor"] = 1, ["pos"] = { 42.4, 37.6 } },
+			},
+	},
+	[492] = {		--Icecrown
+			["Neutral"] = {
+				[33603] = { ["name"] = "Arthur Denny", ["floor"] = 0, ["pos"] = { 71.6, 20.8 } },
+			},
+	},
+	[481] = {		--Shattrath City
+			["Neutral"] = {
+				[33638] = { ["name"] = "Scribe Lanloer", ["floor"] = 0, ["pos"] = { 56, 74.4 } },
+				[33679] = { ["name"] = "Recorder Lidio", ["floor"] = 0, ["pos"] = { 36.2, 43.8 } },
+			},
+	},
+	[806] = {		--The Jade Forest
+			["Neutral"] = {
+				[56065] = { ["name"] = "Inkmaster Wei", ["floor"] = 0, ["pos"] = { 54.6, 44.2 } },
+				[62327] = { ["name"] = "Scribe Rinji", ["floor"] = 0, ["pos"] = { 47.6, 35 } },
+			},
+	},
+	[811] = {		--Vale of Eternal Blossoms
+			["Neutral"] = {
+				[64691] = { ["name"] = "Lorewalker Huynh", ["floor"] = 0, ["pos"] = { 82, 29.4 } },
+			},
+	},
+};
 local INSC_HERBS = {
 	["765"] = {"39151"},
 	["785"] = {"39334","43103"},
@@ -481,6 +578,7 @@ end
 local function CraftBuster_Module_Inscription_OnLoad()
 	SKILL_ACTIONS = CraftBuster_Module_BuildBaseActions(SKILL_TYPE, SKILL_NAME, SKILL_SHORT_CODE);
 	local module_options = {
+		trainer_map_icons = SKILL_TRAINER_MAP_ICONS,
 		spell_1 = SKILL_SPELL_1ID,
 		spell_2 = SKILL_SPELL_2ID,
 		spell_buster = SKILL_SPELL_2ID,

@@ -1,4 +1,4 @@
-local DB_VERSION = 0.01;
+local DB_VERSION = 0.02;
 
 CraftBusterOptions = {};
 CraftBusterPlayer = nil;
@@ -8,7 +8,6 @@ CraftBusterEntry = nil;
 
 local _;
 local CraftBusterInit = nil;
-local CraftBuster_LeaveCombatCommands = {};
 
 --==SLASH COMMANDS==--
 SLASH_CBUSTER1 = "/craftbuster";
@@ -23,6 +22,7 @@ function CraftBuster_OnLoad(self)
 	self:RegisterEvent("CHAT_MSG_SKILL");
 	self:RegisterEvent("SKILL_LINES_CHANGED");
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA");
+	self:RegisterEvent("PLAYER_REGEN_DISABLED");
 	self:RegisterEvent("PLAYER_REGEN_ENABLED");
 	self:RegisterEvent("GET_ITEM_INFO_RECEIVED");
 
@@ -38,6 +38,7 @@ function CraftBuster_OnEvent(self, event, ...)
 		if (CraftBuster_InitPlayer()) then
 			CraftBuster_InitSettings();
 			CraftBuster_MiniMap_Init();
+			CraftBuster_MapIcons_RegisterInit();
 			CraftBuster_MapIcons_Init();
 			CraftBuster_UpdateSkills();
 			CraftBuster_UpdateZone();
@@ -54,8 +55,10 @@ function CraftBuster_OnEvent(self, event, ...)
 		--end
 	elseif (CraftBusterInit and event == "ZONE_CHANGED_NEW_AREA") then
 		CraftBuster_UpdateZone();
+	elseif (CraftBusterInit and event == "PLAYER_REGEN_DISABLED") then
+		--CraftBuster_InCombat();
 	elseif (CraftBusterInit and event == "PLAYER_REGEN_ENABLED") then
-		CraftBuster_ProcessLeaveCombatCommands();
+		--CraftBuster_OutCombat();
 	elseif (CraftBusterInit and event == "GET_ITEM_INFO_RECEIVED") then
 		CraftBuster_GatherFrame_Update();
 	end
@@ -80,6 +83,8 @@ function CraftBuster_Command(cmd)
 		CraftBuster_BusterFrame_ClearIgnore();
 	elseif (cmd == "update") then
 		CraftBuster_UpdateSkills();
+	elseif (cmd == "where") then
+		CraftBuster_MapIcons_DisplayPosition();
 	end
 end
 
@@ -181,9 +186,8 @@ function CraftBuster_InitSettings(reset)
 		CraftBusterOptions[CraftBusterEntry].map_icons = {};
 		CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map = true;
 		CraftBusterOptions[CraftBusterEntry].map_icons.show_mini_map = true;
-		CraftBusterOptions[CraftBusterEntry].map_icons.show_trainers = true;
-		CraftBusterOptions[CraftBusterEntry].map_icons.show_stations = true;
 	end
+		CraftBusterOptions[CraftBusterEntry].map_icons.show_icons = {};
 	if (not CraftBusterOptions[CraftBusterEntry].modules) then
 		CraftBusterOptions[CraftBusterEntry].modules = {};
 	end
@@ -194,6 +198,8 @@ function CraftBuster_InitSettings(reset)
 				CraftBusterOptions[CraftBusterEntry].modules[module_id].show_tooltips = true;
 				CraftBusterOptions[CraftBusterEntry].modules[module_id].show_gather = true;
 				CraftBusterOptions[CraftBusterEntry].modules[module_id].show_buster = true;
+				CraftBusterOptions[CraftBusterEntry].modules[module_id].show_trainer_map_icons = true;
+				CraftBusterOptions[CraftBusterEntry].modules[module_id].show_station_map_icons = true;
 			end
 		end
 	end
@@ -220,6 +226,17 @@ function CraftBuster_InitVersionSettings()
 		end
 	end
 
+	if (not CraftBusterOptions[CraftBusterEntry].db_version or CraftBusterOptions[CraftBusterEntry].db_version < 0.02) then
+		CraftBusterOptions[CraftBusterEntry].gather_frame.auto_hide = true;
+
+		if (CraftBuster_Modules and next(CraftBuster_Modules)) then
+			for module_id, module_data in sortedpairs(CraftBuster_Modules) do
+				CraftBusterOptions[CraftBusterEntry].modules[module_id].show_trainer_map_icons = true;
+				CraftBusterOptions[CraftBusterEntry].modules[module_id].show_station_map_icons = true;
+			end
+		end
+	end
+
 	CraftBusterOptions[CraftBusterEntry].db_version = DB_VERSION;
 end
 
@@ -230,6 +247,8 @@ function CraftBuster_RegisterModule(module_id, module_name, module_options)
 		CraftBuster_Modules[module_id].id = module_id;
 		CraftBuster_Modules[module_id].name = module_name;
 		CraftBuster_Modules[module_id].skill_type = CBG_SKILL_NORMAL;
+		CraftBuster_Modules[module_id].station_map_icons = nil;
+		CraftBuster_Modules[module_id].trainer_map_icons = nil;
 		CraftBuster_Modules[module_id].spell_1 = nil;
 		CraftBuster_Modules[module_id].spell_1_id = nil;
 		CraftBuster_Modules[module_id].spell_2 = nil;
@@ -249,6 +268,14 @@ function CraftBuster_RegisterModule(module_id, module_name, module_options)
 
 	if (module_options.skill_type) then
 		CraftBuster_Modules[module_id].skill_type = module_options.skill_type;
+	end
+	if (module_options.station_map_icons) then
+		CraftBuster_Modules[module_id].station_map_icons = module_options.station_map_icons;
+		CraftBuster_MapIcons_RegisterModule(module_id, module_options.station_map_icons, "stations");
+	end
+	if (module_options.trainer_map_icons) then
+		CraftBuster_Modules[module_id].trainer_map_icons = module_options.trainer_map_icons;
+		CraftBuster_MapIcons_RegisterModule(module_id, module_options.trainer_map_icons, "trainers");
 	end
 	if (module_options.spell_1) then
 		CraftBuster_Modules[module_id].spell_1 = GetSpellInfo(module_options.spell_1);
@@ -380,34 +407,16 @@ function CraftBuster_UpdateZone()
 	end
 	CraftBuster_GatherFrame_Update();
 	CraftBuster_GatherFrame_UpdatePosition();
+
+	CraftBuster_MapIcons_Update();
 end
 
-function CraftBuster_AddLeaveCombatCommand(function_name, ...)
-	local arg = {...};
-	local params = {};
-	--echo("Added: " .. function_name);
-	params.function_name = function_name;
-	params.args = {};
-	if (arg ~= nil) then
-		for _,value in pairs(arg) do
-			table.insert(params.args, value);
-		end
-	end
-	table.insert(CraftBuster_LeaveCombatCommands, params);
+function CraftBuster_InCombat()
+	CraftBuster_SkillFrame_Collapse_OnClick();
 end
 
-function CraftBuster_ProcessLeaveCombatCommands()
-	if (CraftBuster_LeaveCombatCommands and next(CraftBuster_LeaveCombatCommands)) then
-		local i, command_data;
-		for i, command_data in pairs(CraftBuster_LeaveCombatCommands) do
-			--echo("Here: " .. command_data.function_name);
-			_G[command_data.function_name](unpack(command_data.args));
-			table.remove(CraftBuster_LeaveCombatCommands, i);
-		end
-	end
-	if (CraftBuster_LeaveCombatCommands and next(CraftBuster_LeaveCombatCommands)) then
-		CraftBuster_ProcessLeaveCombatCommands();
-	end
+function CraftBuster_OutCombat()
+	CraftBuster_SkillFrame_Collapse_OnClick();
 end
 
 local function CraftBuster_TradeSkillFrame_SetSelection(tradeskill_id)
