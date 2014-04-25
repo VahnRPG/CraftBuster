@@ -123,7 +123,7 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 			local module_data = CraftBuster_Modules[module_id];
 			if (module_data.trainer_map_icons) then
 				local label = config_frame_name .. "TrainerMapIcons_" .. module_id;
-				local x1, x2, y1, y2 = unpack(CBG_MAP_ICON_TEXTURES["trainers"][module_id]);
+				local x1, x2, y1, y2 = unpack(CBG_MAP_ICON_TEXTURES[CBT_MAP_ICON_TRAINER][module_id]);
 				local icon_frame = CreateFrame("Button", label .. "Icon", child_map_icons_frame);
 				icon_frame:SetPoint("TOPLEFT", trainer_map_icons_label, "BOTTOMLEFT", 0, -20 * trainer_count);
 				icon_frame:SetHeight(20);
@@ -150,7 +150,7 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 			
 			if (module_data.station_map_icons) then
 				local label = config_frame_name .. "StationMapIcons_" .. module_id;
-				local x1, x2, y1, y2 = unpack(CBG_MAP_ICON_TEXTURES["stations"][module_id]);
+				local x1, x2, y1, y2 = unpack(CBG_MAP_ICON_TEXTURES[CBT_MAP_ICON_STATION][module_id]);
 				local icon_frame = CreateFrame("Button", label .. "Icon", child_map_icons_frame);
 				icon_frame:SetPoint("TOPLEFT", station_map_icons_label, "BOTTOMLEFT", 0, -20 * station_count);
 				icon_frame:SetHeight(20);

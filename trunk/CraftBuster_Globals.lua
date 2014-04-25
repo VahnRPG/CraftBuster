@@ -34,7 +34,7 @@ CBG_SKILL_PLY_LEVELS = {
 };
 
 CBG_MAP_ICON_TEXTURES = {
-	["trainers"] = {
+	[CBT_MAP_ICON_TRAINER] = {
 		--first row
 		[CBT_SKILL_ALCH] = { 0, 0.125, 0, 0.125 },
 		[CBT_SKILL_ARCH] = { 0.125, 0.25, 0, 0.125 },
@@ -55,7 +55,7 @@ CBG_MAP_ICON_TEXTURES = {
 		--profession
 		["all"] = { 0, 0.0625, 0.375, 0.4375 },
 	},
-	["stations"] = {
+	[CBT_MAP_ICON_STATION] = {
 		--first row
 		[CBT_SKILL_ALCH] = { 0, 0.125, 0.5, 0.625 },
 		[CBT_SKILL_BLCK] = { 0.125, 0.25, 0.5, 0.625 },

@@ -62,13 +62,13 @@ local last_update = 0;
 local HAS_TOMTOM = false;
 
 local function CraftBuster_MapIcons_SetTooltipText(icon_data, floor_label)
-	if (icon_data.icon_type == "trainers") then
+	if (icon_data.icon_type == CBT_MAP_ICON_TRAINER) then
 		tooltip:SetText(CBL["MAPICON_TITLE_TRAINER"]);
-	elseif (icon_data.icon_type == "stations") then
+	elseif (icon_data.icon_type == CBT_MAP_ICON_STATION) then
 		tooltip:SetText(CBL["MAPICON_TITLE_STATION"]);
 	end
 
-	local x1, x2, y1, y2 = unpack(CBG_MAP_ICON_TEXTURES[icon_data.icon_type][icon_data.module_id]);
+	--local x1, x2, y1, y2 = unpack(CBG_MAP_ICON_TEXTURES[icon_data.icon_type][icon_data.module_id]);
 	--local icon_texture = "|TInterface\\AddOns\\CraftBuster\\Images\\CraftBuster_MapIcons:0:0:0:0:64:64:" .. x1 .. ":" .. x2 .. ":" .. y1 .. ":" .. y2 .. "|t";
 
 	local profession_label = CBL[icon_data.module_id];
@@ -287,7 +287,7 @@ local function CraftBuster_CreateMapIcon(map_id, icon_type, module_id, side, npc
 end
 
 function CraftBuster_MapIcons_RegisterInit()
-	CraftBuster_MapIcons_RegisterModule("all", SKILL_ALL_PROFESSIONS_TRAINERS_MAP_ICONS, "trainers");
+	CraftBuster_MapIcons_RegisterModule("all", SKILL_ALL_PROFESSIONS_TRAINERS_MAP_ICONS, CBT_MAP_ICON_TRAINER);
 end
 
 function CraftBuster_MapIcons_RegisterModule(module_id, map_icons, icon_type)
@@ -316,9 +316,9 @@ function CraftBuster_MapIcons_Update()
 		local show_map_icons = true;
 		if (icon.module_id == "all") then
 			show_map_icons = true;
-		elseif (icon.icon_type == "trainers") then
+		elseif (icon.icon_type == CBT_MAP_ICON_TRAINER) then
 			show_map_icons = CraftBusterOptions[CraftBusterEntry].modules[icon.module_id].show_trainer_map_icons;
-		elseif (icon.icon_type == "stations") then
+		elseif (icon.icon_type == CBT_MAP_ICON_STATION) then
 			show_map_icons = CraftBusterOptions[CraftBusterEntry].modules[icon.module_id].show_station_map_icons;
 		end
 

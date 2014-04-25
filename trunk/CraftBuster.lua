@@ -271,11 +271,11 @@ function CraftBuster_RegisterModule(module_id, module_name, module_options)
 	end
 	if (module_options.station_map_icons) then
 		CraftBuster_Modules[module_id].station_map_icons = module_options.station_map_icons;
-		CraftBuster_MapIcons_RegisterModule(module_id, module_options.station_map_icons, "stations");
+		CraftBuster_MapIcons_RegisterModule(module_id, module_options.station_map_icons, CBT_MAP_ICON_STATION);
 	end
 	if (module_options.trainer_map_icons) then
 		CraftBuster_Modules[module_id].trainer_map_icons = module_options.trainer_map_icons;
-		CraftBuster_MapIcons_RegisterModule(module_id, module_options.trainer_map_icons, "trainers");
+		CraftBuster_MapIcons_RegisterModule(module_id, module_options.trainer_map_icons, CBT_MAP_ICON_TRAINER);
 	end
 	if (module_options.spell_1) then
 		CraftBuster_Modules[module_id].spell_1 = GetSpellInfo(module_options.spell_1);

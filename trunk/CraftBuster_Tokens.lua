@@ -21,6 +21,9 @@ CBT_SKILL_ARCH = 794;	--Archaeology
 --Rogue-only
 CBT_SKILL_PICK = 1804;	--Lockpicking
 
+CBT_MAP_ICON_TRAINER = "trainer";
+CBT_MAP_ICON_STATION = "station";
+
 CBT_NEXT_LEVEL = "Next Level";
 CBT_RED = "red";
 CBT_ORANGE = "orange";
