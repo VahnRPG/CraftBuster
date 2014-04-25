@@ -68,7 +68,7 @@ local function CraftBuster_MapIcons_SetTooltipText(icon_data, floor_label)
 		tooltip:SetText(CBL["MAPICON_TITLE_STATION"]);
 	end
 
-	local x1, x2, y1, y2 = unpack(MAP_ICON_TEXTURES[icon_data.icon_type][icon_data.module_id]);
+	local x1, x2, y1, y2 = unpack(CBG_MAP_ICON_TEXTURES[icon_data.icon_type][icon_data.module_id]);
 	--local icon_texture = "|TInterface\\AddOns\\CraftBuster\\Images\\CraftBuster_MapIcons:0:0:0:0:64:64:" .. x1 .. ":" .. x2 .. ":" .. y1 .. ":" .. y2 .. "|t";
 
 	local profession_label = CBL[icon_data.module_id];
