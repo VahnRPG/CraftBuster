@@ -176,6 +176,8 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 			end
 		end
 	end
+
+	child_map_icons_frame:SetScript("OnShow", nil);
 end);
 InterfaceOptions_AddCategory(child_map_icons_frame);
 
@@ -255,6 +257,8 @@ child_tracker_frame:SetScript("OnShow", function(child_tracker_frame)
 			end
 		end
 	end
+
+	child_tracker_frame:SetScript("OnShow", nil);
 end);
 InterfaceOptions_AddCategory(child_tracker_frame);
 
@@ -335,6 +339,8 @@ child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
 			end
 		end
 	end
+
+	child_gatherer_frame:SetScript("OnShow", nil);
 end);
 InterfaceOptions_AddCategory(child_gatherer_frame);
 
