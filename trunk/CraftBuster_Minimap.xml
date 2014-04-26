@@ -41,8 +41,8 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<NormalTexture file="Interface\AddOns\CraftBuster\Images\Minimap-ButtonUp"/>
-				<PushedTexture file="Interface\AddOns\CraftBuster\Images\Minimap-ButtonDown"/>
+				<NormalTexture file="Interface\AddOns\CraftBuster\Images\CraftBuster_Minimap_ButtonUp"/>
+				<PushedTexture file="Interface\AddOns\CraftBuster\Images\CraftBuster_Minimap_ButtonDown"/>
 				<HighlightTexture alphaMode="ADD" file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight"/>
 				<Frames>
 					<Frame name="$parentDropDown" inherits="UIDropDownMenuTemplate" clampedToScreen="true" id="1" hidden="true">
