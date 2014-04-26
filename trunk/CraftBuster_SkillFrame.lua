@@ -1,9 +1,7 @@
-local saved_skills;
-
-function CraftBuster_SkillFrame_Update(skills)
+function CraftBuster_SkillFrame_Update()
+	local skills = CraftBuster_GetProfessions(false);
 	local _, player_class = UnitClass("player");
 	local player_level = UnitLevel("player");
-	saved_skills = skills;
 	if (CraftBusterOptions[CraftBusterEntry].skills_frame.show) then
 		if (CraftBusterOptions[CraftBusterEntry].skills_frame.state == "expanded") then
 			local count = -1;
@@ -149,9 +147,8 @@ function CraftBuster_SkillFrame_Collapse_OnClick()
 		CraftBuster_SkillFrame:Show();
 		CraftBusterOptions[CraftBusterEntry].skills_frame.state = "expanded";
 	end
-	if (saved_skills ~= nil) then
-		CraftBuster_SkillFrame_Update(saved_skills);
-	end
+
+	CraftBuster_SkillFrame_Update();
 end
 
 function CraftBuster_SkillFrame_Close_OnClick()

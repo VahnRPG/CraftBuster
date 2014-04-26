@@ -47,7 +47,7 @@ config_frame:SetScript("OnShow", function(config_frame)
 	show_minimap_button = CreateFrame("CheckButton", config_frame_name .. "Minimap", config_frame, "InterfaceOptionsCheckButtonTemplate");
 	show_minimap_button:SetPoint("TOPLEFT", title_label, "BOTTOMLEFT", 0, -20);
 	_G[show_minimap_button:GetName() .. "Text"]:SetText(CBL["CONFIG_SHOW_MINIMAP"]);
-	show_minimap_button:SetChecked(CraftBusterOptions[CraftBusterEntry].minimap.show);
+	--show_minimap_button:SetChecked(CraftBusterOptions[CraftBusterEntry].minimap.show);
 	show_minimap_button:SetScript("OnClick", function(self, button)
 		CraftBusterOptions[CraftBusterEntry].minimap.show = self:GetChecked();
 		CraftBuster_MiniMap_Init();
@@ -66,7 +66,7 @@ config_frame:SetScript("OnShow", function(config_frame)
 				tooltips[module_id] = CreateFrame("CheckButton", config_frame_name .. "Tooltips" .. module_id, config_frame, "InterfaceOptionsCheckButtonTemplate");
 				tooltips[module_id]:SetPoint("TOPLEFT", tooltips_label, "BOTTOMLEFT", 0, -20 * count);
 				_G[tooltips[module_id]:GetName() .. "Text"]:SetText(CraftBuster_Modules[module_id].name);
-				tooltips[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_tooltips);
+				--tooltips[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_tooltips);
 				tooltips[module_id]:SetScript("OnClick", function(self, button)
 					CraftBuster_MiniMap_SetTooltip(self, module_id, _, self:GetChecked());
 				end);
@@ -94,7 +94,7 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 	show_world_map_icons = CreateFrame("CheckButton", config_frame_name .. "ShowWorldMapMapIcons", child_map_icons_frame, "InterfaceOptionsCheckButtonTemplate");
 	show_world_map_icons:SetPoint("TOPLEFT", title_label, "BOTTOMLEFT", 0, -20);
 	_G[show_world_map_icons:GetName() .. "Text"]:SetText(CBL["CONFIG_SHOW_WORLD_MAP_ICONS"]);
-	show_world_map_icons:SetChecked(CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map);
+	--show_world_map_icons:SetChecked(CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map);
 	show_world_map_icons:SetScript("OnClick", function(self, button)
 		CraftBuster_MiniMap_SetShowWorldMapIcons(self, _, _, self:GetChecked());
 	end);
@@ -102,7 +102,7 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 	show_minimap_map_icons = CreateFrame("CheckButton", config_frame_name .. "ShowMiniMapMapIcons", child_map_icons_frame, "InterfaceOptionsCheckButtonTemplate");
 	show_minimap_map_icons:SetPoint("TOPLEFT", title_label, "BOTTOMLEFT", 0, -40);
 	_G[show_minimap_map_icons:GetName() .. "Text"]:SetText(CBL["CONFIG_SHOW_MINIMAP_ICONS"]);
-	show_minimap_map_icons:SetChecked(CraftBusterOptions[CraftBusterEntry].map_icons.show_mini_map);
+	--show_minimap_map_icons:SetChecked(CraftBusterOptions[CraftBusterEntry].map_icons.show_mini_map);
 	show_minimap_map_icons:SetScript("OnClick", function(self, button)
 		CraftBuster_MiniMap_SetShowMiniMapIcons(self, _, _, self:GetChecked());
 	end);
@@ -140,7 +140,7 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 				map_icons[module_id .. "trainer"] = CreateFrame("CheckButton", label, child_map_icons_frame, "InterfaceOptionsCheckButtonTemplate");
 				map_icons[module_id .. "trainer"]:SetPoint("TOPLEFT", label .. "Icon", "TOPRIGHT", 0, 3);
 				_G[map_icons[module_id .. "trainer"]:GetName() .. "Text"]:SetText(CraftBuster_Modules[module_id].name);
-				map_icons[module_id .. "trainer"]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_trainer_map_icons);
+				--map_icons[module_id .. "trainer"]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_trainer_map_icons);
 				map_icons[module_id .. "trainer"]:SetScript("OnClick", function(self, button)
 					CraftBuster_MiniMap_SetTrainerMapIcons(self, module_id, _, self:GetChecked());
 				end);
@@ -167,7 +167,7 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 				map_icons[module_id .. "station"] = CreateFrame("CheckButton", label, child_map_icons_frame, "InterfaceOptionsCheckButtonTemplate");
 				map_icons[module_id .. "station"]:SetPoint("TOPLEFT", label .. "Icon", "TOPRIGHT", 0, 3);
 				_G[map_icons[module_id .. "station"]:GetName() .. "Text"]:SetText(CBL["CONFIG_MAP_ICON_" .. CraftBuster_Modules[module_id].name]);
-				map_icons[module_id .. "station"]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_station_map_icons);
+				--map_icons[module_id .. "station"]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_station_map_icons);
 				map_icons[module_id .. "station"]:SetScript("OnClick", function(self, button)
 					CraftBuster_MiniMap_SetStationMapIcons(self, module_id, _, self:GetChecked());
 				end);
@@ -192,7 +192,7 @@ child_tracker_frame:SetScript("OnShow", function(child_tracker_frame)
 	show_tracker = CreateFrame("CheckButton", config_frame_name .. "Tracker", child_tracker_frame, "InterfaceOptionsCheckButtonTemplate");
 	show_tracker:SetPoint("TOPLEFT", title_label, "BOTTOMLEFT", 0, -20);
 	_G[show_tracker:GetName() .. "Text"]:SetText(CBL["CONFIG_SHOW_TRACKER"]);
-	show_tracker:SetChecked(CraftBusterOptions[CraftBusterEntry].skills_frame.show);
+	--show_tracker:SetChecked(CraftBusterOptions[CraftBusterEntry].skills_frame.show);
 	show_tracker:SetScript("OnClick", function(self, button)
 		CraftBuster_MiniMap_SetShowTracking(self, _, _, self:GetChecked());
 	end);
@@ -200,7 +200,7 @@ child_tracker_frame:SetScript("OnShow", function(child_tracker_frame)
 	expand_tracker = CreateFrame("CheckButton", config_frame_name .. "ExpandTracker", child_tracker_frame, "InterfaceOptionsCheckButtonTemplate");
 	expand_tracker:SetPoint("TOPLEFT", title_label, "BOTTOMLEFT", 0, -40);
 	_G[expand_tracker:GetName() .. "Text"]:SetText(CBL["CONFIG_EXPAND_TRACKER"]);
-	expand_tracker:SetChecked(CraftBusterOptions[CraftBusterEntry].skills_frame.state == "expanded");
+	--expand_tracker:SetChecked(CraftBusterOptions[CraftBusterEntry].skills_frame.state == "expanded");
 	expand_tracker:SetScript("OnClick", function(self, button)
 		CraftBuster_SkillFrame_Collapse_OnClick();
 	end);
@@ -224,7 +224,7 @@ child_tracker_frame:SetScript("OnShow", function(child_tracker_frame)
 			professions[skill] = CreateFrame("CheckButton", config_frame_name .. "TrackProfessions" .. skill, child_tracker_frame, "InterfaceOptionsCheckButtonTemplate");
 			professions[skill]:SetPoint("TOPLEFT", track_professions_label, "BOTTOMLEFT", 0, -20 * count);
 			_G[professions[skill]:GetName() .. "Text"]:SetText(skill_name);
-			professions[skill]:SetChecked(CraftBusterOptions[CraftBusterEntry].skills_frame.bars[skill]);
+			--professions[skill]:SetChecked(CraftBusterOptions[CraftBusterEntry].skills_frame.bars[skill]);
 			professions[skill]:SetScript("OnClick", function(self, button)
 				CraftBuster_MiniMap_SetTracking(self, skill, _, self:GetChecked());
 			end);
@@ -246,7 +246,7 @@ child_tracker_frame:SetScript("OnShow", function(child_tracker_frame)
 				bustables[module_id] = CreateFrame("CheckButton", config_frame_name .. "Bustables" .. module_id, child_tracker_frame, "InterfaceOptionsCheckButtonTemplate");
 				bustables[module_id]:SetPoint("TOPLEFT", bustables_label, "BOTTOMLEFT", 0, -20 * count);
 				_G[bustables[module_id]:GetName() .. "Text"]:SetText(CraftBuster_Modules[module_id].name);
-				bustables[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_buster);
+				--bustables[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_buster);
 				bustables[module_id]:SetScript("OnClick", function(self, button)
 					CraftBuster_MiniMap_SetBuster(self, module_id, _, self:GetChecked());
 				end);
@@ -271,7 +271,7 @@ child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
 	show_gatherer = CreateFrame("CheckButton", config_frame_name .. "Gatherer", child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
 	show_gatherer:SetPoint("TOPLEFT", title_label, "BOTTOMLEFT", 0, -20);
 	_G[show_gatherer:GetName() .. "Text"]:SetText(CBL["CONFIG_SHOW_GATHERER"]);
-	show_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show);
+	--show_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show);
 	show_gatherer:SetScript("OnClick", function(self, button)
 		CraftBuster_MiniMap_SetShowGatherer(self, _, _, self:GetChecked());
 	end);
@@ -279,7 +279,7 @@ child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
 	expand_gatherer = CreateFrame("CheckButton", config_frame_name .. "ExpandGatherer", child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
 	expand_gatherer:SetPoint("TOPLEFT", show_gatherer, "BOTTOMLEFT", 0, 0);
 	_G[expand_gatherer:GetName() .. "Text"]:SetText(CBL["CONFIG_EXPAND_GATHERER"]);
-	expand_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.state == "expanded");
+	--expand_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.state == "expanded");
 	expand_gatherer:SetScript("OnClick", function(self, button)
 		CraftBuster_GatherFrame_Collapse_OnClick();
 	end);
@@ -287,7 +287,7 @@ child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
 	auto_hide_gatherer = CreateFrame("CheckButton", config_frame_name .. "AutoHideGatherer", child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
 	auto_hide_gatherer:SetPoint("TOPLEFT", expand_gatherer, "BOTTOMLEFT", 0, 0);
 	_G[auto_hide_gatherer:GetName() .. "Text"]:SetText(CBL["CONFIG_AUTOHIDE_GATHERER"]);
-	auto_hide_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.auto_hide);
+	--auto_hide_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.auto_hide);
 	auto_hide_gatherer:SetScript("OnClick", function(self, button)
 		CraftBuster_MiniMap_SetAutoHideGatherer(self, _, _, self:GetChecked());
 	end);
@@ -300,7 +300,7 @@ child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
 	show_zone_nodes = CreateFrame("CheckButton", config_frame_name .. "ShowZoneNodes", child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
 	show_zone_nodes:SetPoint("TOPLEFT", show_nodes_label, "BOTTOMLEFT", 0, 0);
 	_G[show_zone_nodes:GetName() .. "Text"]:SetText(CBL["CONFIG_SHOW_ZONE_NODES"]);
-	show_zone_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_zone_nodes);
+	--show_zone_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_zone_nodes);
 	show_zone_nodes:SetScript("OnClick", function(self, button)
 		CraftBuster_MiniMap_SetShowZoneNodes(self, _, _, self:GetChecked());
 	end);
@@ -308,7 +308,7 @@ child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
 	show_skillup_nodes = CreateFrame("CheckButton", config_frame_name .. "ShowSkillUpZones", child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
 	show_skillup_nodes:SetPoint("TOPLEFT", show_zone_nodes, "BOTTOMLEFT", 0, 0);
 	_G[show_skillup_nodes:GetName() .. "Text"]:SetText(CBL["CONFIG_SHOW_SKILLUP_NODES"]);
-	show_skillup_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_skill_nodes);
+	--show_skillup_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_skill_nodes);
 	show_skillup_nodes:SetScript("OnClick", function(self, button)
 		CraftBuster_MiniMap_SetSkillUpNodes(self, _, _, self:GetChecked());
 	end);
@@ -326,7 +326,7 @@ child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
 				profession_gathers[module_id] = CreateFrame("CheckButton", config_frame_name .. "ProfessionGathers" .. module_id, child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
 				profession_gathers[module_id]:SetPoint("TOPLEFT", professions_label, "BOTTOMLEFT", 0, -20 * count);
 				_G[profession_gathers[module_id]:GetName() .. "Text"]:SetText(CraftBuster_Modules[module_id].name);
-				profession_gathers[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_gather);
+				--profession_gathers[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_gather);
 				profession_gathers[module_id]:SetScript("OnClick", function(self, button)
 					CraftBuster_MiniMap_SetProfessionGather(self, module_id, _, self:GetChecked());
 				end);
@@ -694,8 +694,10 @@ local function updateFields()
 				tooltips[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_tooltips);
 			end
 
-			if (module_data.map_icons) then
+			if (module_data.trainer_map_icons) then
 				map_icons[module_id .. "trainer"]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_trainer_map_icons);
+			end
+			if (module_data.station_map_icons) then
 				map_icons[module_id .. "station"]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_station_map_icons);
 			end
 		end

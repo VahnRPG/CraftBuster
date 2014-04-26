@@ -2,7 +2,6 @@
 	<Script file="OmgLib.lua" />
 	<Script file="CraftBuster_Tokens.lua" />
 	<Script file="CraftBuster_Globals.lua" />
-	<Script file="CraftBuster_MapIcons.lua"/>
 	<Script file="CraftBuster.lua" />
 	<Script file="CraftBuster_Config.lua"/>
 

@@ -58,6 +58,7 @@ local SKILL_ALL_PROFESSIONS_TRAINERS_MAP_ICONS = {
 local CACHED_ICONS = {};
 
 local tooltip = CreateFrame("GameTooltip", "CraftBuster_MapIcons_Tooltip", nil, "GameTooltipTemplate");
+--local dropdown = CreateFrame("Frame", "CraftBuster_MapIcons_Dropdown", nil, "UIDropDownMenuTemplate");
 local last_update = 0;
 local HAS_TOMTOM = false;
 
@@ -160,7 +161,7 @@ local function CraftBuster_MapIcons_Minimap_OnClick(self, button, down)
 	end
 
 	if (self.icon:IsShown() and (self.icon_data.map_id ~= GetCurrentMapAreaID())) then
-		echo("Minimap OnClick: " .. self.icon_data.label);
+		--echo("Minimap OnClick: " .. self.icon_data.label);
 	end
 end
 
@@ -221,7 +222,7 @@ end
 
 local function CraftBuster_MapIcons_World_OnClick(self, button, down)
 	if (self.icon:IsShown()) then
-		echo("World OnClick: " .. self.icon_data.label);
+		--echo("World OnClick: " .. self.icon_data.label);
 	end
 end
 

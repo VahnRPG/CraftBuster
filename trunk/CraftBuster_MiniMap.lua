@@ -1,5 +1,3 @@
-local saved_skills;
-
 function CraftBuster_MiniMap_Update()
 	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
 end
@@ -81,9 +79,7 @@ end
 
 function CraftBuster_MiniMap_SetShowTracking(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].skills_frame.show = checked;
-	if (saved_skills ~= nil) then
-		CraftBuster_SkillFrame_Update(saved_skills);
-	end
+	CraftBuster_SkillFrame_Update();
 	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
 end
 
@@ -113,9 +109,7 @@ end
 
 function CraftBuster_MiniMap_SetTracking(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].skills_frame.bars[id] = checked;
-	if (saved_skills ~= nil) then
-		CraftBuster_SkillFrame_Update(saved_skills);
-	end
+	CraftBuster_SkillFrame_Update();
 	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
 end
 
@@ -138,9 +132,7 @@ end
 
 function CraftBuster_MiniMap_SetBuster(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].modules[id].show_buster = checked;
-	if (saved_skills ~= nil) then
-		CraftBuster_SkillFrame_Update(saved_skills);
-	end
+	CraftBuster_SkillFrame_Update();
 	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
 end
 
@@ -166,22 +158,7 @@ function CraftBuster_MiniMapDropDown_Initialize()
 	info.keepShownOnClick = true;
 	UIDropDownMenu_AddButton(info);
 
-	local skills = {
-		["skill_1"] = nil,
-		["skill_2"] = nil,
-		["cooking"] = nil,
-		["first_aid"] = nil,
-		["fishing"] = nil,
-		["archaeology"] = nil,
-		["lockpicking"] = nil,
-	};
-	skills.skill_1, skills.skill_2, skills.archaeology, skills.fishing, skills.cooking, skills.first_aid = GetProfessions();
-	local _, player_class = UnitClass("player");
-	if (player_class == "ROGUE" and UnitLevel("player") >= 20) then
-		skills.lockpicking = CBT_SKILL_PICK;
-	end
-	saved_skills = skills;
-
+	local skills = CraftBuster_GetProfessions();
 	local rank_skills = {
 		[0] = "skill_1",
 		[1] = "skill_2",

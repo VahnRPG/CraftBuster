@@ -3,6 +3,7 @@ local DB_VERSION = 0.02;
 CraftBusterOptions = {};
 CraftBusterPlayer = nil;
 CraftBusterPlayerLevel = nil;
+CraftBusterPlayerSkills = {};
 CraftBusterServer = nil;
 CraftBusterEntry = nil;
 
@@ -40,7 +41,7 @@ function CraftBuster_OnEvent(self, event, ...)
 			CraftBuster_MiniMap_Init();
 			CraftBuster_MapIcons_RegisterInit();
 			CraftBuster_MapIcons_Init();
-			CraftBuster_UpdateSkills();
+			CraftBuster_UpdateSkills(true);
 			CraftBuster_UpdateZone();
 
 			self:UnregisterEvent(event);
@@ -50,9 +51,7 @@ function CraftBuster_OnEvent(self, event, ...)
 		CraftBuster_UpdatePlayerLevel(arg1);
 	--elseif (CraftBusterInit and (event == "CHAT_MSG_SKILL" or event == "SKILL_LINES_CHANGED")) then
 	elseif (CraftBusterInit and event == "SKILL_LINES_CHANGED") then
-		--if (not InCombatLockdown()) then
-			CraftBuster_UpdateSkills();
-		--end
+		CraftBuster_UpdateSkills(true);
 	elseif (CraftBusterInit and event == "ZONE_CHANGED_NEW_AREA") then
 		CraftBuster_UpdateZone();
 	elseif (CraftBusterInit and event == "PLAYER_REGEN_DISABLED") then
@@ -75,14 +74,14 @@ function CraftBuster_Command(cmd)
 		CraftBuster_Config_Show();
 	elseif (cmd == "reset") then
 		CraftBuster_InitSettings("character");
-		CraftBuster_UpdateSkills();
+		CraftBuster_UpdateSkills(true);
 	elseif (cmd == "fullreset") then
 		CraftBuster_InitSettings(true);
-		CraftBuster_UpdateSkills();
+		CraftBuster_UpdateSkills(true);
 	elseif (cmd == "clearignore") then
 		CraftBuster_BusterFrame_ClearIgnore();
 	elseif (cmd == "update") then
-		CraftBuster_UpdateSkills();
+		CraftBuster_UpdateSkills(true);
 	elseif (cmd == "where") then
 		CraftBuster_MapIcons_DisplayPosition();
 	end
@@ -326,10 +325,14 @@ function CraftBuster_UpdatePlayerLevel(player_level)
 	else
 		CraftBusterPlayerLevel = player_level;
 	end
-	CraftBuster_UpdateSkills();
+	CraftBuster_UpdateSkills(false);
 end
 
-function CraftBuster_UpdateSkills()
+function CraftBuster_GetProfessions(reload)
+	if (CraftBusterPlayerSkills and next(CraftBusterPlayerSkills)) then
+		return CraftBusterPlayerSkills;
+	end
+
 	local skills = {
 		["skill_1"] = nil,
 		["skill_2"] = nil,
@@ -340,7 +343,17 @@ function CraftBuster_UpdateSkills()
 		["lockpicking"] = nil,
 	};
 	skills.skill_1, skills.skill_2, skills.archaeology, skills.fishing, skills.cooking, skills.first_aid = GetProfessions();
+	local _, player_class = UnitClass("player");
+	if (player_class == "ROGUE" and UnitLevel("player") >= 20) then
+		skills.lockpicking = CBT_SKILL_PICK;
+	end
+	CraftBusterPlayerSkills = skills;
+	
+	return skills;
+end
 
+function CraftBuster_UpdateSkills(reload)
+	local skills = CraftBuster_GetProfessions(reload);
 	for skill, index in pairs(skills) do
 		if (index) then
 			local skill_name, skill_texture, skill_level, skill_max_level, skill_num_spells, _, skill_id, skill_bonus = GetProfessionInfo(index);
@@ -388,7 +401,7 @@ function CraftBuster_UpdateSkills()
 		CraftBuster_HandleSkill(skill);
 	end
 
-	CraftBuster_SkillFrame_Update(skills);
+	CraftBuster_SkillFrame_Update();
 	CraftBuster_SkillFrame_UpdatePosition();
 	CraftBuster_UpdateZone();
 end
