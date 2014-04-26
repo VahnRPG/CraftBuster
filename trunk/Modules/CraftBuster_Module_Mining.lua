@@ -496,7 +496,7 @@ local SKILL_STATION_MAP_ICONS = {
 			},
 	},
 };
-local SKILL_TRAINERS_MAP_ICONS = {
+local SKILL_TRAINER_MAP_ICONS = {
 	[35] = {		--Loch Modan
 			["Alliance"] = {
 				[1681] = { ["name"] = "Brock Stoneseeker", ["floor"] = 0, ["pos"] = { 37, 46.8 } },
