@@ -1,148 +1,148 @@
-function CraftBuster_MiniMap_Update()
-	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+function CraftBuster_Minimap_Update()
+	UIDropDownMenu_Refresh(CraftBuster_MinimapButtonDropDown);
 end
 
-function CraftBuster_MiniMap_OnClick(self, button, down)
+function CraftBuster_Minimap_OnClick(self, button, down)
 	if (button == "LeftButton") then
-		--ToggleDropDownMenu(1, nil, CraftBuster_MiniMapButtonDropDown, "CraftBuster_MiniMapButton", 0, -5);
+		--ToggleDropDownMenu(1, nil, CraftBuster_MinimapButtonDropDown, "CraftBuster_MinimapButton", 0, -5);
 		--PlaySound("igMainMenuOptionCheckBoxOn");
 	elseif (button == "RightButton") then
 		CraftBuster_Config_Show();
 	end
 end
 
-function CraftBuster_MiniMapDropDown_OnLoad(self)
-	UIDropDownMenu_Initialize(self, CraftBuster_MiniMapDropDown_Initialize, "MENU");
+function CraftBuster_MinimapDropDown_OnLoad(self)
+	UIDropDownMenu_Initialize(self, CraftBuster_MinimapDropDown_Initialize, "MENU");
 	self.noResize = true;
 end
 
-function CraftBuster_MiniMapDropDownButton_ShowTracking()
+function CraftBuster_MinimapDropDownButton_ShowTracking()
 	if (CraftBusterEntry ~= nil and CraftBusterOptions[CraftBusterEntry].skills_frame.show) then
 		return true;
 	end
 	return false;
 end
 
-function CraftBuster_MiniMapDropDownButton_ShowGatherer()
+function CraftBuster_MinimapDropDownButton_ShowGatherer()
 	if (CraftBusterEntry ~= nil and CraftBusterOptions[CraftBusterEntry].gather_frame.show) then
 		return true;
 	end
 	return false;
 end
 
-function CraftBuster_MiniMapDropDownButton_ShowZoneNodes()
+function CraftBuster_MinimapDropDownButton_ShowZoneNodes()
 	if (CraftBusterEntry ~= nil and CraftBusterOptions[CraftBusterEntry].gather_frame.show_zone_nodes) then
 		return true;
 	end
 	return false;
 end
 
-function CraftBuster_MiniMapDropDownButton_ShowSkillUpNodes()
+function CraftBuster_MinimapDropDownButton_ShowSkillUpNodes()
 	if (CraftBusterEntry ~= nil and CraftBusterOptions[CraftBusterEntry].gather_frame.show_skill_nodes) then
 		return true;
 	end
 	return false;
 end
 
-function CraftBuster_MiniMapDropDownButton_TrackingIsActive(button)
+function CraftBuster_MinimapDropDownButton_TrackingIsActive(button)
 	if (CraftBusterEntry ~= nil and CraftBusterOptions[CraftBusterEntry].skills_frame.bars[button.arg1]) then
 		return true;
 	end
 	return false;
 end
 
-function CraftBuster_MiniMapDropDownButton_TooltipIsActive(button)
+function CraftBuster_MinimapDropDownButton_TooltipIsActive(button)
 	if (CraftBusterEntry ~= nil and CraftBusterOptions[CraftBusterEntry].modules[button.arg1].show_tooltips) then
 		return true;
 	end
 	return false;
 end
 
-function CraftBuster_MiniMapDropDownButton_BusterIsActive(button)
+function CraftBuster_MinimapDropDownButton_BusterIsActive(button)
 	if (CraftBusterEntry ~= nil and CraftBusterOptions[CraftBusterEntry].modules[button.arg1].show_buster) then
 		return true;
 	end
 	return false;
 end
 
-function CraftBuster_MiniMap_SetShowWorldMapIcons(self, id, unused, checked)
+function CraftBuster_Minimap_SetShowWorldMapIcons(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map = checked;
 	CraftBuster_UpdateZone();
-	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+	UIDropDownMenu_Refresh(CraftBuster_MinimapButtonDropDown);
 end
 
-function CraftBuster_MiniMap_SetShowMiniMapIcons(self, id, unused, checked)
+function CraftBuster_Minimap_SetShowMinimapIcons(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].map_icons.show_mini_map = checked;
 	CraftBuster_UpdateZone();
-	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+	UIDropDownMenu_Refresh(CraftBuster_MinimapButtonDropDown);
 end
 
-function CraftBuster_MiniMap_SetShowTracking(self, id, unused, checked)
+function CraftBuster_Minimap_SetShowTracking(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].skills_frame.show = checked;
 	CraftBuster_SkillFrame_Update();
-	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+	UIDropDownMenu_Refresh(CraftBuster_MinimapButtonDropDown);
 end
 
-function CraftBuster_MiniMap_SetShowGatherer(self, id, unused, checked)
+function CraftBuster_Minimap_SetShowGatherer(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].gather_frame.show = checked;
 	CraftBuster_UpdateZone();
-	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+	UIDropDownMenu_Refresh(CraftBuster_MinimapButtonDropDown);
 end
 
-function CraftBuster_MiniMap_SetAutoHideGatherer(self, id, unused, checked)
+function CraftBuster_Minimap_SetAutoHideGatherer(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].gather_frame.auto_hide = checked;
 	CraftBuster_UpdateZone();
-	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+	UIDropDownMenu_Refresh(CraftBuster_MinimapButtonDropDown);
 end
 
-function CraftBuster_MiniMap_SetShowZoneNodes(self, id, unused, checked)
+function CraftBuster_Minimap_SetShowZoneNodes(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].gather_frame.show_zone_nodes = checked;
 	CraftBuster_UpdateZone();
-	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+	UIDropDownMenu_Refresh(CraftBuster_MinimapButtonDropDown);
 end
 
-function CraftBuster_MiniMap_SetSkillUpNodes(self, id, unused, checked)
+function CraftBuster_Minimap_SetSkillUpNodes(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].gather_frame.show_skill_nodes = checked;
 	CraftBuster_UpdateZone();
-	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+	UIDropDownMenu_Refresh(CraftBuster_MinimapButtonDropDown);
 end
 
-function CraftBuster_MiniMap_SetTracking(self, id, unused, checked)
+function CraftBuster_Minimap_SetTracking(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].skills_frame.bars[id] = checked;
 	CraftBuster_SkillFrame_Update();
-	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+	UIDropDownMenu_Refresh(CraftBuster_MinimapButtonDropDown);
 end
 
-function CraftBuster_MiniMap_SetTooltip(self, id, unused, checked)
+function CraftBuster_Minimap_SetTooltip(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].modules[id].show_tooltips = checked;
-	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+	UIDropDownMenu_Refresh(CraftBuster_MinimapButtonDropDown);
 end
 
-function CraftBuster_MiniMap_SetTrainerMapIcons(self, id, unused, checked)
+function CraftBuster_Minimap_SetTrainerMapIcons(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].modules[id].show_trainer_map_icons = checked;
 	CraftBuster_UpdateZone();
-	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+	UIDropDownMenu_Refresh(CraftBuster_MinimapButtonDropDown);
 end
 
-function CraftBuster_MiniMap_SetStationMapIcons(self, id, unused, checked)
+function CraftBuster_Minimap_SetStationMapIcons(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].modules[id].show_station_map_icons = checked;
 	CraftBuster_UpdateZone();
-	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+	UIDropDownMenu_Refresh(CraftBuster_MinimapButtonDropDown);
 end
 
-function CraftBuster_MiniMap_SetBuster(self, id, unused, checked)
+function CraftBuster_Minimap_SetBuster(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].modules[id].show_buster = checked;
 	CraftBuster_SkillFrame_Update();
-	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+	UIDropDownMenu_Refresh(CraftBuster_MinimapButtonDropDown);
 end
 
-function CraftBuster_MiniMap_SetProfessionGather(self, id, unused, checked)
+function CraftBuster_Minimap_SetProfessionGather(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].modules[id].show_gather = checked;
 	CraftBuster_UpdateZone();
-	UIDropDownMenu_Refresh(CraftBuster_MiniMapButtonDropDown);
+	UIDropDownMenu_Refresh(CraftBuster_MinimapButtonDropDown);
 end
 
-function CraftBuster_MiniMapDropDown_Initialize()
+function CraftBuster_MinimapDropDown_Initialize()
 	local info = UIDropDownMenu_CreateInfo();
 	info.text = CBL["CONFIG_TITLE_TRACK_PROFESSION"];
 	info.isTitle = true;
@@ -152,8 +152,8 @@ function CraftBuster_MiniMapDropDown_Initialize()
 
 	info = UIDropDownMenu_CreateInfo();
 	info.text = CBL["CONFIG_SHOW_TRACKER"];
-	info.checked = CraftBuster_MiniMapDropDownButton_ShowTracking;
-	info.func = CraftBuster_MiniMap_SetShowTracking;
+	info.checked = CraftBuster_MinimapDropDownButton_ShowTracking;
+	info.func = CraftBuster_Minimap_SetShowTracking;
 	info.isNotRadio = true;
 	info.keepShownOnClick = true;
 	UIDropDownMenu_AddButton(info);
@@ -184,8 +184,8 @@ function CraftBuster_MiniMapDropDown_Initialize()
 
 			info = UIDropDownMenu_CreateInfo();
 			info.text = skill_name;
-			info.checked = CraftBuster_MiniMapDropDownButton_TrackingIsActive;
-			info.func = CraftBuster_MiniMap_SetTracking;
+			info.checked = CraftBuster_MinimapDropDownButton_TrackingIsActive;
+			info.func = CraftBuster_Minimap_SetTracking;
 			info.icon = skill_texture;
 			info.arg1 = skill;
 			info.isNotRadio = true;
@@ -203,24 +203,24 @@ function CraftBuster_MiniMapDropDown_Initialize()
 
 	info = UIDropDownMenu_CreateInfo();
 	info.text = CBL["CONFIG_SHOW_GATHERER"];
-	info.checked = CraftBuster_MiniMapDropDownButton_ShowGatherer;
-	info.func = CraftBuster_MiniMap_SetShowGatherer;
+	info.checked = CraftBuster_MinimapDropDownButton_ShowGatherer;
+	info.func = CraftBuster_Minimap_SetShowGatherer;
 	info.isNotRadio = true;
 	info.keepShownOnClick = true;
 	UIDropDownMenu_AddButton(info);
 
 	info = UIDropDownMenu_CreateInfo();
 	info.text = CBL["CONFIG_SHOW_ZONE_NODES"];
-	info.checked = CraftBuster_MiniMapDropDownButton_ShowZoneNodes;
-	info.func = CraftBuster_MiniMap_SetShowZoneNodes;
+	info.checked = CraftBuster_MinimapDropDownButton_ShowZoneNodes;
+	info.func = CraftBuster_Minimap_SetShowZoneNodes;
 	info.isNotRadio = true;
 	info.keepShownOnClick = true;
 	UIDropDownMenu_AddButton(info);
 
 	info = UIDropDownMenu_CreateInfo();
 	info.text = CBL["CONFIG_SHOW_SKILLUP_NODES"];
-	info.checked = CraftBuster_MiniMapDropDownButton_ShowSkillUpNodes;
-	info.func = CraftBuster_MiniMap_SetSkillUpNodes;
+	info.checked = CraftBuster_MinimapDropDownButton_ShowSkillUpNodes;
+	info.func = CraftBuster_Minimap_SetSkillUpNodes;
 	info.isNotRadio = true;
 	info.keepShownOnClick = true;
 	UIDropDownMenu_AddButton(info);
@@ -237,8 +237,8 @@ function CraftBuster_MiniMapDropDown_Initialize()
 			if (module_data.tooltip_info) then
 				info = UIDropDownMenu_CreateInfo();
 				info.text = CraftBuster_Modules[module_id].name;
-				info.checked = CraftBuster_MiniMapDropDownButton_TooltipIsActive;
-				info.func = CraftBuster_MiniMap_SetTooltip;
+				info.checked = CraftBuster_MinimapDropDownButton_TooltipIsActive;
+				info.func = CraftBuster_Minimap_SetTooltip;
 				--info.icon = skill_texture;
 				info.arg1 = module_id;
 				info.isNotRadio = true;
@@ -258,8 +258,8 @@ function CraftBuster_MiniMapDropDown_Initialize()
 			if (module_data.bustable_spell) then
 				info = UIDropDownMenu_CreateInfo();
 				info.text = CraftBuster_Modules[module_id].name;
-				info.checked = CraftBuster_MiniMapDropDownButton_BusterIsActive;
-				info.func = CraftBuster_MiniMap_SetBuster;
+				info.checked = CraftBuster_MinimapDropDownButton_BusterIsActive;
+				info.func = CraftBuster_Minimap_SetBuster;
 				--info.icon = skill_texture;
 				info.arg1 = module_id;
 				info.isNotRadio = true;
@@ -270,17 +270,17 @@ function CraftBuster_MiniMapDropDown_Initialize()
 	end
 end
 
-function CraftBuster_MiniMap_Init()
+function CraftBuster_Minimap_Init()
 	if (CraftBusterOptions[CraftBusterEntry].minimap.show) then
-		CraftBuster_MiniMapFrame:Show();
+		CraftBuster_MinimapFrame:Show();
 	else
-		CraftBuster_MiniMapFrame:Hide();
+		CraftBuster_MinimapFrame:Hide();
 	end
-	CraftBuster_MiniMap_UpdatePosition();
+	CraftBuster_Minimap_UpdatePosition();
 end
 
-function CraftBuster_MiniMap_OnEnter()
-	GameTooltip:SetOwner(CraftBuster_MiniMapFrame, "ANCHOR_LEFT");
+function CraftBuster_Minimap_OnEnter()
+	GameTooltip:SetOwner(CraftBuster_MinimapFrame, "ANCHOR_LEFT");
 	GameTooltip:AddLine(CBG_MOD_COLOR .. CBG_MOD_NAME);
 	GameTooltip:AddLine(CBL["MINIMAP_HOVER_LINE1"]);
 	--GameTooltip:AddLine(CBL["MINIMAP_HOVER_LINE2"]);
@@ -288,7 +288,7 @@ function CraftBuster_MiniMap_OnEnter()
 	GameTooltip:Show();
 end
 
-function CraftBuster_MiniMap_OnDrag()
+function CraftBuster_Minimap_OnDrag()
 	local xpos, ypos = GetCursorPosition();
 	local xmin, ymin = Minimap:GetLeft(), Minimap:GetBottom();
 
@@ -301,22 +301,22 @@ function CraftBuster_MiniMap_OnDrag()
 	end;
 
 	CraftBusterOptions[CraftBusterEntry].minimap.position = angle;
-	CraftBuster_MiniMap_UpdatePosition();
+	CraftBuster_Minimap_UpdatePosition();
 end
 
-function CraftBuster_MiniMap_UpdatePosition()
+function CraftBuster_Minimap_UpdatePosition()
 	local radius = 80;
 	local angle = CraftBusterOptions[CraftBusterEntry].minimap.position;
 
-	CraftBuster_MiniMapFrame:SetPoint("TOPLEFT", "Minimap", "TOPLEFT", (52 - (radius * cos(angle))), ((radius * sin(angle)) - 52));
+	CraftBuster_MinimapFrame:SetPoint("TOPLEFT", "Minimap", "TOPLEFT", (52 - (radius * cos(angle))), ((radius * sin(angle)) - 52));
 end
 
-function CraftBuster_MiniMap_Toggle()
-	if (CraftBuster_MiniMapFrame:IsVisible()) then
-		CraftBuster_MiniMapFrame:Hide();
+function CraftBuster_Minimap_Toggle()
+	if (CraftBuster_MinimapFrame:IsVisible()) then
+		CraftBuster_MinimapFrame:Hide();
 		CraftBusterOptions[CraftBusterEntry].minimap.show = false;
 	else
-		CraftBuster_MiniMapFrame:Show()
+		CraftBuster_MinimapFrame:Show()
 		CraftBusterOptions[CraftBusterEntry].minimap.show = true;
 	end
 end

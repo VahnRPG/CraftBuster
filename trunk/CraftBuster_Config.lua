@@ -50,7 +50,7 @@ config_frame:SetScript("OnShow", function(config_frame)
 	--show_minimap_button:SetChecked(CraftBusterOptions[CraftBusterEntry].minimap.show);
 	show_minimap_button:SetScript("OnClick", function(self, button)
 		CraftBusterOptions[CraftBusterEntry].minimap.show = self:GetChecked();
-		CraftBuster_MiniMap_Init();
+		CraftBuster_Minimap_Init();
 	end);
 
 	if (CraftBuster_Modules and next(CraftBuster_Modules)) then
@@ -68,7 +68,7 @@ config_frame:SetScript("OnShow", function(config_frame)
 				_G[tooltips[module_id]:GetName() .. "Text"]:SetText(CraftBuster_Modules[module_id].name);
 				--tooltips[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_tooltips);
 				tooltips[module_id]:SetScript("OnClick", function(self, button)
-					CraftBuster_MiniMap_SetTooltip(self, module_id, _, self:GetChecked());
+					CraftBuster_Minimap_SetTooltip(self, module_id, _, self:GetChecked());
 				end);
 
 				count = count + 1;
@@ -96,15 +96,15 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 	_G[show_world_map_icons:GetName() .. "Text"]:SetText(CBL["CONFIG_SHOW_WORLD_MAP_ICONS"]);
 	--show_world_map_icons:SetChecked(CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map);
 	show_world_map_icons:SetScript("OnClick", function(self, button)
-		CraftBuster_MiniMap_SetShowWorldMapIcons(self, _, _, self:GetChecked());
+		CraftBuster_Minimap_SetShowWorldMapIcons(self, _, _, self:GetChecked());
 	end);
 
-	show_minimap_map_icons = CreateFrame("CheckButton", config_frame_name .. "ShowMiniMapMapIcons", child_map_icons_frame, "InterfaceOptionsCheckButtonTemplate");
+	show_minimap_map_icons = CreateFrame("CheckButton", config_frame_name .. "ShowMinimapMapIcons", child_map_icons_frame, "InterfaceOptionsCheckButtonTemplate");
 	show_minimap_map_icons:SetPoint("TOPLEFT", title_label, "BOTTOMLEFT", 0, -40);
 	_G[show_minimap_map_icons:GetName() .. "Text"]:SetText(CBL["CONFIG_SHOW_MINIMAP_ICONS"]);
 	--show_minimap_map_icons:SetChecked(CraftBusterOptions[CraftBusterEntry].map_icons.show_mini_map);
 	show_minimap_map_icons:SetScript("OnClick", function(self, button)
-		CraftBuster_MiniMap_SetShowMiniMapIcons(self, _, _, self:GetChecked());
+		CraftBuster_Minimap_SetShowMinimapIcons(self, _, _, self:GetChecked());
 	end);
 
 	--Show Map Icons Info
@@ -142,7 +142,7 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 				_G[map_icons[module_id .. "trainer"]:GetName() .. "Text"]:SetText(CraftBuster_Modules[module_id].name);
 				--map_icons[module_id .. "trainer"]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_trainer_map_icons);
 				map_icons[module_id .. "trainer"]:SetScript("OnClick", function(self, button)
-					CraftBuster_MiniMap_SetTrainerMapIcons(self, module_id, _, self:GetChecked());
+					CraftBuster_Minimap_SetTrainerMapIcons(self, module_id, _, self:GetChecked());
 				end);
 				
 				trainer_count = trainer_count + 1;
@@ -169,7 +169,7 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 				_G[map_icons[module_id .. "station"]:GetName() .. "Text"]:SetText(CBL["CONFIG_MAP_ICON_" .. CraftBuster_Modules[module_id].name]);
 				--map_icons[module_id .. "station"]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_station_map_icons);
 				map_icons[module_id .. "station"]:SetScript("OnClick", function(self, button)
-					CraftBuster_MiniMap_SetStationMapIcons(self, module_id, _, self:GetChecked());
+					CraftBuster_Minimap_SetStationMapIcons(self, module_id, _, self:GetChecked());
 				end);
 				
 				station_count = station_count + 1;
@@ -196,7 +196,7 @@ child_tracker_frame:SetScript("OnShow", function(child_tracker_frame)
 	_G[show_tracker:GetName() .. "Text"]:SetText(CBL["CONFIG_SHOW_TRACKER"]);
 	--show_tracker:SetChecked(CraftBusterOptions[CraftBusterEntry].skills_frame.show);
 	show_tracker:SetScript("OnClick", function(self, button)
-		CraftBuster_MiniMap_SetShowTracking(self, _, _, self:GetChecked());
+		CraftBuster_Minimap_SetShowTracking(self, _, _, self:GetChecked());
 	end);
 
 	expand_tracker = CreateFrame("CheckButton", config_frame_name .. "ExpandTracker", child_tracker_frame, "InterfaceOptionsCheckButtonTemplate");
@@ -228,7 +228,7 @@ child_tracker_frame:SetScript("OnShow", function(child_tracker_frame)
 			_G[professions[skill]:GetName() .. "Text"]:SetText(skill_name);
 			--professions[skill]:SetChecked(CraftBusterOptions[CraftBusterEntry].skills_frame.bars[skill]);
 			professions[skill]:SetScript("OnClick", function(self, button)
-				CraftBuster_MiniMap_SetTracking(self, skill, _, self:GetChecked());
+				CraftBuster_Minimap_SetTracking(self, skill, _, self:GetChecked());
 			end);
 
 			count = count + 1;
@@ -250,7 +250,7 @@ child_tracker_frame:SetScript("OnShow", function(child_tracker_frame)
 				_G[bustables[module_id]:GetName() .. "Text"]:SetText(CraftBuster_Modules[module_id].name);
 				--bustables[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_buster);
 				bustables[module_id]:SetScript("OnClick", function(self, button)
-					CraftBuster_MiniMap_SetBuster(self, module_id, _, self:GetChecked());
+					CraftBuster_Minimap_SetBuster(self, module_id, _, self:GetChecked());
 				end);
 
 				count = count + 1;
@@ -277,7 +277,7 @@ child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
 	_G[show_gatherer:GetName() .. "Text"]:SetText(CBL["CONFIG_SHOW_GATHERER"]);
 	--show_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show);
 	show_gatherer:SetScript("OnClick", function(self, button)
-		CraftBuster_MiniMap_SetShowGatherer(self, _, _, self:GetChecked());
+		CraftBuster_Minimap_SetShowGatherer(self, _, _, self:GetChecked());
 	end);
 
 	expand_gatherer = CreateFrame("CheckButton", config_frame_name .. "ExpandGatherer", child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
@@ -293,7 +293,7 @@ child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
 	_G[auto_hide_gatherer:GetName() .. "Text"]:SetText(CBL["CONFIG_AUTOHIDE_GATHERER"]);
 	--auto_hide_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.auto_hide);
 	auto_hide_gatherer:SetScript("OnClick", function(self, button)
-		CraftBuster_MiniMap_SetAutoHideGatherer(self, _, _, self:GetChecked());
+		CraftBuster_Minimap_SetAutoHideGatherer(self, _, _, self:GetChecked());
 	end);
 
 	--Show Nodes
@@ -306,7 +306,7 @@ child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
 	_G[show_zone_nodes:GetName() .. "Text"]:SetText(CBL["CONFIG_SHOW_ZONE_NODES"]);
 	--show_zone_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_zone_nodes);
 	show_zone_nodes:SetScript("OnClick", function(self, button)
-		CraftBuster_MiniMap_SetShowZoneNodes(self, _, _, self:GetChecked());
+		CraftBuster_Minimap_SetShowZoneNodes(self, _, _, self:GetChecked());
 	end);
 
 	show_skillup_nodes = CreateFrame("CheckButton", config_frame_name .. "ShowSkillUpZones", child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
@@ -314,7 +314,7 @@ child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
 	_G[show_skillup_nodes:GetName() .. "Text"]:SetText(CBL["CONFIG_SHOW_SKILLUP_NODES"]);
 	--show_skillup_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_skill_nodes);
 	show_skillup_nodes:SetScript("OnClick", function(self, button)
-		CraftBuster_MiniMap_SetSkillUpNodes(self, _, _, self:GetChecked());
+		CraftBuster_Minimap_SetSkillUpNodes(self, _, _, self:GetChecked());
 	end);
 	
 	--Show Professions Gather
@@ -332,7 +332,7 @@ child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
 				_G[profession_gathers[module_id]:GetName() .. "Text"]:SetText(CraftBuster_Modules[module_id].name);
 				--profession_gathers[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_gather);
 				profession_gathers[module_id]:SetScript("OnClick", function(self, button)
-					CraftBuster_MiniMap_SetProfessionGather(self, module_id, _, self:GetChecked());
+					CraftBuster_Minimap_SetProfessionGather(self, module_id, _, self:GetChecked());
 				end);
 
 				count = count + 1;

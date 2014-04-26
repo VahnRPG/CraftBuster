@@ -38,7 +38,7 @@ function CraftBuster_OnEvent(self, event, ...)
 	if (event == "ADDON_LOADED") then
 		if (CraftBuster_InitPlayer()) then
 			CraftBuster_InitSettings();
-			CraftBuster_MiniMap_Init();
+			CraftBuster_Minimap_Init();
 			CraftBuster_MapIcons_RegisterInit();
 			CraftBuster_MapIcons_Init();
 			CraftBuster_UpdateSkills(true);
@@ -179,7 +179,7 @@ function CraftBuster_InitSettings(reset)
 		CraftBusterOptions[CraftBusterEntry].minimap = {};
 		CraftBusterOptions[CraftBusterEntry].minimap.show = true;
 		CraftBusterOptions[CraftBusterEntry].minimap.position = 310;
-		CraftBuster_MiniMap_Init();
+		CraftBuster_Minimap_Init();
 	end
 	if (not CraftBusterOptions[CraftBusterEntry].map_icons) then
 		CraftBusterOptions[CraftBusterEntry].map_icons = {};

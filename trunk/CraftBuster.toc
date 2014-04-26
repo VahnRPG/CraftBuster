@@ -15,5 +15,5 @@ CraftBuster_MapIcons.xml
 CraftBuster_SkillFrame.xml
 CraftBuster_GatherFrame.xml
 CraftBuster_BusterFrame.xml
-CraftBuster_MiniMap.xml
+CraftBuster_Minimap.xml
 CraftBuster_Modules.xml

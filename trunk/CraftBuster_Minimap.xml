@@ -1,7 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
-	<Script file="CraftBuster_MiniMap.lua"/>
+	<Script file="CraftBuster_Minimap.lua"/>
 
-	<Frame name="CraftBuster_MiniMapFrame" parent="Minimap" enableMouse="true" hidden="false" frameStrata="LOW">
+	<Frame name="CraftBuster_MinimapFrame" parent="Minimap" enableMouse="true" hidden="false" frameStrata="LOW">
 		<Size>
 			<AbsDimension x="32" y="32"/>
 		</Size>
@@ -13,7 +13,7 @@
 			</Anchor>
 		</Anchors>
 		<Frames>
-			<Frame name="CraftBuster_MiniMapHighlightFrame" hidden="true">
+			<Frame name="CraftBuster_MinimapHighlightFrame" hidden="true">
 				<Size>
 					<AbsDimension x="32" y="32"/>
 				</Size>
@@ -30,7 +30,7 @@
 					</Layer>
 				</Layers>
 			</Frame>
-			<Button name="CraftBuster_MiniMapButton">
+			<Button name="CraftBuster_MinimapButton">
 				<Size>
 					<AbsDimension x="32" y="32"/>
 				</Size>
@@ -41,13 +41,13 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<NormalTexture file="Interface\AddOns\CraftBuster\Images\MiniMap-ButtonUp"/>
-				<PushedTexture file="Interface\AddOns\CraftBuster\Images\MiniMap-ButtonDown"/>
+				<NormalTexture file="Interface\AddOns\CraftBuster\Images\Minimap-ButtonUp"/>
+				<PushedTexture file="Interface\AddOns\CraftBuster\Images\Minimap-ButtonDown"/>
 				<HighlightTexture alphaMode="ADD" file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight"/>
 				<Frames>
 					<Frame name="$parentDropDown" inherits="UIDropDownMenuTemplate" clampedToScreen="true" id="1" hidden="true">
 						<Scripts>
-							<OnLoad function="CraftBuster_MiniMapDropDown_OnLoad"/>
+							<OnLoad function="CraftBuster_MinimapDropDown_OnLoad"/>
 						</Scripts>
 					</Frame>
 					<Button name="$parentButton">
@@ -57,7 +57,7 @@
 						</Anchors>
 						<Layers>
 							<Layer level="BORDER">
-								<Texture name="$parentBorder" urgency="5" file="Interface\Minimap\MiniMap-TrackingBorder">
+								<Texture name="$parentBorder" urgency="5" file="Interface\Minimap\Minimap-TrackingBorder">
 									<Size x="54" y="54"/>
 									<Anchors>
 										<Anchor point="TOPLEFT"/>
@@ -81,14 +81,14 @@
 								self.dragging = false;
 								self:RegisterForDrag("LeftButton");
 								self:RegisterForClicks("AnyUp");
-								CraftBuster_MiniMap_Update();
+								CraftBuster_Minimap_Update();
 							</OnLoad>
-							<OnEvent function="CraftBuster_MiniMap_Update"/>
+							<OnEvent function="CraftBuster_Minimap_Update"/>
 							<OnClick>
-								CraftBuster_MiniMap_OnClick(self, button, down);
+								CraftBuster_Minimap_OnClick(self, button, down);
 							</OnClick>
 							<OnEnter>
-								CraftBuster_MiniMap_OnEnter();
+								CraftBuster_Minimap_OnEnter();
 							</OnEnter>
 							<OnLeave>
 								GameTooltip:Hide();
@@ -101,7 +101,7 @@
 							</OnDragStop>
 							<OnUpdate>
 								if (self.dragging) then
-									CraftBuster_MiniMap_OnDrag();
+									CraftBuster_Minimap_OnDrag();
 								end
 							</OnUpdate>
 						</Scripts>
