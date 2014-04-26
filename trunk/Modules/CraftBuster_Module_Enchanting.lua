@@ -194,7 +194,6 @@ local function CraftBuster_Module_Enchanting_HandleAction(skill_data)
 	end
 	for action_id, data in sortedpairs(SKILL_ACTIONS) do
 		if (not CraftBusterOptions[CraftBusterEntry].alerts[SKILL_ID][action_id]) then
-			--echo(SKILL_NAME .. " Check: " .. CraftBusterPlayerLevel .. " >= " .. data.ply_level .. " and " .. skill_data.level .. " >= " .. data.skill_level);
 			if (CraftBusterPlayerLevel >= data.ply_level and skill_data.level >= data.skill_level) then
 				echo(data.message);
 				CraftBusterOptions[CraftBusterEntry].alerts[SKILL_ID][action_id] = true;

@@ -12,9 +12,8 @@ function CraftBuster_SkillFrame_Update()
 				[4] = "first_aid",
 				[5] = "fishing",
 				[6] = "archaeology",
-				--[7] = "lockpicking",
 			};
-			if (player_class == "ROGUE" and player_level >= 24) then
+			if (player_class == "ROGUE" and player_level >= CBG_LOCKPICKING_LEVEL) then
 				rank_skills[7] = "lockpicking";
 			end
 			for rank,skill in sortedpairs(rank_skills) do
@@ -24,16 +23,12 @@ function CraftBuster_SkillFrame_Update()
 					if (bar_frame) then
 						if (CraftBusterOptions[CraftBusterEntry].skills_frame.bars[skill]) then
 							local skill_name, skill_texture, skill_level, skill_max_level, skill_num_spells, _, skill_id, skill_bonus = GetProfessionInfo(index);
-							if (player_class == "ROGUE" and skill == "lockpicking" and player_level >= 24) then
+							if (player_class == "ROGUE" and skill == "lockpicking" and player_level >= CBG_LOCKPICKING_LEVEL) then
 								skill_name, _, skill_texture = GetSpellInfo(index);
 								skill_level = (player_level * 5);
 								skill_max_level = 425 + 100;
 								skill_num_spells = 1;
 								skill_id = index;
-							end
-							if (not skill_level) then
-								echo("Here2: " .. index);
-								echo("Here: " .. skill_name);
 							end
 
 							local skill_bonus_text = "";

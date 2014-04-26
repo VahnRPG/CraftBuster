@@ -179,7 +179,6 @@ local function CraftBuster_Module_Skinning_HandleNode(line_one, line_two, line_t
 	for node_name, item_id in sortedpairs(SKILL_NODES) do
 		if (string.find(line_one, node_name, 1, true) ~= nil) then
 			if (line_three ~= nil and line_three == "Skinnable") then
-				--echo(SKILL_NAME .. " Found: " .. node_name);
 				CraftBuster_Module_Skinning_UpdateTooltip();
 				return true;
 			end
@@ -201,7 +200,6 @@ local function CraftBuster_Module_Skinning_HandleAction(skill_data)
 	end
 	for action_id, data in sortedpairs(SKILL_ACTIONS) do
 		if (not CraftBusterOptions[CraftBusterEntry].alerts[SKILL_ID][action_id]) then
-			--echo(SKILL_NAME .. " Check: " .. CraftBusterPlayerLevel .. " >= " .. data.ply_level .. " and " .. skill_data.level .. " >= " .. data.skill_level);
 			if (CraftBusterPlayerLevel >= data.ply_level and skill_data.level >= data.skill_level) then
 				echo(data.message);
 				CraftBusterOptions[CraftBusterEntry].alerts[SKILL_ID][action_id] = true;

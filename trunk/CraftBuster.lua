@@ -34,7 +34,6 @@ end
 
 function CraftBuster_OnEvent(self, event, ...)
 	local arg1 = ...;
-	--echo("Here: " .. event);
 	if (event == "ADDON_LOADED") then
 		if (CraftBuster_InitPlayer()) then
 			CraftBuster_InitSettings();
@@ -49,7 +48,6 @@ function CraftBuster_OnEvent(self, event, ...)
 		end
 	elseif (CraftBusterInit and (event == "PLAYER_LEVEL_UP")) then
 		CraftBuster_UpdatePlayerLevel(arg1);
-	--elseif (CraftBusterInit and (event == "CHAT_MSG_SKILL" or event == "SKILL_LINES_CHANGED")) then
 	elseif (CraftBusterInit and event == "SKILL_LINES_CHANGED") then
 		CraftBuster_UpdateSkills(true);
 	elseif (CraftBusterInit and event == "ZONE_CHANGED_NEW_AREA") then
@@ -240,7 +238,6 @@ function CraftBuster_InitVersionSettings()
 end
 
 function CraftBuster_RegisterModule(module_id, module_name, module_options)
-	--echo("Here: " .. module_id .. ", " .. module_name);
 	if (not CraftBuster_Modules[module_id]) then
 		CraftBuster_Modules[module_id] = {};
 		CraftBuster_Modules[module_id].id = module_id;
@@ -344,7 +341,7 @@ function CraftBuster_GetProfessions(reload)
 	};
 	skills.skill_1, skills.skill_2, skills.archaeology, skills.fishing, skills.cooking, skills.first_aid = GetProfessions();
 	local _, player_class = UnitClass("player");
-	if (player_class == "ROGUE" and UnitLevel("player") >= 20) then
+	if (player_class == "ROGUE" and UnitLevel("player") >= CBG_LOCKPICKING_LEVEL) then
 		skills.lockpicking = CBT_SKILL_PICK;
 	end
 	CraftBusterPlayerSkills = skills;
@@ -357,7 +354,6 @@ function CraftBuster_UpdateSkills(reload)
 	for skill, index in pairs(skills) do
 		if (index and skill ~= "lockpicking") then
 			local skill_name, skill_texture, skill_level, skill_max_level, skill_num_spells, _, skill_id, skill_bonus = GetProfessionInfo(index);
-			--echo("Here " .. skill .. ", " .. index .. ": " .. skill_name .. ", " .. skill_level .. " - " .. skill_id);
 			if (not CraftBusterOptions[CraftBusterEntry].skills[skill] or (CraftBusterOptions[CraftBusterEntry].skills[skill].id ~= skill_id)) then
 				CraftBusterOptions[CraftBusterEntry].skills[skill] = {};
 				CraftBusterOptions[CraftBusterEntry].skills[skill].index = index;
@@ -365,7 +361,6 @@ function CraftBuster_UpdateSkills(reload)
 				CraftBusterOptions[CraftBusterEntry].skills[skill].name = skill_name;
 				CraftBusterOptions[CraftBusterEntry].skills[skill].texture = skill_texture;
 			end
-			--echo("Here: " .. skill_name .. " -> " .. skill_level);
 			CraftBusterOptions[CraftBusterEntry].skills[skill].profession_level = CraftBuster_GetProfessionLevel(skill_max_level);
 			CraftBusterOptions[CraftBusterEntry].skills[skill].level = skill_level;
 			CraftBusterOptions[CraftBusterEntry].skills[skill].bonus = skill_bonus;
@@ -383,7 +378,6 @@ function CraftBuster_UpdateSkills(reload)
 		skills.lockpicking = skill_id;
 
 		local skill_name, _, skill_texture = GetSpellInfo(index);
-		--echo("Here " .. skill .. ", " .. index .. ": " .. skill_name);
 		if (not CraftBusterOptions[CraftBusterEntry].skills[skill] or (CraftBusterOptions[CraftBusterEntry].skills[skill].id ~= skill_id)) then
 			CraftBusterOptions[CraftBusterEntry].skills[skill] = {};
 			CraftBusterOptions[CraftBusterEntry].skills[skill].index = index;
@@ -391,7 +385,6 @@ function CraftBuster_UpdateSkills(reload)
 			CraftBusterOptions[CraftBusterEntry].skills[skill].name = skill_name;
 			CraftBusterOptions[CraftBusterEntry].skills[skill].texture = skill_texture;
 		end
-		--echo("Here: " .. skill_name .. " -> " .. skill_level);
 		local skill_level = (UnitLevel("player") * 5);
 		local skill_max_level = 425;
 		CraftBusterOptions[CraftBusterEntry].skills[skill].profession_level = CraftBuster_GetProfessionLevel(skill_max_level);
@@ -452,7 +445,6 @@ local function CraftBuster_TradeSkillFrame_SetSelection(tradeskill_id)
 end
 
 function CraftBuster_HandleNode(line_one, line_two, line_three)
-	--echo("Here: " .. line_one .. ", " .. line_two);
 	if (CraftBuster_Modules and next(CraftBuster_Modules)) then
 		for module_id, module_data in sortedpairs(CraftBuster_Modules) do
 			if (module_data.node_function ~= nil and CraftBusterOptions[CraftBusterEntry].modules[module_id].show_tooltips) then

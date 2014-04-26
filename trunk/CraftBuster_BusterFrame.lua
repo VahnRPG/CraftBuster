@@ -25,7 +25,6 @@ function CraftBuster_BusterFrame_OnEvent(self, event, ...)
 	if (event == "BAG_UPDATE") then
 		if (time() >= last_update) then
 			last_update = time() + 1;
-			--echo("Here: " .. event .. " - " .. last_update);
 			CraftBuster_BusterFrame_Update(saved_skill, saved_skill_id, saved_spell_id);
 		end
 	end
@@ -99,7 +98,6 @@ function CraftBuster_BusterFrame_Update(skill, skill_id, spell_id)
 		if (CraftBusterOptions[CraftBusterEntry].buster_frame.state == "expanded") then
 			local count = 0;
 			bust_items = {};
-			--echo("Here: " .. saved_skill .. ", " .. saved_skill_id .. ", " .. saved_spell_id);
 			bustables = module_data.bustable_function();
 			if (bustables and next(bustables)) then
 				for i,item_data in sortedpairs(bustables) do

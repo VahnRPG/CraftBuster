@@ -60,7 +60,6 @@ local CACHED_ICONS = {};
 local tooltip = CreateFrame("GameTooltip", "CraftBuster_MapIcons_Tooltip", nil, "GameTooltipTemplate");
 --local dropdown = CreateFrame("Frame", "CraftBuster_MapIcons_Dropdown", nil, "UIDropDownMenuTemplate");
 local last_update = 0;
-local HAS_TOMTOM = false;
 
 local function CraftBuster_MapIcons_SetTooltipText(icon_data, floor_label)
 	if (icon_data.icon_type == CBT_MAP_ICON_TRAINER) then
@@ -68,9 +67,6 @@ local function CraftBuster_MapIcons_SetTooltipText(icon_data, floor_label)
 	elseif (icon_data.icon_type == CBT_MAP_ICON_STATION) then
 		tooltip:SetText(CBL["MAPICON_TITLE_STATION"]);
 	end
-
-	--local x1, x2, y1, y2 = unpack(CBG_MAP_ICON_TEXTURES[icon_data.icon_type][icon_data.module_id]);
-	--local icon_texture = "|TInterface\\AddOns\\CraftBuster\\Images\\CraftBuster_MapIcons:0:0:0:0:64:64:" .. x1 .. ":" .. x2 .. ":" .. y1 .. ":" .. y2 .. "|t";
 
 	local profession_label = CBL[icon_data.module_id];
 	if (icon_data.module_id == "all") then
@@ -174,7 +170,6 @@ local function CraftBuster_MapIcons_World_OnEvent(self, event, ...)
 		local show = false;
 		local icon_data = self.icon_data;
 		if (icon_data.worldmap_icon_frame and CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map) then
-			--echo("Here1: " .. icon_data.label .. " - " .. icon_data.map_id .. " == " .. GetCurrentMapAreaID() .. " -> " .. astrolabe:GetNumFloors(icon_data.map_id));
 			if (icon_data.map_id == GetCurrentMapAreaID()) then
 				local x,y = astrolabe:PlaceIconOnWorldMap(CraftBuster_MapIcons_Overlay, self, icon_data.map_id, icon_data.npc_data["floor"], (icon_data.npc_data["pos"][1] / 100), (icon_data.npc_data["pos"][2] / 100));
 
@@ -302,10 +297,6 @@ function CraftBuster_MapIcons_RegisterModule(module_id, map_icons, icon_type)
 end
 
 function CraftBuster_MapIcons_Init()
-	local _, _, _, enabled = GetAddOnInfo("TomTom");
-	if (enabled) then
-		HAS_TOMTOM = true;
-	end
 end
 
 function CraftBuster_MapIcons_Update()

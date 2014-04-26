@@ -11,18 +11,18 @@ local skills = {
 	["lockpicking"] = nil,
 };
 local rank_skills = {
-	[0] = "skill_1",
-	[1] = "skill_2",
-	[2] = "cooking",
-	[3] = "first_aid",
-	[4] = "fishing",
-	[5] = "archaeology",
+	[1] = "skill_1",
+	[2] = "skill_2",
+	[3] = "cooking",
+	[4] = "first_aid",
+	[5] = "fishing",
+	[6] = "archaeology",
 };
-if (player_class == "ROGUE" and UnitLevel("player") >= 20) then
-	skills.lockpicking = CBT_SKILL_PICK;
-end
 if (player_class == "ROGUE") then
-	rank_skills[6] = "lockpicking";
+	rank_skills[7] = "lockpicking";
+	if (UnitLevel("player") >= CBG_LOCKPICKING_LEVEL) then
+		skills.lockpicking = CBT_SKILL_PICK;
+	end
 end
 local tooltips = {};
 local map_icons = {};
@@ -54,7 +54,6 @@ config_frame:SetScript("OnShow", function(config_frame)
 	end);
 
 	if (CraftBuster_Modules and next(CraftBuster_Modules)) then
-		--Show Tooltip Info
 		local tooltips_label = config_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
 		tooltips_label:SetPoint("TOPLEFT", show_minimap_button, "BOTTOMLEFT", 0, -24);
 		tooltips_label:SetText(CBL["CONFIG_TITLE_TOOLTIP_INFO"]);
@@ -107,7 +106,6 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 		CraftBuster_Minimap_SetShowMinimapIcons(self, _, _, self:GetChecked());
 	end);
 
-	--Show Map Icons Info
 	local trainer_map_icons_label = child_map_icons_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
 	trainer_map_icons_label:SetPoint("TOPLEFT", show_minimap_map_icons, "BOTTOMLEFT", 0, -20);
 	trainer_map_icons_label:SetText(CBL["CONFIG_TITLE_TRAINER_MAP_ICONS"]);
@@ -219,7 +217,7 @@ child_tracker_frame:SetScript("OnShow", function(child_tracker_frame)
 		local index = skills[skill];
 		if (index) then
 			local skill_name, skill_texture = GetProfessionInfo(index);
-			if (player_class == "ROGUE" and skill == "lockpicking" and UnitLevel("player") >= 20) then
+			if (player_class == "ROGUE" and skill == "lockpicking" and UnitLevel("player") >= CBG_LOCKPICKING_LEVEL) then
 				skill_name, _, skill_texture = GetSpellInfo(index);
 			end
 
@@ -689,7 +687,7 @@ InterfaceOptions_AddCategory(child_modules_frame);
 
 --There's probably a bettr way to do this but I'm not in the mood to figure it out right now...
 local function updateFields()
-	if (player_class == "ROGUE" and UnitLevel("player") >= 20) then
+	if (player_class == "ROGUE" and UnitLevel("player") >= CBG_LOCKPICKING_LEVEL) then
 		skills.lockpicking = CBT_SKILL_PICK;
 	end
 
