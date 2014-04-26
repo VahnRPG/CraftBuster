@@ -355,7 +355,7 @@ end
 function CraftBuster_UpdateSkills(reload)
 	local skills = CraftBuster_GetProfessions(reload);
 	for skill, index in pairs(skills) do
-		if (index) then
+		if (index and skill ~= "lockpicking") then
 			local skill_name, skill_texture, skill_level, skill_max_level, skill_num_spells, _, skill_id, skill_bonus = GetProfessionInfo(index);
 			--echo("Here " .. skill .. ", " .. index .. ": " .. skill_name .. ", " .. skill_level .. " - " .. skill_id);
 			if (not CraftBusterOptions[CraftBusterEntry].skills[skill] or (CraftBusterOptions[CraftBusterEntry].skills[skill].id ~= skill_id)) then
