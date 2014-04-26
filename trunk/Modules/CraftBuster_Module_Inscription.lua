@@ -485,7 +485,6 @@ local function CraftBuster_Module_Inscription_GetBustables()
 					end
 					local _,item_count = GetContainerItemInfo(bag,slot);
 					results[item_id].total = results[item_id].total + item_count;		--really? no += in lua? LAAAAAAAAAME
-					--echo("Bag: " .. bag .. ", Slot: " .. slot .. " - " .. item_id .. " - " .. item_count);
 				end
 			end
 		end

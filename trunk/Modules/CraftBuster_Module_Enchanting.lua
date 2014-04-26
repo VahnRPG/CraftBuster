@@ -172,7 +172,6 @@ local function CraftBuster_Module_Enchanting_GetBustables()
 			if (item_id ~= nil) then
 				local item_name,item_link,item_quality,_,_,item_type,item_sub_type = GetItemInfo(item_id);
 				if (item_quality > 1 and (item_type == "Weapon" or item_type == "Armor")) then
-					--echo("Bag: " .. bag .. ", Slot: " .. slot .. " - " .. item_name .. " - " .. item_type .. ", " .. item_sub_type);
 					item_id = tonumber(item_id);
 					count = count + 1;
 					results[count] = {};

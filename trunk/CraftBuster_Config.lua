@@ -11,15 +11,15 @@ local skills = {
 	["lockpicking"] = nil,
 };
 local rank_skills = {
-	[1] = "skill_1",
-	[2] = "skill_2",
-	[3] = "cooking",
-	[4] = "first_aid",
-	[5] = "fishing",
-	[6] = "archaeology",
+	[0] = "skill_1",
+	[1] = "skill_2",
+	[2] = "cooking",
+	[3] = "first_aid",
+	[4] = "fishing",
+	[5] = "archaeology",
 };
 if (player_class == "ROGUE") then
-	rank_skills[7] = "lockpicking";
+	rank_skills[6] = "lockpicking";
 	if (UnitLevel("player") >= CBG_LOCKPICKING_LEVEL) then
 		skills.lockpicking = CBT_SKILL_PICK;
 	end

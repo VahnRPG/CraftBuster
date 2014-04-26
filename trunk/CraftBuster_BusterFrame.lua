@@ -13,18 +13,58 @@ local sorting = false;
 local sort_paused = 0;
 local items_for_sort = {};
 
+local timer_frame = CreateFrame("Frame", "CraftBuster_BusterFrame_Timer");
+local timer_last_update = 0;
+local function SetTimer(delay, callback)
+	timer_last_update = 0;
+	timer_frame:SetScript("OnUpdate", function(self, elapsed)
+		timer_last_update = timer_last_update + elapsed;
+		if (timer_last_update < delay) then
+			return;
+		end
+
+		timer_last_update = 0;
+		callback();
+		self:SetScript("OnUpdate", nil);
+	end);
+end
+
 function CraftBuster_BusterFrame_OnShow(self)
 	self:RegisterEvent("BAG_UPDATE");
+	self:RegisterEvent("UNIT_SPELLCAST_START");
+	self:RegisterEvent("UNIT_SPELLCAST_SENT");
+	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED");
+	self:RegisterEvent("UNIT_SPELLCAST_FAILED");
+	self:RegisterEvent("UNIT_SPELLCAST_STOP");
+	self:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED");
 end
 
 function CraftBuster_BusterFrame_OnHide(self)
 	self:UnregisterEvent("BAG_UPDATE");
+	self:UnregisterEvent("UNIT_SPELLCAST_START");
+	self:UnregisterEvent("UNIT_SPELLCAST_SENT");
+	self:UnregisterEvent("UNIT_SPELLCAST_SUCCEEDED");
+	self:UnregisterEvent("UNIT_SPELLCAST_FAILED");
+	self:UnregisterEvent("UNIT_SPELLCAST_STOP");
+	self:UnregisterEvent("UNIT_SPELLCAST_INTERRUPTED");
 end
 
 function CraftBuster_BusterFrame_OnEvent(self, event, ...)
 	if (event == "BAG_UPDATE") then
 		if (time() >= last_update) then
 			last_update = time() + 1;
+			CraftBuster_BusterFrame_Update(saved_skill, saved_skill_id, saved_spell_id);
+		end
+	elseif (event == "UNIT_SPELLCAST_START" or event == "UNIT_SPELLCAST_SENT") then
+		local _, spell_name, _, _, spell_id = ...;
+		if (spell_id == saved_spell_id or spell_name == "Pick Lock") then
+			SetTimer(1, function()
+				CraftBuster_BusterFrame_Update(saved_skill, saved_skill_id, saved_spell_id);
+			end);
+		end
+	elseif (event == "UNIT_SPELLCAST_SUCCEEDED" or event == "UNIT_SPELLCAST_FAILED" or event == "UNIT_SPELLCAST_STOP" or event == "UNIT_SPELLCAST_INTERRUPTED") then
+		local _, _, _, _, spell_id = ...;
+		if (spell_id == saved_spell_id) then
 			CraftBuster_BusterFrame_Update(saved_skill, saved_skill_id, saved_spell_id);
 		end
 	end

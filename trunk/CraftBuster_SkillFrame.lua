@@ -6,15 +6,15 @@ function CraftBuster_SkillFrame_Update()
 		if (CraftBusterOptions[CraftBusterEntry].skills_frame.state == "expanded") then
 			local count = -1;
 			local rank_skills = {
-				[1] = "skill_1",
-				[2] = "skill_2",
-				[3] = "cooking",
-				[4] = "first_aid",
-				[5] = "fishing",
-				[6] = "archaeology",
+				[0] = "skill_1",
+				[1] = "skill_2",
+				[2] = "cooking",
+				[3] = "first_aid",
+				[4] = "fishing",
+				[5] = "archaeology",
 			};
 			if (player_class == "ROGUE" and player_level >= CBG_LOCKPICKING_LEVEL) then
-				rank_skills[7] = "lockpicking";
+				rank_skills[6] = "lockpicking";
 			end
 			for rank,skill in sortedpairs(rank_skills) do
 				local index = skills[skill];
