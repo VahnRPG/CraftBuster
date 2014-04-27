@@ -5,19 +5,19 @@ local saved_gather = {
 };
 
 local function CraftBuster_GatherFrame_UpdateBar(label, data)
-	local icon_frame = getglobal(label .. "Icon");
+	local icon_frame = _G[label .. "Icon"];
 	local item_name,item_link,_,_,_,_,_,_,_,item_texture = GetItemInfo(data["item_id"]);
-	getglobal(icon_frame:GetName() .. "Icon"):SetTexture(item_texture);
+	_G[icon_frame:GetName() .. "Icon"]:SetTexture(item_texture);
 	icon_frame.item_id = data["item_id"];
 	icon_frame.item_link = item_link;
 
-	getglobal(label .. "Label"):SetText(data["name"]);
-	getglobal(label .. "Orange"):SetText(ORANGE_FONT_COLOR_CODE .. data["levels"][1]);
-	getglobal(label .. "Yellow"):SetText(YELLOW_FONT_COLOR_CODE .. data["levels"][2]);
-	getglobal(label .. "Green"):SetText(GREEN_FONT_COLOR_CODE .. data["levels"][3]);
-	getglobal(label .. "Grey"):SetText(GRAY_FONT_COLOR_CODE .. data["levels"][4]);
+	_G[label .. "Label"]:SetText(data["name"]);
+	_G[label .. "Orange"]:SetText(ORANGE_FONT_COLOR_CODE .. data["levels"][1]);
+	_G[label .. "Yellow"]:SetText(YELLOW_FONT_COLOR_CODE .. data["levels"][2]);
+	_G[label .. "Green"]:SetText(GREEN_FONT_COLOR_CODE .. data["levels"][3]);
+	_G[label .. "Grey"]:SetText(GRAY_FONT_COLOR_CODE .. data["levels"][4]);
 
-	getglobal(label):Show();
+	_G[label]:Show();
 end
 
 function CraftBuster_GatherFrame_Reset()
@@ -26,7 +26,7 @@ function CraftBuster_GatherFrame_Reset()
 		["skill"] = {},
 	};
 	
-	if (getglobal("CraftBuster_GatherFrameZoneNode100") == nil) then
+	if (_G["CraftBuster_GatherFrameZoneNode100"] == nil) then
 		local frame;
 		for i=1,MAX_GATHER_RECORDS do
 			frame = CreateFrame("Frame", "CraftBuster_GatherFrameZoneNode" .. i, CraftBuster_GatherFrame, "CraftBuster_Gather_BarTemplate");
@@ -52,8 +52,8 @@ function CraftBuster_GatherFrame_Update()
 	if (CraftBusterOptions[CraftBusterEntry].gather_frame.show) then
 		if (CraftBusterOptions[CraftBusterEntry].gather_frame.state == "expanded") then
 			for i=1,MAX_GATHER_RECORDS do
-				getglobal("CraftBuster_GatherFrameZoneNode" .. i):Hide();
-				getglobal("CraftBuster_GatherFrameSkillNode" .. i):Hide();
+				_G["CraftBuster_GatherFrameZoneNode" .. i]:Hide();
+				_G["CraftBuster_GatherFrameSkillNode" .. i]:Hide();
 			end
 
 			local count = 0;
@@ -65,7 +65,7 @@ function CraftBuster_GatherFrame_Update()
 				CraftBuster_GatherFrameZoneNodes:Show();
 				for i, zone_data in sortedpairs(saved_gather["zones"]) do
 					CraftBuster_GatherFrame_UpdateBar("CraftBuster_GatherFrameZoneNode" .. i, zone_data);
-					getglobal("CraftBuster_GatherFrameZoneNode" .. i):SetPoint("TOPLEFT", "CraftBuster_GatherFrame", "TOPLEFT", 5, -((count + padding) * 20) - 5);
+					_G["CraftBuster_GatherFrameZoneNode" .. i]:SetPoint("TOPLEFT", "CraftBuster_GatherFrame", "TOPLEFT", 5, -((count + padding) * 20) - 5);
 					count = count + 1;
 				end
 			else
@@ -77,7 +77,7 @@ function CraftBuster_GatherFrame_Update()
 				CraftBuster_GatherFrameSkillNodes:Show();
 				for i, skill_data in sortedpairs(saved_gather["skill"]) do
 					CraftBuster_GatherFrame_UpdateBar("CraftBuster_GatherFrameSkillNode" .. i, skill_data);
-					getglobal("CraftBuster_GatherFrameSkillNode" .. i):SetPoint("TOPLEFT", "CraftBuster_GatherFrame", "TOPLEFT", 5, -((count + padding) * 20) - 5);
+					_G["CraftBuster_GatherFrameSkillNode" .. i]:SetPoint("TOPLEFT", "CraftBuster_GatherFrame", "TOPLEFT", 5, -((count + padding) * 20) - 5);
 					count = count + 1;
 				end
 			else

@@ -166,7 +166,7 @@ function CraftBuster_BusterFrame_Update(skill, skill_id, spell_id)
 			else
 				CraftBuster_BusterFrameNoneFound:Show();
 				for i=1, MAX_BUSTER_ITEMS do
-					getglobal("CraftBuster_BusterFrameItem" .. i):Hide();
+					_G["CraftBuster_BusterFrameItem" .. i]:Hide();
 				end
 			end
 			CraftBuster_BusterFrame_ScrollFrame_Update();
@@ -204,7 +204,7 @@ function CraftBuster_BusterFrame_ScrollFrame_Update()
 	local _, _, _, x, y = CraftBuster_BusterFrameScrollFrame:GetPoint();
 	for i=1, MAX_BUSTER_ITEMS do
 		local button_frame_name = "CraftBuster_BusterFrameItem" .. i;
-		local button_frame = getglobal(button_frame_name);
+		local button_frame = _G[button_frame_name];
 		local index = (offset * BUSTER_ITEM_WRAP) + i;
 		if (bust_items[index] and next(bust_items[index])) then
 			local item_data = bust_items[index];
