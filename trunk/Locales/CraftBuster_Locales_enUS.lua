@@ -76,6 +76,9 @@
 	CBL["GREEN_ACTION"] = "%s'%s' has turned green at level %s";
 	CBL["GREY_ACTION"] = "%s'%s' has turned grey at level %s";
 
+	CBL["SKILL_FRAME_VISIT_TRAINER"] = "Visit your %s trainer\nto learn %s proficiency";
+	CBL["SKILL_FRAME_LEVEL_UP"] = "At level %s, visit your\n%s trainer to learn\n%s proficiency";
+
 	-- Inscription Localization
 	CBL["SKILL_INSC_PIGMENTS"] = "Pigments";
 	CBL["SKILL_INSC_INKS"] = "Inks";

@@ -48,20 +48,39 @@ function CraftBuster_SkillFrame_Update()
 								else
 									profession_ply_lvl = CBG_SKILL_PLY_LEVELS[profession_level][2];
 								end
+								local title = CBG_PROFESSION_RANKS[profession_level][3];
 
 								if (profession_ply_lvl <= CraftBusterPlayerLevel) then
 									bar_frame:SetStatusBarColor(0.7, 0.0, 0.0, 1.0);
 									bar_frame:SetBackdropColor(0.7, 0.0, 0.0, 0.5);
 									getglobal(bar_frame:GetName() .. "Text"):SetText(CBG_CLR_RED .. skill_name .. ": " .. CBG_CLR_WHITE .. skill_level .. skill_bonus_text .. "/" .. skill_max_level);
+									bar_frame:SetScript("OnEnter", function(self)
+										GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+										GameTooltip:SetText(string.format(CBL["SKILL_FRAME_VISIT_TRAINER"], skill_name, title));
+										GameTooltip:Show();
+									end);
+									bar_frame:SetScript("OnLeave", function(self)
+										GameTooltip:Hide();
+									end);
 								else
 									bar_frame:SetStatusBarColor(0.0, 0.0, 0.7, 1.0);
 									bar_frame:SetBackdropColor(0.0, 0.0, 0.7, 0.5);
 									getglobal(bar_frame:GetName() .. "Text"):SetText(CBG_CLR_BLUE .. skill_name .. ": " .. CBG_CLR_WHITE .. skill_level .. skill_bonus_text .. "/" .. skill_max_level);
+									bar_frame:SetScript("OnEnter", function(self)
+										GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+										GameTooltip:SetText(string.format(CBL["SKILL_FRAME_LEVEL_UP"], profession_ply_lvl, skill_name, title));
+										GameTooltip:Show();
+									end);
+									bar_frame:SetScript("OnLeave", function(self)
+										GameTooltip:Hide();
+									end);
 								end
 							else
 								bar_frame:SetStatusBarColor(0.0, 0.7, 0.0, 1.0);
 								bar_frame:SetBackdropColor(0.0, 0.7, 0.0, 0.5);
 								getglobal(bar_frame:GetName() .. "Text"):SetText(CBG_CLR_DEFAULT .. skill_name .. ": " .. CBG_CLR_WHITE .. skill_level .. skill_bonus_text .. "/" .. skill_max_level);
+								bar_frame:SetScript("OnEnter", nil);
+								bar_frame:SetScript("OnLeave", nil);
 							end
 
 							if (not InCombatLockdown()) then
