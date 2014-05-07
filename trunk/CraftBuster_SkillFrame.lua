@@ -21,6 +21,7 @@ function CraftBuster_SkillFrame_Update()
 				if (index) then
 					local bar_frame = _G["CraftBuster_SkillFrame_" .. skill];
 					if (bar_frame) then
+						bar_frame:Hide();
 						if (CraftBusterOptions[CraftBusterEntry].skills_frame.bars[skill]) then
 							count = count + 1;
 
@@ -128,8 +129,6 @@ function CraftBuster_SkillFrame_Update()
 								end
 							end
 							bar_frame:Show();
-						else
-							bar_frame:Hide();
 						end
 					end
 				end

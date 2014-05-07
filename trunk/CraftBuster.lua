@@ -90,6 +90,7 @@ function CraftBuster_InitPlayer()
 	CraftBusterPlayerLevel = UnitLevel("player");
 	CraftBusterServer = GetRealmName();
 	CraftBusterEntry = CraftBusterPlayer .. "@" .. CraftBusterServer;
+	CraftBusterPlayerSkills = {};
 
 	if (CraftBusterPlayer == nil or CraftBusterPlayer == UNKNOWNOBJECT or CraftBusterPlayer == UKNOWNBEING) then
 		return false;
@@ -326,7 +327,7 @@ function CraftBuster_UpdatePlayerLevel(player_level)
 end
 
 function CraftBuster_GetProfessions(reload)
-	if (CraftBusterPlayerSkills and next(CraftBusterPlayerSkills)) then
+	if (CraftBusterPlayerSkills and next(CraftBusterPlayerSkills) and not reload) then
 		return CraftBusterPlayerSkills;
 	end
 

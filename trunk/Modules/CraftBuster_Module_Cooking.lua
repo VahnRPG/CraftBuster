@@ -176,7 +176,6 @@ local SKILL_TRAINER_MAP_ICONS = {
 	[481] = {		--Shattrath City
 			["Neutral"] = {
 				[19185] = { ["name"] = "Jack Trapper", ["floor"] = 0, ["pos"] = { 62.4, 68.4 } },
-				[19186] = { ["name"] = "Kylene", ["floor"] = 0, ["pos"] = { 75, 31.2 } },
 			},
 	},
 	[492] = {		--Icecrown
