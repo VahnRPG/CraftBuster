@@ -419,7 +419,7 @@ end
 function CraftBuster_AddLeaveCombatCommand(function_name, ...)
 	local arg = {...};
 	local params = {};
-	echo("Added: " .. function_name);
+	--echo("Added: " .. function_name);
 	params.function_name = function_name;
 	params.args = {};
 	if (arg ~= nil) then
