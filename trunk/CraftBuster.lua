@@ -9,6 +9,7 @@ CraftBusterEntry = nil;
 
 local _;
 local CraftBusterInit = nil;
+local CraftBuster_LeaveCombatCommands = {};
 
 --==SLASH COMMANDS==--
 SLASH_CBUSTER1 = "/craftbuster";
@@ -23,7 +24,6 @@ function CraftBuster_OnLoad(self)
 	self:RegisterEvent("CHAT_MSG_SKILL");
 	self:RegisterEvent("SKILL_LINES_CHANGED");
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA");
-	self:RegisterEvent("PLAYER_REGEN_DISABLED");
 	self:RegisterEvent("PLAYER_REGEN_ENABLED");
 	self:RegisterEvent("GET_ITEM_INFO_RECEIVED");
 
@@ -52,10 +52,8 @@ function CraftBuster_OnEvent(self, event, ...)
 		CraftBuster_UpdateSkills(true);
 	elseif (CraftBusterInit and event == "ZONE_CHANGED_NEW_AREA") then
 		CraftBuster_UpdateZone();
-	elseif (CraftBusterInit and event == "PLAYER_REGEN_DISABLED") then
-		--CraftBuster_InCombat();
 	elseif (CraftBusterInit and event == "PLAYER_REGEN_ENABLED") then
-		--CraftBuster_OutCombat();
+		CraftBuster_ProcessLeaveCombatCommands();
 	elseif (CraftBusterInit and event == "GET_ITEM_INFO_RECEIVED") then
 		CraftBuster_GatherFrame_Update();
 	end
@@ -418,12 +416,32 @@ function CraftBuster_UpdateZone()
 	CraftBuster_MapIcons_Update();
 end
 
-function CraftBuster_InCombat()
-	CraftBuster_SkillFrame_Collapse_OnClick();
+function CraftBuster_AddLeaveCombatCommand(function_name, ...)
+	local arg = {...};
+	local params = {};
+	echo("Added: " .. function_name);
+	params.function_name = function_name;
+	params.args = {};
+	if (arg ~= nil) then
+		for _,value in pairs(arg) do
+			table.insert(params.args, value);
+		end
+	end
+	table.insert(CraftBuster_LeaveCombatCommands, params);
 end
 
-function CraftBuster_OutCombat()
-	CraftBuster_SkillFrame_Collapse_OnClick();
+function CraftBuster_ProcessLeaveCombatCommands()
+	if (CraftBuster_LeaveCombatCommands and next(CraftBuster_LeaveCombatCommands)) then
+		local i, command_data;
+		for i, command_data in pairs(CraftBuster_LeaveCombatCommands) do
+			--echo("Here: " .. command_data.function_name);
+			_G[command_data.function_name](unpack(command_data.args));
+			table.remove(CraftBuster_LeaveCombatCommands, i);
+		end
+	end
+	if (CraftBuster_LeaveCombatCommands and next(CraftBuster_LeaveCombatCommands)) then
+		CraftBuster_ProcessLeaveCombatCommands();
+	end
 end
 
 local function CraftBuster_TradeSkillFrame_SetSelection(tradeskill_id)

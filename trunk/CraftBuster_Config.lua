@@ -173,6 +173,26 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 				station_count = station_count + 1;
 			end
 		end
+
+		local map_icons_check_all = CreateFrame("CheckButton", config_frame_name .. "MapIconsCheckAll", child_map_icons_frame, "InterfaceOptionsCheckButtonTemplate");
+		map_icons_check_all:SetPoint("TOPLEFT", station_map_icons_label, "TOPRIGHT", 50, 0);
+		_G[map_icons_check_all:GetName() .. "Text"]:SetText(CBL["CONFIG_MAP_ICON_CHECK_ALL"]);
+		map_icons_check_all:SetChecked(false);
+		map_icons_check_all:SetScript("OnClick", function(self, button)
+			local checked = self:GetChecked();
+			for _, module_id in sortedpairs(CBG_SORTED_SKILLS) do
+				local module_data = CraftBuster_Modules[module_id];
+				if (module_data.trainer_map_icons) then
+					map_icons[module_id .. "trainer"]:SetChecked(checked);
+					CraftBuster_Minimap_SetTrainerMapIcons(self, module_id, _, checked);
+				end
+
+				if (module_data.station_map_icons) then
+					map_icons[module_id .. "station"]:SetChecked(checked);
+					CraftBuster_Minimap_SetStationMapIcons(self, module_id, _, checked);
+				end
+			end
+		end);
 	end
 
 	child_map_icons_frame:SetScript("OnShow", nil);

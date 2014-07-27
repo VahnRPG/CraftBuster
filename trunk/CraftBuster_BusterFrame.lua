@@ -129,6 +129,10 @@ function CraftBuster_BusterFrame_OnUpdate(self, elapsed)
 end
 
 function CraftBuster_BusterFrame_Update(skill, skill_id, spell_id)
+	if (InCombatLockdown()) then
+		CraftBuster_AddLeaveCombatCommand("CraftBuster_BusterFrame_Update", skill, skill_id, spell_id);
+		return;
+	end
 	saved_skill = skill;
 	saved_skill_id = skill_id;
 	saved_spell_id = spell_id;
@@ -237,6 +241,10 @@ function CraftBuster_BusterFrame_ScrollFrame_Update()
 end
 
 function CraftBuster_BusterFrame_Collapse_OnClick()
+	if (InCombatLockdown()) then
+		CraftBuster_AddLeaveCombatCommand("CraftBuster_BusterFrame_Collapse_OnClick");
+		return;
+	end
 	if (CraftBusterOptions[CraftBusterEntry].buster_frame.state == "expanded") then
 		CraftBuster_BusterFrame:Hide();
 		if (not CraftBuster_BusterFrame:IsShown()) then
@@ -254,6 +262,10 @@ function CraftBuster_BusterFrame_Collapse_OnClick()
 end
 
 function CraftBuster_BusterFrame_Close_OnClick()
+	if (InCombatLockdown()) then
+		CraftBuster_AddLeaveCombatCommand("CraftBuster_BusterFrame_Close_OnClick");
+		return;
+	end
 	CraftBuster_Buster_MoverFrame:Hide();
 	CraftBuster_BusterFrame:Hide();
 	if (not CraftBuster_Buster_MoverFrame:IsShown()) then
@@ -271,6 +283,10 @@ function CraftBuster_BusterFrame_OnDrag()
 end
 
 function CraftBuster_BusterFrame_UpdatePosition()
+	if (InCombatLockdown()) then
+		CraftBuster_AddLeaveCombatCommand("CraftBuster_BusterFrame_UpdatePosition");
+		return;
+	end
 	local position = CraftBusterOptions[CraftBusterEntry].buster_frame.position;
 	CraftBuster_Buster_MoverFrame:ClearAllPoints();
 	CraftBuster_Buster_MoverFrame:SetPoint(position.point, nil, position.relative_point, position.x, position.y);

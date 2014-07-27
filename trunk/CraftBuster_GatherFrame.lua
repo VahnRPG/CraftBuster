@@ -49,6 +49,10 @@ function CraftBuster_GatherFrame_AddGather(gather_data)
 end
 
 function CraftBuster_GatherFrame_Update()
+	if (InCombatLockdown()) then
+		CraftBuster_AddLeaveCombatCommand("CraftBuster_GatherFrame_Update");
+		return;
+	end
 	if (CraftBusterOptions[CraftBusterEntry].gather_frame.show) then
 		if (CraftBusterOptions[CraftBusterEntry].gather_frame.state == "expanded") then
 			for i=1,MAX_GATHER_RECORDS do
@@ -112,6 +116,10 @@ function CraftBuster_GatherFrame_Update()
 end
 
 function CraftBuster_GatherFrame_Collapse_OnClick()
+	if (InCombatLockdown()) then
+		CraftBuster_AddLeaveCombatCommand("CraftBuster_GatherFrame_Collapse_OnClick");
+		return;
+	end
 	if (CraftBuster_GatherFrame:IsShown()) then
 		CraftBuster_GatherFrame:Hide();
 		CraftBusterOptions[CraftBusterEntry].gather_frame.state = "collapsed";
@@ -123,6 +131,10 @@ function CraftBuster_GatherFrame_Collapse_OnClick()
 end
 
 function CraftBuster_GatherFrame_Close_OnClick()
+	if (InCombatLockdown()) then
+		CraftBuster_AddLeaveCombatCommand("CraftBuster_GatherFrame_Close_OnClick");
+		return;
+	end
 	CraftBuster_Gather_MoverFrame:Hide();
 	CraftBuster_GatherFrame:Hide();
 	if (not CraftBuster_Gather_MoverFrame:IsShown()) then
@@ -140,6 +152,10 @@ function CraftBuster_GatherFrame_OnDrag()
 end
 
 function CraftBuster_GatherFrame_UpdatePosition()
+	if (InCombatLockdown()) then
+		CraftBuster_AddLeaveCombatCommand("CraftBuster_GatherFrame_UpdatePosition");
+		return;
+	end
 	local position = CraftBusterOptions[CraftBusterEntry].gather_frame.position;
 	CraftBuster_Gather_MoverFrame:ClearAllPoints();
 	CraftBuster_Gather_MoverFrame:SetPoint(position.point, nil, position.relative_point, position.x, position.y);

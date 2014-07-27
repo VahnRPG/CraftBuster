@@ -45,6 +45,7 @@
 	CBL["CONFIG_MAP_ICON_" .. CBL[CBT_SKILL_BLCK]] = "Anvil";
 	CBL["CONFIG_MAP_ICON_" .. CBL[CBT_SKILL_MINE]] = "Forge";
 	CBL["CONFIG_MAP_ICON_" .. CBL[CBT_SKILL_TAIL]] = "Tailoring";
+	CBL["CONFIG_MAP_ICON_CHECK_ALL"] = "Un/Check All";
 	CBL["CONFIG_SHOW_TRACKER"] = "Show Tracker";
 	CBL["CONFIG_EXPAND_TRACKER"] = "Expand Tracker";
 	CBL["CONFIG_TRACKER_POSITION"] = "Tracker Position";
