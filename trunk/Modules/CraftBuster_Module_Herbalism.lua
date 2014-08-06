@@ -190,309 +190,203 @@ local SKILL_NODES = {
 		["item_id"] = 2447, --Peacebloom
 		["ply_level"] = 1,
 		["node_levels"] = { 1, 25, 50, 100 },
-		["zones"] = {
-			"Teldrassil", "Tirisfal Glades", "Durotar", "Dun Morogh",
-			"Azuremyst Isle", "Mulgore", "Elwynn Forest", "Gilneas",
-			"Eversong Woods", "The Lost Isles", "Ghostlands", "Bloodmyst Isle",
-			"Loch Modan", "Westfall", "Gilneas City", "Azshara",
-			"The Wandering Isle", "Darkshore", "Northern Barrens",
-		},
+		["map_ids"] = { 4,9,11,20,27,30,35,39,41,42,181,462,463,464,476,544,545,611,808 },
 	},
 	["Silverleaf"] = {
 		["rank"] = 1,
 		["item_id"] = 765, --Silverleaf
 		["ply_level"] = 1,
 		["node_levels"] = { 1, 25, 50, 100 },
-		["zones"] = {
-			"Elwynn Forest", "Tirisfal Glades", "Teldrassil", "Mulgore",
-			"Dun Morogh", "Eversong Woods", "Azuremyst Isle", "Ghostlands",
-			"Durotar", "Bloodmyst Isle", "Gilneas", "Loch Modan",
-			"Silverpine Forest", "Westfall", "The Lost Isles", "Gilneas City",
-			"The Wandering Isle", "Darkshore", "Northern Barrens", "Azshara",
-		},
+		["map_ids"] = { 4,9,11,20,21,27,30,35,39,41,42,181,462,463,464,476,544,545,611,808 },
 	},
 	["Bloodthistle"] = {
 		["rank"] = 2,
 		["item_id"] = 22710, --Bloodthistle
 		["ply_level"] = 1,
 		["node_levels"] = { 1, 25, 50, 100 },
-		["zones"] = {
-			"Eversong Woods",
-		},
+		["map_ids"] = { 462 },
 	},
 	["Earthroot"] = {
 		["rank"] = 3,
 		["item_id"] = 2449, --Earthroot
 		["ply_level"] = 1,
 		["node_levels"] = { 10, 40, 65, 115 },
-		["zones"] = {
-			"Silverpine Forest", "Tirisfal Glades", "Elwynn Forest", "Redridge Mountains",
-			"Teldrassil", "Durotar", "Mulgore", "Dun Morogh",
-			"Azuremyst Isle", "Eversong Woods", "Ghostlands", "The Lost Isles",
-			"Bloodmyst Isle", "The Wandering Isle", "Westfall", "Gilneas",
-			"Azshara", "Wailing Caverns", "Loch Modan", "Gilneas City",
-			"Northern Barrens", "Darkshore",
-		},
+		["map_ids"] = { 4,9,11,20,21,27,30,35,36,39,41,42,181,462,463,464,476,544,545,611,749,808 },
 	},
 	["Mageroyal"] = {
 		["rank"] = 4,
 		["item_id"] = 785, --Mageroyal
 		["ply_level"] = 1,
 		["node_levels"] = { 50, 75, 100, 150 },
-		["zones"] = {
-			"Hillsbrad Foothills", "Darkshore", "Silverpine Forest", "Northern Barrens",
-			"Azshara", "Loch Modan", "Redridge Mountains", "Westfall",
-			"Wetlands", "Duskwood", "Ghostlands", "Stonetalon Mountains",
-			"Teldrassil", "Bloodmyst Isle", "Ashenvale", "Wailing Caverns",
-			"Southern Barrens",
-		},
+		["map_ids"] = { 11,21,24,34,35,36,39,40,41,42,43,81,181,463,476,607,749 },
 	},
 	["Briarthorn"] = {
 		["rank"] = 5,
 		["item_id"] = 2450, --Briarthorn
 		["ply_level"] = 1,
 		["node_levels"] = { 70, 95, 120, 170 },
-		["zones"] = {
-			"Hillsbrad Foothills", "Duskwood", "Darkshore", "Azshara",
-			"Northern Barrens", "Wetlands", "Redridge Mountains", "Westfall",
-			"Loch Modan", "Silverpine Forest", "Stonetalon Mountains", "Ghostlands",
-			"Bloodmyst Isle", "Ashenvale", "Razorfen Kraul", "Southern Barrens",
-		},
+		["map_ids"] = { 11,21,24,34,35,36,39,40,42,43,81,181,463,476,607,761 },
 	},
 	["Stranglekelp"] = {
 		["rank"] = 6,
 		["item_id"] = 3820, --Stranglekelp
 		["ply_level"] = 1,
 		["node_levels"] = { 85, 110, 135, 185 },
-		["zones"] = {
-			"Thousand Needles", "Western Plaguelands", "Wetlands", "The Cape of Stranglethorn",
-			"Westfall", "Northern Stranglethorn", "The Hinterlands", "Dustwallow Marsh",
-			"Swamp of Sorrows", "Ashenvale", "Blackfathom Deeps", "Darkshore",
-			"Hillsbrad Foothills", "Bloodmyst Isle", "Ghostlands", "The Veiled Sea",
-			"Arathi Highlands", "Silverpine Forest",
-		},
+		["map_ids"] = { 16,21,22,24,26,37,38,39,40,42,43,61,141,463,476,673,688 },
 	},
 	["Bruiseweed"] = {
 		["rank"] = 7,
 		["item_id"] = 2453, --Bruiseweed
 		["ply_level"] = 1,
 		["node_levels"] = { 85, 125, 150, 200 },
-		["zones"] = {
-			"Northern Stranglethorn", "Wetlands", "Redridge Mountains", "Ashenvale",
-			"Duskwood", "Westfall", "The Hinterlands", "Hillsbrad Foothills",
-			"Stonetalon Mountains", "Loch Modan", "Ghostlands", "Arathi Highlands",
-			"Bloodmyst Isle", "Blackfathom Deeps", "Northern Barrens",
-		},
+		["map_ids"] = { 11,16,24,26,34,35,36,37,39,40,43,81,463,476,688 },
 	},
 	["Wild Steelbloom"] = {
 		["rank"] = 8,
 		["item_id"] = 3355, --Wild Steelbloom
 		["ply_level"] = 1,
 		["node_levels"] = { 115, 140, 165, 215 },
-		["zones"] = {
-			"Northern Stranglethorn", "Stonetalon Mountains", "Ashenvale", "Arathi Highlands",
-			"Desolace", "Wetlands", "Duskwood", "The Hinterlands",
-		},
+		["map_ids"] = { 16,26,34,37,40,43,81,101 },
 	},
 	["Grave Moss"] = {
 		["rank"] = 9,
 		["item_id"] = 3369, --Grave Moss
 		["ply_level"] = 1,
 		["node_levels"] = { 120, 150, 170, 220 },
-		["zones"] = {
-			"Duskwood", "Razorfen Downs", "Arathi Highlands", "Wetlands",
-			"Hillsbrad Foothills",
-		},
+		["map_ids"] = { 16,24,34,40,760 },
 	},
 	["Kingsblood"] = {
 		["rank"] = 10,
 		["item_id"] = 3356, --Kingsblood
 		["ply_level"] = 1,
 		["node_levels"] = { 125, 155, 175, 225 },
-		["zones"] = {
-			"Northern Stranglethorn", "Western Plaguelands", "Wetlands", "Southern Barrens",
-			"Desolace", "The Hinterlands", "Arathi Highlands", "Duskwood",
-			"Dustwallow Marsh", "Feralas", "Ashenvale",
-		},
+		["map_ids"] = { 16,22,26,34,37,40,43,101,121,141,607 },
 	},
 	["Liferoot"] = {
 		["rank"] = 11,
 		["item_id"] = 3357, --Liferoot
 		["ply_level"] = 1,
 		["node_levels"] = { 150, 175, 200, 250 },
-		["zones"] = {
-			"Eastern Plaguelands", "Western Plaguelands", "Northern Stranglethorn", "Dustwallow Marsh",
-			"Wetlands", "Thousand Needles", "Arathi Highlands", "The Hinterlands",
-			"Ashenvale", "Southern Barrens", "Desolace", "Netherstorm",
-			"The Cape of Stranglethorn", "Hillsbrad Foothills",
-		},
+		["map_ids"] = { 16,22,23,24,26,37,40,43,61,101,141,479,607,673 },
 	},
 	["Fadeleaf"] = {
 		["rank"] = 12,
 		["item_id"] = 3818, --Fadeleaf
 		["ply_level"] = 1,
 		["node_levels"] = { 150, 175, 200, 250 },
-		["zones"] = {
-			"Feralas", "The Cape of Stranglethorn", "Dustwallow Marsh", "Western Plaguelands",
-			"Arathi Highlands", "The Hinterlands",
-		},
+		["map_ids"] = { 16,22,26,121,141,673 },
 	},
 	["Khadgar's Whisker"] = {
 		["rank"] = 13,
 		["item_id"] = 3358, --Khadgar's Whisker
 		["ply_level"] = 1,
 		["node_levels"] = { 160, 185, 210, 260 },
-		["zones"] = {
-			"Eastern Plaguelands", "Western Plaguelands", "Feralas", "The Cape of Stranglethorn",
-			"Arathi Highlands", "Dustwallow Marsh", "Desolace", "Southern Barrens",
-			"The Hinterlands",
-		},
+		["map_ids"] = { 16,22,23,26,101,121,141,607,673 },
 	},
 	["Goldthorn"] = {
 		["rank"] = 14,
 		["item_id"] = 3821, --Goldthorn
 		["ply_level"] = 1,
 		["node_levels"] = { 150, 195, 220, 270 },
-		["zones"] = {
-			"Arathi Highlands", "Dustwallow Marsh", "The Hinterlands", "Feralas",
-			"Desolace", "The Cape of Stranglethorn",
-		},
+		["map_ids"] = { 16,26,101,121,141,673 },
 	},
 	["Dragon's Teeth"] = {
 		["rank"] = 15,
 		["item_id"] = 3819, --Dragon's Teeth
 		["ply_level"] = 1,
 		["node_levels"] = { 195, 225, 245, 295 },
-		["zones"] = {
-			"Badlands",
-		},
+		["map_ids"] = { 17 },
 	},
 	["Firebloom"] = {
 		["rank"] = 16,
 		["item_id"] = 4625, --Firebloom
 		["ply_level"] = 1,
 		["node_levels"] = { 205, 235, 255, 305 },
-		["zones"] = {
-			"Searing Gorge", "Burning Steppes", "Tanaris", "Badlands",
-		},
+		["map_ids"] = { 17,28,29,161 },
 	},
 	["Purple Lotus"] = {
 		["rank"] = 17,
 		["item_id"] = 8831, --Purple Lotus
 		["ply_level"] = 1,
 		["node_levels"] = { 210, 235, 260, 310 },
-		["zones"] = {
-			"Felwood",
-		},
+		["map_ids"] = { 182 },
 	},
 	["Arthas' Tears"] = {
 		["rank"] = 18,
 		["item_id"] = 8836, --Arthas' Tears
 		["ply_level"] = 1,
 		["node_levels"] = { 220, 250, 270, 320 },
-		["zones"] = {
-			"Razorfen Downs",
-			--[["Western Plaguelands",
-			"Eastern Plaguelands",
-			"Felwood",]]--
-		},
+		["map_ids"] = { 760 },
 	},
 	["Sungrass"] = {
 		["rank"] = 19,
 		["item_id"] = 8838, --Sungrass
 		["ply_level"] = 1,
 		["node_levels"] = { 230, 255, 280, 330 },
-		["zones"] = {
-			"Eastern Plaguelands", "Thousand Needles", "Badlands", "Burning Steppes",
-			"Silithus", "Searing Gorge", "Tanaris", "Un'Goro Crater",
-			"Southern Barrens",
-		},
+		["map_ids"] = { 17,23,28,29,61,161,201,261,607 },
 	},
 	["Blindweed"] = {
 		["rank"] = 20,
 		["item_id"] = 8839, --Blindweed
 		["ply_level"] = 1,
 		["node_levels"] = { 235, 260, 285, 335 },
-		["zones"] = {
-			"Feralas", "Zangarmarsh", "Western Plaguelands", "The Hinterlands",
-			"Un'Goro Crater",
-		},
+		["map_ids"] = { 22,26,121,201,467 },
 	},
 	["Ghost Mushroom"] = {
 		["rank"] = 21,
 		["item_id"] = 8845, --Ghost Mushroom
 		["ply_level"] = 1,
 		["node_levels"] = { 245, 270, 295, 345 },
-		["zones"] = {
-			"Zangarmarsh", "Un'Goro Crater",
-		},
+		["map_ids"] = { 201,467 },
 	},
 	["Gromsblood"] = {
 		["rank"] = 22,
 		["item_id"] = 8846, --Gromsblood
 		["ply_level"] = 1,
 		["node_levels"] = { 250, 275, 300, 350 },
-		["zones"] = {
-			"Felwood", "Blasted Lands", "Desolace",
-		},
+		["map_ids"] = { 19,101,182 },
 	},
 	["Golden Sansam"] = {
 		["rank"] = 23,
 		["item_id"] = 13464, --Golden Sansam
 		["ply_level"] = 1,
 		["node_levels"] = { 260, 280, 310, 360 },
-		["zones"] = {
-			"Swamp of Sorrows", "Felwood", "Hellfire Peninsula", "Silithus",
-			"Zangarmarsh", "Un'Goro Crater", "Badlands", "Blasted Lands",
-			"Netherstorm",
-		},
+		["map_ids"] = { 17,19,38,182,201,261,465,467,479 },
 	},
 	["Dreamfoil"] = {
 		["rank"] = 24,
 		["item_id"] = 13463, --Dreamfoil
 		["ply_level"] = 1,
 		["node_levels"] = { 270, 295, 320, 370 },
-		["zones"] = {
-			"Blasted Lands", "Silithus", "Felwood", "Hellfire Peninsula",
-			"Zangarmarsh", "Burning Steppes", "Un'Goro Crater",
-		},
+		["map_ids"] = { 19,29,182,201,261,465,467 },
 	},
 	["Mountain Silversage"] = {
 		["rank"] = 25,
 		["item_id"] = 13465, --Mountain Silversage
 		["ply_level"] = 1,
 		["node_levels"] = { 280, 305, 330, 380 },
-		["zones"] = {
-			"Winterspring", "Hellfire Peninsula", "Un'Goro Crater", "Blasted Lands",
-			"Silithus",
-		},
+		["map_ids"] = { 19,201,261,281,465 },
 	},
 	["Sorrowmoss"] = {
 		["rank"] = 26,
 		["item_id"] = 13466, --Sorrowmoss
 		["ply_level"] = 1,
 		["node_levels"] = { 285, 310, 335, 385 },
-		["zones"] = {
-			"Swamp of Sorrows",
-		},
+		["map_ids"] = { 38 },
 	},
 	["Icecap"] = {
 		["rank"] = 27,
 		["item_id"] = 13467, --Icecap
 		["ply_level"] = 1,
 		["node_levels"] = { 290, 315, 340, 370 },
-		["zones"] = {
-			"Winterspring",
-		},
+		["map_ids"] = { 281 },
 	},
 	["Black Lotus"] = {
 		["rank"] = 28,
 		["item_id"] = 13468, --Black Lotus
 		["ply_level"] = 1,
 		["node_levels"] = { 300, 345, 375, 400 },
-		["zones"] = {
-			"Blasted Lands", "Silithus", "Eastern Plaguelands", "Winterspring",
-		},
+		["map_ids"] = { 19,23,261,281 },
 	},
 
 	--tbc
@@ -501,86 +395,63 @@ local SKILL_NODES = {
 		["item_id"] = 22785, --Felweed
 		["ply_level"] = 1,
 		["node_levels"] = { 300, 325, 350, 400 },
-		["zones"] = {
-			"Hellfire Peninsula", "Nagrand", "Zangarmarsh", "Blade's Edge Mountains",
-			"Terokkar Forest", "Shadowmoon Valley", "Netherstorm", "The Underbog",
-			"The Slave Pens", "The Botanica",
-		},
+		["map_ids"] = { 465,467,473,475,477,478,479,726,728,729 },
 	},
 	["Dreaming Glory"] = {
 		["rank"] = 30,
 		["item_id"] = 22786, --Dreaming Glory
 		["ply_level"] = 1,
 		["node_levels"] = { 315, 340, 365, 415 },
-		["zones"] = {
-			"Nagrand", "Terokkar Forest", "Blade's Edge Mountains", "Netherstorm",
-			"Hellfire Peninsula", "Zangarmarsh", "Shadowmoon Valley",
-		},
+		["map_ids"] = { 465,467,473,475,477,478,479 },
 	},
 	["Ragveil"] = {
 		["rank"] = 31,
 		["item_id"] = 22787, --Ragveil
 		["ply_level"] = 1,
 		["node_levels"] = { 325, 350, 375, 425 },
-		["zones"] = {
-			"Zangarmarsh", "The Underbog", "The Slave Pens",
-		},
+		["map_ids"] = { 467,726,728 },
 	},
 	["Flame Cap"] = {
 		["rank"] = 32,
 		["item_id"] = 22788, --Flame Cap
 		["ply_level"] = 1,
 		["node_levels"] = { 335, 352, 400, 435 },
-		["zones"] = {
-			"Zangarmarsh", "The Underbog", "The Slave Pens", "The Steamvault",
-		},
+		["map_ids"] = { 467,726,727,728 },
 	},
 	["Terocone"] = {
 		["rank"] = 33,
 		["item_id"] = 22789, --Terocone
 		["ply_level"] = 1,
 		["node_levels"] = { 325, 350, 400, 425 },
-		["zones"] = {
-			"Terokkar Forest", "Shadowmoon Valley", "The Botanica",
-		},
+		["map_ids"] = { 473,478,729 },
 	},
 	["Ancient Lichen"] = {
 		["rank"] = 34,
 		["item_id"] = 22790, --Ancient Lichen
 		["ply_level"] = 1,
 		["node_levels"] = { 350, 375, 400, 450 },
-		["zones"] = {
-			"Mana-Tombs", "The Underbog", "Sethekk Halls", "Auchenai Crypts",
-			"The Slave Pens", "Shadow Labyrinth", "The Steamvault",
-		},
+		["map_ids"] = { 722,723,724,726,727,728,732 },
 	},
 	["Netherbloom"] = {
 		["rank"] = 35,
 		["item_id"] = 22791, --Netherbloom
 		["ply_level"] = 1,
 		["node_levels"] = { 350, 375, 400, 450 },
-		["zones"] = {
-			"Netherstorm", "The Botanica",
-		},
+		["map_ids"] = { 479,729 },
 	},
 	["Nightmare Vine"] = {
 		["rank"] = 36,
 		["item_id"] = 22792, --Nightmare Vine
 		["ply_level"] = 1,
 		["node_levels"] = { 365, 390, 419, 465 },
-		["zones"] = {
-			"Shadowmoon Valley", "Blade's Edge Mountains", "Hellfire Peninsula",
-		},
+		["map_ids"] = { 465,473,475 },
 	},
 	["Mana Thistle"] = {
 		["rank"] = 37,
 		["item_id"] = 22793, --Mana Thistle
 		["ply_level"] = 1,
 		["node_levels"] = { 375, 415, 425, 475 },
-		["zones"] = {
-			"Terokkar Forest", "Shadowmoon Valley", "Isle of Quel'Danas", "Nagrand",
-			"Blade's Edge Mountains", "Netherstorm",
-		},
+		["map_ids"] = { 473,475,477,478,479,499 },
 	},
 
 	--wotlk
@@ -589,85 +460,63 @@ local SKILL_NODES = {
 		["item_id"] = 36901, --Goldclover
 		["ply_level"] = 1,
 		["node_levels"] = { 350, 375, 400, 425 },
-		["zones"] = {
-			"Howling Fjord", "Sholazar Basin", "Borean Tundra", "Grizzly Hills",
-			"Dragonblight", "Azjol-Nerub",
-		},
+		["map_ids"] = { 486,488,490,491,493,533 },
 	},
 	["Firethorn"] = {
 		["rank"] = 39,
 		["item_id"] = 39970, --Firethorn
 		["ply_level"] = 1,
 		["node_levels"] = { 350, 375, 400, 425 },
-		["zones"] = {
-			"Borean Tundra",
-		},
+		["map_ids"] = { 486 },
 	},
 	["Tiger Lily"] = {
 		["rank"] = 40,
 		["item_id"] = 36904, --Tiger Lily
 		["ply_level"] = 1,
 		["node_levels"] = { 375, 400, 425, 450 },
-		["zones"] = {
-			"Sholazar Basin", "Grizzly Hills", "Howling Fjord", "Borean Tundra",
-			"Azjol-Nerub",
-		},
+		["map_ids"] = { 486,490,491,493,533 },
 	},
 	["Talandra's Rose"] = {
 		["rank"] = 41,
 		["item_id"] = 36907, --Talandra's Rose
 		["ply_level"] = 1,
 		["node_levels"] = { 375, 400, 425, 450 },
-		["zones"] = {
-			"Zul'Drak", "Drak'Tharon Keep", "Ahn'kahet: The Old Kingdom", "Grizzly Hills",
-			"Gundrak",
-		},
+		["map_ids"] = { 490,496,522,530,534 },
 	},
 	["Frozen Herb"] = {
 		["rank"] = 42,
 		["item_id"] = "", --Frozen Herb
 		["ply_level"] = 1,
 		["node_levels"] = { 400, 425, 450, 475 },
-		["zones"] = {
-			"Dragonblight", "Zul'Drak", "Wintergrasp", "Hillsbrad Foothills",
-			"The Nexus",
-		},
+		["map_ids"] = { 24,488,496,501,520 },
 	},
 	["Adder's Tongue"] = {
 		["rank"] = 43,
 		["item_id"] = 36903, --Adder's Tongue
 		["ply_level"] = 1,
 		["node_levels"] = { 400, 425, 450, 475 },
-		["zones"] = {
-			"Sholazar Basin", "Drak'Tharon Keep", "Gundrak",
-		},
+		["map_ids"] = { 493,530,534 },
 	},
 	["Lichbloom"] = {
 		["rank"] = 44,
 		["item_id"] = 36905, --Lichbloom
 		["ply_level"] = 1,
 		["node_levels"] = { 425, 450, 475, 525 },
-		["zones"] = {
-			"The Storm Peaks", "Icecrown", "Wintergrasp", "Utgarde Pinnacle",
-		},
+		["map_ids"] = { 492,495,501,524 },
 	},
 	["Icethorn"] = {
 		["rank"] = 45,
 		["item_id"] = 36906, --Icethorn
 		["ply_level"] = 1,
 		["node_levels"] = { 425, 450, 475, 525 },
-		["zones"] = {
-			"The Storm Peaks", "Icecrown", "Wintergrasp", "Utgarde Pinnacle",
-		},
+		["map_ids"] = { 492,495,501,524 },
 	},
 	["Frost Lotus"] = {
 		["rank"] = 46,
 		["item_id"] = 36908, --Frost Lotus
 		["ply_level"] = 1,
 		["node_levels"] = { 450, 475, 500, 525 },
-		["zones"] = {
-			"Wintergrasp", "Ulduar",
-		},
+		["map_ids"] = { 501,529 },
 	},
 
 	--cata
@@ -676,56 +525,42 @@ local SKILL_NODES = {
 		["item_id"] = 52983, --Cinderbloom
 		["ply_level"] = 1,
 		["node_levels"] = { 425, 450, 475, 525 },
-		["zones"] = {
-			"Deepholm", "Twilight Highlands", "Mount Hyjal", "Uldum",
-			"Tol Barad Peninsula", "Tol Barad",
-		},
+		["map_ids"] = { 606,640,700,708,709,720 },
 	},
 	["Azshara's Veil"] = {
 		["rank"] = 48,
 		["item_id"] = 52985, --Azshara's Veil
 		["ply_level"] = 1,
 		["node_levels"] = { 425, 450, 475, 525 },
-		["zones"] = {
-			"Shimmering Expanse", "Tol Barad Peninsula", "Abyssal Depths", "Kelp'thar Forest",
-			"Mount Hyjal",
-		},
+		["map_ids"] = { 606,610,614,615,709 },
 	},
 	["Stormvine"] = {
 		["rank"] = 49,
 		["item_id"] = 52984, --Stormvine
 		["ply_level"] = 1,
 		["node_levels"] = { 425, 450, 475, 525 },
-		["zones"] = {
-			"Mount Hyjal", "Abyssal Depths", "Shimmering Expanse", "Kelp'thar Forest",
-		},
+		["map_ids"] = { 606,610,614,615 },
 	},
 	["Heartblossom"] = {
 		["rank"] = 50,
 		["item_id"] = 52986, --Heartblossom
 		["ply_level"] = 1,
 		["node_levels"] = { 475, 500, 525, 550 },
-		["zones"] = {
-			"Deepholm",
-		},
+		["map_ids"] = { 640 },
 	},
 	["Whiptail"] = {
 		["rank"] = 51,
 		["item_id"] = 52988, --Whiptail
 		["ply_level"] = 1,
 		["node_levels"] = { 500, 525, 550, 575 },
-		["zones"] = {
-			"Uldum", "Tol Barad",
-		},
+		["map_ids"] = { 708,720 },
 	},
 	["Twilight Jasmine"] = {
 		["rank"] = 52,
 		["item_id"] = 52987, --Twilight Jasmine
 		["ply_level"] = 1,
 		["node_levels"] = { 525, 525, 550, 550 },
-		["zones"] = {
-			"Twilight Highlands",
-		},
+		["map_ids"] = { 700 },
 	},
 
 	--mists
@@ -734,57 +569,42 @@ local SKILL_NODES = {
 		["item_id"] = 72234, --Green Tea Leaf
 		["ply_level"] = 1,
 		["node_levels"] = { 500, 525, 550, 575 },
-		["zones"] = {
-			"The Jade Forest", "Valley of the Four Winds", "Krasarang Wilds", "Townlong Steppes",
-			"Kun-Lai Summit", "Dread Wastes", "Vale of Eternal Blossoms", "Timeless Isle",
-			"Temple of the Jade Serpent", "Siege of Niuzao Temple",
-		},
+		["map_ids"] = { 806,807,809,810,811,857,858,867,887,951 },
 	},
 	["Rain Poppy"] = {
 		["rank"] = 54,
 		["item_id"] = 72237, --Rain Poppy
 		["ply_level"] = 1,
 		["node_levels"] = { 525, 550, 575, 600 },
-		["zones"] = {
-			"The Jade Forest", "Vale of Eternal Blossoms", "Timeless Isle",
-		},
+		["map_ids"] = { 806,811,951 },
 	},
 	["Silkweed"] = {
 		["rank"] = 55,
 		["item_id"] = 72235, --Silkweed
 		["ply_level"] = 1,
 		["node_levels"] = { 545, 570, 595, 600 },
-		["zones"] = {
-			"Valley of the Four Winds", "Krasarang Wilds", "The Jade Forest", "The Veiled Stair",
-			"Timeless Isle",
-		},
+		["map_ids"] = { 806,807,857,873,951 },
 	},
 	["Sha-Touched Herb"] = {
 		["rank"] = 57,
 		["item_id"] = 89639, --Desecrated Herb
 		["ply_level"] = 1,
 		["node_levels"] = { 575, 600, 600, 600 },
-		["zones"] = {
-			"Dread Wastes", "Kun-Lai Summit", "Valley of the Four Winds", "The Jade Forest",
-		},
+		["map_ids"] = { 806,807,809,858 },
 	},
 	["Snow Lily"] = {
 		["rank"] = 56,
 		["item_id"] = 79010, --Snow Lily
 		["ply_level"] = 1,
 		["node_levels"] = { 575, 600, 600, 600 },
-		["zones"] = {
-			"Kun-Lai Summit", "Townlong Steppes", "Shado-Pan Monastery",
-		},
+		["map_ids"] = { 809,810,877 },
 	},
 	["Fool's Cap"] = {
 		["rank"] = 58,
 		["item_id"] = 79011, --Fool's Cap
 		["ply_level"] = 1,
 		["node_levels"] = { 600, 600, 600, 600 },
-		["zones"] = {
-			"Dread Wastes", "Townlong Steppes", "The Jade Forest", "Timeless Isle",
-		},
+		["map_ids"] = { 806,810,858,951 },
 	},
 };
 
@@ -829,8 +649,8 @@ local function CraftBuster_Module_Herbalism_HandleGather(zone_name)
 	
 	local found = false;
 	for node_name, node_data in sortedpairs(SKILL_NODES) do
-		for _,zone in sortedpairs(node_data.zones) do
-			if (string.find(zone, zone_name, 1, true) ~= nil) then
+		for _,map_id in pairs(node_data["map_ids"]) do
+			if (map_id == zone_map_id) then
 				local rank = node_data["rank"];
 				gather_data["zones"][rank] = {
 					["item_id"] = node_data["item_id"],
@@ -853,7 +673,7 @@ local function CraftBuster_Module_Herbalism_HandleGather(zone_name)
 			end
 		end
 	end
-	
+
 	if (CraftBusterOptions[CraftBusterEntry].modules[SKILL_ID].show_gather and found) then
 		CraftBuster_GatherFrame_AddGather(gather_data);
 	end
@@ -919,10 +739,10 @@ local function CraftBuster_Module_Herbalism_AddZoneInfo(frame, item_link)
 			for node_name, node_data in sortedpairs(SKILL_NODES) do
 				if (item_id == node_data["item_id"]) then
 					found_item = true;
-					for _,zone_name in ipairs(node_data["zones"]) do
-						if (found_zones[zone_name] == nil) then
-							zones[count] = zone_name;
-							found_zones[zone_name] = zone_name;
+					for _,map_id in pairs(node_data["map_ids"]) do
+						if (found_zones[map_id] == nil) then 
+							zones[count] = CBL["MAP_NAMES"][map_id];
+							found_zones[map_id] = map_id;
 							count = count + 1;
 						end
 					end

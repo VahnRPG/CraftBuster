@@ -649,44 +649,21 @@ local SKILL_NODES = {
 		["item_id"] = 2770, --Copper Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 1, 25, 50, 100 },
-		["zones"] = {
-			"Darkshore", "Durotar", "Azshara", "Northern Barrens",
-			"Elwynn Forest", "Tirisfal Glades", "Dun Morogh", "Eversong Woods",
-			"Loch Modan", "Gilneas", "Mulgore", "The Lost Isles",
-			"Redridge Mountains", "Azuremyst Isle", "Bloodmyst Isle", "Westfall",
-			"Ghostlands", "Silverpine Forest", "Duskwood",
-			"Gilneas City", "The Wandering Isle", "The Deadmines", "Stonetalon Mountains",
-			"Wetlands", "Ashenvale", "Wailing Caverns", "Southern Barrens",
-			"Badlands", "Thousand Needles",
-		},
+		["map_ids"] = { 4,9,11,17,20,21,27,30,34,35,36,39,40,42,43,61,81,181,462,463,464,476,544,545,607,611,749,756,808 },
 	},
 	["Tin Vein"] = {
 		["rank"] = 1,
 		["item_id"]  = 2771, --Tin Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 50, 75, 100, 150 },
-		["zones"] = {
-			"Ashenvale", "Hillsbrad Foothills", "Northern Stranglethorn", "Stonetalon Mountains",
-			"Redridge Mountains", "Duskwood", "Wetlands", "Loch Modan",
-			"Arathi Highlands", "Silverpine Forest", "Bloodmyst Isle", "Ghostlands",
-			"Darkshore", "The Deadmines", "The Hinterlands", "Blackfathom Deeps",
-			"Dustwallow Marsh", "Northern Barrens", "Azshara", "Wailing Caverns",
-			"Badlands",
-		},
+		["map_ids"] = { 11,16,17,21,24,26,34,35,36,37,40,42,43,81,141,181,463,476,688,749,756 },
 	},
 	["Silver Vein"] = {
 		["rank"] = 2,
 		["item_id"] = 2775, --Silver Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 65, 85, 110, 160 },
-		["zones"] = {
-			"Northern Stranglethorn", "Feralas", "Hillsbrad Foothills", "Stonetalon Mountains",
-			"The Cape of Stranglethorn", "Arathi Highlands", "Southern Barrens", "Desolace",
-			"Redridge Mountains", "Wetlands", "Duskwood", "Loch Modan",
-			"Silverpine Forest", "The Hinterlands", "Thousand Needles", "Darkshore",
-			"Northern Barrens", "The Deadmines", "Dustwallow Marsh", "Bloodmyst Isle",
-			"Ghostlands",
-		},
+		["map_ids"] = { 11,16,21,24,26,34,35,36,37,40,42,61,81,101,121,141,463,476,607,673,756 },
 	},
 	--[[
 	["Ooze Covered Silver Vein"] = {
@@ -694,9 +671,7 @@ local SKILL_NODES = {
 		["item_id"] = 2775, --Silver Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 75, 100, 125, 175 },
-		["zones"] = {
-			"",
-		},
+		["map_ids"] = {},
 	},
 	]]--
 	["Iron Deposit"] = {
@@ -704,24 +679,14 @@ local SKILL_NODES = {
 		["item_id"] = 2772, --Iron Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 100, 125, 150, 200 },
-		["zones"] = {
-			"Feralas", "Desolace", "Western Plaguelands", "Eastern Plaguelands",
-			"The Cape of Stranglethorn", "Southern Barrens", "Arathi Highlands", "Thousand Needles",
-			"Northern Stranglethorn", "The Hinterlands", "Duskwood", "Dustwallow Marsh",
-			"Wetlands", "Razorfen Kraul", "Uldaman", "Badlands",
-		},
+		["map_ids"] = { 16,17,22,23,26,34,37,40,61,101,121,141,607,673,692,761 },
 	},
 	["Gold Vein"] = {
 		["rank"] = 5,
 		["item_id"] = 2776, --Gold Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 115, 130, 165, 215 },
-		["zones"] = {
-			"Felwood", "Western Plaguelands", "Feralas", "Eastern Plaguelands",
-			"Burning Steppes", "Badlands", "Southern Barrens", "Tanaris",
-			"The Cape of Stranglethorn", "Thousand Needles", "Searing Gorge", "Northern Stranglethorn",
-			"Desolace", "Un'Goro Crater", "Arathi Highlands", "Duskwood",
-		},
+		["map_ids"] = { 16,17,22,23,28,29,34,37,61,101,121,161,182,201,607,673 },
 	},
 	--[[
 	["Ooze Covered Gold Vein"] = {
@@ -729,9 +694,7 @@ local SKILL_NODES = {
 		["item_id"] = 2776, --Gold Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 115, 130, 165, 215 },
-		["zones"] = {
-			"",
-		},
+		["map_ids"] = {},
 	},
 	]]--
 	["Mithril Deposit"] = {
@@ -739,89 +702,63 @@ local SKILL_NODES = {
 		["item_id"] = 3858, --Mithril Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 150, 175, 200, 250 },
-		["zones"] = {
-			"Thousand Needles", "Badlands", "Burning Steppes", "Searing Gorge",
-			"Felwood", "Eastern Plaguelands", "Tanaris", "Arathi Highlands",
-			"Dustwallow Marsh", "Un'Goro Crater", "Feralas", "Maraudon",
-			"Uldaman",
-		},
+		["map_ids"] = { 16,17,23,28,29,61,121,141,161,182,201,692,750 },
 	},
 	["Ooze Covered Mithril Deposit"] = {
 		["rank"] = 8,
 		["item_id"] = 3858, --Mithril Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 150, 175, 200, 250 },
-		["zones"] = {
-			"Thousand Needles", "Feralas",
-		},
+		["map_ids"] = { 61,121 },
 	},
 	["Truesilver Deposit"] = {
 		["rank"] = 9,
 		["item_id"] = 7911, --Truesilver Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 165, 190, 215, 265 },
-		["zones"] = {
-			"Winterspring", "Burning Steppes", "Felwood", "Thousand Needles",
-			"Badlands", "Silithus", "Searing Gorge", "Blasted Lands",
-			"Eastern Plaguelands", "Swamp of Sorrows", "Tanaris", "Un'Goro Crater",
-			"Feralas", "Dustwallow Marsh", "Arathi Highlands", "The Hinterlands",
-		},
+		["map_ids"] = { 16,17,19,23,26,28,29,38,61,121,141,161,182,201,261,281 },
 	},
 	["Ooze Covered Truesilver Deposit"] = {
 		["rank"] = 10,
 		["item_id"] = 7911, --Truesilver Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 165, 190, 215, 265 },
-		["zones"] = {
-			"Un'Goro Crater", "Silithus",
-		},
+		["map_ids"] = { 201,261 },
 	},
 	["Dark Iron Deposit"] = {
 		["rank"] = 11,
 		["item_id"] = 11370, --Dark Iron Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 175, 255, 280, 330 },
-		["zones"] = {
-			"Molten Core", "Blackrock Depths",
-		},
+		["map_ids"] = { 696,704 },
 	},
 	["Small Thorium Vein"] = {
 		["rank"] = 12,
 		["item_id"] = 10620, --Thorium Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 200, 225, 250, 300 },
-		["zones"] = {
-			"Winterspring", "Silithus", "Un'Goro Crater", "Swamp of Sorrows",
-			"Blasted Lands",
-		},
+		["map_ids"] = { 19,38,201,261,281 },
 	},
 	["Ooze Covered Thorium Vein"] = {
 		["rank"] = 13,
 		["item_id"] = 10620, --Thorium Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 215, 240, 265, 315 },
-		["zones"] = {
-			"Un'Goro Crater",
-		},
+		["map_ids"] = { 201 },
 	},
 	["Rich Thorium Vein"] = {
 		["rank"] = 14,
 		["item_id"] = 10620, --Thorium Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 215, 240, 265, 315 },
-		["zones"] = {
-			"Winterspring", "Silithus", "Swamp of Sorrows", "Un'Goro Crater",
-			"Blasted Lands", "Dire Maul",
-		},
+		["map_ids"] = { 19,38,201,261,281,699 },
 	},
 	["Ooze Covered Rich Thorium Vein"] = {
 		["rank"] = 15,
 		["item_id"] = 10620, --Thorium Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 215, 240, 265, 315 },
-		["zones"] = {
-			"Silithus",
-		},
+		["map_ids"] = { 261 },
 	},
 
 	--tbc
@@ -830,32 +767,21 @@ local SKILL_NODES = {
 		["item_id"] = 23424, --Fel Iron Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 275, 325, 350, 400 },
-		["zones"] = {
-			"Hellfire Peninsula", "Zangarmarsh", "Blade's Edge Mountains", "Shadowmoon Valley",
-			"Terokkar Forest", "Nagrand", "Netherstorm",
-		},
+		["map_ids"] = { 465,467,473,475,477,478,479 },
 	},
 	["Adamantite Deposit"] = {
 		["rank"] = 17,
 		["item_id"] = 23425, --Adamantite Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 325, 350, 375, 425 },
-		["zones"] = {
-			"Nagrand", "Blade's Edge Mountains", "Netherstorm", "Shadowmoon Valley",
-			"Terokkar Forest", "Zangarmarsh", "Isle of Quel'Danas", "Sethekk Halls",
-			"Auchenai Crypts", "Mana-Tombs", "The Slave Pens", "Shadow Labyrinth",
-			"The Steamvault",
-		},
+		["map_ids"] = { 467,473,475,477,478,479,499,722,723,724,727,728,732 },
 	},
 	["Rich Adamantite Deposit"] = {
 		["rank"] = 18,
 		["item_id"] = 23425, --Adamantite Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 350, 375, 400, 450 },
-		["zones"] = {
-			"Nagrand", "Netherstorm", "Shadowmoon Valley", "Terokkar Forest",
-			"Isle of Quel'Danas", "Blade's Edge Mountains", "Shadow Labyrinth",
-		},
+		["map_ids"] = { 473,475,477,478,479,499,724 },
 	},
 	--[[
 	["Nethercite Deposit"] = {
@@ -863,9 +789,7 @@ local SKILL_NODES = {
 		["item_id"] = 32464, --Nethercite Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 350, 375, 390, 400 },
-		["zones"] = {
-			"",
-		},
+		["map_ids"] = {},
 	},
 	]]--
 	["Khorium Vein"] = {
@@ -873,11 +797,7 @@ local SKILL_NODES = {
 		["item_id"] = 23426, --Khorium Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 375, 400, 425, 450 },
-		["zones"] = {
-			"Nagrand", "Blade's Edge Mountains", "Netherstorm", "Terokkar Forest",
-			"Shadowmoon Valley", "Isle of Quel'Danas", "Auchenai Crypts", "Mana-Tombs",
-			"Shadow Labyrinth",
-		},
+		["map_ids"] = { 473,475,477,478,479,499,722,724,732 },
 	},
 
 	--wotlk
@@ -886,41 +806,28 @@ local SKILL_NODES = {
 		["item_id"] = 36909, --Cobalt Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 350, 375, 400, 425 },
-		["zones"] = {
-			"Zul'Drak", "Howling Fjord", "Borean Tundra", "Dragonblight",
-			"Grizzly Hills", "Utgarde Keep", "The Storm Peaks", "Crystalsong Forest",
-		},
+		["map_ids"] = { 486,488,490,491,495,496,510,523 },
 	},
 	["Rich Cobalt Deposit"] = {
 		["rank"] = 22,
 		["item_id"] = 36909, --Cobalt Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 375, 400, 425, 450 },
-		["zones"] = {
-			"Zul'Drak", "Howling Fjord", "Borean Tundra", "Dragonblight",
-			"Grizzly Hills", "The Storm Peaks", "Utgarde Keep", "Crystalsong Forest",
-		},
+		["map_ids"] = { 486,488,490,491,495,496,510,523 },
 	},
 	["Saronite Deposit"] = {
 		["rank"] = 23,
 		["item_id"] = 36912, --Saronite Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 400, 425, 450, 475 },
-		["zones"] = {
-			"Icecrown", "Sholazar Basin", "The Storm Peaks", "Wintergrasp",
-			"Zul'Drak", "Halls of Stone", "Dragonblight", "Crystalsong Forest",
-			"Icecrown Citadel", "Grizzly Hills",
-		},
+		["map_ids"] = { 488,490,492,493,495,496,501,510,526,604 },
 	},
 	["Rich Saronite Deposit"] = {
 		["rank"] = 24,
 		["item_id"] = 36912, --Saronite Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 425, 450, 475, 500 },
-		["zones"] = {
-			"Icecrown", "Sholazar Basin", "Wintergrasp", "The Storm Peaks",
-			"Dragonblight", "Crystalsong Forest",
-		},
+		["map_ids"] = { 488,490,492,493,495,496,501,510,526,604 },
 	},
 	--[[
 	["Pure Saronite Deposit"] = {
@@ -928,9 +835,7 @@ local SKILL_NODES = {
 		["item_id"] = 36912, --Saronite Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 450, 475, 500, 525 },
-		["zones"] = {
-			"",
-		},
+		["map_ids"] = {},
 	},
 	]]--
 	["Titanium Vein"] = {
@@ -938,10 +843,7 @@ local SKILL_NODES = {
 		["item_id"] = 36910, --Titanium Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 450, 475, 500, 525 },
-		["zones"] = {
-			"Icecrown", "Sholazar Basin", "Wintergrasp", "The Storm Peaks",
-			"Dragonblight", "Crystalsong Forest",
-		},
+		["map_ids"] = { 488,492,493,495,501,510 },
 	},
 
 	--cata
@@ -950,57 +852,42 @@ local SKILL_NODES = {
 		["item_id"] = 53038, --Obsidium Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 425, 450, 475, 500 },
-		["zones"] = {
-			"Deepholm", "Mount Hyjal", "Abyssal Depths", "Shimmering Expanse",
-			"Kelp'thar Forest",
-		},
+		["map_ids"] = { 606,610,614,615,640 },
 	},
 	["Rich Obsidium Deposit"] = {
 		["rank"] = 28,
 		["item_id"] = 53038, --Obsidium Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 450, 475, 500, 525 },
-		["zones"] = {
-			"Deepholm",
-		},
+		["map_ids"] = { 640 },
 	},
 	["Elementium Vein"] = {
 		["rank"] = 29,
 		["item_id"] = 52185, --Elementium Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 475, 500, 525, 550 },
-		["zones"] = {
-			"Deepholm", "Twilight Highlands", "Uldum", "Tol Barad Peninsula",
-			"Tol Barad",
-		},
+		["map_ids"] = { 640,700,708,709,720 },
 	},
 	["Rich Elementium Vein"] = {
 		["rank"] = 30,
 		["item_id"] = 52185, --Elementium Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 500, 515, 525, 550 },
-		["zones"] = {
-			"Deepholm", "Twilight Highlands", "Uldum", "Tol Barad Peninsula",
-			"Tol Barad",
-		},
+		["map_ids"] = { 640,700,708,709,720 },
 	},
 	["Pyrite Deposit"] = {
 		["rank"] = 31,
 		["item_id"] = 52183, --Pyrite Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 525, 550, 565, 575 },
-		["zones"] = {
-			"Twilight Highlands", "Uldum",
-		},
+		["map_ids"] = { 700,720 },
 	},
 	["Rich Pyrite Deposit"] = {
 		["rank"] = 32,
 		["item_id"] = 52183, --Pyrite Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 525, 575, 600, 600 },
-		["zones"] = {
-			"Tol Barad Peninsula", "Tol Barad",
-		},
+		["map_ids"] = { 708,709 },
 	},
 
 	--mists
@@ -1009,40 +896,28 @@ local SKILL_NODES = {
 		["item_id"] = 72092, --Ghost Iron Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 525, 550, 575, 600 },
-		["zones"] = {
-			"The Jade Forest", "Valley of the Four Winds", "Dread Wastes", "Townlong Steppes",
-			"Kun-Lai Summit", "Krasarang Wilds", "Vale of Eternal Blossoms", "Timeless Isle",
-			"The Veiled Stair", "Shado-Pan Monastery",
-		},
+		["map_ids"] = { 806,807,809,810,811,857,858,873,877,951 },
 	},
 	["Rich Ghost Iron Deposit"] = {
 		["rank"] = 34,
 		["item_id"] = 72092, --Ghost Iron Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 550, 575, 600, 600 },
-		["zones"] = {
-			"The Jade Forest", "Valley of the Four Winds", "Dread Wastes", "Kun-Lai Summit",
-			"Townlong Steppes", "Vale of Eternal Blossoms", "Krasarang Wilds", "The Veiled Stair",
-			"Timeless Isle",
-		},
+		["map_ids"] = { 806,807,809,810,811,857,858,873,951 },
 	},
 	["Kyparite Deposit"] = {
 		["rank"] = 35,
 		["item_id"] = 72093, --Kyparite
 		["ply_level"] = 1,
 		["node_levels"] = { 550, 575, 600, 600 },
-		["zones"] = {
-			"Dread Wastes", "Townlong Steppes", "Siege of Niuzao Temple",
-		},
+		["map_ids"] = { 810,858,887 },
 	},
 	["Rich Kyparite Deposit"] = {
 		["rank"] = 36,
 		["item_id"] = 72093, --Kyparite
 		["ply_level"] = 1,
 		["node_levels"] = { 575, 600, 600, 600 },
-		["zones"] = {
-			"Dread Wastes", "Townlong Steppes",
-		},
+		["map_ids"] = { 810,858 },
 	},
 	["Trillium Vein"] = {
 		["rank"] = 37,
@@ -1050,10 +925,7 @@ local SKILL_NODES = {
 		--["item_id"] = 72094, --Black Trillium Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 600, 600, 600, 600 },
-		["zones"] = {
-			"Kun-Lai Summit", "Dread Wastes", "Townlong Steppes", "Vale of Eternal Blossoms",
-			"Valley of the Four Winds", "The Jade Forest",
-		},
+		["map_ids"] = { 806,807,809,810,811,858 },
 	},
 	["Rich Trillium Vein"] = {
 		["rank"] = 38,
@@ -1061,10 +933,7 @@ local SKILL_NODES = {
 		--["item_id"] = 72103, --White Trillium Ore
 		["ply_level"] = 1,
 		["node_levels"] = { 600, 600, 600, 600 },
-		["zones"] = {
-			"Dread Wastes", "Townlong Steppes", "Vale of Eternal Blossoms", "Valley of the Four Winds",
-			"The Jade Forest", "Timeless Isle",
-		},
+		["map_ids"] = { 806,807,810,811,858,951 },
 	},
 };
 
@@ -1100,7 +969,7 @@ local function CraftBuster_Module_Mining_BuildActions()
 	end
 end
 
-local function CraftBuster_Module_Mining_HandleGather(zone_name)
+local function CraftBuster_Module_Mining_HandleGather(zone_map_id)
 	local skill_level = CraftBuster_GetSkillLevel(SKILL_ID);
 	local gather_data = {
 		["zones"] = {},
@@ -1109,8 +978,8 @@ local function CraftBuster_Module_Mining_HandleGather(zone_name)
 	
 	local found = false;
 	for node_name, node_data in sortedpairs(SKILL_NODES) do
-		for _,zone in sortedpairs(node_data.zones) do
-			if (string.find(zone, zone_name, 1, true) ~= nil) then
+		for _,map_id in pairs(node_data["map_ids"]) do
+			if (map_id == zone_map_id) then
 				local rank = node_data["rank"];
 				gather_data["zones"][rank] = {
 					["item_id"] = node_data["item_id"],
@@ -1200,10 +1069,10 @@ local function CraftBuster_Module_Mining_AddZoneInfo(frame, item_link)
 			for node_name, node_data in sortedpairs(SKILL_NODES) do
 				if (item_id == node_data["item_id"]) then
 					found_item = true;
-					for _,zone_name in ipairs(node_data["zones"]) do
-						if (found_zones[zone_name] == nil) then
-							zones[count] = zone_name;
-							found_zones[zone_name] = zone_name;
+					for _,map_id in pairs(node_data["map_ids"]) do
+						if (found_zones[map_id] == nil) then 
+							zones[count] = CBL["MAP_NAMES"][map_id];
+							found_zones[map_id] = map_id;
 							count = count + 1;
 						end
 					end

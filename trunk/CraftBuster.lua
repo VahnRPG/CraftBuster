@@ -400,12 +400,12 @@ end
 
 function CraftBuster_UpdateZone()
 	CraftBuster_GatherFrame_Reset();
-	local zone = GetRealZoneText();
-	if (zone ~= nil) then
+	local map_id = GetCurrentMapAreaID();
+	if (map_id ~= nil) then
 		if (CraftBuster_Modules and next(CraftBuster_Modules)) then
 			for module_id, module_data in sortedpairs(CraftBuster_Modules) do
 				if (module_data.gather_function ~= nil) then
-					module_data.gather_function(zone);
+					module_data.gather_function(map_id);
 				end
 			end
 		end
