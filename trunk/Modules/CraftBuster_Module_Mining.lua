@@ -1043,11 +1043,13 @@ local function CraftBuster_Module_Mining_OnLoad()
 		trainer_map_icons = SKILL_TRAINER_MAP_ICONS,
 		spell_1 = SKILL_SPELL_1ID,
 		tooltip_info = true,
+		has_worldmap = true,
 		gather_function = CraftBuster_Module_Mining_HandleGather,
 		node_function = CraftBuster_Module_Mining_HandleNode,
 		action_function = CraftBuster_Module_Mining_HandleAction,
 	};
 	CraftBuster_RegisterModule(SKILL_ID, SKILL_NAME, module_options);
+	CraftBuster_WorldMap_AddNodes(SKILL_ID, SKILL_NODES);
 end
 
 CraftBuster_Module_Mining_OnLoad();

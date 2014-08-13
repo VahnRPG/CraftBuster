@@ -35,6 +35,7 @@
 	CBL["CONFIG_TITLE_TOOLTIP_INFO"] = "Display Tooltip Info";
 	CBL["CONFIG_TITLE_BUSTER_ICON"] = "Show Buster Icon";
 	CBL["CONFIG_TITLE_SHOW_NODES"] = "Show Nodes";
+	CBL["CONFIG_TITLE_SHOW_WORLDMAP_PROFESSIONS"] = "Professions in Nodes List";
 	CBL["CONFIG_TITLE_SHOW_PROFESSION_GATHERS"] = "Show Profession Gathers";
 	CBL["CONFIG_TITLE_OTHER"] = "Other";
 	CBL["CONFIG_SHOW_MINIMAP"] = "Show Minimap Button";
@@ -49,11 +50,14 @@
 	CBL["CONFIG_SHOW_TRACKER"] = "Show Tracker";
 	CBL["CONFIG_EXPAND_TRACKER"] = "Expand Tracker";
 	CBL["CONFIG_TRACKER_POSITION"] = "Tracker Position";
+	CBL["CONFIG_SHOW_WORLDMAP"] = "Show Nodes List";
+	CBL["CONFIG_EXPAND_WORLDMAP"] = "Expand Nodes List";
 	CBL["CONFIG_SHOW_GATHERER"] = "Show Gatherer";
 	CBL["CONFIG_SHOW_ZONE_NODES"] = "Show Zone Nodes";
 	CBL["CONFIG_SHOW_SKILLUP_NODES"] = "Show Skill-Up Nodes";
 	CBL["CONFIG_EXPAND_GATHERER"] = "Expand Gatherer";
 	CBL["CONFIG_AUTOHIDE_GATHERER"] = "Auto-Hide Gatherer";
+	CBL["CONFIG_WORLDMAP_POSITION"] = "World Map Nodes List Position";
 	CBL["CONFIG_GATHERER_POSITION"] = "Gatherer Position";
 	CBL["CONFIG_BUSTER_POSITION"] = "Buster Position";
 	CBL["CONFIG_POSITION_X"] = "X:";

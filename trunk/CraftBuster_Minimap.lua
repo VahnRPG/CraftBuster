@@ -23,6 +23,13 @@ function CraftBuster_MinimapDropDownButton_ShowTracking()
 	return false;
 end
 
+function CraftBuster_MinimapDropDownButton_ShowWorldMap()
+	if (CraftBusterEntry ~= nil and CraftBusterOptions[CraftBusterEntry].worldmap_frame.show) then
+		return true;
+	end
+	return false;
+end
+
 function CraftBuster_MinimapDropDownButton_ShowGatherer()
 	if (CraftBusterEntry ~= nil and CraftBusterOptions[CraftBusterEntry].gather_frame.show) then
 		return true;
@@ -83,6 +90,12 @@ function CraftBuster_Minimap_SetShowTracking(self, id, unused, checked)
 	UIDropDownMenu_Refresh(CraftBuster_MinimapButtonDropDown);
 end
 
+function CraftBuster_Minimap_SetShowWorldMap(self, id, unused, checked)
+	CraftBusterOptions[CraftBusterEntry].worldmap_frame.show = checked;
+	CraftBuster_WorldMap_Update();
+	UIDropDownMenu_Refresh(CraftBuster_MinimapButtonDropDown);
+end
+
 function CraftBuster_Minimap_SetShowGatherer(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].gather_frame.show = checked;
 	CraftBuster_UpdateZone();
@@ -133,6 +146,12 @@ end
 function CraftBuster_Minimap_SetBuster(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].modules[id].show_buster = checked;
 	CraftBuster_SkillFrame_Update();
+	UIDropDownMenu_Refresh(CraftBuster_MinimapButtonDropDown);
+end
+
+function CraftBuster_Minimap_SetProfessionWorldMap(self, id, unused, checked)
+	CraftBusterOptions[CraftBusterEntry].modules[id].show_worldmap_icons = checked;
+	CraftBuster_WorldMap_Update();
 	UIDropDownMenu_Refresh(CraftBuster_MinimapButtonDropDown);
 end
 

@@ -1,4 +1,4 @@
-local DB_VERSION = 0.02;
+local DB_VERSION = 0.03;
 
 CraftBusterOptions = {};
 CraftBusterPlayer = nil;
@@ -183,6 +183,17 @@ function CraftBuster_InitSettings(reset)
 		CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map = true;
 		CraftBusterOptions[CraftBusterEntry].map_icons.show_mini_map = true;
 	end
+	if (not CraftBusterOptions[CraftBusterEntry].worldmap_frame) then
+		CraftBusterOptions[CraftBusterEntry].worldmap_frame = {};
+		CraftBusterOptions[CraftBusterEntry].worldmap_frame.show = true;
+		CraftBusterOptions[CraftBusterEntry].worldmap_frame.position = {
+			point = "TOPLEFT",
+			relative_point = "TOPLEFT",
+			x = 20,
+			y = 20,
+		};
+		CraftBusterOptions[CraftBusterEntry].worldmap_frame.state = "expanded";
+	end
 		CraftBusterOptions[CraftBusterEntry].map_icons.show_icons = {};
 	if (not CraftBusterOptions[CraftBusterEntry].modules) then
 		CraftBusterOptions[CraftBusterEntry].modules = {};
@@ -196,6 +207,7 @@ function CraftBuster_InitSettings(reset)
 				CraftBusterOptions[CraftBusterEntry].modules[module_id].show_buster = true;
 				CraftBusterOptions[CraftBusterEntry].modules[module_id].show_trainer_map_icons = true;
 				CraftBusterOptions[CraftBusterEntry].modules[module_id].show_station_map_icons = true;
+				CraftBusterOptions[CraftBusterEntry].modules[module_id].show_worldmap_icons = true;
 			end
 		end
 	end
@@ -233,6 +245,14 @@ function CraftBuster_InitVersionSettings()
 		end
 	end
 
+	if (not CraftBusterOptions[CraftBusterEntry].db_version or CraftBusterOptions[CraftBusterEntry].db_version < 0.03) then
+		if (CraftBuster_Modules and next(CraftBuster_Modules)) then
+			for module_id, module_data in sortedpairs(CraftBuster_Modules) do
+				CraftBusterOptions[CraftBusterEntry].modules[module_id].show_worldmap_icons = true;
+			end
+		end
+	end
+
 	CraftBusterOptions[CraftBusterEntry].db_version = DB_VERSION;
 end
 
@@ -251,6 +271,7 @@ function CraftBuster_RegisterModule(module_id, module_name, module_options)
 		CraftBuster_Modules[module_id].spell_buster = nil;
 		CraftBuster_Modules[module_id].spell_buster_id = nil;
 		CraftBuster_Modules[module_id].tooltip_info = nil;
+		CraftBuster_Modules[module_id].has_worldmap = nil;
 		CraftBuster_Modules[module_id].bustable_spell = nil;
 		CraftBuster_Modules[module_id].bustable_type = nil;
 		CraftBuster_Modules[module_id].bustable_function = nil;
@@ -286,6 +307,9 @@ function CraftBuster_RegisterModule(module_id, module_name, module_options)
 	end
 	if (module_options.tooltip_info) then
 		CraftBuster_Modules[module_id].tooltip_info = module_options.tooltip_info;
+	end
+	if (module_options.has_worldmap) then
+		CraftBuster_Modules[module_id].has_worldmap = module_options.has_worldmap;
 	end
 	if (module_options.bustable_spell) then
 		CraftBuster_Modules[module_id].bustable_spell = GetSpellInfo(module_options.bustable_spell);

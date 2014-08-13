@@ -1,4 +1,4 @@
-local MAX_GATHER_RECORDS = 100;
+local MAX_FRAMES = 100;
 local saved_gather = {
 	["zones"] = {},
 	["skill"] = {},
@@ -28,7 +28,7 @@ function CraftBuster_GatherFrame_Reset()
 	
 	if (_G["CraftBuster_GatherFrameZoneNode100"] == nil) then
 		local frame;
-		for i=1,MAX_GATHER_RECORDS do
+		for i=1,MAX_FRAMES do
 			frame = CreateFrame("Frame", "CraftBuster_GatherFrameZoneNode" .. i, CraftBuster_GatherFrame, "CraftBuster_Gather_BarTemplate");
 			frame = CreateFrame("Frame", "CraftBuster_GatherFrameSkillNode" .. i, CraftBuster_GatherFrame, "CraftBuster_Gather_BarTemplate");
 		end
@@ -55,14 +55,13 @@ function CraftBuster_GatherFrame_Update()
 	end
 	if (CraftBusterOptions[CraftBusterEntry].gather_frame.show) then
 		if (CraftBusterOptions[CraftBusterEntry].gather_frame.state == "expanded") then
-			for i=1,MAX_GATHER_RECORDS do
+			for i=1,MAX_FRAMES do
 				_G["CraftBuster_GatherFrameZoneNode" .. i]:Hide();
 				_G["CraftBuster_GatherFrameSkillNode" .. i]:Hide();
 			end
 
 			local count = 0;
 			local padding = 0;
-			local label = "";
 			if (CraftBusterOptions[CraftBusterEntry].gather_frame.show_zone_nodes and saved_gather["zones"] and next(saved_gather["zones"])) then
 				padding = padding + 1;
 				CraftBuster_GatherFrameZoneNodes:SetPoint("TOP", "CraftBuster_GatherFrame", "TOP", 0, -10);

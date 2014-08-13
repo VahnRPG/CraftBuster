@@ -1,0 +1,210 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+	<Script file="CraftBuster_WorldMap.lua"/>
+
+	<Frame name="CraftBuster_WorldMap_BarTemplate" frameStrata="FULLSCREEN_DIALOG" virtual="true">
+		<Size x="280" y="18" />
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentLabel" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="30" y="-4" />
+					</Anchors>
+				</FontString>
+				<FontString name="$parentOrange" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="210" y="-4"/>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentYellow" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="235" y="-4"/>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentGreen" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="260" y="-4"/>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentGrey" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="285" y="-4"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentIcon">
+				<Size x="18" y="18"/>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="5" y="0"/>
+				</Anchors>
+				<Layers>
+					<Layer level="ARTWORK">
+						<Texture name="$parentIcon" alphaMode="BLEND"/>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnEnter>
+						GameTooltip:SetOwner(self, "ANCHOR_LEFT");
+						GameTooltip:SetItemByID(self.item_id);
+						GameTooltip:Show();
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+			</Button>
+		</Frames>
+	</Frame>
+
+	<Frame name="CraftBuster_WorldMap_MoverFrame" parent="WorldMapFrame" frameStrata="FULLSCREEN_DIALOG" toplevel="true" enableMouse="true" movable="true" hidden="false">
+		<Size>
+			<AbsDimension x="320" y="10"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" relativeTo="WorldMapFrame"/>
+		</Anchors>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parent_Texture" file="Interface\AddOns\CraftBuster\Images\CraftBuster_Mover">
+					<Size>
+						<AbsDimension x="320" y="16"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="$parentLabel" inherits="GameFontHighlight" text="Zone Nodes">
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parent_ConfigMenu" hidden="false">
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="8" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\CraftBuster\Images\CraftBuster_Mover_Menu" />
+				<Scripts>
+					<OnClick>
+						securecall("CraftBuster_WorldMap_Config_OnClick");
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parent_CollapseFrame" hidden="false">
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-16" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\CraftBuster\Images\CraftBuster_Mover_Collapse" />
+				<Scripts>
+					<OnClick>
+						securecall("CraftBuster_WorldMap_Collapse_OnClick");
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parent_CloseFrame" hidden="false">
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent_CollapseFrame" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-2" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\CraftBuster\Images\CraftBuster_Mover_Close"/>
+				<Scripts>
+					<OnClick>
+						securecall("CraftBuster_WorldMap_Close_OnClick");
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				self:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnDragStart>
+				self.dragging = true;
+				self:StartMoving();
+			</OnDragStart>
+			<OnDragStop>
+				self.dragging = false;
+				self:StopMovingOrSizing();
+			</OnDragStop>
+			<OnUpdate>
+				if (self.dragging) then
+					CraftBuster_WorldMap_OnDrag();
+				end
+			</OnUpdate>
+		</Scripts>
+	</Frame>
+
+	<Frame name="CraftBuster_WorldMapFrame" parent="WorldMapFrame" frameStrata="FULLSCREEN_DIALOG" toplevel="true" enableMouse="true" movable="true" hidden="false">
+		<Size>
+			<AbsDimension x="320" y="28"/>
+		</Size>
+		<Anchors>
+			<Anchor point="TOPLEFT" relativeTo="CraftBuster_WorldMap_MoverFrame" relativePoint="BOTTOMLEFT">
+				<Offset>
+					<AbsDimension x="0" y="2"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer level="ARTWORK">
+				<FontString name="$parentNoneFound" inherits="GameFontHighlight" text="None Found!" hidden="false">
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Backdrop bgFile="Interface\TutorialFrame\TutorialFrameBackground" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+			<BackgroundInsets>
+				<AbsInset left="5" right="5" top="5" bottom="5"/>
+			</BackgroundInsets>
+		</Backdrop>
+		<Scripts>
+			<OnLoad function="CraftBuster_WorldMap_OnLoad" />
+			<OnEvent function="CraftBuster_WorldMap_OnEvent" />
+		</Scripts>
+	</Frame>
+</Ui>
