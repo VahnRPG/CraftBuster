@@ -155,17 +155,21 @@ local function CraftBuster_Module_Skinning_UpdateTooltip()
 		level_orange = 100 - (10 * level);
 	elseif (level > 20 and level <= 73) then
 		level_orange = 5 * level;
-	elseif (level > 73 and level <= 80) then
-		level_orange = 10 * level;
-	elseif (level > 80 and level <= 83) then
-		level_orange = 5 * level;
-	elseif (level > 83) then
-		level_orange = 20 * level;
+	elseif (level > 73 and level <= 83) then
+		level_orange = 5 * level + ((level - 73) * 5);
+	elseif (level == 84) then
+		level_orange = 470;
+	elseif (level == 85) then
+		level_orange = 490;
+	elseif (level == 86) then
+		level_orange = 510;
+	elseif (level >= 87) then
+		level_orange = level * 5 + 95;
 	end
 	local level_yellow = level_orange + 50;
 	local level_green = level_orange + 75;
 	local level_grey = level_orange + 100;
-	GameTooltip:AddLine(CBL["NODE_MSG"] .. ORANGE_FONT_COLOR_CODE .. " " .. level_orange .. YELLOW_FONT_COLOR_CODE .. " " .. level_yellow .. GREEN_FONT_COLOR_CODE .. " " .. level_green .. GRAY_FONT_COLOR_CODE .. " " .. level_grey);
+	GameTooltip:AddLine(CBL["NODE_MSG"] .. ORANGE_FONT_COLOR_CODE .. " " .. math.min(level_orange, CBG_MAX_PROFESSION_RANK) .. YELLOW_FONT_COLOR_CODE .. " " .. math.min(level_yellow, CBG_MAX_PROFESSION_RANK) .. GREEN_FONT_COLOR_CODE .. " " .. math.min(level_green, CBG_MAX_PROFESSION_RANK) .. GRAY_FONT_COLOR_CODE .. " " .. math.min(level_grey, CBG_MAX_PROFESSION_RANK));
 	GameTooltip:Show();
 end
 
