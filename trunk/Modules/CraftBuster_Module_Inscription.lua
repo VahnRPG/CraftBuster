@@ -8,100 +8,100 @@ local SKILL_BUST_SPELLID = 51005;
 local SKILL_ACTIONS = {};
 local SKILL_TRAINER_MAP_ICONS = {
 	[491] = {		--Howling Fjord
-			["Alliance"] = {
-				[26916] = { ["name"] = "Mindri Dinkles", ["floor"] = 0, ["pos"] = { 58.2, 62.4 } },
-			},
-			["Horde"] = {
-				[26959] = { ["name"] = "Booker Kells", ["floor"] = 0, ["pos"] = { 79.4, 29.2 } },
-			},
+		["Alliance"] = {
+			[26916] = { ["name"] = "Mindri Dinkles", ["floor"] = 0, ["pos"] = { 58.2, 62.4 } },
+		},
+		["Horde"] = {
+			[26959] = { ["name"] = "Booker Kells", ["floor"] = 0, ["pos"] = { 79.4, 29.2 } },
+		},
 	},
 	[486] = {		--Borean Tundra
-			["Alliance"] = {
-				[26995] = { ["name"] = "Tink Brightbolt", ["floor"] = 0, ["pos"] = { 57.6, 71.6 } },
-			},
-			["Horde"] = {
-				[26977] = { ["name"] = "Adelene Sunlance", ["floor"] = 0, ["pos"] = { 41.2, 53.8 } },
-			},
+		["Alliance"] = {
+			[26995] = { ["name"] = "Tink Brightbolt", ["floor"] = 0, ["pos"] = { 57.6, 71.6 } },
+		},
+		["Horde"] = {
+			[26977] = { ["name"] = "Adelene Sunlance", ["floor"] = 0, ["pos"] = { 41.2, 53.8 } },
+		},
 	},
 	[301] = {		--Stormwind City
-			["Alliance"] = {
-				[30713] = { ["name"] = "Catarina Stanford", ["floor"] = 0, ["pos"] = { 49.6, 74 } },
-			},
+		["Alliance"] = {
+			[30713] = { ["name"] = "Catarina Stanford", ["floor"] = 0, ["pos"] = { 49.6, 74 } },
+		},
 	},
 	[381] = {		--Darnassus
-			["Alliance"] = {
-				[30715] = { ["name"] = "Feyden Darkin", ["floor"] = 0, ["pos"] = { 56.6, 31.4 } },
-			},
+		["Alliance"] = {
+			[30715] = { ["name"] = "Feyden Darkin", ["floor"] = 0, ["pos"] = { 56.6, 31.4 } },
+		},
 	},
 	[471] = {		--The Exodar
-			["Alliance"] = {
-				[30716] = { ["name"] = "Thoth", ["floor"] = 0, ["pos"] = { 39.8, 38.8 } },
-			},
+		["Alliance"] = {
+			[30716] = { ["name"] = "Thoth", ["floor"] = 0, ["pos"] = { 39.8, 38.8 } },
+		},
 	},
 	[341] = {		--Ironforge
-			["Alliance"] = {
-				[30717] = { ["name"] = "Elise Brightletter", ["floor"] = 0, ["pos"] = { 60.4, 44.4 } },
-			},
+		["Alliance"] = {
+			[30717] = { ["name"] = "Elise Brightletter", ["floor"] = 0, ["pos"] = { 60.4, 44.4 } },
+		},
 	},
 	[465] = {		--Hellfire Peninsula
-			["Alliance"] = {
-				[30721] = { ["name"] = "Michael Schwan", ["floor"] = 0, ["pos"] = { 53.8, 65.4 } },
-			},
-			["Horde"] = {
-				[30722] = { ["name"] = "Neferatti", ["floor"] = 0, ["pos"] = { 52.2, 36 } },
-			},
+		["Alliance"] = {
+			[30721] = { ["name"] = "Michael Schwan", ["floor"] = 0, ["pos"] = { 53.8, 65.4 } },
+		},
+		["Horde"] = {
+			[30722] = { ["name"] = "Neferatti", ["floor"] = 0, ["pos"] = { 52.2, 36 } },
+		},
 	},
 	[141] = {		--Dustwallow Marsh
-			["Alliance"] = {
-				[53415] = { ["name"] = "Theoden Manners", ["floor"] = 0, ["pos"] = { 66, 49.6 } },
-			},
+		["Alliance"] = {
+			[53415] = { ["name"] = "Theoden Manners", ["floor"] = 0, ["pos"] = { 66, 49.6 } },
+		},
 	},
 	[362] = {		--Thunder Bluff
-			["Horde"] = {
-				[30709] = { ["name"] = "Poshken Hardbinder", ["floor"] = 0, ["pos"] = { 28.4, 20.4 } },
-			},
+		["Horde"] = {
+			[30709] = { ["name"] = "Poshken Hardbinder", ["floor"] = 0, ["pos"] = { 28.4, 20.4 } },
+		},
 	},
 	[480] = {		--Silvermoon City
-			["Horde"] = {
-				[30710] = { ["name"] = "Zantasia", ["floor"] = 0, ["pos"] = { 69.2, 23.6 } },
-			},
+		["Horde"] = {
+			[30710] = { ["name"] = "Zantasia", ["floor"] = 0, ["pos"] = { 69.2, 23.6 } },
+		},
 	},
 	[382] = {		--Undercity
-			["Horde"] = {
-				[30711] = { ["name"] = "Margaux Parchley", ["floor"] = 0, ["pos"] = { 61, 58.2 } },
-			},
+		["Horde"] = {
+			[30711] = { ["name"] = "Margaux Parchley", ["floor"] = 0, ["pos"] = { 61, 58.2 } },
+		},
 	},
 	[321] = {		--Orgrimmar
-			["Horde"] = {
-				[46716] = { ["name"] = "Nerog", ["floor"] = 1, ["pos"] = { 55.2, 55.8 } },
-			},
+		["Horde"] = {
+			[46716] = { ["name"] = "Nerog", ["floor"] = 1, ["pos"] = { 55.2, 55.8 } },
+		},
 	},
 	[504] = {		--Dalaran
-			["Neutral"] = {
-				[28702] = { ["name"] = "Professor Pallin", ["floor"] = 1, ["pos"] = { 42.4, 37.6 } },
-			},
+		["Neutral"] = {
+			[28702] = { ["name"] = "Professor Pallin", ["floor"] = 1, ["pos"] = { 42.4, 37.6 } },
+		},
 	},
 	[492] = {		--Icecrown
-			["Neutral"] = {
-				[33603] = { ["name"] = "Arthur Denny", ["floor"] = 0, ["pos"] = { 71.6, 20.8 } },
-			},
+		["Neutral"] = {
+			[33603] = { ["name"] = "Arthur Denny", ["floor"] = 0, ["pos"] = { 71.6, 20.8 } },
+		},
 	},
 	[481] = {		--Shattrath City
-			["Neutral"] = {
-				[33638] = { ["name"] = "Scribe Lanloer", ["floor"] = 0, ["pos"] = { 56, 74.4 } },
-				[33679] = { ["name"] = "Recorder Lidio", ["floor"] = 0, ["pos"] = { 36.2, 43.8 } },
-			},
+		["Neutral"] = {
+			[33638] = { ["name"] = "Scribe Lanloer", ["floor"] = 0, ["pos"] = { 56, 74.4 } },
+			[33679] = { ["name"] = "Recorder Lidio", ["floor"] = 0, ["pos"] = { 36.2, 43.8 } },
+		},
 	},
 	[806] = {		--The Jade Forest
-			["Neutral"] = {
-				[56065] = { ["name"] = "Inkmaster Wei", ["floor"] = 0, ["pos"] = { 54.6, 44.2 } },
-				[62327] = { ["name"] = "Scribe Rinji", ["floor"] = 0, ["pos"] = { 47.6, 35 } },
-			},
+		["Neutral"] = {
+			[56065] = { ["name"] = "Inkmaster Wei", ["floor"] = 0, ["pos"] = { 54.6, 44.2 } },
+			[62327] = { ["name"] = "Scribe Rinji", ["floor"] = 0, ["pos"] = { 47.6, 35 } },
+		},
 	},
 	[811] = {		--Vale of Eternal Blossoms
-			["Neutral"] = {
-				[64691] = { ["name"] = "Lorewalker Huynh", ["floor"] = 0, ["pos"] = { 82, 29.4 } },
-			},
+		["Neutral"] = {
+			[64691] = { ["name"] = "Lorewalker Huynh", ["floor"] = 0, ["pos"] = { 82, 29.4 } },
+		},
 	},
 };
 local INSC_HERBS = {
@@ -573,6 +573,10 @@ local function CraftBuster_Module_Inscription_HandleAction(skill_data)
 	end
 end
 
+local function CraftBuster_Module_Inscription_DisplayActions(display_frame)
+	CraftBuster_Module_BuildActionDisplay(display_frame, SKILL_ID, SKILL_ACTIONS, SKILL_TYPE, SKILL_NAME, SKILL_SHORT_CODE);
+end
+
 local function CraftBuster_Module_Inscription_OnLoad()
 	SKILL_ACTIONS = CraftBuster_Module_BuildBaseActions(SKILL_TYPE, SKILL_NAME, SKILL_SHORT_CODE);
 	local module_options = {
@@ -586,6 +590,7 @@ local function CraftBuster_Module_Inscription_OnLoad()
 		bustable_function = CraftBuster_Module_Inscription_GetBustables,
 		sort_function = CraftBuster_Module_Inscription_Sort,
 		action_function = CraftBuster_Module_Inscription_HandleAction,
+		display_action_function = CraftBuster_Module_Inscription_DisplayActions,
 	};
 	CraftBuster_RegisterModule(SKILL_ID, SKILL_NAME, module_options);
 end
@@ -638,13 +643,33 @@ local function CraftBuster_Module_Inscription_AddMillingInfo(frame, item_link)
 					if (INSC_PIGMENTS[pigment_id]) then
 						local pigment = INSC_PIGMENTS[pigment_id];
 						if (item_type == "herb" or item_type == "ink") then
-							output_pigments[pigment_id] = pigment["name"];
+							local pigment_name = GetItemInfo(pigment_id);
+							if (not pigment_name) then
+								pigment_name = pigment["name"];
+							end
+							output_pigments[pigment_id] = pigment_name;
 						end
 						if (item_type == "pigment" or item_type == "ink") then
-							output_herbs = push_table(output_herbs, pigment["herbs"]);
+							local herbs = {};
+							for herb_id, _ in pairs(pigment["herbs"]) do
+								local herb_name = GetItemInfo(herb_id);
+								if (not herb_name) then
+									herb_name = pigment["herbs"][herb_id];
+								end
+								herbs[herb_id] = herb_name;
+							end
+							output_herbs = push_table(output_herbs, herbs);
 						end
 						if (item_type == "herb" or item_type == "pigment") then
-							output_inks = push_table(output_inks, pigment["inks"]);
+							local inks = {};
+							for ink_id, _ in pairs(pigment["inks"]) do
+								local ink_name = GetItemInfo(ink_id);
+								if (not ink_name) then
+									ink_name = pigment["inks"][ink_id];
+								end
+								inks[ink_id] = ink_name .. "fasdfasdf";
+							end
+							output_inks = push_table(output_inks, inks);
 						end
 					end
 				end

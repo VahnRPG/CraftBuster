@@ -279,6 +279,7 @@ function CraftBuster_RegisterModule(module_id, module_name, module_options)
 		CraftBuster_Modules[module_id].gather_function = nil;
 		CraftBuster_Modules[module_id].node_function = nil;
 		CraftBuster_Modules[module_id].action_function = nil;
+		CraftBuster_Modules[module_id].display_action_function = nil;
 		CraftBuster_Modules[module_id].tradeskill_function = nil;
 	end
 
@@ -330,6 +331,9 @@ function CraftBuster_RegisterModule(module_id, module_name, module_options)
 	end
 	if (module_options.action_function) then
 		CraftBuster_Modules[module_id].action_function = module_options.action_function;
+	end
+	if (module_options.display_action_function) then
+		CraftBuster_Modules[module_id].display_action_function = module_options.display_action_function;
 	end
 	if (module_options.tradeskill_function) then
 		CraftBuster_Modules[module_id].tradeskill_function = module_options.tradeskill_function;

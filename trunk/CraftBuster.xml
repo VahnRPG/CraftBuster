@@ -3,7 +3,6 @@
 	<Script file="CraftBuster_Tokens.lua" />
 	<Script file="CraftBuster_Globals.lua" />
 	<Script file="CraftBuster.lua" />
-	<Script file="CraftBuster_Config.lua"/>
 
 	<Frame name="CraftBusterFrame" parent="UIParent" frameStrata="LOW" toplevel="true" inherits="SecureFrameTemplate" hidden="true">
 		<Scripts>

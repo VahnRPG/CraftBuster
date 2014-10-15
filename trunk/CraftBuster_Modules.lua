@@ -7,10 +7,55 @@ function CraftBuster_Module_BuildBaseActions(skill_type, skill_name, skill_short
 			["skill_level"] = min_skill_level,
 			["action"] = CBT_NEXT_LEVEL,
 			["message"] = string.format(CBL["TRAINER_ACTION"], skill_name, title),
+			["fields"] = { skill_name, title },
 		};
 	end
 
 	return skill_actions;
+end
+
+function CraftBuster_Module_BuildActionDisplay(display_frame, skill_id, skill_actions, skill_type, skill_name, skill_short_code)
+	local messages = {
+		["trainer"] = {},
+		["nodes"] = {},
+	};
+
+	for action_id, data in sortedpairs(skill_actions) do
+		local displayed = false;
+		if (CraftBusterOptions[CraftBusterEntry].alerts[skill_id] ~= nil and CraftBusterOptions[CraftBusterEntry].alerts[skill_id][action_id] ~= nil) then
+			displayed = CraftBusterOptions[CraftBusterEntry].alerts[skill_id][action_id];
+		end
+
+		if (data.action == CBT_NEXT_LEVEL) then
+			local message = {
+				["displayed"] = displayed,
+				["title"] = data.fields[1],
+				["ply_level"] = data.ply_level,
+				["skill_level"] = data.skill_level,
+			};
+			table.insert(messages["trainer"], message);
+		else
+			local node_name = data.fields[1];
+			if (not messages["nodes"][node_name]) then
+				messages["nodes"][node_name] = {};
+				messages["nodes"][node_name]["title"] = node_name;
+				messages["nodes"][node_name][CBT_ORANGE] = false;
+				messages["nodes"][node_name][CBT_YELLOW] = false;
+				messages["nodes"][node_name][CBT_GREEN] = false;
+				messages["nodes"][node_name][CBT_GREY] = false;
+			end
+
+			if (data.action == CBT_ORANGE) then
+				messages["nodes"][node_name][CBT_ORANGE] = displayed;
+			elseif (data.action == CBT_YELLOW) then
+				messages["nodes"][node_name][CBT_YELLOW] = displayed;
+			elseif (data.action == CBT_GREEN) then
+				messages["nodes"][node_name][CBT_GREEN] = displayed;
+			elseif (data.action == CBT_GREY) then
+				messages["nodes"][node_name][CBT_GREY] = displayed;
+			end
+		end
+	end
 end
 
 function CraftBuster_Module_TranslateActionText(color_code, name, level)

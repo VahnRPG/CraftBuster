@@ -68,6 +68,7 @@ CBG_MAP_ICON_TEXTURES = {
 	},
 };
 
+CBG_SKILL_COUNT = 16;
 CBG_SORTED_SKILLS = {
 	--Primary
 	[1] = CBT_SKILL_ALCH,	--Alchemy

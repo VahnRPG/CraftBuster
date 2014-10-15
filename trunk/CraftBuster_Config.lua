@@ -38,6 +38,15 @@ local worldmap_position_x, worldmap_position_y, worldmap_position_point, worldma
 local gatherer_position_x, gatherer_position_y, gatherer_position_point, gatherer_position_relative_point;
 local buster_position_x, buster_position_y, buster_position_point, buster_position_relative_point;
 
+local backdrop = {
+	bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
+	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+	tile = true,
+	tileSize = 16,
+	edgeSize = 16,
+	insets = { left = 3, right = 3, top = 5, bottom = 3 }
+};
+
 local config_frame = CreateFrame("Frame", config_frame_name, InterfaceOptionsFramePanelContainer);
 config_frame.name = CBG_MOD_NAME;
 config_frame:SetScript("OnShow", function(config_frame)
@@ -81,6 +90,76 @@ config_frame:SetScript("OnShow", function(config_frame)
 	config_frame:SetScript("OnShow", nil);
 end);
 InterfaceOptions_AddCategory(config_frame);
+
+--[[
+local child_alerts_frame = CreateFrame("Frame", config_frame_name .. "Alerts", config_frame);
+child_alerts_frame.name = "Alerts";
+child_alerts_frame.parent = config_frame.name;
+child_alerts_frame:SetScript("OnShow", function(child_alerts_frame)
+	local title_label = child_alerts_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
+	title_label:SetPoint("TOPLEFT", 16, -16);
+	title_label:SetText(CBG_MOD_NAME .. " - " .. child_alerts_frame.name);
+
+	local alert_frame = CreateFrame("Frame", config_frame_name .. "AlertFrame", child_alerts_frame);
+	alert_frame:SetPoint("TOPLEFT", title_label, "BOTTOMLEFT", 0, -20);
+	alert_frame:SetSize(155, 500);
+	alert_frame:SetBackdrop(backdrop);
+	alert_frame:SetBackdropColor(0.1, 0.1, 0.1, 0.5);
+	alert_frame:SetBackdropBorderColor(0.4, 0.4, 0.4);
+
+	local alert_data_frame = CreateFrame("Frame", config_frame_name .. "AlertFrame", child_alerts_frame);
+	alert_data_frame:SetPoint("TOPLEFT", alert_frame, "TOPRIGHT", 5, 0);
+	alert_data_frame:SetSize(430, 500);
+	alert_data_frame:SetBackdrop(backdrop);
+	alert_data_frame:SetBackdropColor(0.1, 0.1, 0.1, 0.5);
+	alert_data_frame:SetBackdropBorderColor(0.4, 0.4, 0.4);
+
+	local alert_trainer_tab_frame = CreateFrame("Button", config_frame_name .. "AlertTrainerTab", child_alerts_frame, "TabButtonTemplate");
+	alert_trainer_tab_frame:SetPoint("TOPLEFT", alert_data_frame, "TOPLEFT", 10, 0);
+	alert_trainer_tab_frame:SetText(CBL["CONFIG_ALERTS_TAB_TRAINER"]);
+	PanelTemplates_TabResize(alert_trainer_tab_frame, 0);
+
+	local alert_nodes_tab_frame = CreateFrame("Button", config_frame_name .. "AlertNodesTab", child_alerts_frame, "TabButtonTemplate");
+	alert_nodes_tab_frame:SetPoint("TOPLEFT", alert_trainer_tab_frame, "TOPRIGHT", 5, 0);
+	alert_nodes_tab_frame:SetText(CBL["CONFIG_ALERTS_TAB_NODES"]);
+	PanelTemplates_TabResize(alert_nodes_tab_frame, 0);
+
+	--local alert_trainer_frame = CreateFrame("Frame", );
+	
+	if (CraftBuster_Modules and next(CraftBuster_Modules)) then
+		local count = 1;
+		local max_count = CBG_SKILL_COUNT - 1;
+		for _, module_id in sortedpairs(CBG_SORTED_SKILLS) do
+			local module_data = CraftBuster_Modules[module_id];
+			if (module_data.display_action_function) then
+				local alert_tab = CreateFrame("Button", config_frame_name .. "AlertTab" .. count, alert_frame, "OptionsListButtonTemplate");
+				alert_tab:SetPoint("TOPLEFT", alert_frame, "TOPLEFT", 0, -20 * count + 10);
+				alert_tab:SetSize(150, 20);
+				alert_tab:SetNormalFontObject(GameFontNormal);
+				alert_tab:SetHighlightFontObject(GameFontHighlight);
+				alert_tab:SetText(module_data.name);
+				alert_tab.text:SetPoint("LEFT", 10, 2);
+				alert_tab:SetScript("OnClick", function(self, button)
+					for i=1,max_count do
+						local button = _G[config_frame_name .. "AlertTab" .. i];
+						button.highlight:SetVertexColor(.196, .388, .8);
+						button:UnlockHighlight();
+					end
+					
+					self.highlight:SetVertexColor(1, 1, 0);
+					self:LockHighlight();
+					module_data.display_action_function(alert_data_frame);
+				end);
+
+				count = count + 1;
+			end
+		end
+	end
+
+	child_alerts_frame:SetScript("OnShow", nil);
+end);
+InterfaceOptions_AddCategory(child_alerts_frame);
+]]--
 
 local child_map_icons_frame = CreateFrame("Frame", config_frame_name .. "MapIcons", config_frame);
 child_map_icons_frame.name = "Map Icons";
@@ -140,7 +219,7 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 
 				map_icons[module_id .. "trainer"] = CreateFrame("CheckButton", label, child_map_icons_frame, "InterfaceOptionsCheckButtonTemplate");
 				map_icons[module_id .. "trainer"]:SetPoint("TOPLEFT", label .. "Icon", "TOPRIGHT", 0, 3);
-				_G[map_icons[module_id .. "trainer"]:GetName() .. "Text"]:SetText(CraftBuster_Modules[module_id].name);
+				_G[map_icons[module_id .. "trainer"]:GetName() .. "Text"]:SetText(module_data.name);
 				map_icons[module_id .. "trainer"]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_trainer_map_icons);
 				map_icons[module_id .. "trainer"]:SetScript("OnClick", function(self, button)
 					CraftBuster_Minimap_SetTrainerMapIcons(self, module_id, _, self:GetChecked());
@@ -835,18 +914,6 @@ end);
 InterfaceOptions_AddCategory(child_positioning_frame);
 
 --[[
-local child_actions_frame = CreateFrame("Frame", config_frame_name .. "Actions", config_frame);
-child_actions_frame.name = "Actions";
-child_actions_frame.parent = config_frame.name;
-child_actions_frame:SetScript("OnShow", function(child_actions_frame)
-	local title = child_actions_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
-	title:SetPoint("TOPLEFT", 16, -16);
-	title:SetText(CBG_MOD_NAME .. " - Actions");
-
-	child_actions_frame:SetScript("OnShow", nil);
-end);
-InterfaceOptions_AddCategory(child_actions_frame);
-
 local child_modules_frame = CreateFrame("Frame", config_frame_name .. "Modules", config_frame);
 child_modules_frame.name = "Modules";
 child_modules_frame.parent = config_frame.name;

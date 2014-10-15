@@ -2,56 +2,56 @@ local astrolabe = DongleStub("Astrolabe-1.0");
 
 local SKILL_ALL_PROFESSIONS_TRAINERS_MAP_ICONS = {
 	[30] = {		--Elwynn Forest
-			["Alliance"] = {
-				[47384] = { ["name"] = "Lien Farner", ["floor"] = 0, ["pos"] = { 42, 67 } },
-			},
+		["Alliance"] = {
+			[47384] = { ["name"] = "Lien Farner", ["floor"] = 0, ["pos"] = { 42, 67 } },
+		},
 	},
 	[27] = {		--Dun Morogh
-			["Alliance"] = {
-				[47396] = { ["name"] = "Wembil Taskwidget", ["floor"] = 0, ["pos"] = { 53.8, 52 } },
-			},
+		["Alliance"] = {
+			[47396] = { ["name"] = "Wembil Taskwidget", ["floor"] = 0, ["pos"] = { 53.8, 52 } },
+		},
 	},
 	[41] = {		--Teldrassil
-			["Alliance"] = {
-				[47420] = { ["name"] = "Iranis Shadebloom", ["floor"] = 0, ["pos"] = { 56, 52.2 } },
-			},
+		["Alliance"] = {
+			[47420] = { ["name"] = "Iranis Shadebloom", ["floor"] = 0, ["pos"] = { 56, 52.2 } },
+		},
 	},
 	[464] = {		--Azuremyst Isle
-			["Alliance"] = {
-				[47431] = { ["name"] = "Valn", ["floor"] = 0, ["pos"] = { 48.6, 52.2 } },
-			},
+		["Alliance"] = {
+			[47431] = { ["name"] = "Valn", ["floor"] = 0, ["pos"] = { 48.6, 52.2 } },
+		},
 	},
 	[611] = {		--Gilneas City
-			["Alliance"] = {
-				[50247] = { ["name"] = "Jack \"All-Trades\" Derrington", ["floor"] = 0, ["pos"] = { 37.2, 37.4 } },
-			},
+		["Alliance"] = {
+			[50247] = { ["name"] = "Jack \"All-Trades\" Derrington", ["floor"] = 0, ["pos"] = { 37.2, 37.4 } },
+		},
 	},
 	[20] = {		--Tirisfal Glades
-			["Horde"] = {
-				[47400] = { ["name"] = "Nedric Sallow", ["floor"] = 0, ["pos"] = { 61, 51 } },
-				[48619] = { ["name"] = "Therisa Sallow", ["floor"] = 0, ["pos"] = { 44.4, 53 } },
-			},
+		["Horde"] = {
+			[47400] = { ["name"] = "Nedric Sallow", ["floor"] = 0, ["pos"] = { 61, 51 } },
+			[48619] = { ["name"] = "Therisa Sallow", ["floor"] = 0, ["pos"] = { 44.4, 53 } },
+		},
 	},
 	[4] = {		--Durotar
-			["Horde"] = {
-				[47418] = { ["name"] = "Runda", ["floor"] = 0, ["pos"] = { 52.8, 42 } },
-			},
+		["Horde"] = {
+			[47418] = { ["name"] = "Runda", ["floor"] = 0, ["pos"] = { 52.8, 42 } },
+		},
 	},
 	[9] = {		--Mulgore
-			["Horde"] = {
-				[47419] = { ["name"] = "Lalum Darkmane", ["floor"] = 0, ["pos"] = { 46.4, 57.6 } },
-			},
+		["Horde"] = {
+			[47419] = { ["name"] = "Lalum Darkmane", ["floor"] = 0, ["pos"] = { 46.4, 57.6 } },
+		},
 	},
 	[462] = {		--Eversong Woods
-			["Horde"] = {
-				[47421] = { ["name"] = "Saren", ["floor"] = 0, ["pos"] = { 48.8, 46.8 } },
-			},
+		["Horde"] = {
+			[47421] = { ["name"] = "Saren", ["floor"] = 0, ["pos"] = { 48.8, 46.8 } },
+		},
 	},
 	[808] = {		--The Wandering Isle
-			["Neutral"] = {
-				[57620] = { ["name"] = "Whittler Dewei", ["floor"] = 0, ["pos"] = { 63, 41.4 } },
-				[65043] = { ["name"] = "Elder Oakpaw", ["floor"] = 0, ["pos"] = { 50.4, 58.6 } },
-			},
+		["Neutral"] = {
+			[57620] = { ["name"] = "Whittler Dewei", ["floor"] = 0, ["pos"] = { 63, 41.4 } },
+			[65043] = { ["name"] = "Elder Oakpaw", ["floor"] = 0, ["pos"] = { 50.4, 58.6 } },
+		},
 	},
 };
 

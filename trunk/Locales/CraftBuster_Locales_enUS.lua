@@ -38,6 +38,8 @@
 	CBL["CONFIG_TITLE_SHOW_WORLDMAP_PROFESSIONS"] = "Professions in Nodes List";
 	CBL["CONFIG_TITLE_SHOW_PROFESSION_GATHERS"] = "Show Profession Gathers";
 	CBL["CONFIG_TITLE_OTHER"] = "Other";
+	CBL["CONFIG_ALERTS_TAB_TRAINER"] = "Trainer Alerts";
+	CBL["CONFIG_ALERTS_TAB_NODES"] = "Node Alerts";
 	CBL["CONFIG_SHOW_MINIMAP"] = "Show Minimap Button";
 	CBL["CONFIG_SHOW_WORLD_MAP_ICONS"] = "Show World Map Icons";
 	CBL["CONFIG_SHOW_MINIMAP_ICONS"] = "Show Minimap Icons";
