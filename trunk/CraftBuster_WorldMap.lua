@@ -130,15 +130,15 @@ function CraftBuster_WorldMap_Close_OnClick()
 	if (InCombatLockdown()) then
 		return;
 	end
-	CraftBuster_Gather_MoverFrame:Hide();
+	CraftBuster_WorldMap_MoverFrame:Hide();
 	CraftBuster_WorldMapFrame:Hide();
-	if (not CraftBuster_Gather_MoverFrame:IsShown()) then
+	if (not CraftBuster_WorldMap_MoverFrame:IsShown()) then
 		CraftBusterOptions[CraftBusterEntry].worldmap_frame.show = false;
 	end
 end
 
 function CraftBuster_WorldMap_OnDrag()
-	local point, _, relative_point, x, y = CraftBuster_Gather_MoverFrame:GetPoint();
+	local point, _, relative_point, x, y = CraftBuster_WorldMap_MoverFrame:GetPoint();
 	CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.point = point;
 	CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.relative_point = relative_point;
 	CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.x = x;
@@ -151,8 +151,8 @@ function CraftBuster_WorldMap_UpdatePosition()
 		return;
 	end
 	local position = CraftBusterOptions[CraftBusterEntry].worldmap_frame.position;
-	CraftBuster_Gather_MoverFrame:ClearAllPoints();
-	CraftBuster_Gather_MoverFrame:SetPoint(position.point, nil, position.relative_point, position.x, position.y);
+	CraftBuster_WorldMap_MoverFrame:ClearAllPoints();
+	CraftBuster_WorldMap_MoverFrame:SetPoint(position.point, nil, position.relative_point, position.x, position.y);
 end
 
 function CraftBuster_WorldMap_ResetPosition()
