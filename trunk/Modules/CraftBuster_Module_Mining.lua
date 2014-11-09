@@ -935,6 +935,43 @@ local SKILL_NODES = {
 		["node_levels"] = { 600, 600, 600, 600 },
 		["map_ids"] = { 806,807,810,811,858,951 },
 	},
+
+	--warlords
+	["Blackrock Deposit"] = {
+		["rank"] = 36,
+		["item_id"] = 109118, --Blackrock Ore
+		["ply_level"] = 1,
+		["node_levels"] = { 600, 625, 650, 675 },
+		["map_ids"] = { 946,950,948,947,941,949,978 },
+	},
+	["Rich Blackrock Deposit"] = {
+		["rank"] = 40,
+		["item_id"] = 109118, --Blackrock Ore
+		["ply_level"] = 1,
+		["node_levels"] = { 625, 650, 675, 700 },
+		["map_ids"] = { 946,950,947,941,978 },
+	},
+	["True Iron Deposit"] = {
+		["rank"] = 41,
+		["item_id"] = 109119, --True Iron Ore
+		["ply_level"] = 1,
+		["node_levels"] = { 650, 675, 700, 700 },
+		["map_ids"] = { 946,947,950,948,949,941,978 },
+	},
+	["Rich True Iron Deposit"] = {
+		["rank"] = 42,
+		["item_id"] = 109119, --True Iron Ore
+		["ply_level"] = 1,
+		["node_levels"] = { 675, 700, 700, 700 },
+		["map_ids"] = { 950,941,947,946,978 },
+	},
+	["Smoldering True Iron Deposit"] = {
+		["rank"] = 43,
+		["item_id"] = 109119, --True Iron Ore
+		["ply_level"] = 1,
+		["node_levels"] = { 625, 650, 675, 700 },
+		["map_ids"] = { 941 },
+	},
 };
 
 local function CraftBuster_Module_Mining_BuildActions()

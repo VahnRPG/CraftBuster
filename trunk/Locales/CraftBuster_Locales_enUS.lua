@@ -104,8 +104,6 @@
 	CBL["BUSTER_IGNORE"] = CBG_CLR_WHITE .. "CTRL + Right-click to " .. CBG_CLR_RED .. "ignore";
 
 	-- Tradeskill Localization
-	--CBL["TRADESKILL_NUMLINES"] = 2;
 	CBL["TRADESKILL_NUMLINES"] = 1;
 	CBL["TRADESKILL_LINE1"] = CBG_CLR_WHITE .. "List relevant items in bags";
-	--CBL["TRADESKILL_LINE2"] = CBG_CLR_WHITE .. "fasdfadsfadsf";
 --end

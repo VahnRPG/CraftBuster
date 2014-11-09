@@ -259,7 +259,7 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 		local map_icons_check_all = CreateFrame("CheckButton", config_frame_name .. "MapIconsCheckAll", child_map_icons_frame, "InterfaceOptionsCheckButtonTemplate");
 		map_icons_check_all:SetPoint("TOPLEFT", station_map_icons_label, "TOPRIGHT", 50, 0);
 		_G[map_icons_check_all:GetName() .. "Text"]:SetText(CBL["CONFIG_MAP_ICON_CHECK_ALL"]);
-		map_icons_check_all:SetChecked(false);
+		map_icons_check_all:SetChecked(true);
 		map_icons_check_all:SetScript("OnClick", function(self, button)
 			local checked = self:GetChecked();
 			for _, module_id in sortedpairs(CBG_SORTED_SKILLS) do

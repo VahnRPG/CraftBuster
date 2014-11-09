@@ -6,7 +6,7 @@ CBG_VERSION = GetAddOnMetadata(CBG_MOD_NAME, "Version");
 CBG_LAST_UPDATED = GetAddOnMetadata(CBG_MOD_NAME, "X-Date");
 
 CBG_LOCKPICKING_LEVEL = 24;
-CBG_MAX_PROFESSIONS = 8;
+CBG_MAX_PROFESSIONS = 9;
 CBG_PROFESSION_RANKS = {
 	[1] = { 0, 75, APPRENTICE },
 	[2] = { 50, 150, JOURNEYMAN },
@@ -16,6 +16,7 @@ CBG_PROFESSION_RANKS = {
 	[6] = { 350, 450, GRAND_MASTER },
 	[7] = { 425, 525, ILLUSTRIOUS },
 	[8] = { 500, 600, ZEN_MASTER },
+	[9] = { 600, 700, DRAENOR_MASTER },
 };
 CBG_MAX_PROFESSION_RANK = CBG_PROFESSION_RANKS[CBG_MAX_PROFESSIONS][2];
 
@@ -32,6 +33,7 @@ CBG_SKILL_PLY_LEVELS = {
 	[6] = { 65, 55 },		--Grand Master
 	[7] = { 75, 75 },		--Illustrious Grand Master
 	[8] = { 80, 80 },		--Zen Master
+	[9] = { 90, 90 },		--Draenor Master
 };
 
 CBG_MAP_ICON_TEXTURES = {
@@ -243,6 +245,21 @@ CBG_MAP_IDS = {
 	811,	--Vale of Eternal Blossoms
 	807,	--Valley of the Four Winds
 
+	962,	--Draenor
+	978,	--Ashran
+	941,	--Frostfire Ridge
+	976,	--Frostwall
+	949,	--Gorgrond
+	971,	--Lunarfall
+	950,	--Nagrand
+	947,	--Shadowmoon Valley
+	948,	--Spires of Arak
+	1009,	--Stormshield
+	946,	--Talador
+	945,	--Tanaan Jungle
+	970,	--Tanaan Jungle - Assault on the Dark Portal
+	1011,	--Warspear
+
 	401,	--Alterac Valley
 	461,	--Arathi Basin
 	935,	--Deepwind Gorge
@@ -385,4 +402,16 @@ CBG_MAP_IDS = {
 	953,	--Siege of Orgrimmar
 	886,	--Terrace of Endless Spring
 	930,	--Throne of Thunder
+
+	984,	--Auchindoun
+	964,	--Bloodmaul Slag Mines
+	993,	--Grimrail Depot
+	987,	--Iron Docks
+	969,	--Shadowmoon Burial Grounds
+	989,	--Skyreach
+	1008,	--The Everbloom
+	995,	--Upper Blackrock Spire
+
+	994,	--Highmaul
+	988,	--Blackrock Foundry
 };

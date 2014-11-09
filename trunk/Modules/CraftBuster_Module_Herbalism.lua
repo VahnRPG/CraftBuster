@@ -2,7 +2,6 @@ local SKILL_ID = CBT_SKILL_HERB;
 local SKILL_NAME = CBL[CBT_SKILL_HERB];
 local SKILL_SHORT_CODE = "herb";
 local SKILL_TYPE = CBG_SKILL_GATHER;
-local SKILL_SPELL_1ID = 81708;		--Lifeblood
 local SKILL_ACTIONS = {};
 local SKILL_TRAINER_MAP_ICONS = {
 	[36] = {		--Redridge Mountains
@@ -606,6 +605,50 @@ local SKILL_NODES = {
 		["node_levels"] = { 600, 600, 600, 600 },
 		["map_ids"] = { 806,810,858,951 },
 	},
+
+	--warlords
+	["Frostweed"] = {
+		["rank"] = 59,
+		["item_id"] = 109124, --Frostweed
+		["ply_level"] = 1,
+		["node_levels"] = { 675, 600, 600, 700 },
+		["map_ids"] = { 948,947,941,978 },
+	},
+	["Fireweed"] = {
+		["rank"] = 60,
+		["item_id"] = 109125, --Fireweed
+		["ply_level"] = 1,
+		["node_levels"] = { 600, 600, 600, 700 },
+		["map_ids"] = { 948,941,978 },
+	},
+	["Gorgrond Flytrap"] = {
+		["rank"] = 61,
+		["item_id"] = 109126, --Gorgrond Flytrap
+		["ply_level"] = 1,
+		["node_levels"] = { 675, 600, 600, 700 },
+		["map_ids"] = { 948,949,978 },
+	},
+	["Starflower"] = {
+		["rank"] = 62,
+		["item_id"] = 109127, --Starflower
+		["ply_level"] = 1,
+		["node_levels"] = { 625, 650, 675, 700 },
+		["map_ids"] = { 948,947,978 },
+	},
+	["Nagrand Arrowbloom"] = {
+		["rank"] = 63,
+		["item_id"] = 109128, --Nagrand Arrowbloom
+		["ply_level"] = 1,
+		["node_levels"] = { 645, 670, 695, 700 },
+		["map_ids"] = { 948,950,978 },
+	},
+	["Talador Orchid"] = {
+		["rank"] = 64,
+		["item_id"] = 109129, --Talador Orchid
+		["ply_level"] = 1,
+		["node_levels"] = { 600, 625, 650, 775 },
+		["map_ids"] = { 948,946,978 },
+	},
 };
 
 local function CraftBuster_Module_Herbalism_BuildActions()
@@ -644,7 +687,7 @@ local function CraftBuster_Module_Herbalism_BuildActions()
 	end
 end
 
-local function CraftBuster_Module_Herbalism_HandleGather(zone_name)
+local function CraftBuster_Module_Herbalism_HandleGather(zone_map_id)
 	local skill_level = CraftBuster_GetSkillLevel(SKILL_ID);
 	local gather_data = {
 		["zones"] = {},
@@ -719,7 +762,6 @@ local function CraftBuster_Module_Herbalism_OnLoad()
 	local module_options = {
 		skill_type = CBG_SKILL_GATHER,
 		trainer_map_icons = SKILL_TRAINER_MAP_ICONS,
-		spell_1 = SKILL_SPELL_1ID,
 		tooltip_info = true,
 		has_worldmap = true,
 		gather_function = CraftBuster_Module_Herbalism_HandleGather,

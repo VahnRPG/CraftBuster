@@ -161,10 +161,12 @@ local INSC_HERBS = {
 	["89639"] = {"79251","79253"},
 	["79010"] = {"79251","79253"},
 	["79011"] = {"79251","79253"},
+	["109125"] = {"114931"},
+	["109127"] = {"114931"},
+	["109128"] = {"114931"},
 };
 
 local INSC_INKS = {
-	["37101"] = {"39151"},
 	["39469"] = {"39151"},
 	["39774"] = {"39334"},
 	["43115"] = {"43103"},
@@ -184,6 +186,8 @@ local INSC_INKS = {
 	["61981"] = {"61980"},
 	["79254"] = {"79251"},
 	["79255"] = {"79253"},
+	["112377"] = {"114931"},
+	["113111"] = {"114931"},
 };
 
 local INSC_PIGMENTS = {
@@ -196,7 +200,6 @@ local INSC_PIGMENTS = {
 			["2449"] = "Earthroot",
 		},
 		["inks"] = {
-			["37101"] = "Ivory Ink",
 			["39469"] = "Moonglow Ink",
 		},
 	},
@@ -332,6 +335,19 @@ local INSC_PIGMENTS = {
 		},
 		["inks"] = {
 			["79254"] = "Ink of Dreams",
+		},
+	},
+	["114931"] = {
+		["name"] = "Cerulean Pigment",
+		["type"] = "common",
+		["herbs"] = {
+			["109125"] = "Fireweed",
+			["109127"] = "Starflower",
+			["109128"] = "Nagrand Arrowbloom",
+		},
+		["inks"] = {
+			["112377"] = "War Paints",
+			["113111"] = "Warbinder's Ink",
 		},
 	},
 	["43104"] = {
@@ -667,7 +683,7 @@ local function CraftBuster_Module_Inscription_AddMillingInfo(frame, item_link)
 								if (not ink_name) then
 									ink_name = pigment["inks"][ink_id];
 								end
-								inks[ink_id] = ink_name .. "fasdfasdf";
+								inks[ink_id] = ink_name;
 							end
 							output_inks = push_table(output_inks, inks);
 						end
