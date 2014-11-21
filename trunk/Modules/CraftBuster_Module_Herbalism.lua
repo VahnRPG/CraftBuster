@@ -611,42 +611,42 @@ local SKILL_NODES = {
 		["rank"] = 59,
 		["item_id"] = 109124, --Frostweed
 		["ply_level"] = 1,
-		["node_levels"] = { 675, 600, 600, 700 },
+		["node_levels"] = { 600, 625, 650, 700 },
 		["map_ids"] = { 948,947,941,978 },
 	},
 	["Fireweed"] = {
 		["rank"] = 60,
 		["item_id"] = 109125, --Fireweed
 		["ply_level"] = 1,
-		["node_levels"] = { 600, 600, 600, 700 },
+		["node_levels"] = { 600, 625, 650, 700 },
 		["map_ids"] = { 948,941,978 },
 	},
 	["Gorgrond Flytrap"] = {
 		["rank"] = 61,
 		["item_id"] = 109126, --Gorgrond Flytrap
 		["ply_level"] = 1,
-		["node_levels"] = { 675, 600, 600, 700 },
+		["node_levels"] = { 600, 625, 650, 700 },
 		["map_ids"] = { 948,949,978 },
 	},
 	["Starflower"] = {
 		["rank"] = 62,
 		["item_id"] = 109127, --Starflower
 		["ply_level"] = 1,
-		["node_levels"] = { 625, 650, 675, 700 },
+		["node_levels"] = { 600, 625, 650, 700 },
 		["map_ids"] = { 948,947,978 },
 	},
 	["Nagrand Arrowbloom"] = {
 		["rank"] = 63,
 		["item_id"] = 109128, --Nagrand Arrowbloom
 		["ply_level"] = 1,
-		["node_levels"] = { 645, 670, 695, 700 },
+		["node_levels"] = { 600, 625, 650, 700 },
 		["map_ids"] = { 948,950,978 },
 	},
 	["Talador Orchid"] = {
 		["rank"] = 64,
 		["item_id"] = 109129, --Talador Orchid
 		["ply_level"] = 1,
-		["node_levels"] = { 600, 625, 650, 775 },
+		["node_levels"] = { 600, 625, 650, 700 },
 		["map_ids"] = { 948,946,978 },
 	},
 };

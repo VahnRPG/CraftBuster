@@ -161,9 +161,12 @@ local INSC_HERBS = {
 	["89639"] = {"79251","79253"},
 	["79010"] = {"79251","79253"},
 	["79011"] = {"79251","79253"},
+	["109124"] = {"114931"},
 	["109125"] = {"114931"},
+	["109126"] = {"114931"},
 	["109127"] = {"114931"},
 	["109128"] = {"114931"},
+	["109129"] = {"114931"},
 };
 
 local INSC_INKS = {
@@ -341,9 +344,12 @@ local INSC_PIGMENTS = {
 		["name"] = "Cerulean Pigment",
 		["type"] = "common",
 		["herbs"] = {
+			["109124"] = "Frostweed",
 			["109125"] = "Fireweed",
+			["109126"] = "Gorgrond Flytrap",
 			["109127"] = "Starflower",
 			["109128"] = "Nagrand Arrowbloom",
+			["109129"] = "Talador Orchid",
 		},
 		["inks"] = {
 			["112377"] = "War Paints",
@@ -499,7 +505,7 @@ local function CraftBuster_Module_Inscription_GetBustables()
 						results[item_id].item_id = item_id;
 						results[item_id].total = 0;
 					end
-					local _,item_count = GetContainerItemInfo(bag,slot);
+					local _,item_count = GetContainerItemInfo(bag, slot);
 					results[item_id].total = results[item_id].total + item_count;		--really? no += in lua? LAAAAAAAAAME
 				end
 			end
