@@ -514,7 +514,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	position_x_label:SetPoint("TOPLEFT", position_label, "BOTTOMLEFT", 10, -10);
 	position_x_label:SetText(CBL["CONFIG_POSITION_X"]);
 	
-	position_x = CreateFrame("EditBox", "PositionX", child_positioning_frame, "InputBoxTemplate");
+	position_x = CreateFrame("EditBox", config_frame_name .. "PositionX", child_positioning_frame, "InputBoxTemplate");
 	position_x:SetPoint("TOPLEFT", position_x_label, "TOPRIGHT", 10, 0);
 	position_x:SetSize(64, 16);
 	position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.x, 2));
@@ -522,7 +522,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	position_x:SetFontObject(ChatFontNormal);
 	position_x:SetCursorPosition(0);
 
-	local set_position_x = CreateFrame("Button", "SetPositionX", child_positioning_frame, "UIPanelButtonTemplate");
+	local set_position_x = CreateFrame("Button", config_frame_name .. "SetPositionX", child_positioning_frame, "UIPanelButtonTemplate");
 	set_position_x:SetPoint("TOPLEFT", position_x, "TOPRIGHT", 10, 2);
 	set_position_x:SetText(CBL["CONFIG_POSITION_SET"]);
 	set_position_x:SetSize(48, 20);
@@ -535,7 +535,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	position_y_label:SetPoint("TOPLEFT", position_x, "TOPRIGHT", 120, 0);
 	position_y_label:SetText(CBL["CONFIG_POSITION_Y"]);
 	
-	position_y = CreateFrame("EditBox", "PositionY", child_positioning_frame, "InputBoxTemplate");
+	position_y = CreateFrame("EditBox", config_frame_name .. "PositionY", child_positioning_frame, "InputBoxTemplate");
 	position_y:SetPoint("TOPLEFT", position_y_label, "TOPRIGHT", 10, 0);
 	position_y:SetSize(64, 16);
 	position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.y, 2));
@@ -543,7 +543,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	position_y:SetFontObject(ChatFontNormal);
 	position_y:SetCursorPosition(0);
 
-	local set_position_y = CreateFrame("Button", "SetPositionY", child_positioning_frame, "UIPanelButtonTemplate");
+	local set_position_y = CreateFrame("Button", config_frame_name .. "etPositionY", child_positioning_frame, "UIPanelButtonTemplate");
 	set_position_y:SetPoint("TOPLEFT", position_y, "TOPRIGHT", 10, 2);
 	set_position_y:SetText(CBL["CONFIG_POSITION_SET"]);
 	set_position_y:SetSize(48, 20);
@@ -556,7 +556,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	position_point_label:SetPoint("TOPLEFT", position_x_label, "BOTTOMLEFT", 0, -20);
 	position_point_label:SetText(CBL["CONFIG_POSITION_POINT"]);
 
-	position_point = CreateFrame("Frame", "SetPoint", child_positioning_frame, "UIDropDownMenuTemplate");
+	position_point = CreateFrame("Frame", config_frame_name .. "SetPoint", child_positioning_frame, "UIDropDownMenuTemplate");
 	position_point:SetPoint("TOPLEFT", position_point_label, "TOPRIGHT", 0, 2);
 	UIDropDownMenu_Initialize(position_point, function()
 		local points = { "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT", "CENTER" };
@@ -579,7 +579,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	position_relative_point_label:SetPoint("TOPLEFT", position_y_label, "BOTTOMLEFT", 0, -20);
 	position_relative_point_label:SetText(CBL["CONFIG_POSITION_RELATIVE_POINT"]);
 
-	position_relative_point = CreateFrame("Frame", "SetRelativePoint", child_positioning_frame, "UIDropDownMenuTemplate");
+	position_relative_point = CreateFrame("Frame", config_frame_name .. "SetRelativePoint", child_positioning_frame, "UIDropDownMenuTemplate");
 	position_relative_point:SetPoint("TOPLEFT", position_relative_point_label, "TOPRIGHT", 0, 2);
 	UIDropDownMenu_Initialize(position_relative_point, function()
 		local points = { "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT", "CENTER" };
@@ -607,7 +607,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	worldmap_position_x_label:SetPoint("TOPLEFT", worldmap_position_label, "BOTTOMLEFT", 10, -10);
 	worldmap_position_x_label:SetText(CBL["CONFIG_POSITION_X"]);
 	
-	worldmap_position_x = CreateFrame("EditBox", "WorldMapPositionX", child_positioning_frame, "InputBoxTemplate");
+	worldmap_position_x = CreateFrame("EditBox", config_frame_name .. "WorldMapPositionX", child_positioning_frame, "InputBoxTemplate");
 	worldmap_position_x:SetPoint("TOPLEFT", worldmap_position_x_label, "TOPRIGHT", 10, 0);
 	worldmap_position_x:SetSize(64, 16);
 	worldmap_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.x, 2));
@@ -615,7 +615,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	worldmap_position_x:SetFontObject(ChatFontNormal);
 	worldmap_position_x:SetCursorPosition(0);
 
-	local set_worldmap_position_x = CreateFrame("Button", "SetWorldMapPositionX", child_positioning_frame, "UIPanelButtonTemplate");
+	local set_worldmap_position_x = CreateFrame("Button", config_frame_name .. "SetWorldMapPositionX", child_positioning_frame, "UIPanelButtonTemplate");
 	set_worldmap_position_x:SetPoint("TOPLEFT", worldmap_position_x, "TOPRIGHT", 10, 2);
 	set_worldmap_position_x:SetText(CBL["CONFIG_POSITION_SET"]);
 	set_worldmap_position_x:SetSize(48, 20);
@@ -628,7 +628,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	worldmap_position_y_label:SetPoint("TOPLEFT", worldmap_position_x, "TOPRIGHT", 120, 0);
 	worldmap_position_y_label:SetText(CBL["CONFIG_POSITION_Y"]);
 	
-	worldmap_position_y = CreateFrame("EditBox", "WorldMapPositionY", child_positioning_frame, "InputBoxTemplate");
+	worldmap_position_y = CreateFrame("EditBox", config_frame_name .. "WorldMapPositionY", child_positioning_frame, "InputBoxTemplate");
 	worldmap_position_y:SetPoint("TOPLEFT", worldmap_position_y_label, "TOPRIGHT", 10, 0);
 	worldmap_position_y:SetSize(64, 16);
 	worldmap_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.y, 2));
@@ -636,7 +636,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	worldmap_position_y:SetFontObject(ChatFontNormal);
 	worldmap_position_y:SetCursorPosition(0);
 
-	local set_worldmap_position_y = CreateFrame("Button", "SetWorldMapPositionY", child_positioning_frame, "UIPanelButtonTemplate");
+	local set_worldmap_position_y = CreateFrame("Button", config_frame_name .. "SetWorldMapPositionY", child_positioning_frame, "UIPanelButtonTemplate");
 	set_worldmap_position_y:SetPoint("TOPLEFT", worldmap_position_y, "TOPRIGHT", 10, 2);
 	set_worldmap_position_y:SetText(CBL["CONFIG_POSITION_SET"]);
 	set_worldmap_position_y:SetSize(48, 20);
@@ -649,7 +649,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	worldmap_position_point_label:SetPoint("TOPLEFT", worldmap_position_x_label, "BOTTOMLEFT", 0, -20);
 	worldmap_position_point_label:SetText(CBL["CONFIG_POSITION_POINT"]);
 
-	worldmap_position_point = CreateFrame("Frame", "SetWorldMapPoint", child_positioning_frame, "UIDropDownMenuTemplate");
+	worldmap_position_point = CreateFrame("Frame", config_frame_name .. "SetWorldMapPoint", child_positioning_frame, "UIDropDownMenuTemplate");
 	worldmap_position_point:SetPoint("TOPLEFT", worldmap_position_point_label, "TOPRIGHT", 0, 2);
 	UIDropDownMenu_Initialize(worldmap_position_point, function()
 		local points = { "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT", "CENTER" };
@@ -672,7 +672,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	worldmap_position_relative_point_label:SetPoint("TOPLEFT", worldmap_position_y_label, "BOTTOMLEFT", 0, -20);
 	worldmap_position_relative_point_label:SetText(CBL["CONFIG_POSITION_RELATIVE_POINT"]);
 
-	worldmap_position_relative_point = CreateFrame("Frame", "SetWorldMapRelativePoint", child_positioning_frame, "UIDropDownMenuTemplate");
+	worldmap_position_relative_point = CreateFrame("Frame", config_frame_name .. "SetWorldMapRelativePoint", child_positioning_frame, "UIDropDownMenuTemplate");
 	worldmap_position_relative_point:SetPoint("TOPLEFT", worldmap_position_relative_point_label, "TOPRIGHT", 0, 2);
 	UIDropDownMenu_Initialize(worldmap_position_relative_point, function()
 		local points = { "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT", "CENTER" };
@@ -700,7 +700,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	gatherer_position_x_label:SetPoint("TOPLEFT", gatherer_position_label, "BOTTOMLEFT", 10, -10);
 	gatherer_position_x_label:SetText(CBL["CONFIG_POSITION_X"]);
 	
-	gatherer_position_x = CreateFrame("EditBox", "GathererPositionX", child_positioning_frame, "InputBoxTemplate");
+	gatherer_position_x = CreateFrame("EditBox", config_frame_name .. "GathererPositionX", child_positioning_frame, "InputBoxTemplate");
 	gatherer_position_x:SetPoint("TOPLEFT", gatherer_position_x_label, "TOPRIGHT", 10, 0);
 	gatherer_position_x:SetSize(64, 16);
 	gatherer_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.x, 2));
@@ -708,7 +708,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	gatherer_position_x:SetFontObject(ChatFontNormal);
 	gatherer_position_x:SetCursorPosition(0);
 
-	local set_gatherer_position_x = CreateFrame("Button", "SetGathererPositionX", child_positioning_frame, "UIPanelButtonTemplate");
+	local set_gatherer_position_x = CreateFrame("Button", config_frame_name .. "SetGathererPositionX", child_positioning_frame, "UIPanelButtonTemplate");
 	set_gatherer_position_x:SetPoint("TOPLEFT", gatherer_position_x, "TOPRIGHT", 10, 2);
 	set_gatherer_position_x:SetText(CBL["CONFIG_POSITION_SET"]);
 	set_gatherer_position_x:SetSize(48, 20);
@@ -721,7 +721,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	gatherer_position_y_label:SetPoint("TOPLEFT", gatherer_position_x, "TOPRIGHT", 120, 0);
 	gatherer_position_y_label:SetText(CBL["CONFIG_POSITION_Y"]);
 	
-	gatherer_position_y = CreateFrame("EditBox", "GathererPositionY", child_positioning_frame, "InputBoxTemplate");
+	gatherer_position_y = CreateFrame("EditBox", config_frame_name .. "GathererPositionY", child_positioning_frame, "InputBoxTemplate");
 	gatherer_position_y:SetPoint("TOPLEFT", gatherer_position_y_label, "TOPRIGHT", 10, 0);
 	gatherer_position_y:SetSize(64, 16);
 	gatherer_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.y, 2));
@@ -729,7 +729,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	gatherer_position_y:SetFontObject(ChatFontNormal);
 	gatherer_position_y:SetCursorPosition(0);
 
-	local set_gatherer_position_y = CreateFrame("Button", "SetGathererPositionY", child_positioning_frame, "UIPanelButtonTemplate");
+	local set_gatherer_position_y = CreateFrame("Button", config_frame_name .. "SetGathererPositionY", child_positioning_frame, "UIPanelButtonTemplate");
 	set_gatherer_position_y:SetPoint("TOPLEFT", gatherer_position_y, "TOPRIGHT", 10, 2);
 	set_gatherer_position_y:SetText(CBL["CONFIG_POSITION_SET"]);
 	set_gatherer_position_y:SetSize(48, 20);
@@ -742,7 +742,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	gatherer_position_point_label:SetPoint("TOPLEFT", gatherer_position_x_label, "BOTTOMLEFT", 0, -20);
 	gatherer_position_point_label:SetText(CBL["CONFIG_POSITION_POINT"]);
 
-	gatherer_position_point = CreateFrame("Frame", "SetGathererPoint", child_positioning_frame, "UIDropDownMenuTemplate");
+	gatherer_position_point = CreateFrame("Frame", config_frame_name .. "SetGathererPoint", child_positioning_frame, "UIDropDownMenuTemplate");
 	gatherer_position_point:SetPoint("TOPLEFT", gatherer_position_point_label, "TOPRIGHT", 0, 2);
 	UIDropDownMenu_Initialize(gatherer_position_point, function()
 		local points = { "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT", "CENTER" };
@@ -765,7 +765,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	gatherer_position_relative_point_label:SetPoint("TOPLEFT", gatherer_position_y_label, "BOTTOMLEFT", 0, -20);
 	gatherer_position_relative_point_label:SetText(CBL["CONFIG_POSITION_RELATIVE_POINT"]);
 
-	gatherer_position_relative_point = CreateFrame("Frame", "SetGathererRelativePoint", child_positioning_frame, "UIDropDownMenuTemplate");
+	gatherer_position_relative_point = CreateFrame("Frame", config_frame_name .. "SetGathererRelativePoint", child_positioning_frame, "UIDropDownMenuTemplate");
 	gatherer_position_relative_point:SetPoint("TOPLEFT", gatherer_position_relative_point_label, "TOPRIGHT", 0, 2);
 	UIDropDownMenu_Initialize(gatherer_position_relative_point, function()
 		local points = { "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT", "CENTER" };
@@ -793,7 +793,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	buster_position_x_label:SetPoint("TOPLEFT", buster_position_label, "BOTTOMLEFT", 10, -10);
 	buster_position_x_label:SetText(CBL["CONFIG_POSITION_X"]);
 	
-	buster_position_x = CreateFrame("EditBox", "BusterPositionX", child_positioning_frame, "InputBoxTemplate");
+	buster_position_x = CreateFrame("EditBox", config_frame_name .. "BusterPositionX", child_positioning_frame, "InputBoxTemplate");
 	buster_position_x:SetPoint("TOPLEFT", buster_position_x_label, "TOPRIGHT", 10, 0);
 	buster_position_x:SetSize(64, 16);
 	buster_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.x, 2));
@@ -801,7 +801,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	buster_position_x:SetFontObject(ChatFontNormal);
 	buster_position_x:SetCursorPosition(0);
 
-	local set_buster_position_x = CreateFrame("Button", "SetBusterPositionX", child_positioning_frame, "UIPanelButtonTemplate");
+	local set_buster_position_x = CreateFrame("Button", config_frame_name .. "SetBusterPositionX", child_positioning_frame, "UIPanelButtonTemplate");
 	set_buster_position_x:SetPoint("TOPLEFT", buster_position_x, "TOPRIGHT", 10, 2);
 	set_buster_position_x:SetText(CBL["CONFIG_POSITION_SET"]);
 	set_buster_position_x:SetSize(48, 20);
@@ -814,7 +814,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	buster_position_y_label:SetPoint("TOPLEFT", buster_position_x, "TOPRIGHT", 120, 0);
 	buster_position_y_label:SetText(CBL["CONFIG_POSITION_Y"]);
 	
-	buster_position_y = CreateFrame("EditBox", "BusterPositionY", child_positioning_frame, "InputBoxTemplate");
+	buster_position_y = CreateFrame("EditBox", config_frame_name .. "BusterPositionY", child_positioning_frame, "InputBoxTemplate");
 	buster_position_y:SetPoint("TOPLEFT", buster_position_y_label, "TOPRIGHT", 10, 0);
 	buster_position_y:SetSize(64, 16);
 	buster_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.y, 2));
@@ -822,7 +822,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	buster_position_y:SetFontObject(ChatFontNormal);
 	buster_position_y:SetCursorPosition(0);
 
-	local set_buster_position_y = CreateFrame("Button", "SetBusterPositionY", child_positioning_frame, "UIPanelButtonTemplate");
+	local set_buster_position_y = CreateFrame("Button", config_frame_name .. "SetBusterPositionY", child_positioning_frame, "UIPanelButtonTemplate");
 	set_buster_position_y:SetPoint("TOPLEFT", buster_position_y, "TOPRIGHT", 10, 2);
 	set_buster_position_y:SetText(CBL["CONFIG_POSITION_SET"]);
 	set_buster_position_y:SetSize(48, 20);
@@ -835,7 +835,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	buster_position_point_label:SetPoint("TOPLEFT", buster_position_x_label, "BOTTOMLEFT", 0, -20);
 	buster_position_point_label:SetText(CBL["CONFIG_POSITION_POINT"]);
 
-	buster_position_point = CreateFrame("Frame", "SetBusterPoint", child_positioning_frame, "UIDropDownMenuTemplate");
+	buster_position_point = CreateFrame("Frame", config_frame_name .. "SetBusterPoint", child_positioning_frame, "UIDropDownMenuTemplate");
 	buster_position_point:SetPoint("TOPLEFT", buster_position_point_label, "TOPRIGHT", 0, 2);
 	UIDropDownMenu_Initialize(buster_position_point, function()
 		local points = { "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT", "CENTER" };
@@ -858,7 +858,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	buster_position_relative_point_label:SetPoint("TOPLEFT", buster_position_y_label, "BOTTOMLEFT", 0, -20);
 	buster_position_relative_point_label:SetText(CBL["CONFIG_POSITION_RELATIVE_POINT"]);
 
-	buster_position_relative_point = CreateFrame("Frame", "SetBusterRelativePoint", child_positioning_frame, "UIDropDownMenuTemplate");
+	buster_position_relative_point = CreateFrame("Frame", config_frame_name .. "SetBusterRelativePoint", child_positioning_frame, "UIDropDownMenuTemplate");
 	buster_position_relative_point:SetPoint("TOPLEFT", buster_position_relative_point_label, "TOPRIGHT", 0, 2);
 	UIDropDownMenu_Initialize(buster_position_relative_point, function()
 		local points = { "TOPLEFT", "TOPRIGHT", "BOTTOMLEFT", "BOTTOMRIGHT", "CENTER" };
@@ -878,7 +878,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	UIDropDownMenu_SetSelectedValue(buster_position_relative_point, CraftBusterOptions[CraftBusterEntry].buster_frame.position.relative_point);
 
 	--Reset Positions
-	local reset_position = CreateFrame("Button", "ResetPositions", child_positioning_frame, "UIPanelButtonTemplate");
+	local reset_position = CreateFrame("Button", config_frame_name .. "ResetPositions", child_positioning_frame, "UIPanelButtonTemplate");
 	reset_position:SetPoint("TOPLEFT", buster_position_label, "BOTTOMLEFT", 0, -100);
 	reset_position:SetText(CBL["CONFIG_POSITIONS_RESET"]);
 	reset_position:SetSize(160, 24);
@@ -927,7 +927,7 @@ end);
 InterfaceOptions_AddCategory(child_modules_frame);
 ]]--
 
---There's probably a bettr way to do this but I'm not in the mood to figure it out right now...
+--There's probably a better way to do this but I'm not in the mood to figure it out right now...
 local function updateFields()
 	if (player_class == "ROGUE" and UnitLevel("player") >= CBG_LOCKPICKING_LEVEL) then
 		skills.lockpicking = CBT_SKILL_PICK;

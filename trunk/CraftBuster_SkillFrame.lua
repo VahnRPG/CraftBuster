@@ -33,7 +33,7 @@ function CraftBuster_SkillFrame_Update()
 							if (player_class == "ROGUE" and skill == "lockpicking" and player_level >= CBG_LOCKPICKING_LEVEL) then
 								skill_name, _, skill_texture = GetSpellInfo(index);
 								skill_level = (player_level * 5);
-								skill_max_level = 425 + 100;
+								skill_max_level = CBG_LOCKPICKING_MAX_SKILL_LEVEL;
 								skill_num_spells = 1;
 								skill_id = index;
 							end
