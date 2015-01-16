@@ -1,0 +1,29 @@
+<Bindings>
+	<Binding category="ADDONS" header="CRAFTBUSTER" name="CB_TOGGLE_SKILL_FRAME">
+		CraftBuster_SkillFrame_Collapse_OnClick();
+	</Binding>
+	<Binding category="ADDONS" name="CB_OPEN_SKILL_1">
+		_G["CraftBuster_SkillFrame_skill_1_spell_1"]:Click();
+	</Binding>
+	<Binding category="ADDONS" name="CB_OPEN_SKILL_1_BUSTER">
+		_G["CraftBuster_SkillFrame_skill_1_buster"]:Click();
+	</Binding>
+	<Binding category="ADDONS" name="CB_OPEN_SKILL_2">
+		_G["CraftBuster_SkillFrame_skill_2_spell_1"]:Click();
+	</Binding>
+	<Binding category="ADDONS" name="CB_OPEN_SKILL_2_BUSTER">
+		_G["CraftBuster_SkillFrame_skill_2_buster"]:Click();
+	</Binding>
+	<Binding category="ADDONS" name="CB_OPEN_COOKING">
+		_G["CraftBuster_SkillFrame_cooking_spell_1"]:Click();
+	</Binding>
+	<Binding category="ADDONS" name="CB_OPEN_FIRST_AID">
+		_G["CraftBuster_SkillFrame_first_aid_spell_1"]:Click();
+	</Binding>
+	<Binding category="ADDONS" name="CB_OPEN_ARCHAEOLOGY">
+		_G["CraftBuster_SkillFrame_archaeology_spell_1"]:Click();
+	</Binding>
+	<Binding category="ADDONS" name="CB_OPEN_LOCKPICKING_BUSTER">
+		_G["CraftBuster_SkillFrame_lockpicking_buster"]:Click();
+	</Binding>
+</Bindings>

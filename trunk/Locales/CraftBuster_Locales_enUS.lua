@@ -30,6 +30,16 @@
 	CBL["LBL_GREEN"] = "Green";
 	CBL["LBL_GREY"] = "Grey";
 
+	CBL["BINDING_TOGGLE_SKILL_FRAME"] = "Toggle Skill Frame";
+	CBL["BINDING_OPEN_SKILL_1"] = "Toggle Skill 1 Window";
+	CBL["BINDING_OPEN_SKILL_1_BUSTER"] = "Toggle Skill 1 Buster Window";
+	CBL["BINDING_OPEN_SKILL_2"] = "Toggle Skill 2 Window";
+	CBL["BINDING_OPEN_SKILL_2_BUSTER"] = "Toggle Skill 2 Buster Window";
+	CBL["BINDING_OPEN_COOKING"] = "Toggle Cooking Window";
+	CBL["BINDING_OPEN_FIRST_AID"] = "Toggle First Aid Window";
+	CBL["BINDING_OPEN_ARCHAEOLOGY"] = "Toggle Archaeology Window";
+	CBL["BINDING_OPEN_LOCKPICKING_BUSTER"] = "Toggle Lockpicking Buster Window";
+
 	CBL["CONFIG_TITLE_TRACK_PROFESSION"] = "Track Professions";
 	CBL["CONFIG_TITLE_TRACK_GATHERING"] = "Gathering Info";
 	CBL["CONFIG_TITLE_TOOLTIP_INFO"] = "Display Tooltip Info";

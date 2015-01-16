@@ -1,17 +1,18 @@
 ## Interface: 60000
 ## Title: CraftBuster
 ## Author: Lord Vashtal
-## Version: 1.23
-## X-Date: 2015-01-07
+## Version: 1.25
+## X-Date: 2015-01-15
 ## Notes: Provides versatile functionality for professions
 ## SavedVariables: CraftBusterOptions
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
 Libs\Astrolabe\Load.xml
 
+CraftBuster_Utils.xml
+CraftBuster_Locales.xml
 CraftBuster.xml
 CraftBuster_Config.xml
-CraftBuster_Locales.xml
 CraftBuster_MapIcons.xml
 CraftBuster_WorldMap.xml
 CraftBuster_SkillFrame.xml
