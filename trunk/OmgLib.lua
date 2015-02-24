@@ -1,6 +1,9 @@
 -------------------------------------------------------------------------------
 -- The Object-Manipulation Grouping Lib utilities file
 -------------------------------------------------------------------------------
+function create_timer(duration, callback)
+	C_Timer.After(duration, callback);
+end
 
 function str_pad(str, size, pad_str, pad_dir)
 	if (strlen(str) >= size or size < 1) then
@@ -60,7 +63,12 @@ function build_time_string(timestamp)
 	local minutes = math.fmod(t, 60);
 	local hours = math.floor(t / 60);
 
-	return str_pad(hours, 2, "0") .. ":" .. str_pad(minutes, 2, "0") .. ":" .. str_pad(seconds, 2, "0");
+	local hours_str = "";
+	if (hours > 0) then
+		hours_str = "asdqwe" .. str_pad(hours, 2, "0") .. ":";
+	end
+
+	return hours_str .. str_pad(minutes, 2, "0") .. ":" .. str_pad(seconds, 2, "0");
 end
 
 function end_string(cut_string, length)
