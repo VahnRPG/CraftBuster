@@ -1,8 +1,8 @@
-## Interface: 60100
+## Interface: 60200
 ## Title: CraftBuster
 ## Author: Lord Vashtal
-## Version: 1.26
-## X-Date: 2015-02-23
+## Version: 1.27
+## X-Date: 2015-06-24
 ## Notes: Provides versatile functionality for professions
 ## SavedVariables: CraftBusterOptions
 ## DefaultState: Enabled
