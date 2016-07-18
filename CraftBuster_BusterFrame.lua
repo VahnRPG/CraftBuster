@@ -133,6 +133,7 @@ function CraftBuster_BusterFrame_Update(skill, skill_id, spell_id)
 		CraftBuster_AddLeaveCombatCommand("CraftBuster_BusterFrame_Update", skill, skill_id, spell_id);
 		return;
 	end
+	
 	saved_skill = skill;
 	saved_skill_id = skill_id;
 	saved_spell_id = spell_id;
@@ -205,7 +206,6 @@ end
 function CraftBuster_BusterFrame_ScrollFrame_Update()
 	local offset = FauxScrollFrame_GetOffset(CraftBuster_BusterFrameScrollFrame);
 	
-	local _, _, _, x, y = CraftBuster_BusterFrameScrollFrame:GetPoint();
 	for i=1, MAX_BUSTER_ITEMS do
 		local button_frame_name = "CraftBuster_BusterFrameItem" .. i;
 		local button_frame = _G[button_frame_name];

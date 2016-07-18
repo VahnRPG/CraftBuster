@@ -1,6 +1,21 @@
 -------------------------------------------------------------------------------
 -- The Object-Manipulation Grouping Lib utilities file
 -------------------------------------------------------------------------------
+local backdrop = {
+	bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
+	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+	tile = true,
+	tileSize = 16,
+	edgeSize = 16,
+	insets = { left = 3, right = 3, top = 5, bottom = 3 }
+};
+
+function add_debug_border(frame)
+	frame:SetBackdrop(backdrop);
+	frame:SetBackdropColor(0.25, 0.05, 0.25, 0.75);
+	frame:SetBackdropBorderColor(.5, .5, 0, 1);
+end
+
 function create_timer(duration, callback)
 	C_Timer.After(duration, callback);
 end
@@ -145,21 +160,21 @@ function print_r(t)
  	local print_r_cache = {};
 	local function sub_print_r(t, indent)
 		if (print_r_cache[tostring(t)]) then
-			DEFAULT_CHAT_FRAME:AddMessage(indent .. "*" .. tostring(t));
+			echo(indent .. "*" .. tostring(t));
 		else
 			print_r_cache[tostring(t)] = true;
 			if (type(t) == "table") then
-				for pos, val in sortedpairs(t) do
+				for pos, val in pairs(t) do
 					if (type(val) == "table") then
-						DEFAULT_CHAT_FRAME:AddMessage(indent .. "[" .. pos .. "] => " .. tostring(t) .. " {");
+						echo(indent .. "[" .. pos .. "] => " .. tostring(t) .. " {");
 						sub_print_r(val,indent..string.rep(" ",string.len(pos)+8));
-						DEFAULT_CHAT_FRAME:AddMessage(indent .. string.rep(" ", string.len(pos)+6) .. "}");
+						echo(indent .. string.rep(" ", string.len(pos)+6) .. "}");
 					else
-						DEFAULT_CHAT_FRAME:AddMessage(indent .. "[" .. pos .. "] => " .. tostring(val));
+						echo(indent .. "[" .. pos .. "] => " .. tostring(val));
 					end
 				end
 			else
-				DEFAULT_CHAT_FRAME:AddMessage(indent .. tostring(t));
+				echo(indent .. tostring(t));
 			end
 		end
 	end
