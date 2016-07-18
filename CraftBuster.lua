@@ -485,13 +485,11 @@ function CraftBuster_ProcessLeaveCombatCommands()
 end
 
 local function CraftBuster_TradeSkillFrame_SetSelection(tradeskill_id)
-	echo("Here: " .. CURRENT_TRADESKILL);
 	if (CURRENT_TRADESKILL == "") then
 		return;
 	end
 
 	for skill, skill_data in sortedpairs(CraftBusterOptions[CraftBusterEntry].skills) do
-		echo("Here: " .. CURRENT_TRADESKILL);
 		if (skill_data.name == CURRENT_TRADESKILL) then
 			local skill_id = skill_data.id;
 			if (CraftBuster_Modules[skill_id] and next(CraftBuster_Modules[skill_id])) then
@@ -576,7 +574,6 @@ hook_frame:RegisterEvent("ADDON_LOADED");
 local function HookFrame(frame)
 	frame:HookScript("OnShow",
 		function(self, ...)
-			--if (self.show_frame ~= nil and self.show_frame ~= true) then		--something weird happening to cause this to duplicate itself
 			if (not self.show_frame or self.show_frame ~= true) then		--something weird happening to cause this to duplicate itself
 				CraftBuster_HandleNode(GameTooltipTextLeft1:GetText(), GameTooltipTextLeft2:GetText(), GameTooltipTextLeft3:GetText());
 				self.show_frame = true;
