@@ -1,0 +1,71 @@
+v 1.0.29
+	- Replaced Astrolabe with HereBeDragons, initial work updating for Legion
+
+v 0.1.27
+	- Updated interface # for 6.2
+
+v 0.1.26
+	- Updated for patch 6.1
+
+v 0.1.25
+	- Initial work adding keybindings
+
+v 0.1.23
+	- Added Warlords lockbox & fixed max level lock picking
+
+v 0.1.22
+	- Fixed missing Warlords herbs for inscription
+
+v 0.1.21
+	- Added Draenor herbs & mining nodes, added Draenor profession ranks
+
+v 0.1.19
+	- Fixed closing the worldmap nodes frame
+
+v 0.1.18
+	- Updated to patch 6.0
+
+v 0.1.17
+	- Updated Mists skinning calculations
+
+v 0.1.16
+	- Added world map frame for listing mining/herb nodes
+
+v 0.1.14
+	- Modified zone data to use localized map name
+
+v 0.1.13
+	- Reverted changes for combat handling, added checkbox for map icons in config
+
+v 0.1.11
+	- Small bug fixes
+
+v 0.1.10
+	- Updated global references
+
+v 0.1.09
+	- Added functionality to buster frame to refresh display after a lockbox is unlocked
+
+v 0.1.08
+	- Manually removed duplicate stations from blacksmithing & mining modules, possible fix for skill frame hiding randomly, initial fix for checkboxes not updating in config
+
+v 0.1.07
+	- Added config for map icons
+
+v 0.1.03
+	- Added Mists Lockboxes for Lockpicking buster frame
+
+v 0.1.02
+	- Fixed default string localization
+
+v 0.1.01
+	- Added toggles for modules that display nodes in Gatherer (ie don't show irrelevant data to non-double gatherers)
+
+v 0.0.99
+	- Added Gathering Frame
+
+v 0.0.98
+	- Added positioning frame
+
+v 0.0.97
+	- Initial import of CraftBuster
