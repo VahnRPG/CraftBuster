@@ -1,10 +1,12 @@
 function CraftBuster_Module_BuildBaseActions(skill_type, skill_name, skill_short_code)
 	local skill_actions = {};
-	for i=2,#CBG_PROFESSION_RANKS do
+	for i=2,CBG_MAX_PROFESSIONS do
 		local min_skill_level, max_skill_level, title = CBG_PROFESSION_RANKS[i][1], CBG_PROFESSION_RANKS[i][2], CBG_PROFESSION_RANKS[i][3];
 		skill_actions[str_pad(i-1, 2, "0", "right") .. skill_short_code .. "_level_" .. i] = {
 			["ply_level"] = CBG_SKILL_PLY_LEVELS[i][skill_type],
 			["skill_level"] = min_skill_level,
+			["min_skill_level"] = min_skill_level,
+			["max_skill_level"] = max_skill_level,
 			["action"] = CBT_NEXT_LEVEL,
 			["message"] = string.format(CBL["TRAINER_ACTION"], skill_name, title),
 			["fields"] = { skill_name, title },
@@ -31,7 +33,8 @@ function CraftBuster_Module_BuildActionDisplay(display_frame, skill_id, skill_ac
 				["displayed"] = displayed,
 				["title"] = data.fields[1],
 				["ply_level"] = data.ply_level,
-				["skill_level"] = data.skill_level,
+				["min_skill_level"] = data.min_skill_level,
+				["max_skill_level"] = data.max_skill_level,
 			};
 			table.insert(messages["trainer"], message);
 		else

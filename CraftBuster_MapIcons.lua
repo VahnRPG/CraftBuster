@@ -1,4 +1,5 @@
-local astrolabe = DongleStub("Astrolabe-1.0");
+local HBD = LibStub("HereBeDragons-1.0");
+local HBDPins = LibStub("HereBeDragons-Pins-1.0");
 
 local SKILL_ALL_PROFESSIONS_TRAINERS_MAP_ICONS = {
 	[30] = {		--Elwynn Forest
@@ -83,13 +84,13 @@ local function CraftBuster_MapIcons_Minimap_OnEvent(self, event, ...)
 		end
 
 		local icon_data = self.icon_data;
-		astrolabe:PlaceIconOnMinimap(self, icon_data.map_id, icon_data.npc_data["floor"], (icon_data.npc_data["pos"][1] / 100), (icon_data.npc_data["pos"][2] / 100));
+		HBDPins:AddMinimapIconMF(CBG_MOD_NAME, self, icon_data.map_id, icon_data.npc_data["floor"], (icon_data.npc_data["pos"][1] / 100), (icon_data.npc_data["pos"][2] / 100));
 	end
 end
 
 local function CraftBuster_MapIcons_Minimap_OnUpdate(self, elapsed)
-	local dist, x, y = astrolabe:GetDistanceToIcon(self);
-	if (not dist) then
+	local angle, distance = HBDPins:GetVectorToIcon(self);
+	if (not angle) then
 		self:Hide();
 
 		return;
@@ -103,7 +104,7 @@ local function CraftBuster_MapIcons_Minimap_OnUpdate(self, elapsed)
 	last_update = 0;
 
 	local show = false;
-	if (not astrolabe:IsIconOnEdge(self)) then
+	if (not HBDPins:IsMinimapIconOnEdge(self)) then
 		show = true;
 	end
 
@@ -128,7 +129,7 @@ local function CraftBuster_MapIcons_Minimap_OnEnter(self, event, ...)
 		tooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT");
 
 		local floor_label = "";
-		local _, floor = astrolabe:GetCurrentPlayerPosition();
+		local _, _, _, floor = HBD:GetPlayerZonePosition();
 		if (floor < self.icon_data.npc_data["floor"]) then
 			floor_label = "|TInterface\\Minimap\\Minimap-PositionArrows:0:0:0:0:16:32:0:16:0:16|t";
 		elseif (floor > self.icon_data.npc_data["floor"]) then
@@ -171,11 +172,8 @@ local function CraftBuster_MapIcons_World_OnEvent(self, event, ...)
 		local icon_data = self.icon_data;
 		if (icon_data.worldmap_icon_frame and CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map) then
 			if (icon_data.map_id == GetCurrentMapAreaID()) then
-				local x,y = astrolabe:PlaceIconOnWorldMap(CraftBuster_MapIcons_Overlay, self, icon_data.map_id, icon_data.npc_data["floor"], (icon_data.npc_data["pos"][1] / 100), (icon_data.npc_data["pos"][2] / 100));
-
-				if (x and y and (0 < x and x <= 1) and (0 < y and y <= 1)) then
-					show = true;
-				end
+				HBDPins:AddWorldMapIconMF(CBG_MOD_NAME, self, icon_data.map_id, icon_data.npc_data["floor"], (icon_data.npc_data["pos"][1] / 100), (icon_data.npc_data["pos"][2] / 100));
+				show = true;
 			end
 		end
 
@@ -278,8 +276,10 @@ local function CraftBuster_CreateMapIcon(map_id, icon_type, module_id, side, npc
 	icon.worldmap_icon_frame.icon_data = icon;
 	CACHED_ICONS[label] = icon;
 
-	astrolabe:PlaceIconOnMinimap(icon.minimap_icon_frame, icon.map_id, icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
-	astrolabe:PlaceIconOnWorldMap(CraftBuster_MapIcons_Overlay, icon.worldmap_icon_frame, icon.map_id, icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
+	--HBDPins:AddMinimapIconWorld(icon.minimap_icon_frame, icon.map_id, icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
+	--HBDPins:AddWorldMapIconMF(CraftBuster_MapIcons_Overlay, icon.worldmap_icon_frame, icon.map_id, icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
+	HBDPins:AddMinimapIconMF(CBG_MOD_NAME, icon.minimap_icon_frame, icon.map_id, icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
+	HBDPins:AddWorldMapIconMF(CBG_MOD_NAME, icon.worldmap_icon_frame, icon.map_id, icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
 end
 
 function CraftBuster_MapIcons_RegisterInit()
@@ -347,6 +347,6 @@ function CraftBuster_MapIcons_Update()
 end
 
 function CraftBuster_MapIcons_DisplayPosition()
-	local map_id, floor, x, y = astrolabe:GetCurrentPlayerPosition();
+	local x, y, map_id, floor = HBD:GetPlayerZonePosition();
 	echo("Map: " .. GetMapNameByID(map_id) .. " (" .. map_id .. "), Floor: " .. floor .. " -> " .. round(x * 100, 1) .. ", " .. round(y * 100, 1));
 end
