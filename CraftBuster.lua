@@ -565,7 +565,6 @@ end
 local hook_frame = CreateFrame("Frame");
 hook_frame:SetScript("OnEvent", function(self, event, addon)
 	if (addon == "Blizzard_TradeSkillUI") then
-		echo("Here: " .. addon);
 		hooksecurefunc(TradeSkillRecipeListMixin, "SetSelectedRecipeID", CraftBuster_TradeSkillFrame_SetSelection);
 	end
 end);
