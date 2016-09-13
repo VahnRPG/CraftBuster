@@ -649,6 +649,50 @@ local SKILL_NODES = {
 		["node_levels"] = { 600, 625, 650, 700 },
 		["map_ids"] = { 948,946,978 },
 	},
+
+	--legion
+	["Aethril"] = {
+		["rank"] = 65,
+		["item_id"] = 124101, --Aethril
+		["ply_level"] = 1,
+		["node_levels"] = { 700, 725, 750, 800 },
+		["map_ids"] = { },
+	},
+	["Dreamleaf"] = {
+		["rank"] = 66,
+		["item_id"] = 124102, --Dreamleaf
+		["ply_level"] = 1,
+		["node_levels"] = { 700, 725, 750, 800 },
+		["map_ids"] = { },
+	},
+	["Foxflower"] = {
+		["rank"] = 67,
+		["item_id"] = 124103, --Foxflower
+		["ply_level"] = 1,
+		["node_levels"] = { 700, 725, 750, 800 },
+		["map_ids"] = { },
+	},
+	["Fjarnskaggl"] = {
+		["rank"] = 68,
+		["item_id"] = 124104, --Fjarnskaggl
+		["ply_level"] = 1,
+		["node_levels"] = { 700, 725, 750, 800 },
+		["map_ids"] = { },
+	},
+	["Starlight Rose"] = {
+		["rank"] = 69,
+		["item_id"] = 124105, --Starlight Rose
+		["ply_level"] = 1,
+		["node_levels"] = { 700, 725, 750, 800 },
+		["map_ids"] = { },
+	},
+	["Felwort"] = {
+		["rank"] = 70,
+		["item_id"] = 124106, --Felwort
+		["ply_level"] = 1,
+		["node_levels"] = { 700, 725, 750, 800 },
+		["map_ids"] = { },
+	},
 };
 
 local function CraftBuster_Module_Herbalism_BuildActions()
