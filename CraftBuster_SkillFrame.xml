@@ -129,14 +129,32 @@
 					</OnClick>
 				</Scripts>
 			</Button>
-			<Button name="$parent_CollapseFrame" hidden="false">
+			<Button name="$parent_LockFrame" hidden="false">
 				<Size>
 					<AbsDimension x="16" y="16"/>
 				</Size>
 				<Anchors>
 					<Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT">
 						<Offset>
-							<AbsDimension x="-16" y="0"/>
+							<AbsDimension x="-32" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<NormalTexture file="Interface\AddOns\CraftBuster\Images\CraftBuster_Mover_Unlocked" />
+				<Scripts>
+					<OnClick>
+						securecall("CraftBuster_SkillFrame_Lock_OnClick");
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parent_CollapseFrame" hidden="false">
+				<Size>
+					<AbsDimension x="16" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent_LockFrame" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-2" y="0"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -171,12 +189,17 @@
 				self:RegisterForDrag("LeftButton");
 			</OnLoad>
 			<OnDragStart>
-				self.dragging = true;
-				self:StartMoving();
+				if (not CraftBusterOptions[CraftBusterEntry].skills_frame.locked) then
+					self.dragging = true;
+					self:StartMoving();
+				end
 			</OnDragStart>
 			<OnDragStop>
 				self.dragging = false;
-				self:StopMovingOrSizing();
+				if (not CraftBusterOptions[CraftBusterEntry].skills_frame.locked) then
+					self.dragging = false;
+					self:StopMovingOrSizing();
+				end
 			</OnDragStop>
 			<OnUpdate>
 				if (self.dragging) then

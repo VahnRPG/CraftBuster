@@ -1,4 +1,4 @@
-local DB_VERSION = 0.03;
+local DB_VERSION = 0.04;
 
 CraftBusterOptions = {};
 CraftBusterPlayer = nil;
@@ -140,6 +140,7 @@ function CraftBuster_InitSettings(reset)
 			x = 490,
 			y = -330,
 		};
+		CraftBusterOptions[CraftBusterEntry].skills_frame.locked = false;
 		CraftBusterOptions[CraftBusterEntry].skills_frame.state = "expanded";
 		CraftBusterOptions[CraftBusterEntry].skills_frame.bars = {
 			["skill_1"] = true,
@@ -263,6 +264,10 @@ function CraftBuster_InitVersionSettings()
 				CraftBusterOptions[CraftBusterEntry].modules[module_id].show_worldmap_icons = true;
 			end
 		end
+	end
+
+	if (not CraftBusterOptions[CraftBusterEntry].db_version or CraftBusterOptions[CraftBusterEntry].db_version < 0.04) then
+		CraftBusterOptions[CraftBusterEntry].skills_frame.locked = false;
 	end
 
 	CraftBusterOptions[CraftBusterEntry].db_version = DB_VERSION;
