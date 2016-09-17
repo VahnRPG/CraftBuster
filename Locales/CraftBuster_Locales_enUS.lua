@@ -72,6 +72,7 @@
 	CBL["CONFIG_WORLDMAP_POSITION"] = "World Map Nodes List Position";
 	CBL["CONFIG_GATHERER_POSITION"] = "Gatherer Position";
 	CBL["CONFIG_BUSTER_POSITION"] = "Buster Position";
+	CBL["CONFIG_POSITION_LOCKED"] = "Position Locked";
 	CBL["CONFIG_POSITION_X"] = "X:";
 	CBL["CONFIG_POSITION_Y"] = "Y:";
 	CBL["CONFIG_POSITION_POINT"] = "Point:";

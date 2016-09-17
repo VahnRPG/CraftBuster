@@ -33,7 +33,7 @@ local profession_gathers = {};
 local show_minimap_button, show_world_map_icons, show_minimap_map_icons, show_tracker, expand_tracker;
 local show_worldmap, expand_worldmap;
 local show_gatherer, expand_gatherer, auto_hide_gatherer, show_zone_nodes, show_skillup_nodes;
-local position_x, position_y, position_point, position_relative_point;
+local position_x, position_y, position_point, position_relative_point, position_locked;
 local worldmap_position_x, worldmap_position_y, worldmap_position_point, worldmap_position_relative_point;
 local gatherer_position_x, gatherer_position_y, gatherer_position_point, gatherer_position_relative_point;
 local buster_position_x, buster_position_y, buster_position_point, buster_position_relative_point;
@@ -509,7 +509,15 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	local position_label = child_positioning_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
 	position_label:SetPoint("TOPLEFT", title_label, "BOTTOMLEFT", 0, -20);
 	position_label:SetText(CBL["CONFIG_TRACKER_POSITION"]);
-	
+
+	position_locked = CreateFrame("CheckButton", config_frame_name .. "PositionLocked", child_positioning_frame, "InterfaceOptionsCheckButtonTemplate");
+	position_locked:SetPoint("TOPLEFT", position_label, "TOPRIGHT", 20, 5);
+	_G[position_locked:GetName() .. "Text"]:SetText(CBL["CONFIG_POSITION_LOCKED"]);
+	position_locked:SetChecked(CraftBusterOptions[CraftBusterEntry].skills_frame.locked);
+	position_locked:SetScript("OnClick", function(self, button)
+		CraftBuster_SkillFrame_Lock_OnClick();
+	end);
+
 	local position_x_label = child_positioning_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
 	position_x_label:SetPoint("TOPLEFT", position_label, "BOTTOMLEFT", 10, -10);
 	position_x_label:SetText(CBL["CONFIG_POSITION_X"]);
