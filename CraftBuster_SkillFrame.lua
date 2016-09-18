@@ -3,6 +3,7 @@ function CraftBuster_SkillFrame_Update()
 		CraftBuster_AddLeaveCombatCommand("CraftBuster_SkillFrame_Update");
 		return;
 	end
+
 	local skills = CraftBuster_GetProfessions(false);
 	local _, player_class = UnitClass("player");
 	local player_level = UnitLevel("player");
@@ -151,10 +152,31 @@ function CraftBuster_SkillFrame_Update()
 			CraftBuster_Skill_MoverFrame_CollapseFrame:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Expand");
 			CraftBuster_SkillFrame:Hide();
 		end
+
+		if (not CraftBusterOptions[CraftBusterEntry].skills_frame.locked) then
+			CraftBuster_Skill_MoverFrame_LockFrame:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Unlocked");
+		else
+			CraftBuster_Skill_MoverFrame_LockFrame:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Locked");
+		end
 	else
 		CraftBuster_Skill_MoverFrame:Hide();
 		CraftBuster_SkillFrame:Hide();
 	end
+end
+
+function CraftBuster_SkillFrame_Lock_OnClick()
+	if (InCombatLockdown()) then
+		CraftBuster_AddLeaveCombatCommand("CraftBuster_SkillFrame_Lock_OnClick");
+		return;
+	end
+
+	if (not CraftBusterOptions[CraftBusterEntry].skills_frame.locked) then
+		CraftBusterOptions[CraftBusterEntry].skills_frame.locked = true;
+	else
+		CraftBusterOptions[CraftBusterEntry].skills_frame.locked = false;
+	end
+
+	CraftBuster_SkillFrame_Update();
 end
 
 function CraftBuster_SkillFrame_Collapse_OnClick()

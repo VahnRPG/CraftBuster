@@ -1,4 +1,4 @@
-local DB_VERSION = 0.03;
+local DB_VERSION = 0.04;
 
 CraftBusterOptions = {};
 CraftBusterPlayer = nil;
@@ -6,6 +6,7 @@ CraftBusterPlayerLevel = nil;
 CraftBusterPlayerSkills = {};
 CraftBusterServer = nil;
 CraftBusterEntry = nil;
+CraftBusterEntry_Personal = nil;
 
 local _;
 local CraftBusterInit = nil;
@@ -96,11 +97,23 @@ function CraftBuster_Command(cmd)
 end
 
 function CraftBuster_InitPlayer()
+	CraftBusterPlayerSkills = {};
 	CraftBusterPlayer = UnitName("player");
 	CraftBusterPlayerLevel = UnitLevel("player");
 	CraftBusterServer = GetRealmName();
-	CraftBusterEntry = CraftBusterPlayer .. "@" .. CraftBusterServer;
-	CraftBusterPlayerSkills = {};
+	CraftBusterEntry_Personal = CraftBusterPlayer .. "@" .. CraftBusterServer;
+	CraftBusterEntry = CraftBusterEntry_Personal;
+	if (not CraftBusterOptions) then
+		CraftBusterOptions = {};
+	end
+	if (not CraftBusterOptions.globals) then
+		CraftBusterOptions.globals = {};
+	end
+	if (not CraftBusterOptions.globals[CraftBusterEntry_Personal]) then
+		--CraftBusterOptions.globals[CraftBusterEntry_Personal] = CBG_GLOBAL_PROFILE;
+		CraftBusterOptions.globals[CraftBusterEntry_Personal] = CraftBusterEntry_Personal;
+	end
+	CraftBusterEntry = CraftBusterOptions.globals[CraftBusterEntry_Personal];
 
 	if (CraftBusterPlayer == nil or CraftBusterPlayer == UNKNOWNOBJECT or CraftBusterPlayer == UKNOWNBEING) then
 		return false;
@@ -140,6 +153,7 @@ function CraftBuster_InitSettings(reset)
 			x = 490,
 			y = -330,
 		};
+		CraftBusterOptions[CraftBusterEntry].skills_frame.locked = false;
 		CraftBusterOptions[CraftBusterEntry].skills_frame.state = "expanded";
 		CraftBusterOptions[CraftBusterEntry].skills_frame.bars = {
 			["skill_1"] = true,
@@ -263,6 +277,10 @@ function CraftBuster_InitVersionSettings()
 				CraftBusterOptions[CraftBusterEntry].modules[module_id].show_worldmap_icons = true;
 			end
 		end
+	end
+
+	if (not CraftBusterOptions[CraftBusterEntry].db_version or CraftBusterOptions[CraftBusterEntry].db_version < 0.04) then
+		CraftBusterOptions[CraftBusterEntry].skills_frame.locked = false;
 	end
 
 	CraftBusterOptions[CraftBusterEntry].db_version = DB_VERSION;

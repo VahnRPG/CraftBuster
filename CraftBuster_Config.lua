@@ -33,7 +33,7 @@ local profession_gathers = {};
 local show_minimap_button, show_world_map_icons, show_minimap_map_icons, show_tracker, expand_tracker;
 local show_worldmap, expand_worldmap;
 local show_gatherer, expand_gatherer, auto_hide_gatherer, show_zone_nodes, show_skillup_nodes;
-local position_x, position_y, position_point, position_relative_point;
+local position_x, position_y, position_point, position_relative_point, position_locked;
 local worldmap_position_x, worldmap_position_y, worldmap_position_point, worldmap_position_relative_point;
 local gatherer_position_x, gatherer_position_y, gatherer_position_point, gatherer_position_relative_point;
 local buster_position_x, buster_position_y, buster_position_point, buster_position_relative_point;
@@ -47,6 +47,76 @@ local backdrop = {
 	insets = { left = 3, right = 3, top = 5, bottom = 3 }
 };
 
+--There's probably a better way to do this but I'm not in the mood to figure it out right now...
+local function CraftBuster()
+	if (player_class == "ROGUE" and UnitLevel("player") >= CBG_LOCKPICKING_LEVEL) then
+		skills.lockpicking = CBT_SKILL_PICK;
+	end
+
+	show_minimap_button:SetChecked(CraftBusterOptions[CraftBusterEntry].minimap.show);
+	if (CraftBuster_Modules and next(CraftBuster_Modules)) then
+		for module_id, module_data in sortedpairs(CraftBuster_Modules) do
+			if (module_data.tooltip_info) then
+				tooltips[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_tooltips);
+			end
+
+			if (module_data.trainer_map_icons) then
+				map_icons[module_id .. "trainer"]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_trainer_map_icons);
+			end
+			if (module_data.station_map_icons) then
+				map_icons[module_id .. "station"]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_station_map_icons);
+			end
+		end
+	end
+
+	show_world_map_icons:SetChecked(CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map);
+	show_minimap_map_icons:SetChecked(CraftBusterOptions[CraftBusterEntry].map_icons.show_mini_map);
+
+	show_tracker:SetChecked(CraftBusterOptions[CraftBusterEntry].skills_frame.show);
+	expand_tracker:SetChecked(CraftBusterOptions[CraftBusterEntry].skills_frame.state == "expanded");
+	for rank,skill in sortedpairs(rank_skills) do
+		local index = skills[skill];
+		if (index) then
+			professions[skill]:SetChecked(CraftBusterOptions[CraftBusterEntry].skills_frame.bars[skill]);
+		end
+	end
+
+	show_worldmap:SetChecked(CraftBusterOptions[CraftBusterEntry].worldmap_frame.show);
+	expand_worldmap:SetChecked(CraftBusterOptions[CraftBusterEntry].worldmap_frame.state == "expanded");
+
+	if (CraftBuster_Modules and next(CraftBuster_Modules)) then
+		for module_id, module_data in sortedpairs(CraftBuster_Modules) do
+			if (module_data.bustable_spell) then
+				bustables[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_buster);
+			end
+			if (module_data.show_worldmap_icons) then
+				profession_worldmap[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_worldmap_icons);
+			end
+			if (module_data.gather_function) then
+				profession_gathers[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_gather);
+			end
+		end
+	end
+
+	show_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show);
+	expand_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.state == "expanded");
+	auto_hide_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.auto_hide);
+	show_zone_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_zone_nodes);
+	show_skillup_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_skill_nodes);
+
+	position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.x, 2));
+	position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.y, 2));
+
+	worldmap_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.x, 2));
+	worldmap_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.y, 2));
+
+	gatherer_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.x, 2));
+	gatherer_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.y, 2));
+
+	buster_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.x, 2));
+	buster_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.y, 2));
+end
+
 local config_frame = CreateFrame("Frame", config_frame_name, InterfaceOptionsFramePanelContainer);
 config_frame.name = CBG_MOD_NAME;
 config_frame:SetScript("OnShow", function(config_frame)
@@ -56,8 +126,42 @@ config_frame:SetScript("OnShow", function(config_frame)
 	title_label:SetPoint("TOPLEFT", 16, -16);
 	title_label:SetText(CBG_MOD_NAME .. " v" .. CBG_VERSION);
 
+	--[[
+	local settings_label = config_frame:CreateFontString(nil, "ARTWORK", "GameFontNormal");
+	settings_label:SetPoint("TOPLEFT", title_label, "BOTTOMLEFT", 0, -20);
+	settings_label:SetText(CBL["CONFIG_SETTINGS_TYPE"]);
+
+	settings_menu = CreateFrame("Frame", config_frame_name .. "SetSettings", config_frame, "UIDropDownMenuTemplate");
+	settings_menu:SetPoint("TOPLEFT", settings_label, "TOPRIGHT", 0, 4);
+	UIDropDownMenu_Initialize(settings_menu, function()
+		local values = { "Global", "Personal" };
+		for i, value in pairs(values) do
+			local info = UIDropDownMenu_CreateInfo();
+			info.text = value;
+			info.value = value;
+			info.func = function(self)
+				UIDropDownMenu_SetSelectedValue(settings_menu, self.value);
+				if (self.value == "Personal") then
+					CraftBusterOptions.globals[CraftBusterEntry_Personal] = CraftBusterEntry_Personal;
+				else
+					CraftBusterOptions.globals[CraftBusterEntry_Personal] = CBG_GLOBAL_PROFILE;
+				end
+				CraftBusterEntry = CraftBusterOptions.globals[CraftBusterEntry_Personal];
+				if (not CraftBusterOptions[CraftBusterEntry]) then
+					CraftBuster_InitSettings("character");
+				end
+				CraftBuster();
+			end
+			UIDropDownMenu_AddButton(info);
+		end
+	end);
+	UIDropDownMenu_JustifyText(settings_menu, "LEFT");
+	UIDropDownMenu_SetSelectedValue(settings_menu, ((CraftBusterEntry_Personal == CraftBusterEntry) and "Personal" or "Global"));
+	]]--
+
 	show_minimap_button = CreateFrame("CheckButton", config_frame_name .. "Minimap", config_frame, "InterfaceOptionsCheckButtonTemplate");
-	show_minimap_button:SetPoint("TOPLEFT", title_label, "BOTTOMLEFT", 0, -20);
+	--show_minimap_button:SetPoint("TOPLEFT", settings_label, "BOTTOMLEFT", 0, -24);
+	show_minimap_button:SetPoint("TOPLEFT", title_label, "BOTTOMLEFT", 0, -24);
 	_G[show_minimap_button:GetName() .. "Text"]:SetText(CBL["CONFIG_SHOW_MINIMAP"]);
 	show_minimap_button:SetChecked(CraftBusterOptions[CraftBusterEntry].minimap.show);
 	show_minimap_button:SetScript("OnClick", function(self, button)
@@ -189,70 +293,77 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 	end);
 
 	local trainer_map_icons_label = child_map_icons_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
-	trainer_map_icons_label:SetPoint("TOPLEFT", show_minimap_map_icons, "BOTTOMLEFT", 0, -20);
+	trainer_map_icons_label:SetPoint("TOPLEFT", show_minimap_map_icons, "BOTTOMLEFT", 0, -24);
 	trainer_map_icons_label:SetText(CBL["CONFIG_TITLE_TRAINER_MAP_ICONS"]);
 
 	local station_map_icons_label = child_map_icons_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
-	station_map_icons_label:SetPoint("TOPLEFT", show_minimap_map_icons, "BOTTOMLEFT", 220, -20);
+	station_map_icons_label:SetPoint("TOPLEFT", show_minimap_map_icons, "BOTTOMLEFT", 220, -24);
 	station_map_icons_label:SetText(CBL["CONFIG_TITLE_STATION_MAP_ICONS"]);
 
 	if (CraftBuster_Modules and next(CraftBuster_Modules)) then
+		local skills = {};
+		for skill, skill_data in sortedpairs(CraftBusterOptions[CraftBusterEntry].skills) do
+			skills[skill] = skill_data.id;
+		end
+
 		trainer_count = 0;
 		station_count = 0;
 		for _, module_id in sortedpairs(CBG_SORTED_SKILLS) do
-			local module_data = CraftBuster_Modules[module_id];
-			if (module_data.trainer_map_icons) then
-				local label = config_frame_name .. "TrainerMapIcons_" .. module_id;
-				local x1, x2, y1, y2 = unpack(CBG_MAP_ICON_TEXTURES[CBT_MAP_ICON_TRAINER][module_id]);
-				local icon_frame = CreateFrame("Button", label .. "Icon", child_map_icons_frame);
-				icon_frame:SetPoint("TOPLEFT", trainer_map_icons_label, "BOTTOMLEFT", 0, -20 * trainer_count);
-				icon_frame:SetHeight(20);
-				icon_frame:SetWidth(20);
-				icon_frame:Show();
-				icon_frame.icon = icon_frame:CreateTexture("BACKGROUND");
-				icon_frame.icon:SetPoint("CENTER", 0, 0);
-				icon_frame.icon:SetTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_MapIcons");
-				icon_frame.icon:SetTexCoord(x1, x2, y1, y2);
-				icon_frame.icon:SetHeight(16);
-				icon_frame.icon:SetWidth(16);
-				icon_frame.icon:Show();
+			if (CraftBusterEntry ~= CBG_GLOBAL_PROFILE or in_array(module_id, skills)) then
+				local module_data = CraftBuster_Modules[module_id];
+				if (module_data.trainer_map_icons) then
+					local label = config_frame_name .. "TrainerMapIcons_" .. module_id;
+					local x1, x2, y1, y2 = unpack(CBG_MAP_ICON_TEXTURES[CBT_MAP_ICON_TRAINER][module_id]);
+					local icon_frame = CreateFrame("Button", label .. "Icon", child_map_icons_frame);
+					icon_frame:SetPoint("TOPLEFT", trainer_map_icons_label, "BOTTOMLEFT", 0, -20 * trainer_count);
+					icon_frame:SetHeight(20);
+					icon_frame:SetWidth(20);
+					icon_frame:Show();
+					icon_frame.icon = icon_frame:CreateTexture("BACKGROUND");
+					icon_frame.icon:SetPoint("CENTER", 0, 0);
+					icon_frame.icon:SetTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_MapIcons");
+					icon_frame.icon:SetTexCoord(x1, x2, y1, y2);
+					icon_frame.icon:SetHeight(16);
+					icon_frame.icon:SetWidth(16);
+					icon_frame.icon:Show();
 
-				map_icons[module_id .. "trainer"] = CreateFrame("CheckButton", label, child_map_icons_frame, "InterfaceOptionsCheckButtonTemplate");
-				map_icons[module_id .. "trainer"]:SetPoint("TOPLEFT", label .. "Icon", "TOPRIGHT", 0, 3);
-				_G[map_icons[module_id .. "trainer"]:GetName() .. "Text"]:SetText(module_data.name);
-				map_icons[module_id .. "trainer"]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_trainer_map_icons);
-				map_icons[module_id .. "trainer"]:SetScript("OnClick", function(self, button)
-					CraftBuster_Minimap_SetTrainerMapIcons(self, module_id, _, self:GetChecked());
-				end);
+					map_icons[module_id .. "trainer"] = CreateFrame("CheckButton", label, child_map_icons_frame, "InterfaceOptionsCheckButtonTemplate");
+					map_icons[module_id .. "trainer"]:SetPoint("TOPLEFT", label .. "Icon", "TOPRIGHT", 0, 3);
+					_G[map_icons[module_id .. "trainer"]:GetName() .. "Text"]:SetText(module_data.name);
+					map_icons[module_id .. "trainer"]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_trainer_map_icons);
+					map_icons[module_id .. "trainer"]:SetScript("OnClick", function(self, button)
+						CraftBuster_Minimap_SetTrainerMapIcons(self, module_id, _, self:GetChecked());
+					end);
+					
+					trainer_count = trainer_count + 1;
+				end
 				
-				trainer_count = trainer_count + 1;
-			end
-			
-			if (module_data.station_map_icons) then
-				local label = config_frame_name .. "StationMapIcons_" .. module_id;
-				local x1, x2, y1, y2 = unpack(CBG_MAP_ICON_TEXTURES[CBT_MAP_ICON_STATION][module_id]);
-				local icon_frame = CreateFrame("Button", label .. "Icon", child_map_icons_frame);
-				icon_frame:SetPoint("TOPLEFT", station_map_icons_label, "BOTTOMLEFT", 0, -20 * station_count);
-				icon_frame:SetHeight(20);
-				icon_frame:SetWidth(20);
-				icon_frame:Show();
-				icon_frame.icon = icon_frame:CreateTexture("BACKGROUND");
-				icon_frame.icon:SetPoint("CENTER", 0, 0);
-				icon_frame.icon:SetTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_MapIcons");
-				icon_frame.icon:SetTexCoord(x1, x2, y1, y2);
-				icon_frame.icon:SetHeight(16);
-				icon_frame.icon:SetWidth(16);
-				icon_frame.icon:Show();
+				if (module_data.station_map_icons) then
+					local label = config_frame_name .. "StationMapIcons_" .. module_id;
+					local x1, x2, y1, y2 = unpack(CBG_MAP_ICON_TEXTURES[CBT_MAP_ICON_STATION][module_id]);
+					local icon_frame = CreateFrame("Button", label .. "Icon", child_map_icons_frame);
+					icon_frame:SetPoint("TOPLEFT", station_map_icons_label, "BOTTOMLEFT", 0, -20 * station_count);
+					icon_frame:SetHeight(20);
+					icon_frame:SetWidth(20);
+					icon_frame:Show();
+					icon_frame.icon = icon_frame:CreateTexture("BACKGROUND");
+					icon_frame.icon:SetPoint("CENTER", 0, 0);
+					icon_frame.icon:SetTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_MapIcons");
+					icon_frame.icon:SetTexCoord(x1, x2, y1, y2);
+					icon_frame.icon:SetHeight(16);
+					icon_frame.icon:SetWidth(16);
+					icon_frame.icon:Show();
 
-				map_icons[module_id .. "station"] = CreateFrame("CheckButton", label, child_map_icons_frame, "InterfaceOptionsCheckButtonTemplate");
-				map_icons[module_id .. "station"]:SetPoint("TOPLEFT", label .. "Icon", "TOPRIGHT", 0, 3);
-				_G[map_icons[module_id .. "station"]:GetName() .. "Text"]:SetText(CBL["CONFIG_MAP_ICON_" .. CraftBuster_Modules[module_id].name]);
-				map_icons[module_id .. "station"]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_station_map_icons);
-				map_icons[module_id .. "station"]:SetScript("OnClick", function(self, button)
-					CraftBuster_Minimap_SetStationMapIcons(self, module_id, _, self:GetChecked());
-				end);
-				
-				station_count = station_count + 1;
+					map_icons[module_id .. "station"] = CreateFrame("CheckButton", label, child_map_icons_frame, "InterfaceOptionsCheckButtonTemplate");
+					map_icons[module_id .. "station"]:SetPoint("TOPLEFT", label .. "Icon", "TOPRIGHT", 0, 3);
+					_G[map_icons[module_id .. "station"]:GetName() .. "Text"]:SetText(CBL["CONFIG_MAP_ICON_" .. CraftBuster_Modules[module_id].name]);
+					map_icons[module_id .. "station"]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_station_map_icons);
+					map_icons[module_id .. "station"]:SetScript("OnClick", function(self, button)
+						CraftBuster_Minimap_SetStationMapIcons(self, module_id, _, self:GetChecked());
+					end);
+					
+					station_count = station_count + 1;
+				end
 			end
 		end
 
@@ -263,12 +374,35 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 		map_icons_check_all:SetScript("OnClick", function(self, button)
 			local checked = self:GetChecked();
 			for _, module_id in sortedpairs(CBG_SORTED_SKILLS) do
+				if (CraftBusterEntry ~= CBG_GLOBAL_PROFILE or in_array(module_id, skills)) then
+					local module_data = CraftBuster_Modules[module_id];
+					if (module_data.trainer_map_icons) then
+						map_icons[module_id .. "trainer"]:SetChecked(checked);
+						CraftBuster_Minimap_SetTrainerMapIcons(self, module_id, _, checked);
+					end
+
+					if (module_data.station_map_icons) then
+						map_icons[module_id .. "station"]:SetChecked(checked);
+						CraftBuster_Minimap_SetStationMapIcons(self, module_id, _, checked);
+					end
+				end
+			end
+		end);
+
+		local map_icons_select_mine = CreateFrame("Button", config_frame_name .. "MapIconsSelectMine", child_map_icons_frame, "UIPanelButtonTemplate");
+		map_icons_select_mine:SetPoint("TOPLEFT", map_icons_check_all, "TOPLEFT", 0, -40);
+		map_icons_select_mine:SetText(CBL["CONFIG_MAP_ICON_SELECT_MINE"]);
+		map_icons_select_mine:SetSize(120, 20);
+		map_icons_select_mine:SetScript("OnClick", function()
+			for _, module_id in sortedpairs(CBG_SORTED_SKILLS) do
+				local checked = in_array(module_id, skills);
 				local module_data = CraftBuster_Modules[module_id];
+				
 				if (module_data.trainer_map_icons) then
 					map_icons[module_id .. "trainer"]:SetChecked(checked);
 					CraftBuster_Minimap_SetTrainerMapIcons(self, module_id, _, checked);
 				end
-
+				
 				if (module_data.station_map_icons) then
 					map_icons[module_id .. "station"]:SetChecked(checked);
 					CraftBuster_Minimap_SetStationMapIcons(self, module_id, _, checked);
@@ -434,7 +568,7 @@ child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
 	end);
 
 	expand_gatherer = CreateFrame("CheckButton", config_frame_name .. "ExpandGatherer", child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
-	expand_gatherer:SetPoint("TOPLEFT", show_gatherer, "BOTTOMLEFT", 0, 0);
+	expand_gatherer:SetPoint("TOPLEFT", title_label, "BOTTOMLEFT", 0, -40);
 	_G[expand_gatherer:GetName() .. "Text"]:SetText(CBL["CONFIG_EXPAND_GATHERER"]);
 	expand_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.state == "expanded");
 	expand_gatherer:SetScript("OnClick", function(self, button)
@@ -442,7 +576,7 @@ child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
 	end);
 
 	auto_hide_gatherer = CreateFrame("CheckButton", config_frame_name .. "AutoHideGatherer", child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
-	auto_hide_gatherer:SetPoint("TOPLEFT", expand_gatherer, "BOTTOMLEFT", 0, 0);
+	auto_hide_gatherer:SetPoint("TOPLEFT", title_label, "BOTTOMLEFT", 0, -60);
 	_G[auto_hide_gatherer:GetName() .. "Text"]:SetText(CBL["CONFIG_AUTOHIDE_GATHERER"]);
 	auto_hide_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.auto_hide);
 	auto_hide_gatherer:SetScript("OnClick", function(self, button)
@@ -463,7 +597,7 @@ child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
 	end);
 
 	show_skillup_nodes = CreateFrame("CheckButton", config_frame_name .. "ShowSkillUpZones", child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
-	show_skillup_nodes:SetPoint("TOPLEFT", show_zone_nodes, "BOTTOMLEFT", 0, 0);
+	show_skillup_nodes:SetPoint("TOPLEFT", show_nodes_label, "BOTTOMLEFT", 0, -20);
 	_G[show_skillup_nodes:GetName() .. "Text"]:SetText(CBL["CONFIG_SHOW_SKILLUP_NODES"]);
 	show_skillup_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_skill_nodes);
 	show_skillup_nodes:SetScript("OnClick", function(self, button)
@@ -509,7 +643,15 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	local position_label = child_positioning_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
 	position_label:SetPoint("TOPLEFT", title_label, "BOTTOMLEFT", 0, -20);
 	position_label:SetText(CBL["CONFIG_TRACKER_POSITION"]);
-	
+
+	position_locked = CreateFrame("CheckButton", config_frame_name .. "PositionLocked", child_positioning_frame, "InterfaceOptionsCheckButtonTemplate");
+	position_locked:SetPoint("TOPLEFT", position_label, "TOPRIGHT", 20, 5);
+	_G[position_locked:GetName() .. "Text"]:SetText(CBL["CONFIG_POSITION_LOCKED"]);
+	position_locked:SetChecked(CraftBusterOptions[CraftBusterEntry].skills_frame.locked);
+	position_locked:SetScript("OnClick", function(self, button)
+		CraftBuster_SkillFrame_Lock_OnClick();
+	end);
+
 	local position_x_label = child_positioning_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
 	position_x_label:SetPoint("TOPLEFT", position_label, "BOTTOMLEFT", 10, -10);
 	position_x_label:SetText(CBL["CONFIG_POSITION_X"]);
@@ -927,76 +1069,6 @@ end);
 InterfaceOptions_AddCategory(child_modules_frame);
 ]]--
 
---There's probably a better way to do this but I'm not in the mood to figure it out right now...
-local function updateFields()
-	if (player_class == "ROGUE" and UnitLevel("player") >= CBG_LOCKPICKING_LEVEL) then
-		skills.lockpicking = CBT_SKILL_PICK;
-	end
-
-	show_minimap_button:SetChecked(CraftBusterOptions[CraftBusterEntry].minimap.show);
-	if (CraftBuster_Modules and next(CraftBuster_Modules)) then
-		for module_id, module_data in sortedpairs(CraftBuster_Modules) do
-			if (module_data.tooltip_info) then
-				tooltips[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_tooltips);
-			end
-
-			if (module_data.trainer_map_icons) then
-				map_icons[module_id .. "trainer"]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_trainer_map_icons);
-			end
-			if (module_data.station_map_icons) then
-				map_icons[module_id .. "station"]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_station_map_icons);
-			end
-		end
-	end
-
-	show_world_map_icons:SetChecked(CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map);
-	show_minimap_map_icons:SetChecked(CraftBusterOptions[CraftBusterEntry].map_icons.show_mini_map);
-
-	show_tracker:SetChecked(CraftBusterOptions[CraftBusterEntry].skills_frame.show);
-	expand_tracker:SetChecked(CraftBusterOptions[CraftBusterEntry].skills_frame.state == "expanded");
-	for rank,skill in sortedpairs(rank_skills) do
-		local index = skills[skill];
-		if (index) then
-			professions[skill]:SetChecked(CraftBusterOptions[CraftBusterEntry].skills_frame.bars[skill]);
-		end
-	end
-
-	show_worldmap:SetChecked(CraftBusterOptions[CraftBusterEntry].worldmap_frame.show);
-	expand_worldmap:SetChecked(CraftBusterOptions[CraftBusterEntry].worldmap_frame.state == "expanded");
-
-	if (CraftBuster_Modules and next(CraftBuster_Modules)) then
-		for module_id, module_data in sortedpairs(CraftBuster_Modules) do
-			if (module_data.bustable_spell) then
-				bustables[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_buster);
-			end
-			if (module_data.show_worldmap_icons) then
-				profession_worldmap[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_worldmap_icons);
-			end
-			if (module_data.gather_function) then
-				profession_gathers[module_id]:SetChecked(CraftBusterOptions[CraftBusterEntry].modules[module_id].show_gather);
-			end
-		end
-	end
-
-	show_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show);
-	expand_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.state == "expanded");
-	auto_hide_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.auto_hide);
-	show_zone_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_zone_nodes);
-	show_skillup_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_skill_nodes);
-
-	position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.x, 2));
-	position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.y, 2));
-
-	worldmap_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.x, 2));
-	worldmap_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.y, 2));
-
-	gatherer_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.x, 2));
-	gatherer_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.y, 2));
-
-	buster_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.x, 2));
-	buster_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.y, 2));
-end
-
 function CraftBuster_Config_RegisterModule(module_id, module_name, module_options)
 	local module_config_frame = module_options.config.frame;
 	--module_config_frame.name = module_options.config.name;
@@ -1008,5 +1080,5 @@ function CraftBuster_Config_Show()
 	InterfaceOptionsFrame_OpenToCategory(config_frame.name);
 	InterfaceOptionsFrame_OpenToCategory(config_frame.name);		--hack for patch 5.3
 
-	updateFields();
+	CraftBuster();
 end
