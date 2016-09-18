@@ -181,6 +181,15 @@ function print_r(t)
 	sub_print_r(t, "  ");
 end
 
+function in_array(needle, haystack)
+    for key, value in pairs(haystack) do
+        if (value == needle) then
+			return true;
+		end
+    end
+    return false;
+end
+
 function echo(text)
 	DEFAULT_CHAT_FRAME:AddMessage(text);
 end

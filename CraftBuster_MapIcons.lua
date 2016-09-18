@@ -303,6 +303,10 @@ function CraftBuster_MapIcons_Update()
 	local map_icon_cfg = CraftBusterOptions[CraftBusterEntry].map_icons;
 	local current_map_id = GetCurrentMapAreaID();
 	local player_side = UnitFactionGroup("player");
+	local skills = {};
+	for skill, skill_data in sortedpairs(CraftBusterOptions[CraftBusterEntry].skills) do
+		skills[skill] = skill_data.id;
+	end
 
 	for label, icon in sortedpairs(CACHED_ICONS) do
 		local show_map_icons = true;
@@ -310,8 +314,12 @@ function CraftBuster_MapIcons_Update()
 			show_map_icons = true;
 		elseif (icon.icon_type == CBT_MAP_ICON_TRAINER) then
 			show_map_icons = CraftBusterOptions[CraftBusterEntry].modules[icon.module_id].show_trainer_map_icons;
+			if (CraftBusterEntry ~= CBG_GLOBAL_PROFILE or in_array(icon.module_id, skills)) then
+			end
 		elseif (icon.icon_type == CBT_MAP_ICON_STATION) then
 			show_map_icons = CraftBusterOptions[CraftBusterEntry].modules[icon.module_id].show_station_map_icons;
+			if (CraftBusterEntry ~= CBG_GLOBAL_PROFILE or in_array(icon.module_id, skills)) then
+			end
 		end
 
 		if ((icon.side == player_side or icon.side == "Neutral") and show_map_icons) then
