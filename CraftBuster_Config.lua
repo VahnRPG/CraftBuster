@@ -275,6 +275,31 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 				end
 			end
 		end);
+
+		local map_icons_select_mine = CreateFrame("Button", config_frame_name .. "MapIconsSelectMine", child_map_icons_frame, "UIPanelButtonTemplate");
+		map_icons_select_mine:SetPoint("TOPLEFT", map_icons_check_all, "TOPLEFT", 0, -40);
+		map_icons_select_mine:SetText(CBL["CONFIG_MAP_ICON_SELECT_MINE"]);
+		map_icons_select_mine:SetSize(120, 20);
+		map_icons_select_mine:SetScript("OnClick", function()
+			local skills = {};
+			for skill, skill_data in sortedpairs(CraftBusterOptions[CraftBusterEntry].skills) do
+				skills[skill] = skill_data.id;
+			end
+			for _, module_id in sortedpairs(CBG_SORTED_SKILLS) do
+				local checked = in_array(module_id, skills);
+				local module_data = CraftBuster_Modules[module_id];
+				
+				if (module_data.trainer_map_icons) then
+					map_icons[module_id .. "trainer"]:SetChecked(checked);
+					CraftBuster_Minimap_SetTrainerMapIcons(self, module_id, _, checked);
+				end
+				
+				if (module_data.station_map_icons) then
+					map_icons[module_id .. "station"]:SetChecked(checked);
+					CraftBuster_Minimap_SetStationMapIcons(self, module_id, _, checked);
+				end
+			end
+		end);
 	end
 
 	child_map_icons_frame:SetScript("OnShow", nil);

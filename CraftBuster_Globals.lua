@@ -5,6 +5,8 @@ CBG_MOD_NAME = "CraftBuster";
 CBG_VERSION = GetAddOnMetadata(CBG_MOD_NAME, "Version");
 CBG_LAST_UPDATED = GetAddOnMetadata(CBG_MOD_NAME, "X-Date");
 
+CBG_GLOBAL_PROFILE = "CraftBuster-Global-Profile";
+
 CBG_LOCKPICKING_LEVEL = 24;
 CBG_LOCKPICKING_MAX_SKILL_LEVEL = 800;
 

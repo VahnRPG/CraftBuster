@@ -50,6 +50,7 @@
 	CBL["CONFIG_TITLE_OTHER"] = "Other";
 	CBL["CONFIG_ALERTS_TAB_TRAINER"] = "Trainer Alerts";
 	CBL["CONFIG_ALERTS_TAB_NODES"] = "Node Alerts";
+	CBL["CONFIG_GLOBAL_PROFILE"] = "Use Global Profile";
 	CBL["CONFIG_SHOW_MINIMAP"] = "Show Minimap Button";
 	CBL["CONFIG_SHOW_WORLD_MAP_ICONS"] = "Show World Map Icons";
 	CBL["CONFIG_SHOW_MINIMAP_ICONS"] = "Show Minimap Icons";
@@ -59,6 +60,7 @@
 	CBL["CONFIG_MAP_ICON_" .. CBL[CBT_SKILL_MINE]] = "Forge";
 	CBL["CONFIG_MAP_ICON_" .. CBL[CBT_SKILL_TAIL]] = "Tailoring";
 	CBL["CONFIG_MAP_ICON_CHECK_ALL"] = "Un/Check All";
+	CBL["CONFIG_MAP_ICON_SELECT_MINE"] = "Select Mine";
 	CBL["CONFIG_SHOW_TRACKER"] = "Show Tracker";
 	CBL["CONFIG_EXPAND_TRACKER"] = "Expand Tracker";
 	CBL["CONFIG_TRACKER_POSITION"] = "Tracker Position";
