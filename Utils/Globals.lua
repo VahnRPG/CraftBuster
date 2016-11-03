@@ -266,6 +266,25 @@ CBG_MAP_IDS = {
 	970,	--Tanaan Jungle - Assault on the Dark Portal
 	1011,	--Warspear
 
+	1007,	--Broken Isles
+	1015,	--Aszuna
+	1021,	--Broken Shore
+	1014,	--Dalaran
+	1098,	--Eye of Azshara
+	1024,	--Highmountain
+	1017,	--Stormheim
+	1033,	--Suramar
+	1018,	--Val'sharah
+	
+	1068,	--Hall of the Guardian - Mage Order Hall
+	1052,	--Mardum, the Shattered Abyss - Demon Hunter
+	1040,	--Netherlight Temple - Priest Order Hall
+	1035,	--Skyhold - Warrior Order Hall
+	1077,	--The Dreamgrove - Druid Order Hall
+	1057,	--The Heart of Azeroth - Shaman Order Hall
+	1044,	--The Wandering Isle - Monk Order Hall
+	1072,	--Trueshot Lodge - Hunter Order Hall
+
 	401,	--Alterac Valley
 	461,	--Arathi Basin
 	935,	--Deepwind Gorge
@@ -420,4 +439,19 @@ CBG_MAP_IDS = {
 
 	994,	--Highmaul
 	988,	--Blackrock Foundry
+	1026,	--Hellfire Citadel
+	
+	1081,	--Black Rook Hold
+	1087,	--Court of Stars
+	1067,	--Darkheart Thicket
+	1046,	--Eye of Azshara
+	1041,	--Halls of Valor
+	1042,	--Maw of Souls
+	1065,	--Neltharion's Lair
+	1079,	--The Arcway
+	1045,	--Vault of the Wardens
+	1066,	--Violet Hold
+
+	1094,	--The Emerald Nightmare
+	1088,	--The Nighthold
 };
