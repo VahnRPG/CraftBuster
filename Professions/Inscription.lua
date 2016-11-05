@@ -1,109 +1,5 @@
-local SKILL_ID = CBT_SKILL_INSC;
-local SKILL_NAME = CBL[CBT_SKILL_INSC];
-local SKILL_SHORT_CODE = "insc";
-local SKILL_TYPE = CBG_SKILL_NORMAL;
-local SKILL_SPELL_1ID = 45357;		--Inscription
-local SKILL_SPELL_2ID = 51005;		--Milling
-local SKILL_BUST_SPELLID = 51005;
-local SKILL_ACTIONS = {};
-local SKILL_TRAINER_MAP_ICONS = {
-	[491] = {		--Howling Fjord
-		["Alliance"] = {
-			[26916] = { ["name"] = "Mindri Dinkles", ["floor"] = 0, ["pos"] = { 58.2, 62.4 } },
-		},
-		["Horde"] = {
-			[26959] = { ["name"] = "Booker Kells", ["floor"] = 0, ["pos"] = { 79.4, 29.2 } },
-		},
-	},
-	[486] = {		--Borean Tundra
-		["Alliance"] = {
-			[26995] = { ["name"] = "Tink Brightbolt", ["floor"] = 0, ["pos"] = { 57.6, 71.6 } },
-		},
-		["Horde"] = {
-			[26977] = { ["name"] = "Adelene Sunlance", ["floor"] = 0, ["pos"] = { 41.2, 53.8 } },
-		},
-	},
-	[301] = {		--Stormwind City
-		["Alliance"] = {
-			[30713] = { ["name"] = "Catarina Stanford", ["floor"] = 0, ["pos"] = { 49.6, 74 } },
-		},
-	},
-	[381] = {		--Darnassus
-		["Alliance"] = {
-			[30715] = { ["name"] = "Feyden Darkin", ["floor"] = 0, ["pos"] = { 56.6, 31.4 } },
-		},
-	},
-	[471] = {		--The Exodar
-		["Alliance"] = {
-			[30716] = { ["name"] = "Thoth", ["floor"] = 0, ["pos"] = { 39.8, 38.8 } },
-		},
-	},
-	[341] = {		--Ironforge
-		["Alliance"] = {
-			[30717] = { ["name"] = "Elise Brightletter", ["floor"] = 0, ["pos"] = { 60.4, 44.4 } },
-		},
-	},
-	[465] = {		--Hellfire Peninsula
-		["Alliance"] = {
-			[30721] = { ["name"] = "Michael Schwan", ["floor"] = 0, ["pos"] = { 53.8, 65.4 } },
-		},
-		["Horde"] = {
-			[30722] = { ["name"] = "Neferatti", ["floor"] = 0, ["pos"] = { 52.2, 36 } },
-		},
-	},
-	[141] = {		--Dustwallow Marsh
-		["Alliance"] = {
-			[53415] = { ["name"] = "Theoden Manners", ["floor"] = 0, ["pos"] = { 66, 49.6 } },
-		},
-	},
-	[362] = {		--Thunder Bluff
-		["Horde"] = {
-			[30709] = { ["name"] = "Poshken Hardbinder", ["floor"] = 0, ["pos"] = { 28.4, 20.4 } },
-		},
-	},
-	[480] = {		--Silvermoon City
-		["Horde"] = {
-			[30710] = { ["name"] = "Zantasia", ["floor"] = 0, ["pos"] = { 69.2, 23.6 } },
-		},
-	},
-	[382] = {		--Undercity
-		["Horde"] = {
-			[30711] = { ["name"] = "Margaux Parchley", ["floor"] = 0, ["pos"] = { 61, 58.2 } },
-		},
-	},
-	[321] = {		--Orgrimmar
-		["Horde"] = {
-			[46716] = { ["name"] = "Nerog", ["floor"] = 1, ["pos"] = { 55.2, 55.8 } },
-		},
-	},
-	[504] = {		--Dalaran
-		["Neutral"] = {
-			[28702] = { ["name"] = "Professor Pallin", ["floor"] = 1, ["pos"] = { 42.4, 37.6 } },
-		},
-	},
-	[492] = {		--Icecrown
-		["Neutral"] = {
-			[33603] = { ["name"] = "Arthur Denny", ["floor"] = 0, ["pos"] = { 71.6, 20.8 } },
-		},
-	},
-	[481] = {		--Shattrath City
-		["Neutral"] = {
-			[33638] = { ["name"] = "Scribe Lanloer", ["floor"] = 0, ["pos"] = { 56, 74.4 } },
-			[33679] = { ["name"] = "Recorder Lidio", ["floor"] = 0, ["pos"] = { 36.2, 43.8 } },
-		},
-	},
-	[806] = {		--The Jade Forest
-		["Neutral"] = {
-			[56065] = { ["name"] = "Inkmaster Wei", ["floor"] = 0, ["pos"] = { 54.6, 44.2 } },
-			[62327] = { ["name"] = "Scribe Rinji", ["floor"] = 0, ["pos"] = { 47.6, 35 } },
-		},
-	},
-	[811] = {		--Vale of Eternal Blossoms
-		["Neutral"] = {
-			[64691] = { ["name"] = "Lorewalker Huynh", ["floor"] = 0, ["pos"] = { 82, 29.4 } },
-		},
-	},
-};
+local _, cb = ...;
+
 local INSC_HERBS = {
 	--vanilla
 	["765"] = {"39151"},
@@ -563,132 +459,139 @@ local INSC_PIGMENTS = {
 	},
 };
 
-local function CraftBuster_Module_Inscription_GetBustables()
-	local results = {};
-	for bag=0, 4 do
-		for slot=1, GetContainerNumSlots(bag) do
-			local _, _, item_id = string.find(GetContainerItemLink(bag, slot) or "", "item:(%d+).+%[(.+)%]");
-			if (item_id ~= nil) then
-				if (INSC_HERBS[item_id] ~= nil) then
-					item_id = tonumber(item_id);
-					if (not results[item_id]) then
-						results[item_id] = {};
-						results[item_id].item_id = item_id;
-						results[item_id].total = 0;
-					end
-					local _,item_count = GetContainerItemInfo(bag, slot);
-					results[item_id].total = results[item_id].total + item_count;		--really? no += in lua? LAAAAAAAAAME
-				end
-			end
-		end
-	end
-
-	return results;
-end
-
-local function CraftBuster_Module_Inscription_Sort()
-	echo("Begin Inscription Sort:");
-	local sort_items = {};
-	for bag=0, 4 do
-		local sort_bag = 5 - bag;		--since Blizzard checks bustables in the 'last' bags first, sort them first
-		for slot=1, GetContainerNumSlots(bag) do
-			--local sort_slot = 100 - slot;		--do likewise for the slots
-			local sort_slot = slot;		--do likewise for the slots
-			local _, _, item_id = string.find(GetContainerItemLink(bag, slot) or "", "item:(%d+).+%[(.+)%]");
-			if (item_id ~= nil) then
-				if (INSC_HERBS[item_id] ~= nil) then
-					item_id = tonumber(item_id);
-					if (not sort_items[item_id]) then
-						local _,_,_,_,_,_,_,max_stack = GetItemInfo(item_id);
-						sort_items[item_id] = {};
-						sort_items[item_id].item_id = item_id;
-						sort_items[item_id].max_stack = max_stack;
-						sort_items[item_id].total = 0;
-						sort_items[item_id].bags = {};
-					end
-					local _,item_count = GetContainerItemInfo(bag,slot);
-					if (item_count < sort_items[item_id].max_stack) then
-						if (not sort_items[item_id].bags[sort_bag]) then
-							sort_items[item_id].bags[sort_bag] = {};
+local SKILL_ID = CBT_SKILL_INSC;
+local SKILL_SHORT_CODE = "insc";
+local profession_data = {
+	["id"] = SKILL_ID,
+	["name"] = CBL[SKILL_ID],
+	["short_code"] = SKILL_SHORT_CODE,
+	["type"] = CBG_SKILL_NORMAL,
+	["show_tooltips"] = true,
+	["spell_1"] = 45357,		--Inscription
+	["spell_2"] = 51005,		--Milling
+	["spell_buster"] = 51005,
+	["bustable_function"] = function()
+		local results = {};
+		for bag=0, 4 do
+			for slot=1, GetContainerNumSlots(bag) do
+				local _, _, item_id = string.find(GetContainerItemLink(bag, slot) or "", "item:(%d+).+%[(.+)%]");
+				if (item_id ~= nil) then
+					if (INSC_HERBS[item_id] ~= nil) then
+						item_id = tonumber(item_id);
+						if (not results[item_id]) then
+							results[item_id] = {};
+							results[item_id].item_id = item_id;
+							results[item_id].total = 0;
 						end
-						if (not sort_items[item_id].bags[sort_bag][sort_slot]) then
-							sort_items[item_id].bags[sort_bag][sort_slot] = 0;
-						end
-						sort_items[item_id].total = sort_items[item_id].total + item_count;
-						sort_items[item_id].bags[sort_bag][sort_slot] = sort_items[item_id].bags[sort_bag][sort_slot] + item_count;
-						echo("Bag: " .. bag .. ", Slot: " .. slot .. " - " .. item_id .. " - " .. item_count);
+						local _,item_count = GetContainerItemInfo(bag, slot);
+						results[item_id].total = results[item_id].total + item_count;		--really? no += in lua? LAAAAAAAAAME
 					end
 				end
 			end
 		end
-	end
-	print_r(sort_items);
-	if (sort_items and next(sort_items)) then
-		for i,item_data in sortedpairs(sort_items) do
-			if (tcount(item_data.bags) > 1) then
-				local total_stacks = ceil(item_data.total / item_data.max_stack);
-				local stack_items = {};
-				stack_items.bags = {};
-				for sort_bag,bag_data in sortedpairs(item_data.bags) do
-					local bag = 5 - sort_bag;
-					if (not stack_items.bags[bag]) then
-						stack_items.bags[bag] = {};
-					end
-					for sort_slot,slot_data in sortedpairs(bag_data) do
-						--local slot = 100 - sort_slot;
-						local slot = sort_slot;
-						if (not stack_items.bags[bag][slot]) then
-							stack_items.bags[bag][slot] = 0;
-						end
-					end
-				end
-				--print_r(stack_items);
-				for stack=1, total_stacks do
-				end
-			end
-		end
-	end
 
-	CraftBuster_BusterFrame_SortItems();
-end
-
-local function CraftBuster_Module_Inscription_HandleAction(skill_data)
-	if (not CraftBusterOptions[CraftBusterEntry].alerts[SKILL_ID]) then
-		CraftBusterOptions[CraftBusterEntry].alerts[SKILL_ID] = {};
-	end
-	for action_id, data in sortedpairs(SKILL_ACTIONS) do
-		if (not CraftBusterOptions[CraftBusterEntry].alerts[SKILL_ID][action_id]) then
-			if (CraftBusterPlayerLevel >= data.ply_level and skill_data.level >= data.skill_level) then
-				echo(data.message);
-				CraftBusterOptions[CraftBusterEntry].alerts[SKILL_ID][action_id] = true;
-			end
-		end
-	end
-end
-
-local function CraftBuster_Module_Inscription_DisplayActions(display_frame)
-	CraftBuster_Module_BuildActionDisplay(display_frame, SKILL_ID, SKILL_ACTIONS, SKILL_TYPE, SKILL_NAME, SKILL_SHORT_CODE);
-end
-
-local function CraftBuster_Module_Inscription_OnLoad()
-	SKILL_ACTIONS = CraftBuster_Module_BuildBaseActions(SKILL_TYPE, SKILL_NAME, SKILL_SHORT_CODE);
-	local module_options = {
-		trainer_map_icons = SKILL_TRAINER_MAP_ICONS,
-		spell_1 = SKILL_SPELL_1ID,
-		spell_2 = SKILL_SPELL_2ID,
-		spell_buster = SKILL_SPELL_2ID,
-		tooltip_info = true,
-		bustable_spell = SKILL_BUST_SPELLID,
-		bustable_type = ITEM_MILLABLE,
-		bustable_function = CraftBuster_Module_Inscription_GetBustables,
-		sort_function = CraftBuster_Module_Inscription_Sort,
-		action_function = CraftBuster_Module_Inscription_HandleAction,
-		display_action_function = CraftBuster_Module_Inscription_DisplayActions,
-	};
-	CraftBuster_RegisterModule(SKILL_ID, SKILL_NAME, module_options);
-end
-
-CraftBuster_Module_Inscription_OnLoad();
+		return results;
+	end,
+	["trainer_map_icons"] = {
+		[491] = {		--Howling Fjord
+			["Alliance"] = {
+				[26916] = { ["name"] = "Mindri Dinkles", ["floor"] = 0, ["pos"] = { 58.2, 62.4 } },
+			},
+			["Horde"] = {
+				[26959] = { ["name"] = "Booker Kells", ["floor"] = 0, ["pos"] = { 79.4, 29.2 } },
+			},
+		},
+		[486] = {		--Borean Tundra
+			["Alliance"] = {
+				[26995] = { ["name"] = "Tink Brightbolt", ["floor"] = 0, ["pos"] = { 57.6, 71.6 } },
+			},
+			["Horde"] = {
+				[26977] = { ["name"] = "Adelene Sunlance", ["floor"] = 0, ["pos"] = { 41.2, 53.8 } },
+			},
+		},
+		[301] = {		--Stormwind City
+			["Alliance"] = {
+				[30713] = { ["name"] = "Catarina Stanford", ["floor"] = 0, ["pos"] = { 49.6, 74 } },
+			},
+		},
+		[381] = {		--Darnassus
+			["Alliance"] = {
+				[30715] = { ["name"] = "Feyden Darkin", ["floor"] = 0, ["pos"] = { 56.6, 31.4 } },
+			},
+		},
+		[471] = {		--The Exodar
+			["Alliance"] = {
+				[30716] = { ["name"] = "Thoth", ["floor"] = 0, ["pos"] = { 39.8, 38.8 } },
+			},
+		},
+		[341] = {		--Ironforge
+			["Alliance"] = {
+				[30717] = { ["name"] = "Elise Brightletter", ["floor"] = 0, ["pos"] = { 60.4, 44.4 } },
+			},
+		},
+		[465] = {		--Hellfire Peninsula
+			["Alliance"] = {
+				[30721] = { ["name"] = "Michael Schwan", ["floor"] = 0, ["pos"] = { 53.8, 65.4 } },
+			},
+			["Horde"] = {
+				[30722] = { ["name"] = "Neferatti", ["floor"] = 0, ["pos"] = { 52.2, 36 } },
+			},
+		},
+		[141] = {		--Dustwallow Marsh
+			["Alliance"] = {
+				[53415] = { ["name"] = "Theoden Manners", ["floor"] = 0, ["pos"] = { 66, 49.6 } },
+			},
+		},
+		[362] = {		--Thunder Bluff
+			["Horde"] = {
+				[30709] = { ["name"] = "Poshken Hardbinder", ["floor"] = 0, ["pos"] = { 28.4, 20.4 } },
+			},
+		},
+		[480] = {		--Silvermoon City
+			["Horde"] = {
+				[30710] = { ["name"] = "Zantasia", ["floor"] = 0, ["pos"] = { 69.2, 23.6 } },
+			},
+		},
+		[382] = {		--Undercity
+			["Horde"] = {
+				[30711] = { ["name"] = "Margaux Parchley", ["floor"] = 0, ["pos"] = { 61, 58.2 } },
+			},
+		},
+		[321] = {		--Orgrimmar
+			["Horde"] = {
+				[46716] = { ["name"] = "Nerog", ["floor"] = 1, ["pos"] = { 55.2, 55.8 } },
+			},
+		},
+		[504] = {		--Dalaran
+			["Neutral"] = {
+				[28702] = { ["name"] = "Professor Pallin", ["floor"] = 1, ["pos"] = { 42.4, 37.6 } },
+			},
+		},
+		[492] = {		--Icecrown
+			["Neutral"] = {
+				[33603] = { ["name"] = "Arthur Denny", ["floor"] = 0, ["pos"] = { 71.6, 20.8 } },
+			},
+		},
+		[481] = {		--Shattrath City
+			["Neutral"] = {
+				[33638] = { ["name"] = "Scribe Lanloer", ["floor"] = 0, ["pos"] = { 56, 74.4 } },
+				[33679] = { ["name"] = "Recorder Lidio", ["floor"] = 0, ["pos"] = { 36.2, 43.8 } },
+			},
+		},
+		[806] = {		--The Jade Forest
+			["Neutral"] = {
+				[56065] = { ["name"] = "Inkmaster Wei", ["floor"] = 0, ["pos"] = { 54.6, 44.2 } },
+				[62327] = { ["name"] = "Scribe Rinji", ["floor"] = 0, ["pos"] = { 47.6, 35 } },
+			},
+		},
+		[811] = {		--Vale of Eternal Blossoms
+			["Neutral"] = {
+				[64691] = { ["name"] = "Lorewalker Huynh", ["floor"] = 0, ["pos"] = { 82, 29.4 } },
+			},
+		},
+	},
+};
+cb.professions:registerModule(profession_data);
 
 local function parse_output(color, header, table_data)
 	local output_txt = color .. header .. ": |r";
@@ -707,7 +610,7 @@ local function parse_output(color, header, table_data)
 	return output_txt;
 end
 
-local function CraftBuster_Module_Inscription_AddMillingInfo(frame, item_link)
+local function add_tooltip_info(frame, item_link)
 	if (CraftBusterOptions[CraftBusterEntry].modules[SKILL_ID].show_tooltips ~= true) then
 		return;
 	end
@@ -803,7 +706,7 @@ local function HookFrame(frame)
 		function(self, ...)
 			local item_link = select(2, self:GetItem());
 			if (item_link and GetItemInfo(item_link)) then
-				CraftBuster_Module_Inscription_AddMillingInfo(self, item_link);
+				add_tooltip_info(self, item_link);
 			end
 		end
 	);

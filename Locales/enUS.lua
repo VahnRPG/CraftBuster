@@ -83,8 +83,7 @@
 	CBL["CONFIG_POSITIONS_RESET"] = "Reset Positions";
 
 	CBL["MINIMAP_HOVER_LINE1"] = CBG_CLR_WHITE .. "Left button to " .. CBG_CLR_LIGHTGREEN .. "Drag";
-	--CBL["MINIMAP_HOVER_LINE2"] = CBG_CLR_WHITE .. "Left-click for " .. CBG_CLR_OFFBLUE .. "Toggle Menu";
-	CBL["MINIMAP_HOVER_LINE3"] = CBG_CLR_WHITE .. "Right-click for " .. CBG_CLR_OFFBLUE .. "Config";
+	CBL["MINIMAP_HOVER_LINE2"] = CBG_CLR_WHITE .. "Right-click for " .. CBG_CLR_OFFBLUE .. "Config";
 
 	CBL["MAPICON_TITLE_TRAINER"] = CBG_CLR_OFFBLUE .. "Trainer: ";
 	CBL["MAPICON_TITLE_STATION"] = CBG_CLR_OFFBLUE .. "Station: ";
@@ -119,4 +118,5 @@
 	-- Tradeskill Localization
 	CBL["TRADESKILL_NUMLINES"] = 1;
 	CBL["TRADESKILL_LINE1"] = CBG_CLR_WHITE .. "List relevant items in bags";
+	CBL["TRADESKILL_ENCHANTING"] = "Vellum";
 --end
