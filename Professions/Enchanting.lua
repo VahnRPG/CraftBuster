@@ -37,7 +37,7 @@ local profession_data = {
 		local count = 0;
 		for bag=0, 4 do
 			for slot=1, GetContainerNumSlots(bag) do
-				local _, _, item_id = string.find(GetContainerItemLink(bag, slot) or "", "item:(%d+).+%[(.+)%]");
+				local item_id = GetContainerItemID(bag, slot);
 				if (item_id ~= nil) then
 					local item_name,item_link,item_quality,_,_,item_type,item_sub_type = GetItemInfo(item_id);
 					if (item_quality > 1 and (item_type == "Weapon" or item_type == "Armor")) then

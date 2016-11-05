@@ -1,3 +1,5 @@
+local _, cb = ...;
+
 local HBD = LibStub("HereBeDragons-1.0");
 local HBDPins = LibStub("HereBeDragons-Pins-1.0");
 
@@ -57,16 +59,17 @@ local SKILL_ALL_PROFESSIONS_TRAINERS_MAP_ICONS = {
 };
 
 local CACHED_ICONS = {};
-
-local tooltip = CreateFrame("GameTooltip", "CraftBuster_MapIcons_Tooltip", nil, "GameTooltipTemplate");
---local dropdown = CreateFrame("Frame", "CraftBuster_MapIcons_Dropdown", nil, "UIDropDownMenuTemplate");
 local last_update = 0;
 
-local function CraftBuster_MapIcons_SetTooltipText(icon_data, floor_label)
+cb.map_icons = {};
+cb.map_icons.frame = CreateFrame("Frame", "CraftBuster_MapIcons_Frame", UIParent);
+cb.map_icons.tooltip_frame = CreateFrame("GameTooltip", "CraftBuster_MapIcons_Tooltip", nil, "GameTooltipTemplate");
+
+function cb.map_icons:setTooltipText(icon_data, floor_label)
 	if (icon_data.icon_type == CBT_MAP_ICON_TRAINER) then
-		tooltip:SetText(CBL["MAPICON_TITLE_TRAINER"]);
+		cb.map_icons.tooltip_frame:SetText(CBL["MAPICON_TITLE_TRAINER"]);
 	elseif (icon_data.icon_type == CBT_MAP_ICON_STATION) then
-		tooltip:SetText(CBL["MAPICON_TITLE_STATION"]);
+		cb.map_icons.tooltip_frame:SetText(CBL["MAPICON_TITLE_STATION"]);
 	end
 
 	local profession_label = CBL[icon_data.module_id];
@@ -74,21 +77,10 @@ local function CraftBuster_MapIcons_SetTooltipText(icon_data, floor_label)
 		profession_label = CBL["SKILL_ALL_PROFESSIONS"];
 	end
 
-	tooltip:AddLine(floor_label .. CBG_CLR_WHITE .. icon_data.npc_data["name"] .. " - " .. profession_label);
+	cb.map_icons.tooltip_frame:AddLine(floor_label .. CBG_CLR_WHITE .. icon_data.npc_data["name"] .. " - " .. profession_label);
 end
 
-local function CraftBuster_MapIcons_Minimap_OnEvent(self, event, ...)
-	if (event == "PLAYER_ENTERING_WORLD") then
-		if (not self.icon_data.label) then
-			return;
-		end
-
-		local icon_data = self.icon_data;
-		HBDPins:AddMinimapIconMF(CBG_MOD_NAME, self, icon_data.map_id, icon_data.npc_data["floor"], (icon_data.npc_data["pos"][1] / 100), (icon_data.npc_data["pos"][2] / 100));
-	end
-end
-
-local function CraftBuster_MapIcons_Minimap_OnUpdate(self, elapsed)
+function cb.map_icons:updateMinimap(self, elapsed)
 	local angle, distance = HBDPins:GetVectorToIcon(self);
 	if (not angle) then
 		self:Hide();
@@ -115,125 +107,73 @@ local function CraftBuster_MapIcons_Minimap_OnUpdate(self, elapsed)
 	end
 end
 
-local function CraftBuster_MapIcons_Minimap_OnEnter(self, event, ...)
-	if (not self.icon_data.label) then
-		return;
-	end
-
-	if (self.icon:IsShown()) then
-		if (UIParent:IsVisible()) then
-			tooltip:SetParent(UIParent);
-		else
-			tooltip:SetParent(self);
-		end
-		tooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT");
-
-		local floor_label = "";
-		local _, _, _, floor = HBD:GetPlayerZonePosition();
-		if (floor < self.icon_data.npc_data["floor"]) then
-			floor_label = "|TInterface\\Minimap\\Minimap-PositionArrows:0:0:0:0:16:32:0:16:0:16|t";
-		elseif (floor > self.icon_data.npc_data["floor"]) then
-			floor_label = "|TInterface\\Minimap\\Minimap-PositionArrows:0:0:0:0:16:32:0:16:16:32|t";
-		end
-
-		CraftBuster_MapIcons_SetTooltipText(self.icon_data, floor_label);
-
-		tooltip:Show();
-	end
-end
-
-local function CraftBuster_MapIcons_Minimap_OnLeave(self)
-	if (not self.icon_data.label) then
-		return;
-	end
-
-	if (self.icon:IsShown()) then
-		tooltip:Hide();
-	end
-end
-
-local function CraftBuster_MapIcons_Minimap_OnClick(self, button, down)
-	if (not self.icon_data.label) then
-		return;
-	end
-
-	if (self.icon:IsShown() and (self.icon_data.map_id ~= GetCurrentMapAreaID())) then
-		--echo("Minimap OnClick: " .. self.icon_data.label);
-	end
-end
-
-local function CraftBuster_MapIcons_World_OnEvent(self, event, ...)
-	if (event == "WORLD_MAP_UPDATE") then
-		if (not self.icon_data.label or not CraftBusterEntry) then
-			return;
-		end
-
-		local show = false;
-		local icon_data = self.icon_data;
-		if (icon_data.worldmap_icon_frame and CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map) then
-			if (icon_data.map_id == GetCurrentMapAreaID()) then
-				HBDPins:AddWorldMapIconMF(CBG_MOD_NAME, self, icon_data.map_id, icon_data.npc_data["floor"], (icon_data.npc_data["pos"][1] / 100), (icon_data.npc_data["pos"][2] / 100));
-				show = true;
-			end
-		end
-
-		if (show) then
-			self:Show();
-		else
-			self:Hide();
-		end
-	end
-end
-
-local function CraftBuster_MapIcons_World_OnEnter(self, event, ...)
-	if (self.icon:IsShown()) then
-		if (UIParent:IsVisible()) then
-			tooltip:SetParent(UIParent);
-		else
-			tooltip:SetParent(self);
-		end
-		tooltip:SetOwner(self, "ANCHOR_BOTTOMLEFT");
-
-		local floor_label = "";
-		local floor = GetCurrentMapDungeonLevel();
-		if (floor < self.icon_data.npc_data["floor"]) then
-			floor_label = "|TInterface\\Minimap\\Minimap-PositionArrows:0:0:0:0:16:32:0:16:0:16|t";
-		elseif (floor > self.icon_data.npc_data["floor"]) then
-			floor_label = "|TInterface\\Minimap\\Minimap-PositionArrows:0:0:0:0:16:32:0:16:16:32|t";
-		end
-		CraftBuster_MapIcons_SetTooltipText(self.icon_data, floor_label);
-
-		tooltip:Show();
-	end
-end
-
-local function CraftBuster_MapIcons_World_OnLeave(self)
-	if (self.icon:IsShown()) then
-		tooltip:Hide();
-	end
-end
-
-local function CraftBuster_MapIcons_World_OnClick(self, button, down)
-	if (self.icon:IsShown()) then
-		--echo("World OnClick: " .. self.icon_data.label);
-	end
-end
-
-local function CraftBuster_CreateMapIcon(map_id, icon_type, module_id, side, npc_id, npc_data)
+function cb.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, npc_data)
 	local label = map_id .. "_" .. icon_type .. "_" .. module_id .. "_" .. side .. "_" .. npc_id;
-
+	
 	local x1, x2, y1, y2 = unpack(CBG_MAP_ICON_TEXTURES[icon_type][module_id]);
 	local minimap_icon_frame = CreateFrame("Button", nil, Minimap);
 	minimap_icon_frame:SetHeight(20);
 	minimap_icon_frame:SetWidth(20);
 	minimap_icon_frame:RegisterForClicks("RightButtonUp");
 	minimap_icon_frame:RegisterEvent("PLAYER_ENTERING_WORLD");
-	minimap_icon_frame:SetScript("OnEvent", CraftBuster_MapIcons_Minimap_OnEvent);
-	minimap_icon_frame:SetScript("OnUpdate", CraftBuster_MapIcons_Minimap_OnUpdate);
-	minimap_icon_frame:SetScript("OnEnter", CraftBuster_MapIcons_Minimap_OnEnter);
-	minimap_icon_frame:SetScript("OnLeave", CraftBuster_MapIcons_Minimap_OnLeave);
-	minimap_icon_frame:SetScript("OnClick", CraftBuster_MapIcons_Minimap_OnClick);
+	minimap_icon_frame:SetScript("OnEvent", function(self, event, ...)
+		if (event == "PLAYER_ENTERING_WORLD") then
+			if (not self.icon_data.label) then
+				return;
+			end
 
+			local icon_data = self.icon_data;
+			HBDPins:AddMinimapIconMF(CBG_MOD_NAME, self, icon_data.map_id, icon_data.npc_data["floor"], (icon_data.npc_data["pos"][1] / 100), (icon_data.npc_data["pos"][2] / 100));
+			minimap_icon_frame:UnregisterEvent("PLAYER_ENTERING_WORLD");
+		end
+	end);
+	minimap_icon_frame:SetScript("OnUpdate", function(self, elapsed)
+		cb.map_icons:updateMinimap(self, elapsed);
+	end);
+	minimap_icon_frame:SetScript("OnEnter", function(self, event, ...)
+		if (not self.icon_data.label) then
+			return;
+		end
+
+		if (self.icon:IsShown()) then
+			if (UIParent:IsVisible()) then
+				cb.map_icons.tooltip_frame:SetParent(UIParent);
+			else
+				cb.map_icons.tooltip_frame:SetParent(self);
+			end
+			cb.map_icons.tooltip_frame:SetOwner(self, "ANCHOR_BOTTOMLEFT");
+
+			local floor_label = "";
+			local _, _, _, floor = HBD:GetPlayerZonePosition();
+			if (floor < self.icon_data.npc_data["floor"]) then
+				floor_label = "|TInterface\\Minimap\\Minimap-PositionArrows:0:0:0:0:16:32:0:16:0:16|t";
+			elseif (floor > self.icon_data.npc_data["floor"]) then
+				floor_label = "|TInterface\\Minimap\\Minimap-PositionArrows:0:0:0:0:16:32:0:16:16:32|t";
+			end
+
+			cb.map_icons:setTooltipText(self.icon_data, floor_label);
+			cb.map_icons.tooltip_frame:Show();
+		end
+	end);
+	minimap_icon_frame:SetScript("OnLeave", function(self)
+		if (not self.icon_data.label) then
+			return;
+		end
+
+		if (self.icon:IsShown()) then
+			cb.map_icons.tooltip_frame:Hide();
+		end
+	end);
+	minimap_icon_frame:SetScript("OnClick", function(self, button, down)
+		if (not self.icon_data.label) then
+			return;
+		end
+
+		if (self.icon:IsShown() and (self.icon_data.map_id ~= GetCurrentMapAreaID())) then
+			--echo("Minimap OnClick: " .. self.icon_data.label);
+		end
+	end);
+	
 	minimap_icon_frame.icon = minimap_icon_frame:CreateTexture("BACKGROUND");
 	minimap_icon_frame.icon:SetPoint("CENTER", 0, 0);
 	minimap_icon_frame.icon:SetTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_MapIcons");
@@ -241,7 +181,7 @@ local function CraftBuster_CreateMapIcon(map_id, icon_type, module_id, side, npc
 	minimap_icon_frame.icon:SetHeight(16);
 	minimap_icon_frame.icon:SetWidth(16);
 
-	if (not CraftBuster_MapIcons_Overlay) then
+	if (not _G["CraftBuster_MapIcons_Overlay"]) then
 		local overlay = CreateFrame("Frame", "CraftBuster_MapIcons_Overlay", WorldMapButton);
 		overlay:SetAllPoints(true);
 	end
@@ -251,11 +191,60 @@ local function CraftBuster_CreateMapIcon(map_id, icon_type, module_id, side, npc
 	worldmap_icon_frame:SetWidth(14);
 	worldmap_icon_frame:RegisterForClicks("RightButtonUp");
 	worldmap_icon_frame:RegisterEvent("WORLD_MAP_UPDATE");
-	worldmap_icon_frame:SetScript("OnEvent", CraftBuster_MapIcons_World_OnEvent);
-	worldmap_icon_frame:SetScript("OnEnter", CraftBuster_MapIcons_World_OnEnter);
-	worldmap_icon_frame:SetScript("OnLeave", CraftBuster_MapIcons_World_OnLeave);
-	worldmap_icon_frame:SetScript("OnClick", CraftBuster_MapIcons_World_OnClick);
+	worldmap_icon_frame:SetScript("OnEvent", function(self, event, ...)
+		if (event == "WORLD_MAP_UPDATE") then
+			if (not self.icon_data.label or not CraftBusterEntry) then
+				return;
+			end
 
+			local show = false;
+			local icon_data = self.icon_data;
+			if (icon_data.worldmap_icon_frame and CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map) then
+				if (icon_data.map_id == GetCurrentMapAreaID()) then
+					HBDPins:AddWorldMapIconMF(CBG_MOD_NAME, self, icon_data.map_id, icon_data.npc_data["floor"], (icon_data.npc_data["pos"][1] / 100), (icon_data.npc_data["pos"][2] / 100));
+					show = true;
+				end
+			end
+
+			if (show) then
+				self:Show();
+			else
+				self:Hide();
+			end
+		end
+	end);
+	worldmap_icon_frame:SetScript("OnEnter", function(self, event, ...)
+		if (self.icon:IsShown()) then
+			if (UIParent:IsVisible()) then
+				cb.map_icons.tooltip_frame:SetParent(UIParent);
+			else
+				cb.map_icons.tooltip_frame:SetParent(self);
+			end
+			cb.map_icons.tooltip_frame:SetOwner(self, "ANCHOR_BOTTOMLEFT");
+
+			local floor_label = "";
+			local floor = GetCurrentMapDungeonLevel();
+			if (floor < self.icon_data.npc_data["floor"]) then
+				floor_label = "|TInterface\\Minimap\\Minimap-PositionArrows:0:0:0:0:16:32:0:16:0:16|t";
+			elseif (floor > self.icon_data.npc_data["floor"]) then
+				floor_label = "|TInterface\\Minimap\\Minimap-PositionArrows:0:0:0:0:16:32:0:16:16:32|t";
+			end
+
+			cb.map_icons:setTooltipText(self.icon_data, floor_label);
+			cb.map_icons.tooltip_frame:Show();
+		end
+	end);
+	worldmap_icon_frame:SetScript("OnLeave", function(self)
+		if (self.icon:IsShown()) then
+			cb.map_icons.tooltip_frame:Hide();
+		end
+	end);
+	worldmap_icon_frame:SetScript("OnClick", function(self, button, down)
+		if (self.icon:IsShown()) then
+			--echo("World OnClick: " .. self.icon_data.label);
+		end
+	end);
+	
 	worldmap_icon_frame.icon = worldmap_icon_frame:CreateTexture("ARTWORK");
 	worldmap_icon_frame.icon:SetAllPoints();
 	worldmap_icon_frame.icon:SetTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_MapIcons");
@@ -276,49 +265,44 @@ local function CraftBuster_CreateMapIcon(map_id, icon_type, module_id, side, npc
 	icon.worldmap_icon_frame.icon_data = icon;
 	CACHED_ICONS[label] = icon;
 
-	--HBDPins:AddMinimapIconWorld(icon.minimap_icon_frame, icon.map_id, icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
-	--HBDPins:AddWorldMapIconMF(CraftBuster_MapIcons_Overlay, icon.worldmap_icon_frame, icon.map_id, icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
 	HBDPins:AddMinimapIconMF(CBG_MOD_NAME, icon.minimap_icon_frame, icon.map_id, icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
 	HBDPins:AddWorldMapIconMF(CBG_MOD_NAME, icon.worldmap_icon_frame, icon.map_id, icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
 end
 
-function CraftBuster_MapIcons_RegisterInit()
-	CraftBuster_MapIcons_RegisterModule("all", SKILL_ALL_PROFESSIONS_TRAINERS_MAP_ICONS, CBT_MAP_ICON_TRAINER);
+function cb.map_icons:registerInit()
+	cb.map_icons:registerModule("all", SKILL_ALL_PROFESSIONS_TRAINERS_MAP_ICONS, CBT_MAP_ICON_TRAINER);
 end
 
-function CraftBuster_MapIcons_RegisterModule(module_id, map_icons, icon_type)
+function cb.map_icons:registerModule(module_id, map_icons, icon_type)
 	for map_id, map_data in pairs(map_icons) do
-		for side, side_data in sortedpairs(map_data) do
-			for npc_id, npc_data in sortedpairs(side_data) do
-				CraftBuster_CreateMapIcon(map_id, icon_type, module_id, side, npc_id, npc_data);
+		for side, side_data in cb.omg:sortedpairs(map_data) do
+			for npc_id, npc_data in cb.omg:sortedpairs(side_data) do
+				cb.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, npc_data);
 			end
 		end
 	end
 end
 
-function CraftBuster_MapIcons_Init()
-end
-
-function CraftBuster_MapIcons_Update()
+function cb.map_icons:update()
 	local map_icon_cfg = CraftBusterOptions[CraftBusterEntry].map_icons;
 	local current_map_id = GetCurrentMapAreaID();
 	local player_side = UnitFactionGroup("player");
 	local skills = {};
-	for skill, skill_data in sortedpairs(CraftBusterOptions[CraftBusterEntry].skills) do
+	for skill, skill_data in cb.omg:sortedpairs(CraftBusterOptions[CraftBusterEntry].skills) do
 		skills[skill] = skill_data.id;
 	end
 
-	for label, icon in sortedpairs(CACHED_ICONS) do
+	for label, icon in cb.omg:sortedpairs(CACHED_ICONS) do
 		local show_map_icons = true;
 		if (icon.module_id == "all") then
 			show_map_icons = true;
 		elseif (icon.icon_type == CBT_MAP_ICON_TRAINER) then
 			show_map_icons = CraftBusterOptions[CraftBusterEntry].modules[icon.module_id].show_trainer_map_icons;
-			if (CraftBusterEntry ~= CBG_GLOBAL_PROFILE or in_array(icon.module_id, skills)) then
+			if (CraftBusterEntry ~= CBG_GLOBAL_PROFILE or cb.omg:in_array(icon.module_id, skills)) then
 			end
 		elseif (icon.icon_type == CBT_MAP_ICON_STATION) then
 			show_map_icons = CraftBusterOptions[CraftBusterEntry].modules[icon.module_id].show_station_map_icons;
-			if (CraftBusterEntry ~= CBG_GLOBAL_PROFILE or in_array(icon.module_id, skills)) then
+			if (CraftBusterEntry ~= CBG_GLOBAL_PROFILE or cb.omg:in_array(icon.module_id, skills)) then
 			end
 		end
 
@@ -326,7 +310,9 @@ function CraftBuster_MapIcons_Update()
 			if (map_icon_cfg.show_mini_map and current_map_id == icon.map_id) then
 				icon.minimap_icon_frame:Show();
 				icon.minimap_icon_frame.icon:Show();
-				icon.minimap_icon_frame:SetScript("OnUpdate", CraftBuster_MapIcons_Minimap_OnUpdate);
+				icon.minimap_icon_frame:SetScript("OnUpdate", function(self, elapsed)
+					cb.map_icons:updateMinimap(self, elapsed);
+				end);
 			else
 				icon.minimap_icon_frame:Hide();
 				icon.minimap_icon_frame.icon:Hide();
@@ -354,7 +340,7 @@ function CraftBuster_MapIcons_Update()
 	end
 end
 
-function CraftBuster_MapIcons_DisplayPosition()
+function cb.map_icons:displayPosition()
 	local x, y, map_id, floor = HBD:GetPlayerZonePosition();
-	echo("Map: " .. GetMapNameByID(map_id) .. " (" .. map_id .. "), Floor: " .. floor .. " -> " .. round(x * 100, 1) .. ", " .. round(y * 100, 1));
+	cb.omg:echo("Map: " .. GetMapNameByID(map_id) .. " (" .. map_id .. "), Floor: " .. floor .. " -> " .. round(x * 100, 1) .. ", " .. round(y * 100, 1));
 end

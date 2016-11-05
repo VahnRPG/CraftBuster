@@ -25,6 +25,7 @@ function cb.professions:registerModule(module_options)
 	cb.professions.modules[module_id].nodes = module_options["nodes"];
 	cb.professions.modules[module_id].node_function = nil;
 	if (module_options["node_function"]) then
+		cb.worldmap_frame:addGatherData(module_id, module_options["nodes"]);
 		if (type(module_options["node_function"]) == "function") then
 			cb.professions.modules[module_id].node_function = function(line_one, line_two, line_three)
 				local skill_nodes = module_options["node_function"](line_one, line_two, line_three);
@@ -162,8 +163,8 @@ function cb.professions:handleGather(skill_id, zone_map_id)
 		end
 	end
 	
-	if (found) then
-		--CraftBuster_GatherFrame_AddGather(gather_data);
+	if (CraftBusterOptions[CraftBusterEntry].modules[skill_id].show_gather and found) then
+		cb.gather_frame:addGatherData(gather_data);
 	end
 end
 

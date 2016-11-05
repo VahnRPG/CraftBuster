@@ -2,7 +2,8 @@
 -- CraftBuster enUS Localization
 -------------------------------------------------------------------------------
 --if (GetLocale() == "enUS") then
-	--Primary
+	-- Profession Names Localization
+	-- Primary
 	CBL[CBT_SKILL_ALCH] = "Alchemy";
 	CBL[CBT_SKILL_BLCK] = "Blacksmithing";
 	CBL[CBT_SKILL_ENCH] = "Enchanting";
@@ -14,22 +15,17 @@
 	CBL[CBT_SKILL_MINE] = "Mining";
 	CBL[CBT_SKILL_SKIN] = "Skinning";
 	CBL[CBT_SKILL_TAIL] = "Tailoring";
-	--Secondary
+	-- Secondary
 	CBL[CBT_SKILL_ARCH] = "Archaeology";
 	CBL[CBT_SKILL_COOK] = "Cooking";
 	CBL[CBT_SKILL_FRST] = "First Aid";
 	CBL[CBT_SKILL_FISH] = "Fishing";
-	--Rogue Only
+	-- Rogue Only
 	CBL[CBT_SKILL_PICK] = "Lockpicking";
 
 	CBL["SKILL_ALL_PROFESSIONS"] = "All Professions";
 
-	CBL["LBL_RED"] = "Red";
-	CBL["LBL_ORANGE"] = "Orange";
-	CBL["LBL_YELLOW"] = "Yellow";
-	CBL["LBL_GREEN"] = "Green";
-	CBL["LBL_GREY"] = "Grey";
-
+	-- Binding Localization
 	CBL["BINDING_TOGGLE_SKILL_FRAME"] = "Toggle Skill Frame";
 	CBL["BINDING_OPEN_SKILL_1"] = "Toggle Skill 1 Window";
 	CBL["BINDING_OPEN_SKILL_1_BUSTER"] = "Toggle Skill 1 Buster Window";
@@ -40,6 +36,7 @@
 	CBL["BINDING_OPEN_ARCHAEOLOGY"] = "Toggle Archaeology Window";
 	CBL["BINDING_OPEN_LOCKPICKING_BUSTER"] = "Toggle Lockpicking Buster Window";
 
+	-- Config Localization
 	CBL["CONFIG_TITLE_TRACK_PROFESSION"] = "Track Professions";
 	CBL["CONFIG_TITLE_TRACK_GATHERING"] = "Gathering Info";
 	CBL["CONFIG_TITLE_TOOLTIP_INFO"] = "Display Tooltip Info";
@@ -82,12 +79,15 @@
 	CBL["CONFIG_POSITION_SET"] = "SET";
 	CBL["CONFIG_POSITIONS_RESET"] = "Reset Positions";
 
+	-- Minimap Localization
 	CBL["MINIMAP_HOVER_LINE1"] = CBG_CLR_WHITE .. "Left button to " .. CBG_CLR_LIGHTGREEN .. "Drag";
 	CBL["MINIMAP_HOVER_LINE2"] = CBG_CLR_WHITE .. "Right-click for " .. CBG_CLR_OFFBLUE .. "Config";
 
+	-- Map Icon Localization
 	CBL["MAPICON_TITLE_TRAINER"] = CBG_CLR_OFFBLUE .. "Trainer: ";
 	CBL["MAPICON_TITLE_STATION"] = CBG_CLR_OFFBLUE .. "Station: ";
 
+	-- Gathered Levels Localization
 	CBL["NODE_MSG"] = CBG_CLR_OFFBLUE .. "Gather Levels: |r";
 	CBL["TRAINER_ACTION"] = "Visit your %s trainer to learn %s proficiency";
 	CBL["ORANGE_ACTION"] = "%sReaching level %d you can now gather from '%s' nodes.";
@@ -95,28 +95,40 @@
 	CBL["GREEN_ACTION"] = "%s'%s' has turned green at level %s";
 	CBL["GREY_ACTION"] = "%s'%s' has turned grey at level %s";
 
-	CBL["SKILL_FRAME_VISIT_TRAINER"] = "Visit your %s trainer\nto learn %s proficiency";
-	CBL["SKILL_FRAME_LEVEL_UP"] = "At level %s, visit your\n%s trainer to learn\n%s proficiency";
-
-	-- Inscription Localization
-	CBL["SKILL_INSC_PIGMENTS"] = "Pigments";
-	CBL["SKILL_INSC_INKS"] = "Inks";
-	CBL["SKILL_INSC_HERBS"] = "Herbs";
-
-	-- "Found in Zone" Localization
+	-- Gathered From Localization
 	CBL["SKILL_MINE_ZONE"] = CBG_CLR_ORANGE .. "Mined in Zones: |r";
 	CBL["SKILL_HERB_ZONE"] = CBG_CLR_ORANGE .. "Gathered in Zones: |r";
+
+	-- Tradeskill Localization
+	CBL["TRADESKILL_NUMLINES"] = 1;
+	CBL["TRADESKILL_LINE1"] = CBG_CLR_WHITE .. "List relevant items in bags";
+	CBL["TRADESKILL_ENCHANTING"] = "Vellum";
+	CBL["TRADESKILL_INSCRIPTION_PIGMENTS"] = "Pigments";
+	CBL["TRADESKILL_INSCRIPTION_HERBS"] = "Herbs";
+	CBL["TRADESKILL_INSCRIPTION_INKS"] = "Inks";
+
+	-- Skill Frame Localization
+	CBL["SKILL_FRAME_HEADER"] = "Professions";
+	CBL["SKILL_FRAME_VISIT_TRAINER"] = "Visit your %s trainer\nto learn %s proficiency";
+	CBL["SKILL_FRAME_LEVEL_UP"] = "At level %s, visit your\n%s trainer to learn\n%s proficiency";
 
 	-- Buster Spell Localization
 	CBL["BUSTER_SPELL_TOOLTIP_APPEND"] = CBG_CLR_WHITE .. " - " .. CBG_CLR_OFFBLUE .. "Buster";
 	CBL["BUSTER_SPELL_TOOLTIP_LINE1"] = CBG_CLR_WHITE .. "List relevant items in bags";
 
 	-- Buster Frame Localization
-	CBL["BUSTER_CLICK"] = CBG_CLR_WHITE .. "Left-click to use ";
-	CBL["BUSTER_IGNORE"] = CBG_CLR_WHITE .. "CTRL + Right-click to " .. CBG_CLR_RED .. "ignore";
+	CBL["BUSTER_FRAME_HEADER"] = "Buster";
+	CBL["BUSTER_FRAME_NONE_FOUND"] = "None Found!";
+	CBL["BUSTER_FRAME_CLICK"] = CBG_CLR_WHITE .. "Left-click to use ";
+	CBL["BUSTER_FRAME_IGNORE"] = CBG_CLR_WHITE .. "CTRL + Right-click to " .. CBG_CLR_RED .. "ignore";
 
-	-- Tradeskill Localization
-	CBL["TRADESKILL_NUMLINES"] = 1;
-	CBL["TRADESKILL_LINE1"] = CBG_CLR_WHITE .. "List relevant items in bags";
-	CBL["TRADESKILL_ENCHANTING"] = "Vellum";
+	-- Gather Frame Localization
+	CBL["GATHER_FRAME_HEADER"] = "Gathering";
+	CBL["GATHER_FRAME_NONE_FOUND"] = "None Found!";
+	CBL["GATHER_FRAME_ZONE_NODES"] = "-- Zone Nodes --";
+	CBL["GATHER_FRAME_SKILL_NODES"] = "-- Skill-up Nodes --";
+
+	-- World Map Frame Localization
+	CBL["WORLDMAP_FRAME_HEADER"] = "Zone Nodes";
+	CBL["WORLDMAP_FRAME_NONE_FOUND"] = "None Found!";
 --end

@@ -2,457 +2,457 @@ local _, cb = ...;
 
 local INSC_HERBS = {
 	--vanilla
-	["765"] = {"39151"},
-	["785"] = {"39334","43103"},
-	["2447"] = {"39151"},
-	["2449"] = {"39151"},
-	["2450"] = {"39334","43103"},
-	["2452"] = {"39334","43103"},
-	["2453"] = {"39334","43103"},
-	["3355"] = {"39338","43104"},
-	["3356"] = {"39338","43104"},
-	["3357"] = {"39338","43104"},
-	["3358"] = {"39339","43105"},
-	["3369"] = {"39338","43104"},
-	["3818"] = {"39339","43105"},
-	["3819"] = {"39339","43105"},
-	["3820"] = {"39334","43103"},
-	["3821"] = {"39339","43105"},
-	["4625"] = {"39340","43106"},
-	["8831"] = {"39340","43106"},
-	["8836"] = {"39340","43106"},
-	["8838"] = {"39340","43106"},
-	["8839"] = {"39340","43106"},
-	["8845"] = {"39340","43106"},
-	["8846"] = {"39340","43106"},
-	["13463"] = {"39341","43107"},
-	["13464"] = {"39341","43107"},
-	["13465"] = {"39341","43107"},
-	["13466"] = {"39341","43107"},
-	["13467"] = {"39341","43107"},
+	[765] = {39151},
+	[785] = {39334,43103},
+	[2447] = {39151},
+	[2449] = {39151},
+	[2450] = {39334,43103},
+	[2452] = {39334,43103},
+	[2453] = {39334,43103},
+	[3355] = {39338,43104},
+	[3356] = {39338,43104},
+	[3357] = {39338,43104},
+	[3358] = {39339,43105},
+	[3369] = {39338,43104},
+	[3818] = {39339,43105},
+	[3819] = {39339,43105},
+	[3820] = {39334,43103},
+	[3821] = {39339,43105},
+	[4625] = {39340,43106},
+	[8831] = {39340,43106},
+	[8836] = {39340,43106},
+	[8838] = {39340,43106},
+	[8839] = {39340,43106},
+	[8845] = {39340,43106},
+	[8846] = {39340,43106},
+	[13463] = {39341,43107},
+	[13464] = {39341,43107},
+	[13465] = {39341,43107},
+	[13466] = {39341,43107},
+	[13467] = {39341,43107},
 
 	--tbc
-	["22785"] = {"39342","43108"},
-	["22786"] = {"39342","43108"},
-	["22787"] = {"39342","43108"},
-	["22789"] = {"39342","43108"},
-	["22790"] = {"39342","43108"},
-	["22791"] = {"39342","43108"},
-	["22792"] = {"39342","43108"},
-	["22793"] = {"39342","43108"},
+	[22785] = {39342,43108},
+	[22786] = {39342,43108},
+	[22787] = {39342,43108},
+	[22789] = {39342,43108},
+	[22790] = {39342,43108},
+	[22791] = {39342,43108},
+	[22792] = {39342,43108},
+	[22793] = {39342,43108},
 
 	--wotlk
-	["36901"] = {"39343","43109"},
-	["36903"] = {"39343","43109"},
-	["36904"] = {"39343","43109"},
-	["36905"] = {"39343","43109"},
-	["36906"] = {"39343","43109"},
-	["36907"] = {"39343","43109"},
-	["37921"] = {"39343","43109"},
-	["39970"] = {"39343","43109"},
+	[36901] = {39343,43109},
+	[36903] = {39343,43109},
+	[36904] = {39343,43109},
+	[36905] = {39343,43109},
+	[36906] = {39343,43109},
+	[36907] = {39343,43109},
+	[37921] = {39343,43109},
+	[39970] = {39343,43109},
 
 	--cata
-	["52983"] = {"61979","61980"},
-	["52984"] = {"61979","61980"},
-	["52985"] = {"61979","61980"},
-	["52986"] = {"61979","61980"},
-	["52987"] = {"61979","61980"},
-	["52988"] = {"61979","61980"},
+	[52983] = {61979,61980},
+	[52984] = {61979,61980},
+	[52985] = {61979,61980},
+	[52986] = {61979,61980},
+	[52987] = {61979,61980},
+	[52988] = {61979,61980},
 	
 	--mists
-	["72234"] = {"79251","79253"},
-	["72237"] = {"79251","79253"},
-	["72235"] = {"79251","79253"},
-	["89639"] = {"79251","79253"},
-	["79010"] = {"79251","79253"},
-	["79011"] = {"79251","79253"},
+	[72234] = {79251,79253},
+	[72237] = {79251,79253},
+	[72235] = {79251,79253},
+	[89639] = {79251,79253},
+	[79010] = {79251,79253},
+	[79011] = {79251,79253},
 
 	--warlords
-	["109124"] = {"114931"},
-	["109125"] = {"114931"},
-	["109126"] = {"114931"},
-	["109127"] = {"114931"},
-	["109128"] = {"114931"},
-	["109129"] = {"114931"},
+	[109124] = {114931},
+	[109125] = {114931},
+	[109126] = {114931},
+	[109127] = {114931},
+	[109128] = {114931},
+	[109129] = {114931},
 	
 	--legion
-	["124101"] = {"129032","129034"},
-	["124102"] = {"129032","129034"},
-	["124103"] = {"129032","129034"},
-	["124104"] = {"129032","129034"},
-	["124105"] = {"129032","129034"},
-	["124106"] = {"129032","129034"},
+	[124101] = {129032,129034},
+	[124102] = {129032,129034},
+	[124103] = {129032,129034},
+	[124104] = {129032,129034},
+	[124105] = {129032,129034},
+	[124106] = {129032,129034},
 };
 
 local INSC_INKS = {
 	--vanilla
-	["39469"] = {"39151"},
-	["39774"] = {"39334"},
-	["43115"] = {"43103"},
-	["43116"] = {"39338"},
-	["43117"] = {"43104"},
-	["43118"] = {"39339"},
-	["43119"] = {"43105"},
-	["43120"] = {"39340"},
-	["43121"] = {"43106"},
-	["43122"] = {"39341"},
-	["43123"] = {"43107"},
+	[39469] = {39151},
+	[39774] = {39334},
+	[43115] = {43103},
+	[43116] = {39338},
+	[43117] = {43104},
+	[43118] = {39339},
+	[43119] = {43105},
+	[43120] = {39340},
+	[43121] = {43106},
+	[43122] = {39341},
+	[43123] = {43107},
 
 	--tbc
-	["43124"] = {"39342"},
-	["43125"] = {"43108"},
+	[43124] = {39342},
+	[43125] = {43108},
 
 	--wotlk
-	["43126"] = {"39343"},
-	["43127"] = {"43109"},
+	[43126] = {39343},
+	[43127] = {43109},
 
 	--cata
-	["61978"] = {"61979"},
-	["61981"] = {"61980"},
+	[61978] = {61979},
+	[61981] = {61980},
 
 	--mists
-	["79254"] = {"79251"},
-	["79255"] = {"79253"},
+	[79254] = {79251},
+	[79255] = {79253},
 
 	--warlords
-	["112377"] = {"114931"},
-	["113111"] = {"114931"},
+	[112377] = {114931},
+	[113111] = {114931},
 };
 
 local INSC_PIGMENTS = {
 	--vanilla
-	["39151"] = {
+	[39151] = {
 		["name"] = "Alabaster Pigment",
 		["type"] = "common",
 		["herbs"] = {
-			["765"] = "Silverleaf",
-			["2447"] = "Peacebloom",
-			["2449"] = "Earthroot",
+			[765] = "Silverleaf",
+			[2447] = "Peacebloom",
+			[2449] = "Earthroot",
 		},
 		["inks"] = {
-			["39469"] = "Moonglow Ink",
+			[39469] = "Moonglow Ink",
 		},
 	},
-	["39334"] = {
+	[39334] = {
 		["name"] = "Dusky Pigment",
 		["type"] = "common",
 		["herbs"] = {
-			["785"] = "Mageroyal",
-			["2450"] = "Briarthorn",
-			["2452"] = "Swiftthistle",
-			["2453"] = "Bruiseweed",
-			["3820"] = "Stranglekelp",
+			[785] = "Mageroyal",
+			[2450] = "Briarthorn",
+			[2452] = "Swiftthistle",
+			[2453] = "Bruiseweed",
+			[3820] = "Stranglekelp",
 		},
 		["inks"] = {
-			["39774"] = "Midnight Ink",
+			[39774] = "Midnight Ink",
 		},
 	},
-	["39338"] = {
+	[39338] = {
 		["name"] = "Golden Pigment",
 		["type"] = "common",
 		["herbs"] = {
-			["3355"] = "Wild Steelbloom",
-			["3356"] = "Kingsblood",
-			["3357"] = "Liferoot",
-			["3369"] = "Grave Moss",
+			[3355] = "Wild Steelbloom",
+			[3356] = "Kingsblood",
+			[3357] = "Liferoot",
+			[3369] = "Grave Moss",
 		},
 		["inks"] = {
-			["43116"] = "Lion's Ink",
+			[43116] = "Lion's Ink",
 		},
 	},
-	["39339"] = {
+	[39339] = {
 		["name"] = "Emerald Pigment",
 		["type"] = "common",
 		["herbs"] = {
-			["3358"] = "Khadgar's Whisker",
-			["3818"] = "Fadeleaf",
-			["3819"] = "Dragon's Teeth",
-			["3821"] = "Goldthorn",
+			[3358] = "Khadgar's Whisker",
+			[3818] = "Fadeleaf",
+			[3819] = "Dragon's Teeth",
+			[3821] = "Goldthorn",
 		},
 		["inks"] = {
-			["43118"] = "Jadefire Ink",
+			[43118] = "Jadefire Ink",
 		},
 	},
-	["39340"] = {
+	[39340] = {
 		["name"] = "Violet Pigment",
 		["type"] = "common",
 		["herbs"] = {
-			["4625"] = "Firebloom",
-			["8831"] = "Purple Lotus",
-			["8836"] = "Arthas' Tears",
-			["8838"] = "Sungrass",
-			["8839"] = "Blindweed",
-			["8845"] = "Ghost Mushroom",
-			["8846"] = "Gromsblood",
+			[4625] = "Firebloom",
+			[8831] = "Purple Lotus",
+			[8836] = "Arthas' Tears",
+			[8838] = "Sungrass",
+			[8839] = "Blindweed",
+			[8845] = "Ghost Mushroom",
+			[8846] = "Gromsblood",
 		},
 		["inks"] = {
-			["43120"] = "Celestial Ink",
+			[43120] = "Celestial Ink",
 		},
 	},
-	["39341"] = {
+	[39341] = {
 		["name"] = "Silvery Pigment",
 		["type"] = "common",
 		["herbs"] = {
-			["13463"] = "Dreamfoil",
-			["13464"] = "Golden Sansam",
-			["13465"] = "Mountain Silversage",
-			["13466"] = "Sorrowmoss",
-			["13467"] = "Icecap",
+			[13463] = "Dreamfoil",
+			[13464] = "Golden Sansam",
+			[13465] = "Mountain Silversage",
+			[13466] = "Sorrowmoss",
+			[13467] = "Icecap",
 		},
 		["inks"] = {
-			["43122"] = "Shimmering Ink",
+			[43122] = "Shimmering Ink",
 		},
 	},
-	["43103"] = {
+	[43103] = {
 		["name"] = "Verdant Pigment",
 		["type"] = "rare",
 		["herbs"] = {
-			["785"] = "Mageroyal",
-			["2450"] = "Briarthorn",
-			["2452"] = "Swiftthistle",
-			["2453"] = "Bruiseweed",
-			["3820"] = "Stranglekelp",
+			[785] = "Mageroyal",
+			[2450] = "Briarthorn",
+			[2452] = "Swiftthistle",
+			[2453] = "Bruiseweed",
+			[3820] = "Stranglekelp",
 		},
 		["inks"] = {
-			["43115"] = "Hunter's Ink",
+			[43115] = "Hunter's Ink",
 		},
 	},
-	["43104"] = {
+	[43104] = {
 		["name"] = "Burnt Pigment",
 		["type"] = "rare",
 		["herbs"] = {
-			["3355"] = "Wild Steelbloom",
-			["3356"] = "Kingsblood",
-			["3357"] = "Liferoot",
-			["3369"] = "Grave Moss",
+			[3355] = "Wild Steelbloom",
+			[3356] = "Kingsblood",
+			[3357] = "Liferoot",
+			[3369] = "Grave Moss",
 		},
 		["inks"] = {
-			["43117"] = "Dawnstar Ink",
+			[43117] = "Dawnstar Ink",
 		},
 	},
-	["43105"] = {
+	[43105] = {
 		["name"] = "Indigo Pigment",
 		["type"] = "rare",
 		["herbs"] = {
-			["3358"] = "Khadgar's Whisker",
-			["3818"] = "Fadeleaf",
-			["3819"] = "Dragon's Teeth",
-			["3821"] = "Goldthorn",
+			[3358] = "Khadgar's Whisker",
+			[3818] = "Fadeleaf",
+			[3819] = "Dragon's Teeth",
+			[3821] = "Goldthorn",
 		},
 		["inks"] = {
-			["43119"] = "Royal Ink",
+			[43119] = "Royal Ink",
 		},
 	},
-	["43106"] = {
+	[43106] = {
 		["name"] = "Ruby Pigment",
 		["type"] = "rare",
 		["herbs"] = {
-			["4625"] = "Firebloom",
-			["8831"] = "Purple Lotus",
-			["8836"] = "Arthas' Tears",
-			["8838"] = "Sungrass",
-			["8839"] = "Blindweed",
-			["8845"] = "Ghost Mushroom",
-			["8846"] = "Gromsblood",
+			[4625] = "Firebloom",
+			[8831] = "Purple Lotus",
+			[8836] = "Arthas' Tears",
+			[8838] = "Sungrass",
+			[8839] = "Blindweed",
+			[8845] = "Ghost Mushroom",
+			[8846] = "Gromsblood",
 		},
 		["inks"] = {
-			["43121"] = "Fiery Ink",
+			[43121] = "Fiery Ink",
 		},
 	},
-	["43107"] = {
+	[43107] = {
 		["name"] = "Sapphire Pigment",
 		["type"] = "rare",
 		["herbs"] = {
-			["13463"] = "Dreamfoil",
-			["13464"] = "Golden Sansam",
-			["13465"] = "Mountain Silversage",
-			["13466"] = "Sorrowmoss",
-			["13467"] = "Icecap",
+			[13463] = "Dreamfoil",
+			[13464] = "Golden Sansam",
+			[13465] = "Mountain Silversage",
+			[13466] = "Sorrowmoss",
+			[13467] = "Icecap",
 		},
 		["inks"] = {
-			["43123"] = "Ink of the Sky",
+			[43123] = "Ink of the Sky",
 		},
 	},
 
 	--tbc
-	["39342"] = {
+	[39342] = {
 		["name"] = "Nether Pigment",
 		["type"] = "common",
 		["herbs"] = {
-			["22785"] = "Felweed",
-			["22786"] = "Dreaming Glory",
-			["22787"] = "Ragveil",
-			["22789"] = "Terocone",
-			["22790"] = "Ancient Lichen",
-			["22791"] = "Netherbloom",
-			["22792"] = "Nightmare Vine",
-			["22793"] = "Mana Thistle",
+			[22785] = "Felweed",
+			[22786] = "Dreaming Glory",
+			[22787] = "Ragveil",
+			[22789] = "Terocone",
+			[22790] = "Ancient Lichen",
+			[22791] = "Netherbloom",
+			[22792] = "Nightmare Vine",
+			[22793] = "Mana Thistle",
 		},
 		["inks"] = {
-			["43124"] = "Ethereal Ink",
+			[43124] = "Ethereal Ink",
 		},
 	},
-	["43108"] = {
+	[43108] = {
 		["name"] = "Ebon Pigment",
 		["type"] = "rare",
 		["herbs"] = {
-			["22785"] = "Felweed",
-			["22786"] = "Dreaming Glory",
-			["22787"] = "Ragveil",
-			["22789"] = "Terocone",
-			["22790"] = "Ancient Lichen",
-			["22791"] = "Netherbloom",
-			["22792"] = "Nightmare Vine",
-			["22793"] = "Mana Thistle",
+			[22785] = "Felweed",
+			[22786] = "Dreaming Glory",
+			[22787] = "Ragveil",
+			[22789] = "Terocone",
+			[22790] = "Ancient Lichen",
+			[22791] = "Netherbloom",
+			[22792] = "Nightmare Vine",
+			[22793] = "Mana Thistle",
 		},
 		["inks"] = {
-			["43125"] = "Darkflame Ink",
+			[43125] = "Darkflame Ink",
 		},
 	},
 
 	--wotlk
-	["39343"] = {
+	[39343] = {
 		["name"] = "Azure Pigment",
 		["type"] = "common",
 		["herbs"] = {
-			["36901"] = "Goldclover",
-			["36903"] = "Adder's Tongue",
-			["36904"] = "Tiger Lily",
-			["36905"] = "Lichbloom",
-			["36906"] = "Icethorn",
-			["36907"] = "Talandra's Rose",
-			["37921"] = "Deadnettle",
-			["39970"] = "Fire Leaf",
+			[36901] = "Goldclover",
+			[36903] = "Adder's Tongue",
+			[36904] = "Tiger Lily",
+			[36905] = "Lichbloom",
+			[36906] = "Icethorn",
+			[36907] = "Talandra's Rose",
+			[37921] = "Deadnettle",
+			[39970] = "Fire Leaf",
 		},
 		["inks"] = {
-			["43126"] = "Ink of the Sea",
+			[43126] = "Ink of the Sea",
 		},
 	},
-	["43109"] = {
+	[43109] = {
 		["name"] = "Icy Pigment",
 		["type"] = "rare",
 		["herbs"] = {
-			["36901"] = "Goldclover",
-			["36903"] = "Adder's Tongue",
-			["36904"] = "Tiger Lily",
-			["36905"] = "Lichbloom",
-			["36906"] = "Icethorn",
-			["36907"] = "Talandra's Rose",
-			["37921"] = "Deadnettle",
-			["39970"] = "Fire Leaf",
+			[36901] = "Goldclover",
+			[36903] = "Adder's Tongue",
+			[36904] = "Tiger Lily",
+			[36905] = "Lichbloom",
+			[36906] = "Icethorn",
+			[36907] = "Talandra's Rose",
+			[37921] = "Deadnettle",
+			[39970] = "Fire Leaf",
 		},
 		["inks"] = {
-			["43127"] = "Snowfall Ink",
+			[43127] = "Snowfall Ink",
 		},
 	},
 
 	--cata
-	["61979"] = {
+	[61979] = {
 		["name"] = "Ashen Pigment",
 		["type"] = "common",
 		["herbs"] = {
-			["52983"] = "Cinderbloom",
-			["52984"] = "Stormvine",
-			["52985"] = "Azshara's Veil",
-			["52986"] = "Heartblossom",
-			["52987"] = "Twilight Jasmine",
-			["52988"] = "Whiptail",
+			[52983] = "Cinderbloom",
+			[52984] = "Stormvine",
+			[52985] = "Azshara's Veil",
+			[52986] = "Heartblossom",
+			[52987] = "Twilight Jasmine",
+			[52988] = "Whiptail",
 		},
 		["inks"] = {
-			["61978"] = "Blackfallow Ink",
+			[61978] = "Blackfallow Ink",
 		},
 	},
-	["61980"] = {
+	[61980] = {
 		["name"] = "Burning Embers",
 		["type"] = "rare",
 		["herbs"] = {
-			["52983"] = "Cinderbloom",
-			["52984"] = "Stormvine",
-			["52985"] = "Azshara's Veil",
-			["52986"] = "Heartblossom",
-			["52987"] = "Twilight Jasmine",
-			["52988"] = "Whiptail",
+			[52983] = "Cinderbloom",
+			[52984] = "Stormvine",
+			[52985] = "Azshara's Veil",
+			[52986] = "Heartblossom",
+			[52987] = "Twilight Jasmine",
+			[52988] = "Whiptail",
 		},
 		["inks"] = {
-			["61981"] = "Inferno Ink",
+			[61981] = "Inferno Ink",
 		},
 	},
 
 	--mists
-	["79251"] = {
+	[79251] = {
 		["name"] = "Shadow Pigment",
 		["type"] = "common",
 		["herbs"] = {
-			["79010"] = "Snow Lily",
-			["72234"] = "Green Tea Leaf",
-			["72235"] = "Silkweed",
-			["72237"] = "Rain Poppy",
-			["89639"] = "Desecrated Herb",
-			["79011"] = "Fool's Cap",
+			[79010] = "Snow Lily",
+			[72234] = "Green Tea Leaf",
+			[72235] = "Silkweed",
+			[72237] = "Rain Poppy",
+			[89639] = "Desecrated Herb",
+			[79011] = "Fool's Cap",
 		},
 		["inks"] = {
-			["79254"] = "Ink of Dreams",
+			[79254] = "Ink of Dreams",
 		},
 	},
-	["79253"] = {
+	[79253] = {
 		["name"] = "Misty Pigment",
 		["type"] = "rare",
 		["herbs"] = {
-			["72234"] = "Green Tea Leaf",
-			["72237"] = "Rain Poppy",
-			["72235"] = "Silkweed",
-			["89639"] = "Desecrated Herb",
-			["79010"] = "Snow Lily",
-			["79011"] = "Fool's Cap",
+			[72234] = "Green Tea Leaf",
+			[72237] = "Rain Poppy",
+			[72235] = "Silkweed",
+			[89639] = "Desecrated Herb",
+			[79010] = "Snow Lily",
+			[79011] = "Fool's Cap",
 		},
 		["inks"] = {
-			["79255"] = "Starlight Ink",
+			[79255] = "Starlight Ink",
 		},
 	},
 
 	--warlords
-	["114931"] = {
+	[114931] = {
 		["name"] = "Cerulean Pigment",
 		["type"] = "common",
 		["herbs"] = {
-			["109124"] = "Frostweed",
-			["109125"] = "Fireweed",
-			["109126"] = "Gorgrond Flytrap",
-			["109127"] = "Starflower",
-			["109128"] = "Nagrand Arrowbloom",
-			["109129"] = "Talador Orchid",
+			[109124] = "Frostweed",
+			[109125] = "Fireweed",
+			[109126] = "Gorgrond Flytrap",
+			[109127] = "Starflower",
+			[109128] = "Nagrand Arrowbloom",
+			[109129] = "Talador Orchid",
 		},
 		["inks"] = {
-			["112377"] = "War Paints",
-			["113111"] = "Warbinder's Ink",
+			[112377] = "War Paints",
+			[113111] = "Warbinder's Ink",
 		},
 	},
 
 	--legion
-	["129032"] = {
+	[129032] = {
 		["name"] = "Roseate Pigment",
 		["type"] = "common",
 		["herbs"] = {
-			["124101"] = "Aethril",
-			["124102"] = "Dreamleaf",
-			["124103"] = "Foxflower",
-			["124104"] = "Fjarnskaggl",
-			["124105"] = "Starlight Rose",
-			["124106"] = "Felwort",
+			[124101] = "Aethril",
+			[124102] = "Dreamleaf",
+			[124103] = "Foxflower",
+			[124104] = "Fjarnskaggl",
+			[124105] = "Starlight Rose",
+			[124106] = "Felwort",
 		},
 		["inks"] = {
 		},
 	},
-	["129034"] = {
+	[129034] = {
 		["name"] = "Sallow Pigment",
 		["type"] = "common",
 		["herbs"] = {
-			["124101"] = "Aethril",
-			["124102"] = "Dreamleaf",
-			["124103"] = "Foxflower",
-			["124104"] = "Fjarnskaggl",
-			["124105"] = "Starlight Rose",
-			["124106"] = "Felwort",
+			[124101] = "Aethril",
+			[124102] = "Dreamleaf",
+			[124103] = "Foxflower",
+			[124104] = "Fjarnskaggl",
+			[124105] = "Starlight Rose",
+			[124106] = "Felwort",
 		},
 		["inks"] = {
 		},
@@ -474,18 +474,15 @@ local profession_data = {
 		local results = {};
 		for bag=0, 4 do
 			for slot=1, GetContainerNumSlots(bag) do
-				local _, _, item_id = string.find(GetContainerItemLink(bag, slot) or "", "item:(%d+).+%[(.+)%]");
-				if (item_id ~= nil) then
-					if (INSC_HERBS[item_id] ~= nil) then
-						item_id = tonumber(item_id);
-						if (not results[item_id]) then
-							results[item_id] = {};
-							results[item_id].item_id = item_id;
-							results[item_id].total = 0;
-						end
-						local _,item_count = GetContainerItemInfo(bag, slot);
-						results[item_id].total = results[item_id].total + item_count;		--really? no += in lua? LAAAAAAAAAME
+				local item_id = GetContainerItemID(bag, slot);
+				if (item_id and INSC_HERBS[item_id]) then
+					if (not results[item_id]) then
+						results[item_id] = {};
+						results[item_id].item_id = item_id;
+						results[item_id].total = 0;
 					end
+					local _,item_count = GetContainerItemInfo(bag, slot);
+					results[item_id].total = results[item_id].total + item_count;		--really? no += in lua? LAAAAAAAAAME
 				end
 			end
 		end
@@ -619,6 +616,7 @@ local function add_tooltip_info(frame, item_link)
 	if (item_string) then
 		local _, item_id = strsplit(":", item_string);
 		if (item_id) then
+			item_id = tonumber(item_id);
 			local item_type;
 			local pigment_ids = {};
 			if (INSC_HERBS[item_id]) then
@@ -676,21 +674,21 @@ local function add_tooltip_info(frame, item_link)
 					if (found) then
 						output_txt = output_txt .. "\n";
 					end
-					output_txt = output_txt .. parse_output(CBG_CLR_LIGHTGREY, CBL["SKILL_INSC_PIGMENTS"], output_pigments);
+					output_txt = output_txt .. parse_output(CBG_CLR_LIGHTGREY, CBL["TRADESKILL_INSCRIPTION_PIGMENTS"], output_pigments);
 					found = true;
 				end
 				if (next(output_herbs)) then
 					if (found) then
 						output_txt = output_txt .. "\n";
 					end
-					output_txt = output_txt .. parse_output(CBG_CLR_LIGHTGREEN, CBL["SKILL_INSC_HERBS"], output_herbs);
+					output_txt = output_txt .. parse_output(CBG_CLR_LIGHTGREEN, CBL["TRADESKILL_INSCRIPTION_HERBS"], output_herbs);
 					found = true;
 				end
 				if (next(output_inks)) then
 					if (found) then
 						output_txt = output_txt .. "\n";
 					end
-					output_txt = output_txt .. parse_output(CBG_CLR_DARKBLUE, CBL["SKILL_INSC_INKS"], output_inks);
+					output_txt = output_txt .. parse_output(CBG_CLR_DARKBLUE, CBL["TRADESKILL_INSCRIPTION_INKS"], output_inks);
 					found = true;
 				end
 				frame:AddLine(output_txt);

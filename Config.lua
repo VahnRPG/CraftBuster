@@ -19,7 +19,7 @@ end
 
 function cb.config:setShowWorldMap(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].worldmap_frame.show = checked;
-	CraftBuster_WorldMap_Update();
+	cb.worldmap_frame:update();
 end
 
 function cb.config:setShowGatherer(self, id, unused, checked)
@@ -68,7 +68,7 @@ end
 
 function cb.config:setProfessionWorldMap(self, id, unused, checked)
 	CraftBusterOptions[CraftBusterEntry].modules[id].show_worldmap_icons = checked;
-	CraftBuster_WorldMap_Update();
+	cb.worldmap_frame:update();
 end
 
 function cb.config:setProfessionGather(self, id, unused, checked)
@@ -225,7 +225,7 @@ config_frame:SetScript("OnShow", function(config_frame)
 				end
 				CraftBusterEntry = CraftBusterOptions.globals[CraftBusterEntry_Personal];
 				if (not CraftBusterOptions[CraftBusterEntry]) then
-					CraftBuster_InitSettings("character");
+					cb:initSettings("character");
 				end
 				CraftBuster();
 			end
@@ -316,7 +316,7 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 		trainer_count = 0;
 		station_count = 0;
 		for _, module_id in cb.omg:sortedpairs(CBG_SORTED_SKILLS) do
-			if (CraftBusterEntry ~= CBG_GLOBAL_PROFILE or in_array(module_id, skills)) then
+			if (CraftBusterEntry ~= CBG_GLOBAL_PROFILE or cb.omg:in_array(module_id, skills)) then
 				local module_data = cb.professions.modules[module_id];
 				if (module_data.trainer_map_icons) then
 					local label = config_frame_name .. "TrainerMapIcons_" .. module_id;
@@ -381,7 +381,7 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 		map_icons_check_all:SetScript("OnClick", function(self, button)
 			local checked = self:GetChecked();
 			for _, module_id in cb.omg:sortedpairs(CBG_SORTED_SKILLS) do
-				if (CraftBusterEntry ~= CBG_GLOBAL_PROFILE or in_array(module_id, skills)) then
+				if (CraftBusterEntry ~= CBG_GLOBAL_PROFILE or cb.omg:in_array(module_id, skills)) then
 					local module_data = cb.professions.modules[module_id];
 					if (module_data.trainer_map_icons) then
 						map_icons[module_id .. "trainer"]:SetChecked(checked);
@@ -402,7 +402,7 @@ child_map_icons_frame:SetScript("OnShow", function(child_map_icons_frame)
 		map_icons_select_mine:SetSize(120, 20);
 		map_icons_select_mine:SetScript("OnClick", function()
 			for _, module_id in cb.omg:sortedpairs(CBG_SORTED_SKILLS) do
-				local checked = in_array(module_id, skills);
+				local checked = cb.omg:in_array(module_id, skills);
 				local module_data = cb.professions.modules[module_id];
 				
 				if (module_data.trainer_map_icons) then
@@ -445,7 +445,7 @@ child_tracker_frame:SetScript("OnShow", function(child_tracker_frame)
 	_G[expand_tracker:GetName() .. "Text"]:SetText(CBL["CONFIG_EXPAND_TRACKER"]);
 	expand_tracker:SetChecked(CraftBusterOptions[CraftBusterEntry].skills_frame.state == "expanded");
 	expand_tracker:SetScript("OnClick", function(self, button)
-		CraftBuster_SkillFrame_Collapse_OnClick();
+		cb.skill_frame:collapseFrame();
 	end);
 
 	--Track Professions
@@ -526,7 +526,7 @@ child_worldmap_frame:SetScript("OnShow", function(child_worldmap_frame)
 	_G[expand_worldmap:GetName() .. "Text"]:SetText(CBL["CONFIG_EXPAND_WORLDMAP"]);
 	expand_worldmap:SetChecked(CraftBusterOptions[CraftBusterEntry].worldmap_frame.state == "expanded");
 	expand_worldmap:SetScript("OnClick", function(self, button)
-		CraftBuster_WorldMap_Collapse_OnClick();
+		cb.worldmap_frame:collapseFrame();
 	end);
 	
 	--Show Professions World Map
@@ -579,7 +579,7 @@ child_gatherer_frame:SetScript("OnShow", function(child_gatherer_frame)
 	_G[expand_gatherer:GetName() .. "Text"]:SetText(CBL["CONFIG_EXPAND_GATHERER"]);
 	expand_gatherer:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.state == "expanded");
 	expand_gatherer:SetScript("OnClick", function(self, button)
-		CraftBuster_GatherFrame_Collapse_OnClick();
+		cb.gather_frame:collapseFrame();
 	end);
 
 	auto_hide_gatherer = CreateFrame("CheckButton", config_frame_name .. "AutoHideGatherer", child_gatherer_frame, "InterfaceOptionsCheckButtonTemplate");
@@ -656,7 +656,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	_G[position_locked:GetName() .. "Text"]:SetText(CBL["CONFIG_POSITION_LOCKED"]);
 	position_locked:SetChecked(CraftBusterOptions[CraftBusterEntry].skills_frame.locked);
 	position_locked:SetScript("OnClick", function(self, button)
-		CraftBuster_SkillFrame_Lock_OnClick();
+		cb.skill_frame:lockFrame();
 	end);
 
 	local position_x_label = child_positioning_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
@@ -770,7 +770,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	set_worldmap_position_x:SetSize(48, 20);
 	set_worldmap_position_x:SetScript("OnClick", function()
 		CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.x = round(worldmap_position_x:GetText(), 2);
-		CraftBuster_WorldMap_UpdatePosition();
+		cb.worldmap_frame:updatePosition();
 	end);
 	
 	local worldmap_position_y_label = child_positioning_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
@@ -791,7 +791,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	set_worldmap_position_y:SetSize(48, 20);
 	set_worldmap_position_y:SetScript("OnClick", function()
 		CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.y = round(worldmap_position_y:GetText(), 2);
-		CraftBuster_WorldMap_UpdatePosition();
+		cb.worldmap_frame:updatePosition();
 	end);
 	
 	local worldmap_position_point_label = child_positioning_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
@@ -809,7 +809,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 			info.func = function(self)
 				CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.point = self.value;
 				UIDropDownMenu_SetSelectedValue(worldmap_position_point, self.value);
-				CraftBuster_WorldMap_UpdatePosition();
+				cb.worldmap_frame:updatePosition();
 			end
 			UIDropDownMenu_AddButton(info);
 		end
@@ -832,7 +832,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 			info.func = function(self)
 				CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.point = self.value;
 				UIDropDownMenu_SetSelectedValue(worldmap_position_relative_point, self.value);
-				CraftBuster_WorldMap_UpdatePosition();
+				cb.worldmap_frame:updatePosition();
 			end
 			UIDropDownMenu_AddButton(info);
 		end
@@ -863,7 +863,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	set_gatherer_position_x:SetSize(48, 20);
 	set_gatherer_position_x:SetScript("OnClick", function()
 		CraftBusterOptions[CraftBusterEntry].gather_frame.position.x = round(gatherer_position_x:GetText(), 2);
-		CraftBuster_GatherFrame_UpdatePosition();
+		cb.gather_frame:updatePosition();
 	end);
 	
 	local gatherer_position_y_label = child_positioning_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
@@ -884,7 +884,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	set_gatherer_position_y:SetSize(48, 20);
 	set_gatherer_position_y:SetScript("OnClick", function()
 		CraftBusterOptions[CraftBusterEntry].gather_frame.position.y = round(gatherer_position_y:GetText(), 2);
-		CraftBuster_GatherFrame_UpdatePosition();
+		cb.gather_frame:updatePosition();
 	end);
 	
 	local gatherer_position_point_label = child_positioning_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
@@ -902,7 +902,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 			info.func = function(self)
 				CraftBusterOptions[CraftBusterEntry].gather_frame.position.point = self.value;
 				UIDropDownMenu_SetSelectedValue(gatherer_position_point, self.value);
-				CraftBuster_GatherFrame_UpdatePosition();
+				cb.gather_frame:updatePosition();
 			end
 			UIDropDownMenu_AddButton(info);
 		end
@@ -925,7 +925,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 			info.func = function(self)
 				CraftBusterOptions[CraftBusterEntry].gather_frame.position.point = self.value;
 				UIDropDownMenu_SetSelectedValue(gatherer_position_relative_point, self.value);
-				CraftBuster_GatherFrame_UpdatePosition();
+				cb.gather_frame:updatePosition();
 			end
 			UIDropDownMenu_AddButton(info);
 		end
@@ -956,7 +956,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	set_buster_position_x:SetSize(48, 20);
 	set_buster_position_x:SetScript("OnClick", function()
 		CraftBusterOptions[CraftBusterEntry].buster_frame.position.x = round(buster_position_x:GetText(), 2);
-		CraftBuster_BusterFrame_UpdatePosition();
+		cb.buster_frame:updatePosition();
 	end);
 	
 	local buster_position_y_label = child_positioning_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
@@ -977,7 +977,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	set_buster_position_y:SetSize(48, 20);
 	set_buster_position_y:SetScript("OnClick", function()
 		CraftBusterOptions[CraftBusterEntry].buster_frame.position.y = round(buster_position_y:GetText(), 2);
-		CraftBuster_BusterFrame_UpdatePosition();
+		cb.buster_frame:updatePosition();
 	end);
 	
 	local buster_position_point_label = child_positioning_frame:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge");
@@ -995,7 +995,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 			info.func = function(self)
 				CraftBusterOptions[CraftBusterEntry].buster_frame.position.point = self.value;
 				UIDropDownMenu_SetSelectedValue(buster_position_point, self.value);
-				CraftBuster_BusterFrame_UpdatePosition();
+				cb.buster_frame:updatePosition();
 			end
 			UIDropDownMenu_AddButton(info);
 		end
@@ -1018,7 +1018,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 			info.func = function(self)
 				CraftBusterOptions[CraftBusterEntry].buster_frame.position.point = self.value;
 				UIDropDownMenu_SetSelectedValue(buster_position_relative_point, self.value);
-				CraftBuster_BusterFrame_UpdatePosition();
+				cb.buster_frame:updatePosition();
 			end
 			UIDropDownMenu_AddButton(info);
 		end
@@ -1032,10 +1032,10 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	reset_position:SetText(CBL["CONFIG_POSITIONS_RESET"]);
 	reset_position:SetSize(160, 24);
 	reset_position:SetScript("OnClick", function() 
-		CraftBuster_SkillFrame_ResetPosition();
-		CraftBuster_WorldMap_ResetPosition();
-		CraftBuster_GatherFrame_ResetPosition();
-		CraftBuster_BusterFrame_ResetPosition();
+		cb.skill_frame:resetPosition();
+		cb.buster_frame:resetPosition();
+		cb.gather_frame:resetPosition();
+		cb.worldmap_frame:resetPosition();
 
 		position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.x, 2));
 		position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.y, 2));

@@ -21,7 +21,8 @@ cb.skill_frame.mover_frame:SetScript("OnUpdate", function(self)
 		cb.skill_frame:dragFrame();
 	end
 end);
-CraftBuster_SkillFrame_MoverFrameLabel:SetText("Professions");
+CraftBuster_SkillFrame_MoverFrameTexture:SetSize(234, 16);
+CraftBuster_SkillFrame_MoverFrameLabel:SetText(CBL["SKILL_FRAME_HEADER"]);
 CraftBuster_SkillFrame_MoverFrame_LockFrame:SetScript("OnClick", function(self)
 	cb.skill_frame:lockFrame();
 end);
@@ -158,8 +159,9 @@ function cb.skill_frame:update()
 									_G[spell_buster_frame:GetName() .. "Icon"]:SetTexture(button_texture);
 									spell_buster_frame.spell_id = module_data.spell_buster_id;
 									spell_buster_frame:SetScript("OnClick", function(self)
-										CraftBusterOptions[CraftBusterEntry].buster_frame.show = not CraftBuster_Buster_MoverFrame:IsVisible();
-										CraftBuster_BusterFrame_Update(skill, skill_id, self.spell_id);
+										CraftBusterOptions[CraftBusterEntry].buster_frame.show = not cb.buster_frame.mover_frame:IsVisible();
+										cb.buster_frame:updateSkill(skill, skill_id, self.spell_id);
+										cb.buster_frame:update();
 									end);
 									spell_buster_frame:SetScript("OnEnter", function(self)
 										GameTooltip_SetDefaultAnchor(GameTooltip, self);

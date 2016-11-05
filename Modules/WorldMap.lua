@@ -1,166 +1,251 @@
+local _, cb = ...;
+
 local MAX_FRAMES = 100;
-local saved_nodes = {};
 
-local function CraftBuster_WorldMap_UpdateBar(label, item_id, level_data)
-	local icon_frame = _G[label .. "Icon"];
-	local item_name,item_link,_,_,_,_,_,_,_,item_texture = GetItemInfo(item_id);
-	_G[icon_frame:GetName() .. "Icon"]:SetTexture(item_texture);
-	icon_frame.item_id = item_id;
-	icon_frame.item_link = item_link;
+cb.worldmap_frame = {};
+cb.worldmap_frame.mover_frame = CreateFrame("Frame", "CraftBuster_WorldMapFrame_MoverFrame", WorldMapFrame, "CraftBuster_MoverBar_Template");
+cb.worldmap_frame.mover_frame:SetFrameStrata("FULLSCREEN_DIALOG");
+cb.worldmap_frame.mover_frame:SetSize(320, 10);
+cb.worldmap_frame.mover_frame:RegisterForDrag("LeftButton");
+cb.worldmap_frame.mover_frame:SetScript("OnDragStart", function(self)
+	if (not CraftBusterOptions[CraftBusterEntry].worldmap_frame.locked) then
+		self.dragging = true;
+		self:StartMoving();
+	end
+end);
+cb.worldmap_frame.mover_frame:SetScript("OnDragStop", function(self)
+	if (not CraftBusterOptions[CraftBusterEntry].worldmap_frame.locked) then
+		self.dragging = false;
+		self:StopMovingOrSizing();
+	end
+end);
+cb.worldmap_frame.mover_frame:SetScript("OnUpdate", function(self)
+	if (self.dragging) then
+		cb.worldmap_frame:dragFrame();
+	end
+end);
+cb.worldmap_frame.mover_frame:Hide();
+CraftBuster_WorldMapFrame_MoverFrameTexture:SetSize(320, 16);
+CraftBuster_WorldMapFrame_MoverFrameLabel:SetText(CBL["WORLDMAP_FRAME_HEADER"]);
+CraftBuster_WorldMapFrame_MoverFrame_ConfigMenu:SetScript("OnClick", function(self)
+	if (WorldMapFrame:IsShown()) then
+		ToggleFrame(WorldMapFrame);
+	end
+	CraftBuster_Config_Show();
+end);
+CraftBuster_WorldMapFrame_MoverFrame_LockFrame:SetScript("OnClick", function(self)
+	cb.worldmap_frame:lockFrame();
+end);
+CraftBuster_WorldMapFrame_MoverFrame_CollapseFrame:SetScript("OnClick", function(self)
+	cb.worldmap_frame:collapseFrame();
+end);
+CraftBuster_WorldMapFrame_MoverFrame_CloseFrame:SetScript("OnClick", function(self)
+	cb.worldmap_frame:closeFrame();
+end);
 
-	_G[label .. "Label"]:SetText(item_name);
-	_G[label .. "Orange"]:SetText(ORANGE_FONT_COLOR_CODE .. level_data[1]);
-	_G[label .. "Yellow"]:SetText(YELLOW_FONT_COLOR_CODE .. level_data[2]);
-	_G[label .. "Green"]:SetText(GREEN_FONT_COLOR_CODE .. level_data[3]);
-	_G[label .. "Grey"]:SetText(GRAY_FONT_COLOR_CODE .. level_data[4]);
+cb.worldmap_frame.frame = CreateFrame("Frame", "CraftBuster_WorldMapFrame_Frame", WorldMapFrame, "CraftBuster_ContainerFrame_Template");
+cb.worldmap_frame.frame:SetFrameStrata("FULLSCREEN_DIALOG");
+cb.worldmap_frame.frame:SetSize(320, 10);
+cb.worldmap_frame.frame:SetPoint("TOPLEFT", cb.worldmap_frame.mover_frame, "BOTTOMLEFT", 0, 2);
+cb.worldmap_frame.frame:RegisterEvent("ADDON_LOADED");
+cb.worldmap_frame.frame:RegisterEvent("WORLD_MAP_UPDATE");
+cb.worldmap_frame.frame:SetScript("OnEvent", function(self, event, ...)
+	return cb.worldmap_frame[event] and cb.worldmap_frame[event](qb, ...)
+end);
 
-	_G[label]:Show();
+cb.worldmap_frame.frame.none_found = cb.worldmap_frame.frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight");
+cb.worldmap_frame.frame.none_found:SetPoint("CENTER");
+cb.worldmap_frame.frame.none_found:SetText(CBL["worldmap_frame_NONE_FOUND"]);
+
+cb.worldmap_frame.nodes = {};
+cb.worldmap_frame.gather_records = {};
+
+function cb.worldmap_frame:ADDON_LOADED()
+	for i=1,MAX_FRAMES do
+		cb.worldmap_frame.nodes[i] = CreateFrame("Frame", cb.worldmap_frame.frame:GetName() .. "_NODE_LINE" .. i, cb.worldmap_frame.frame, "CraftBuster_ItemLevelsBar_Template");
+		cb.worldmap_frame.nodes[i]:SetFrameStrata("FULLSCREEN_DIALOG");
+	end
+
+	cb.worldmap_frame.frame:UnregisterEvent("ADDON_LOADED");
 end
 
-function CraftBuster_WorldMap_Update()
+function cb.worldmap_frame:WORLD_MAP_UPDATE()
+	if (WorldMapFrame:IsShown()) then
+		cb.worldmap_frame.update();
+		cb.worldmap_frame.updatePosition();
+	end
+end
+
+function cb.worldmap_frame:update()
 	if (InCombatLockdown()) then
+		cb:addLeaveCombatCommand("CraftBuster_WorldMapFrame_Update");
 		return;
 	end
 
 	if (CraftBusterOptions[CraftBusterEntry].worldmap_frame.show) then
 		if (CraftBusterOptions[CraftBusterEntry].worldmap_frame.state == "expanded") then
 			for i=1,MAX_FRAMES do
-				_G["CraftBuster_WorldMap_Node" .. i]:Hide();
+				cb.worldmap_frame.nodes[i]:Hide();
 			end
 
 			local count = 0;
 			local current_map_id = GetCurrentMapAreaID();
-			if (saved_nodes[current_map_id] and next(saved_nodes[current_map_id])) then
-				for skill_id, skill_data in sortedpairs(saved_nodes[current_map_id]) do
+			if (cb.worldmap_frame.gather_records[current_map_id] and next(cb.worldmap_frame.gather_records[current_map_id])) then
+				for skill_id, skill_data in cb.omg:sortedpairs(cb.worldmap_frame.gather_records[current_map_id]) do
 					if (CraftBusterOptions[CraftBusterEntry].modules[skill_id].show_worldmap_icons) then
-						for item_id, item_data in sortedpairs(skill_data) do
+						for i, item_data in cb.omg:sortedpairs(skill_data) do
 							count = count + 1;
-							CraftBuster_WorldMap_UpdateBar("CraftBuster_WorldMap_Node" .. count, item_id, item_data);
-							_G["CraftBuster_WorldMap_Node" .. count]:SetPoint("TOPLEFT", "CraftBuster_WorldMapFrame", "TOPLEFT", 5, -(count * 20) + 11);
+							local node_frame = cb.worldmap_frame.nodes[i];
+							node_frame:SetPoint("TOPLEFT", cb.worldmap_frame.frame, "TOPLEFT", 5, -(count * 20) + 11);
+							cb.worldmap_frame:updateBar(node_frame, item_data);
 						end
 					end
 				end
 			end
 
 			if (count > 0) then
-				CraftBuster_WorldMapFrameNoneFound:Hide();
-				CraftBuster_WorldMap_MoverFrame:Show();
-				CraftBuster_WorldMap_MoverFrame_CollapseFrame:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Collapse");
-				CraftBuster_WorldMapFrame:SetHeight(15 + (count * 20));
-				CraftBuster_WorldMapFrame:Show();
+				cb.worldmap_frame.frame.none_found:Hide();
+				cb.worldmap_frame.mover_frame:Show();
+				_G[cb.worldmap_frame.mover_frame:GetName() .. "_CollapseFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Collapse");
+				cb.worldmap_frame.frame:SetHeight(15 + (count * 20));
+				cb.worldmap_frame.frame:Show();
+			elseif (CraftBusterOptions[CraftBusterEntry].worldmap_frame.auto_hide) then
+				cb.worldmap_frame.mover_frame:Hide();
+				cb.worldmap_frame.frame:Hide();
 			else
-				CraftBuster_WorldMapFrameNoneFound:Show();
-				CraftBuster_WorldMap_MoverFrame:Show();
-				CraftBuster_WorldMap_MoverFrame_CollapseFrame:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Collapse");
-				CraftBuster_WorldMapFrame:SetHeight(28);
-				CraftBuster_WorldMapFrame:Show();
+				cb.worldmap_frame.frame.none_found:Show();
+				cb.worldmap_frame.mover_frame:Show();
+				_G[cb.worldmap_frame.mover_frame:GetName() .. "_CollapseFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Collapse");
+				cb.worldmap_frame.frame:SetHeight(28);
+				cb.worldmap_frame.frame:Show();
 			end
 		else
-			CraftBuster_WorldMap_MoverFrame:Show();
-			CraftBuster_WorldMap_MoverFrame_CollapseFrame:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Expand");
-			CraftBuster_WorldMapFrame:Hide();
+			cb.worldmap_frame.mover_frame:Show();
+			_G[cb.worldmap_frame.mover_frame:GetName() .. "_CollapseFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Expand");
+			cb.worldmap_frame.frame:Hide();
+		end
+
+		if (not CraftBusterOptions[CraftBusterEntry].worldmap_frame.locked) then
+			_G[cb.worldmap_frame.mover_frame:GetName() .. "_LockFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Unlocked");
+		else
+			_G[cb.worldmap_frame.mover_frame:GetName() .. "_LockFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Locked");
 		end
 	else
-		CraftBuster_WorldMap_MoverFrame:Hide();
-		CraftBuster_WorldMapFrame:Hide();
+		cb.worldmap_frame.mover_frame:Hide();
+		cb.worldmap_frame.frame:Hide();
 	end
 end
 
-function CraftBuster_WorldMap_OnLoad(self)
-	for i=1,MAX_FRAMES do
-		local frame = CreateFrame("Frame", "CraftBuster_WorldMap_Node" .. i, CraftBuster_WorldMapFrame, "CraftBuster_WorldMap_BarTemplate");
-	end
+function cb.worldmap_frame:updateBar(frame, data)
+	local frame_name = frame:GetName();
+	local icon_frame = _G[frame_name .. "Icon"];
+	local item_name,item_link,_,_,_,_,_,_,_,item_texture = GetItemInfo(data["item_id"]);
+	_G[icon_frame:GetName() .. "Icon"]:SetTexture(item_texture);
+	icon_frame.item_id = data["item_id"];
+	icon_frame.item_link = item_link;
 
-	self:RegisterEvent("WORLD_MAP_UPDATE");
+	_G[frame_name .. "Label"]:SetText(data["name"]);
+	_G[frame_name .. "Orange"]:SetText(ORANGE_FONT_COLOR_CODE .. data["levels"][1]);
+	_G[frame_name .. "Yellow"]:SetText(YELLOW_FONT_COLOR_CODE .. data["levels"][2]);
+	_G[frame_name .. "Green"]:SetText(GREEN_FONT_COLOR_CODE .. data["levels"][3]);
+	_G[frame_name .. "Grey"]:SetText(GRAY_FONT_COLOR_CODE .. data["levels"][4]);
+
+	frame:Show();
 end
 
-function CraftBuster_WorldMap_OnEvent(self, event, ...)
-	if (event == "WORLD_MAP_UPDATE" and WorldMapFrame:IsShown()) then
-		if (not CraftBusterEntry) then
-			return;
-		end
-
-		CraftBuster_WorldMap_Update();
-	end
-end
-
-function CraftBuster_WorldMap_AddNodes(skill_id, skill_nodes)
+function cb.worldmap_frame:addGatherData(skill_id, skill_nodes)
 	if (skill_nodes and next(skill_nodes)) then
-		for _, node_data in sortedpairs(skill_nodes) do
+		for node_name, node_data in cb.omg:sortedpairs(skill_nodes) do
 			if (node_data.map_ids and next(node_data.map_ids)) then
 				for _, map_id in pairs(node_data.map_ids) do
-					if (not saved_nodes[map_id]) then
-						saved_nodes[map_id] = {};
+					if (not cb.worldmap_frame.gather_records[map_id]) then
+						cb.worldmap_frame.gather_records[map_id] = {};
 					end
-					if (not saved_nodes[map_id][skill_id]) then
-						saved_nodes[map_id][skill_id] = {};
+					if (not cb.worldmap_frame.gather_records[map_id][skill_id]) then
+						cb.worldmap_frame.gather_records[map_id][skill_id] = {};
 					end
+					
+					local rank = node_data["rank"];
+					gather_data = {
+						["item_id"] = node_data["item_id"],
+						["name"] = node_name,
+						["levels"] = node_data["node_levels"],
+					};
 
-					if (node_data.item_id ~= "") then
-						saved_nodes[map_id][skill_id][node_data.item_id] = node_data.node_levels;
-					end
+					cb.worldmap_frame.gather_records[map_id][skill_id][rank] = gather_data;
 				end
 			end
 		end
 	end
 end
 
-function CraftBuster_WorldMap_Config_OnClick()
-	if (WorldMapFrame:IsShown()) then
-		ToggleFrame(WorldMapFrame);
+function cb.worldmap_frame:lockFrame()
+	if (not CraftBusterOptions[CraftBusterEntry].worldmap_frame.locked) then
+		CraftBusterOptions[CraftBusterEntry].worldmap_frame.locked = true;
+	else
+		CraftBusterOptions[CraftBusterEntry].worldmap_frame.locked = false;
 	end
-	CraftBuster_Config_Show();
+	cb.worldmap_frame:update();
 end
 
-function CraftBuster_WorldMap_Collapse_OnClick()
+function cb.worldmap_frame:collapseFrame()
 	if (InCombatLockdown()) then
+		cb:addLeaveCombatCommand("CraftBuster_WorldMapFrame_Collapse_OnClick");
 		return;
 	end
-	if (CraftBuster_WorldMapFrame:IsShown()) then
-		CraftBuster_WorldMapFrame:Hide();
+	
+	if (cb.worldmap_frame.frame:IsShown()) then
+		cb.worldmap_frame.frame:Hide();
 		CraftBusterOptions[CraftBusterEntry].worldmap_frame.state = "collapsed";
 	else
-		CraftBuster_WorldMapFrame:Show();
+		cb.worldmap_frame.frame:Show();
 		CraftBusterOptions[CraftBusterEntry].worldmap_frame.state = "expanded";
 	end
-	CraftBuster_WorldMap_Update();
+	cb.worldmap_frame:update();
 end
 
-function CraftBuster_WorldMap_Close_OnClick()
+function CraftBuster_WorldMapFrame_Collapse_OnClick()
+	cb.worldmap_frame:collapseFrame();
+end
+
+function cb.worldmap_frame:closeFrame()
 	if (InCombatLockdown()) then
+		cb:addLeaveCombatCommand("CraftBuster_WorldMapFrame_Close_OnClick");
 		return;
 	end
-	CraftBuster_WorldMap_MoverFrame:Hide();
-	CraftBuster_WorldMapFrame:Hide();
-	if (not CraftBuster_WorldMap_MoverFrame:IsShown()) then
+	
+	cb.worldmap_frame.mover_frame:Hide();
+	cb.worldmap_frame.frame:Hide();
+	if (not cb.worldmap_frame.mover_frame:IsShown()) then
 		CraftBusterOptions[CraftBusterEntry].worldmap_frame.show = false;
 	end
 end
 
-function CraftBuster_WorldMap_OnDrag()
-	local point, _, relative_point, x, y = CraftBuster_WorldMap_MoverFrame:GetPoint();
+function cb.worldmap_frame:dragFrame()
+	local point, _, relative_point, x, y = cb.worldmap_frame.mover_frame:GetPoint();
 	CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.point = point;
 	CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.relative_point = relative_point;
 	CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.x = x;
 	CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.y = y;
-	CraftBuster_WorldMap_UpdatePosition();
+	cb.worldmap_frame:updatePosition();
 end
 
-function CraftBuster_WorldMap_UpdatePosition()
+function cb.worldmap_frame:updatePosition()
 	if (InCombatLockdown()) then
+		cb:addLeaveCombatCommand("CraftBuster_WorldMapFrame_UpdatePosition");
 		return;
 	end
 	local position = CraftBusterOptions[CraftBusterEntry].worldmap_frame.position;
-	CraftBuster_WorldMap_MoverFrame:ClearAllPoints();
-	CraftBuster_WorldMap_MoverFrame:SetPoint(position.point, nil, position.relative_point, position.x, position.y);
+	cb.worldmap_frame.mover_frame:ClearAllPoints();
+	cb.worldmap_frame.mover_frame:SetPoint(position.point, nil, position.relative_point, position.x, position.y);
 end
 
-function CraftBuster_WorldMap_ResetPosition()
+function cb.worldmap_frame:resetPosition()
 	CraftBusterOptions[CraftBusterEntry].worldmap_frame.position = {
 		point = "TOPLEFT",
 		relative_point = "TOPLEFT",
 		x = 490,
 		y = -330,
 	};
-	CraftBuster_WorldMap_UpdatePosition();
+	cb.worldmap_frame:updatePosition();
 end

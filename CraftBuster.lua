@@ -1,4 +1,4 @@
-local DB_VERSION = 0.04;
+local DB_VERSION = 0.05;
 
 CraftBusterInit = nil;
 CraftBusterOptions = {};
@@ -46,7 +46,7 @@ SlashCmdList["CBUSTER"] = function(cmd)
 		cb:initSettings(true);
 		cb:SKILL_LINES_CHANGED(true);
 	elseif (cmd == "clearignore") then
-		CraftBuster_BusterFrame_ClearIgnore();
+		cb.buster_frame:clearIgnore();
 	elseif (cmd == "update") then
 		cb:SKILL_LINES_CHANGED(true);
 	elseif (cmd == "where") then
@@ -143,7 +143,7 @@ function cb:SKILL_LINES_CHANGED(reload)
 end
 
 function cb:ZONE_CHANGED_NEW_AREA()
-	--CraftBuster_GatherFrame_Reset();
+	cb.gather_frame:reset();
 	local map_id = GetCurrentMapAreaID();
 	if (map_id ~= nil) then
 		if (cb.professions.modules and next(cb.professions.modules)) then
@@ -154,8 +154,8 @@ function cb:ZONE_CHANGED_NEW_AREA()
 			end
 		end
 	end
-	--CraftBuster_GatherFrame_Update();
-	--CraftBuster_GatherFrame_UpdatePosition();
+	cb.gather_frame:update();
+	cb.gather_frame:updatePosition();
 
 	cb.map_icons:update();
 end
@@ -174,7 +174,7 @@ function cb:PLAYER_REGEN_ENABLED()
 end
 
 function cb:GET_ITEM_INFO_RECEIVED()
-	--CraftBuster_GatherFrame_Update();
+	cb.gather_frame:update();
 end
 
 function cb:initPlayer()
@@ -214,6 +214,14 @@ function cb:initSettings(reset)
 	if (not CraftBusterOptions[CraftBusterEntry] or reset == "character") then
 		CraftBusterOptions[CraftBusterEntry] = {};
 	end
+
+	if (not CraftBusterOptions[CraftBusterEntry].minimap) then
+		CraftBusterOptions[CraftBusterEntry].minimap = {};
+		CraftBusterOptions[CraftBusterEntry].minimap.show = true;
+		CraftBusterOptions[CraftBusterEntry].minimap.position = 310;
+		cb.minimap:init();
+	end
+
 	if (not CraftBusterOptions[CraftBusterEntry].skills) then
 		CraftBusterOptions[CraftBusterEntry].skills = {
 			["skill_1"] = nil,
@@ -225,6 +233,7 @@ function cb:initSettings(reset)
 			["lockpicking"] = nil,
 		};
 	end
+
 	if (not CraftBusterOptions[CraftBusterEntry].skills_frame) then
 		CraftBusterOptions[CraftBusterEntry].skills_frame = {};
 		CraftBusterOptions[CraftBusterEntry].skills_frame.show = true;
@@ -250,23 +259,7 @@ function cb:initSettings(reset)
 			CraftBusterOptions[CraftBusterEntry].skills_frame.bars.lockpicking = true;
 		end
 	end
-	if (not CraftBusterOptions[CraftBusterEntry].gather_frame) then
-		CraftBusterOptions[CraftBusterEntry].gather_frame = {};
-		CraftBusterOptions[CraftBusterEntry].gather_frame.show = true;
-		CraftBusterOptions[CraftBusterEntry].gather_frame.position = {
-			point = "TOPLEFT",
-			relative_point = "TOPLEFT",
-			x = 490,
-			y = -330,
-		};
-		CraftBusterOptions[CraftBusterEntry].gather_frame.state = "expanded";
-		CraftBusterOptions[CraftBusterEntry].gather_frame.show_zone_nodes = true;
-		CraftBusterOptions[CraftBusterEntry].gather_frame.show_skill_nodes = true;
-		CraftBusterOptions[CraftBusterEntry].gather_frame.auto_hide = true;
-	end
-	if (not CraftBusterOptions[CraftBusterEntry].zone_limit) then
-		CraftBusterOptions[CraftBusterEntry].zone_limit = 10;
-	end
+
 	if (not CraftBusterOptions[CraftBusterEntry].buster_frame) then
 		CraftBusterOptions[CraftBusterEntry].buster_frame = {};
 		CraftBusterOptions[CraftBusterEntry].buster_frame.show = true;
@@ -276,20 +269,30 @@ function cb:initSettings(reset)
 			x = 490,
 			y = -330,
 		};
+		CraftBusterOptions[CraftBusterEntry].buster_frame.locked = false;
 		CraftBusterOptions[CraftBusterEntry].buster_frame.state = "expanded";
 		CraftBusterOptions[CraftBusterEntry].buster_frame.ignored_items = {};
 	end
-	if (not CraftBusterOptions[CraftBusterEntry].minimap) then
-		CraftBusterOptions[CraftBusterEntry].minimap = {};
-		CraftBusterOptions[CraftBusterEntry].minimap.show = true;
-		CraftBusterOptions[CraftBusterEntry].minimap.position = 310;
-		cb.minimap:init();
+
+	if (not CraftBusterOptions[CraftBusterEntry].gather_frame) then
+		CraftBusterOptions[CraftBusterEntry].gather_frame = {};
+		CraftBusterOptions[CraftBusterEntry].gather_frame.show = true;
+		CraftBusterOptions[CraftBusterEntry].gather_frame.position = {
+			point = "TOPLEFT",
+			relative_point = "TOPLEFT",
+			x = 490,
+			y = -330,
+		};
+		CraftBusterOptions[CraftBusterEntry].gather_frame.locked = false;
+		CraftBusterOptions[CraftBusterEntry].gather_frame.state = "expanded";
+		CraftBusterOptions[CraftBusterEntry].gather_frame.show_zone_nodes = true;
+		CraftBusterOptions[CraftBusterEntry].gather_frame.show_skill_nodes = true;
+		CraftBusterOptions[CraftBusterEntry].gather_frame.auto_hide = true;
 	end
-	if (not CraftBusterOptions[CraftBusterEntry].map_icons) then
-		CraftBusterOptions[CraftBusterEntry].map_icons = {};
-		CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map = true;
-		CraftBusterOptions[CraftBusterEntry].map_icons.show_mini_map = true;
+	if (not CraftBusterOptions[CraftBusterEntry].zone_limit) then
+		CraftBusterOptions[CraftBusterEntry].zone_limit = 10;
 	end
+
 	if (not CraftBusterOptions[CraftBusterEntry].worldmap_frame) then
 		CraftBusterOptions[CraftBusterEntry].worldmap_frame = {};
 		CraftBusterOptions[CraftBusterEntry].worldmap_frame.show = true;
@@ -299,9 +302,16 @@ function cb:initSettings(reset)
 			x = 20,
 			y = 20,
 		};
+		CraftBusterOptions[CraftBusterEntry].worldmap_frame.locked = false;
 		CraftBusterOptions[CraftBusterEntry].worldmap_frame.state = "expanded";
 	end
-		CraftBusterOptions[CraftBusterEntry].map_icons.show_icons = {};
+
+	if (not CraftBusterOptions[CraftBusterEntry].map_icons) then
+		CraftBusterOptions[CraftBusterEntry].map_icons = {};
+		CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map = true;
+		CraftBusterOptions[CraftBusterEntry].map_icons.show_mini_map = true;
+	end
+
 	if (not CraftBusterOptions[CraftBusterEntry].modules) then
 		CraftBusterOptions[CraftBusterEntry].modules = {};
 	end
@@ -318,9 +328,11 @@ function cb:initSettings(reset)
 			end
 		end
 	end
+
 	if (not CraftBusterOptions[CraftBusterEntry].alerts) then
 		CraftBusterOptions[CraftBusterEntry].alerts = {};
 	end
+
 	if (not CraftBusterOptions[CraftBusterEntry].bustables) then
 		CraftBusterOptions[CraftBusterEntry].bustables = {};
 	end
@@ -362,6 +374,12 @@ function cb:initVersionSettings()
 
 	if (not CraftBusterOptions[CraftBusterEntry].db_version or CraftBusterOptions[CraftBusterEntry].db_version < 0.04) then
 		CraftBusterOptions[CraftBusterEntry].skills_frame.locked = false;
+	end
+
+	if (not CraftBusterOptions[CraftBusterEntry].db_version or CraftBusterOptions[CraftBusterEntry].db_version < 0.05) then
+		CraftBusterOptions[CraftBusterEntry].buster_frame.locked = false;
+		CraftBusterOptions[CraftBusterEntry].gather_frame.locked = false;
+		CraftBusterOptions[CraftBusterEntry].worldmap_frame.locked = false;
 	end
 
 	CraftBusterOptions[CraftBusterEntry].db_version = DB_VERSION;
