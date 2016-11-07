@@ -652,7 +652,7 @@ local function add_tooltip_info(frame, item_link)
 								end
 								herbs[herb_id] = herb_name;
 							end
-							output_herbs = push_table(output_herbs, herbs);
+							output_herbs = cb.omg:push_table(output_herbs, herbs);
 						end
 						if (item_type == "herb" or item_type == "pigment") then
 							local inks = {};
@@ -663,7 +663,7 @@ local function add_tooltip_info(frame, item_link)
 								end
 								inks[ink_id] = ink_name;
 							end
-							output_inks = push_table(output_inks, inks);
+							output_inks = cb.omg:push_table(output_inks, inks);
 						end
 					end
 				end

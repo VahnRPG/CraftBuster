@@ -219,13 +219,13 @@ config_frame:SetScript("OnShow", function(config_frame)
 			info.func = function(self)
 				UIDropDownMenu_SetSelectedValue(settings_menu, self.value);
 				if (self.value == "Personal") then
-					CraftBusterOptions.globals[CraftBusterEntry_Personal] = CraftBusterEntry_Personal;
+					CraftBusterOptions.globals[CraftBusterEntry] = CraftBusterEntry;
 				else
-					CraftBusterOptions.globals[CraftBusterEntry_Personal] = CBG_GLOBAL_PROFILE;
+					CraftBusterOptions.globals[CraftBusterEntry] = CBG_GLOBAL_PROFILE;
 				end
-				CraftBusterEntry = CraftBusterOptions.globals[CraftBusterEntry_Personal];
+				CraftBusterEntry = CraftBusterOptions.globals[CraftBusterEntry];
 				if (not CraftBusterOptions[CraftBusterEntry]) then
-					cb:initSettings("character");
+					cb.settings:initSettings("character");
 				end
 				CraftBuster();
 			end
@@ -233,7 +233,7 @@ config_frame:SetScript("OnShow", function(config_frame)
 		end
 	end);
 	UIDropDownMenu_JustifyText(settings_menu, "LEFT");
-	UIDropDownMenu_SetSelectedValue(settings_menu, ((CraftBusterEntry_Personal == CraftBusterEntry) and "Personal" or "Global"));
+	UIDropDownMenu_SetSelectedValue(settings_menu, ((CraftBusterEntry == CraftBusterEntry) and "Personal" or "Global"));
 	]]--
 
 	show_minimap_button = CreateFrame("CheckButton", config_frame_name .. "Minimap", config_frame, "InterfaceOptionsCheckButtonTemplate");
@@ -243,7 +243,7 @@ config_frame:SetScript("OnShow", function(config_frame)
 	show_minimap_button:SetChecked(CraftBusterOptions[CraftBusterEntry].minimap.show);
 	show_minimap_button:SetScript("OnClick", function(self, button)
 		CraftBusterOptions[CraftBusterEntry].minimap.show = self:GetChecked();
-		cb.minimap:init();
+		cb.minimap:update();
 	end);
 
 	if (cb.professions.modules and next(cb.professions.modules)) then

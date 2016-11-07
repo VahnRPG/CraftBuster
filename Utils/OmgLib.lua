@@ -170,6 +170,20 @@ function mod.omg:in_array(needle, haystack)
 	return false;
 end
 
+function mod.omg:clone_table(t)
+    if (type(t) ~= "table") then
+		return t;
+	end
+
+	local copy = {};
+	for k, v in next, t, nil do
+		copy[mod.omg:clone_table(k)] = mod.omg:clone_table(v);
+	end
+	setmetatable(copy, mod.omg:clone_table(getmetatable(t)));
+
+    return copy;
+end
+
 function mod.omg:print_r(t)
 	local print_r_cache = {};
 	local function sub_print_r(t, indent)

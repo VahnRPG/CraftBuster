@@ -184,7 +184,7 @@ function cb.professions:processAction(module_id, skill_data)
 	
 	for message_id, message_data in cb.omg:sortedpairs(cb.professions.modules[module_id].messages) do
 		if (not CraftBusterOptions[CraftBusterEntry].alerts[module_id][message_id]) then
-			if (CraftBusterPlayerLevel >= data.ply_level and skill_data.level >= data.skill_level) then
+			if (cb.settings.player.level >= data.ply_level and skill_data.level >= data.skill_level) then
 				cb.omg:echo(message_data.message);
 				CraftBusterOptions[CraftBusterEntry].alerts[module_id][message_id] = true;
 			end

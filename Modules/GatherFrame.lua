@@ -40,6 +40,7 @@ cb.gather_frame.frame = CreateFrame("Frame", "CraftBuster_GatherFrame_Frame", UI
 cb.gather_frame.frame:SetSize(320, 10);
 cb.gather_frame.frame:SetPoint("TOPLEFT", cb.gather_frame.mover_frame, "BOTTOMLEFT", 0, 2);
 cb.gather_frame.frame:RegisterEvent("ADDON_LOADED");
+cb.gather_frame.frame:RegisterEvent("GET_ITEM_INFO_RECEIVED");
 cb.gather_frame.frame:SetScript("OnEvent", function(self, event, ...)
 	return cb.gather_frame[event] and cb.gather_frame[event](qb, ...)
 end);
@@ -70,6 +71,10 @@ function cb.gather_frame:ADDON_LOADED()
 	end
 
 	cb.gather_frame.frame:UnregisterEvent("ADDON_LOADED");
+end
+
+function cb.gather_frame:GET_ITEM_INFO_RECEIVED()
+	cb.gather_frame:update();
 end
 
 function cb.gather_frame:update()

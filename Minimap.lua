@@ -8,7 +8,7 @@ cb.minimap.frame:SetSize(32, 32);
 cb.minimap.frame:EnableMouse(true);
 cb.minimap.frame:RegisterEvent("ADDON_LOADED");
 cb.minimap.frame:SetScript("OnEvent", function(self, event, ...)
-	if (CraftBusterInit) then
+	if (cb.settings.init) then
 		return cb.minimap[event] and cb.minimap[event](qb, ...)
 	end
 end);
@@ -32,7 +32,7 @@ cb.minimap.frame.button:SetScript("OnDragStop", function(self)
 end);
 cb.minimap.frame.button:SetScript("OnUpdate", function(self)
 	if (self.dragging) then
-		cb.minimap:dragFrame(cb.minimap.frame:GetName());
+		cb.minimap:dragFrame();
 	end
 end);
 cb.minimap.frame.button:SetScript("OnEnter", function(self, button, down)
@@ -52,17 +52,21 @@ cb.minimap.frame.button:SetScript("OnClick", function(self, button, down)
 end);
 
 function cb.minimap:ADDON_LOADED()
-	if (CraftBusterOptions[CraftBusterEntry].minimap.show) then
+	if (cb.settings:get().minimap.show) then
 		cb.minimap.frame:Show();
 	else
 		cb.minimap.frame:Hide();
 	end
-	cb.minimap:updatePosition(cb.minimap.frame:GetName());
+	cb.minimap:updatePosition();
 
 	cb.minimap.frame:UnregisterEvent("ADDON_LOADED");
 end
 
-function cb.minimap:dragFrame(frame_name)
+function cb.minimap:update()
+	cb.minimap:updatePosition();
+end
+
+function cb.minimap:dragFrame()
 	local xpos, ypos = GetCursorPosition();
 	local xmin, ymin = Minimap:GetLeft(), Minimap:GetBottom();
 
@@ -74,13 +78,13 @@ function cb.minimap:dragFrame(frame_name)
 		angle = angle + 360;
 	end;
 
-	CraftBusterOptions[CraftBusterEntry].minimap.position = angle;
-	cb.minimap:updatePosition(frame_name);
+	cb.settings:get().minimap.position = angle;
+	cb.minimap:updatePosition();
 end
 
-function cb.minimap:updatePosition(frame_name)
+function cb.minimap:updatePosition()
 	local radius = 80;
-	local angle = CraftBusterOptions[CraftBusterEntry].minimap.position;
-
-	_G[frame_name]:SetPoint("TOPLEFT", "Minimap", "TOPLEFT", (52 - (radius * cos(angle))), ((radius * sin(angle)) - 52));
+	local angle = cb.settings:get().minimap.position;
+	
+	cb.minimap.frame:SetPoint("TOPLEFT", "Minimap", "TOPLEFT", (52 - (radius * cos(angle))), ((radius * sin(angle)) - 52));
 end

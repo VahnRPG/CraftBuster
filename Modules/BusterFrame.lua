@@ -44,7 +44,7 @@ cb.buster_frame.frame:SetSize(180, 185);
 cb.buster_frame.frame:SetPoint("TOPLEFT", cb.buster_frame.mover_frame, "BOTTOMLEFT", 0, 2);
 cb.buster_frame.frame:RegisterEvent("ADDON_LOADED");
 cb.buster_frame.frame:SetScript("OnEvent", function(self, event, ...)
-	if (CraftBusterInit) then
+	if (cb.settings.init) then
 		return cb.buster_frame[event] and cb.buster_frame[event](qb, ...)
 	end
 end);

@@ -38,7 +38,7 @@ cb.skill_frame.frame:SetSize(234, 10);
 cb.skill_frame.frame:SetPoint("TOPLEFT", cb.skill_frame.mover_frame, "BOTTOMLEFT", 0, 2);
 cb.skill_frame.frame:RegisterEvent("ADDON_LOADED");
 cb.skill_frame.frame:SetScript("OnEvent", function(self, event, ...)
-	if (CraftBusterInit) then
+	if (cb.settings.init) then
 		return cb.skill_frame[event] and cb.skill_frame[event](qb, ...)
 	end
 end);
@@ -118,7 +118,7 @@ function cb.skill_frame:update()
 								end
 								local title = CBG_PROFESSION_RANKS[profession_level][3];
 
-								if (profession_ply_lvl <= CraftBusterPlayerLevel) then
+								if (profession_ply_lvl <= cb.settings.player.level) then
 									bar_frame:SetStatusBarColor(0.7, 0.0, 0.0, 1.0);
 									bar_frame:SetBackdropColor(0.7, 0.0, 0.0, 0.5);
 									_G[bar_frame:GetName() .. "Text"]:SetText(CBG_CLR_RED .. skill_name .. ": " .. CBG_CLR_WHITE .. skill_level .. skill_bonus_text .. "/" .. skill_max_level);
