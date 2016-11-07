@@ -181,8 +181,10 @@ function mod.omg:print_r(t)
 				for pos, val in pairs(t) do
 					if (type(val) == "table") then
 						mod.omg:echo(indent .. "[" .. pos .. "] => " .. tostring(t) .. " {");
-						sub_print_r(val, indent..string.rep(" ", string.len(pos) + 8));
+						sub_print_r(val, indent .. string.rep(" ", string.len(pos) + 8));
 						mod.omg:echo(indent .. string.rep(" ", string.len(pos) + 6) .. "}");
+					elseif (type(val) == "string") then
+						mod.omg:echo(indent .. "[" .. pos .. "] => \"" .. val .. "\"");
 					else
 						mod.omg:echo(indent .. "[" .. pos .. "] => " .. tostring(val));
 					end
@@ -192,7 +194,15 @@ function mod.omg:print_r(t)
 			end
 		end
 	end
-	sub_print_r(t, "  ");
+	if (type(t) == "table") then
+		mod.omg:echo(tostring(t).." {");
+		sub_print_r(t, "  ");
+		mod.omg:echo("}");
+	else
+		sub_print_r(t, "  ");
+	end
+
+	mod.omg:echo(" ");
 end
 
 function mod.omg:echo(text)

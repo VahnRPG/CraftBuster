@@ -63,7 +63,17 @@ local last_update = 0;
 
 cb.map_icons = {};
 cb.map_icons.frame = CreateFrame("Frame", "CraftBuster_MapIcons_Frame", UIParent);
+cb.map_icons.frame:RegisterEvent("ADDON_LOADED");
+cb.map_icons.frame:SetScript("OnEvent", function(self, event, ...)
+	return cb.map_icons[event] and cb.map_icons[event](qb, ...)
+end);
+
 cb.map_icons.tooltip_frame = CreateFrame("GameTooltip", "CraftBuster_MapIcons_Tooltip", nil, "GameTooltipTemplate");
+
+function cb.map_icons:ADDON_LOADED(self, ...)
+	cb.map_icons:registerModule("all", SKILL_ALL_PROFESSIONS_TRAINERS_MAP_ICONS, CBT_MAP_ICON_TRAINER);
+	cb.map_icons.frame:UnregisterEvent("ADDON_LOADED");
+end
 
 function cb.map_icons:setTooltipText(icon_data, floor_label)
 	if (icon_data.icon_type == CBT_MAP_ICON_TRAINER) then
@@ -267,10 +277,6 @@ function cb.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, 
 
 	HBDPins:AddMinimapIconMF(CBG_MOD_NAME, icon.minimap_icon_frame, icon.map_id, icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
 	HBDPins:AddWorldMapIconMF(CBG_MOD_NAME, icon.worldmap_icon_frame, icon.map_id, icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
-end
-
-function cb.map_icons:registerInit()
-	cb.map_icons:registerModule("all", SKILL_ALL_PROFESSIONS_TRAINERS_MAP_ICONS, CBT_MAP_ICON_TRAINER);
 end
 
 function cb.map_icons:registerModule(module_id, map_icons, icon_type)

@@ -52,16 +52,14 @@ cb.minimap.frame.button:SetScript("OnClick", function(self, button, down)
 end);
 
 function cb.minimap:ADDON_LOADED()
-	cb.minimap.frame:UnregisterEvent("ADDON_LOADED");
-end
-
-function cb.minimap:init()
 	if (CraftBusterOptions[CraftBusterEntry].minimap.show) then
 		cb.minimap.frame:Show();
 	else
 		cb.minimap.frame:Hide();
 	end
 	cb.minimap:updatePosition(cb.minimap.frame:GetName());
+
+	cb.minimap.frame:UnregisterEvent("ADDON_LOADED");
 end
 
 function cb.minimap:dragFrame(frame_name)

@@ -78,7 +78,7 @@ end
 
 function cb.worldmap_frame:update()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand("CraftBuster_WorldMapFrame_Update");
+		cb:addLeaveCombatCommand(function() cb.worldmap_frame:update(); end);
 		return;
 	end
 
@@ -190,7 +190,7 @@ end
 
 function cb.worldmap_frame:collapseFrame()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand("CraftBuster_WorldMapFrame_Collapse_OnClick");
+		cb:addLeaveCombatCommand(function() cb.worldmap_frame:collapseFrame(); end);
 		return;
 	end
 	
@@ -210,7 +210,7 @@ end
 
 function cb.worldmap_frame:closeFrame()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand("CraftBuster_WorldMapFrame_Close_OnClick");
+		cb:addLeaveCombatCommand(function() cb.worldmap_frame:closeFrame(); end);
 		return;
 	end
 	
@@ -232,7 +232,7 @@ end
 
 function cb.worldmap_frame:updatePosition()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand("CraftBuster_WorldMapFrame_UpdatePosition");
+		cb:addLeaveCombatCommand(function() cb.worldmap_frame:updatePosition(); end);
 		return;
 	end
 	local position = CraftBusterOptions[CraftBusterEntry].worldmap_frame.position;

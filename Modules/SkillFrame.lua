@@ -61,7 +61,7 @@ end
 
 function cb.skill_frame:update()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand("CraftBuster_SkillFrame_Update");
+		cb:addLeaveCombatCommand(function() cb.skill_frame:update(); end);
 		return;
 	end
 
@@ -237,7 +237,7 @@ end
 
 function cb.skill_frame:collapseFrame()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand("CraftBuster_SkillFrame_Collapse_OnClick");
+		cb:addLeaveCombatCommand(function() cb.skill_frame:collapseFrame(); end);
 		return;
 	end
 	
@@ -257,7 +257,7 @@ end
 
 function cb.skill_frame:closeFrame()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand("CraftBuster_SkillFrame_Close_OnClick");
+		cb:addLeaveCombatCommand(function() cb.skill_frame:closeFrame(); end);
 		return;
 	end
 	
@@ -279,7 +279,7 @@ end
 
 function cb.skill_frame:updatePosition()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand("CraftBuster_SkillFrame_UpdatePosition");
+		cb:addLeaveCombatCommand(function() cb.skill_frame:updatePosition(); end);
 		return;
 	end
 	local position = CraftBusterOptions[CraftBusterEntry].skills_frame.position;

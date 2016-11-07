@@ -158,7 +158,7 @@ end
 
 function cb.buster_frame:update()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand("CraftBuster_BusterFrame_Update");
+		cb:addLeaveCombatCommand(function() cb.buster_frame:update(); end);
 		return;
 	end
 	
@@ -303,7 +303,7 @@ end
 
 function cb.buster_frame:collapseFrame()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand("CraftBuster_BusterFrame_Collapse_OnClick");
+		cb:addLeaveCombatCommand(function() cb.buster_frame:collapseFrame(); end);
 		return;
 	end
 	
@@ -323,7 +323,7 @@ end
 
 function cb.buster_frame:closeFrame()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand("CraftBuster_BusterFrame_Close_OnClick");
+		cb:addLeaveCombatCommand(function() cb.buster_frame:closeFrame(); end);
 		return;
 	end
 	
@@ -345,7 +345,7 @@ end
 
 function cb.buster_frame:updatePosition()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand("CraftBuster_BusterFrame_UpdatePosition");
+		cb:addLeaveCombatCommand(function() cb.buster_frame:updatePosition(); end);
 		return;
 	end
 	local position = CraftBusterOptions[CraftBusterEntry].buster_frame.position;

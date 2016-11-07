@@ -35,7 +35,7 @@ SlashCmdList["CBUSTER"] = function(cmd)
 
 	if (cmd == "help") then
 		for i = 1, CBL["HELP_LINES"] do
-			DEFAULT_CHAT_FRAME:AddMessage(CBL["HELP" .. i]);
+			cb.omg:echo(CBL["HELP" .. i]);
 		end
 	elseif (cmd == "config") then
 		CraftBuster_Config_Show();
@@ -73,9 +73,9 @@ end);
 function cb:ADDON_LOADED(self, ...)
 	if (cb:initPlayer()) then
 		cb:initSettings();
-		cb.minimap:init();
-		cb.map_icons:registerInit();
-		cb:SKILL_LINES_CHANGED(true);
+		cb.omg:create_timer(2, function()
+			cb:SKILL_LINES_CHANGED(true);
+		end);
 		cb:ZONE_CHANGED_NEW_AREA();
 
 		cb.frame:UnregisterEvent("ADDON_LOADED");
@@ -162,14 +162,10 @@ end
 
 function cb:PLAYER_REGEN_ENABLED()
 	if (cb.leave_combat_commands and next(cb.leave_combat_commands)) then
-		local i, command_data;
-		for i, command_data in pairs(cb.leave_combat_commands) do
-			_G[command_data.function_name](unpack(command_data.args));
+		for i, command in pairs(cb.leave_combat_commands) do
+			command();
 			table.remove(cb.leave_combat_commands, i);
 		end
-	end
-	if (cb.leave_combat_commands and next(cb.leave_combat_commands)) then
-		cb:PLAYER_REGEN_ENABLED();
 	end
 end
 
@@ -339,7 +335,7 @@ function cb:initSettings(reset)
 
 	cb:initVersionSettings();
 
-	DEFAULT_CHAT_FRAME:AddMessage(CBG_MOD_COLOR .. CBG_MOD_NAME .. " (v" .. CBG_VERSION .. " - Last Updated: " .. CBG_LAST_UPDATED .. ")");
+	cb.omg:echo(CBG_MOD_COLOR .. CBG_MOD_NAME .. " (v" .. CBG_VERSION .. " - Last Updated: " .. CBG_LAST_UPDATED .. ")");
 end
 
 function cb:initVersionSettings()
@@ -385,6 +381,22 @@ function cb:initVersionSettings()
 	CraftBusterOptions[CraftBusterEntry].db_version = DB_VERSION;
 end
 
+function cb:handleNode(line_one, line_two, line_three)
+	if (cb.professions.modules and next(cb.professions.modules)) then
+		for module_id, module_data in cb.omg:sortedpairs(cb.professions.modules) do
+			if (module_data.node_function ~= nil and CraftBusterOptions[CraftBusterEntry].modules[module_id].show_tooltips) then
+				if (module_data.node_function(line_one, line_two, line_three)) then
+					return;
+				end
+			end
+		end
+	end
+end
+
+function cb:addLeaveCombatCommand(callback)
+	table.insert(cb.leave_combat_commands, callback);
+end
+
 function cb:getProfessions(reload)
 	if (CraftBusterPlayerSkills and next(CraftBusterPlayerSkills) and not reload) then
 		return CraftBusterPlayerSkills;
@@ -407,31 +419,6 @@ function cb:getProfessions(reload)
 	CraftBusterPlayerSkills = skills;
 	
 	return skills;
-end
-
-function cb:addLeaveCombatCommand(function_name, ...)
-	local arg = {...};
-	local params = {};
-	params.function_name = function_name;
-	params.args = {};
-	if (arg ~= nil) then
-		for _,value in pairs(arg) do
-			table.insert(params.args, value);
-		end
-	end
-	table.insert(cb.leave_combat_commands, params);
-end
-
-function cb:handleNode(line_one, line_two, line_three)
-	if (cb.professions.modules and next(cb.professions.modules)) then
-		for module_id, module_data in cb.omg:sortedpairs(cb.professions.modules) do
-			if (module_data.node_function ~= nil and CraftBusterOptions[CraftBusterEntry].modules[module_id].show_tooltips) then
-				if (module_data.node_function(line_one, line_two, line_three)) then
-					return;
-				end
-			end
-		end
-	end
 end
 
 function cb:getSkillLevel(skill_id)
