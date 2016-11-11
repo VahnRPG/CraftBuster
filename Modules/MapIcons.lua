@@ -65,7 +65,7 @@ cb.map_icons = {};
 cb.map_icons.frame = CreateFrame("Frame", "CraftBuster_MapIcons_Frame", UIParent);
 cb.map_icons.frame:RegisterEvent("ADDON_LOADED");
 cb.map_icons.frame:SetScript("OnEvent", function(self, event, ...)
-	return cb.map_icons[event] and cb.map_icons[event](qb, ...)
+	return cb.map_icons[event] and cb.map_icons[event](cb, ...)
 end);
 
 cb.map_icons.tooltip_frame = CreateFrame("GameTooltip", "CraftBuster_MapIcons_Tooltip", nil, "GameTooltipTemplate");

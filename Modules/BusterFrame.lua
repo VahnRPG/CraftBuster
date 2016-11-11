@@ -45,7 +45,7 @@ cb.buster_frame.frame:SetPoint("TOPLEFT", cb.buster_frame.mover_frame, "BOTTOMLE
 cb.buster_frame.frame:RegisterEvent("ADDON_LOADED");
 cb.buster_frame.frame:SetScript("OnEvent", function(self, event, ...)
 	if (cb.settings.init) then
-		return cb.buster_frame[event] and cb.buster_frame[event](qb, ...)
+		return cb.buster_frame[event] and cb.buster_frame[event](cb, ...)
 	end
 end);
 cb.buster_frame.frame:SetScript("OnShow", function(self, ...)
@@ -114,36 +114,36 @@ function cb.buster_frame:BAG_UPDATE()
 	end
 end
 
-function cb.buster_frame:UNIT_SPELLCAST_START(self, event, ...)
-	cb.buster_frame:handleSpellStart(self, event, ...);
+function cb.buster_frame:UNIT_SPELLCAST_START(self, ...)
+	cb.buster_frame:handleSpellStart(self, ...);
 end
-function cb.buster_frame:UNIT_SPELLCAST_SENT(self, event, ...)
-	cb.buster_frame:handleSpellStart(self, event, ...);
+function cb.buster_frame:UNIT_SPELLCAST_SENT(self, ...)
+	cb.buster_frame:handleSpellStart(self, ...);
 end
-function cb.buster_frame:handleSpellStart(self, event, ...)
-	local _, spell_name, _, _, spell_id = ...;
+function cb.buster_frame:handleSpellStart(self, ...)
+	local spell_name, rank, spell_line_id_counter, spell_id = ...;
 	if (spell_id == cb.buster_frame.skill_data["spell_id"] or spell_name == "Pick Lock") then
-		cb.omg:create_timer(1, function()
+		cb.omg:create_timer(2, function()
 			cb.buster_frame:update();
 		end);
 	end
 end
 
-function cb.buster_frame:UNIT_SPELLCAST_SUCCEEDED(self, event, ...)
-	cb.buster_frame:handleSpellFinish(self, event, ...);
+function cb.buster_frame:UNIT_SPELLCAST_SUCCEEDED(self, ...)
+	cb.buster_frame:handleSpellFinish(self, ...);
 end
-function cb.buster_frame:UNIT_SPELLCAST_FAILED(self, event, ...)
-	cb.buster_frame:handleSpellFinish(self, event, ...);
+function cb.buster_frame:UNIT_SPELLCAST_FAILED(self, ...)
+	cb.buster_frame:handleSpellFinish(self, ...);
 end
-function cb.buster_frame:UNIT_SPELLCAST_STOP(self, event, ...)
-	cb.buster_frame:handleSpellFinish(self, event, ...);
+function cb.buster_frame:UNIT_SPELLCAST_STOP(self, ...)
+	cb.buster_frame:handleSpellFinish(self, ...);
 end
-function cb.buster_frame:UNIT_SPELLCAST_INTERRUPTED(self, event, ...)
-	cb.buster_frame:handleSpellFinish(self, event, ...);
+function cb.buster_frame:UNIT_SPELLCAST_INTERRUPTED(self, ...)
+	cb.buster_frame:handleSpellFinish(self, ...);
 end
-function cb.buster_frame:handleSpellFinish(self, event, ...)
-	local _, _, _, _, spell_id = ...;
-	if (spell_id == cb.buster_frame.skill_data["spell_id"]) then
+function cb.buster_frame:handleSpellFinish(self, ...)
+	local spell_name, rank, spell_line_id_counter, spell_id = ...;
+	if (spell_id == cb.buster_frame.skill_data["spell_id"] or spell_name == "Pick Lock") then
 		cb.buster_frame:update();
 	end
 end

@@ -9,7 +9,7 @@ cb.minimap.frame:EnableMouse(true);
 cb.minimap.frame:RegisterEvent("ADDON_LOADED");
 cb.minimap.frame:SetScript("OnEvent", function(self, event, ...)
 	if (cb.settings.init) then
-		return cb.minimap[event] and cb.minimap[event](qb, ...)
+		return cb.minimap[event] and cb.minimap[event](cb, ...)
 	end
 end);
 

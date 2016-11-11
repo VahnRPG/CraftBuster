@@ -39,7 +39,7 @@ cb.skill_frame.frame:SetPoint("TOPLEFT", cb.skill_frame.mover_frame, "BOTTOMLEFT
 cb.skill_frame.frame:RegisterEvent("ADDON_LOADED");
 cb.skill_frame.frame:SetScript("OnEvent", function(self, event, ...)
 	if (cb.settings.init) then
-		return cb.skill_frame[event] and cb.skill_frame[event](qb, ...)
+		return cb.skill_frame[event] and cb.skill_frame[event](cb, ...)
 	end
 end);
 cb.skill_frame.skill_frames = {};

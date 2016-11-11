@@ -42,7 +42,7 @@ cb.gather_frame.frame:SetPoint("TOPLEFT", cb.gather_frame.mover_frame, "BOTTOMLE
 cb.gather_frame.frame:RegisterEvent("ADDON_LOADED");
 cb.gather_frame.frame:RegisterEvent("GET_ITEM_INFO_RECEIVED");
 cb.gather_frame.frame:SetScript("OnEvent", function(self, event, ...)
-	return cb.gather_frame[event] and cb.gather_frame[event](qb, ...)
+	return cb.gather_frame[event] and cb.gather_frame[event](cb, ...)
 end);
 
 cb.gather_frame.frame.none_found = cb.gather_frame.frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight");

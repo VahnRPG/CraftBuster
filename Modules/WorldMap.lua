@@ -50,7 +50,7 @@ cb.worldmap_frame.frame:SetPoint("TOPLEFT", cb.worldmap_frame.mover_frame, "BOTT
 cb.worldmap_frame.frame:RegisterEvent("ADDON_LOADED");
 cb.worldmap_frame.frame:RegisterEvent("WORLD_MAP_UPDATE");
 cb.worldmap_frame.frame:SetScript("OnEvent", function(self, event, ...)
-	return cb.worldmap_frame[event] and cb.worldmap_frame[event](qb, ...)
+	return cb.worldmap_frame[event] and cb.worldmap_frame[event](cb, ...)
 end);
 
 cb.worldmap_frame.frame.none_found = cb.worldmap_frame.frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight");

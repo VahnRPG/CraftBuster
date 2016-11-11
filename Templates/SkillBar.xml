@@ -51,11 +51,6 @@
 			</Layer>
 		</Layers>
 		<Frames>
-			<Button name="$parent_gather" inherits="CraftBuster_SkillBar_Button_Template" hidden="true">
-				<Anchors>
-					<Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPLEFT" x="-3" y="0"/>
-				</Anchors>
-			</Button>
 			<Button name="$parent_buster" inherits="CraftBuster_SkillBar_Button_Template" hidden="true">
 				<Anchors>
 					<Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPLEFT" x="-3" y="0"/>

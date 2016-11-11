@@ -10,7 +10,7 @@ cb.settings.frame = CreateFrame("Frame", "CraftBuster_SettingsFrame", Minimap);
 cb.settings.frame:RegisterEvent("ADDON_LOADED");
 cb.settings.frame:RegisterEvent("PLAYER_LEVEL_UP");
 cb.settings.frame:SetScript("OnEvent", function(self, event, ...)
-	return cb.settings[event] and cb.settings[event](qb, ...)
+	return cb.settings[event] and cb.settings[event](cb, ...)
 end);
 cb.settings.init = false;
 cb.settings.player = {
