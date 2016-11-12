@@ -32,7 +32,9 @@ local profession_data = {
 			level_orange = level * 5 + 95;
 		end
 
-		local results = {
+		local node_name =  gsub(gsub(line_one, "|c........", ""), "|r", "");
+		local results = {};
+		results[node_name] = {
 			["rank"] = 0,
 			["item_id"] = 2770, --Copper Ore
 			["ply_level"] = 1,
