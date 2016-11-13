@@ -165,7 +165,7 @@ function cb.worldmap_frame:addGatherData(skill_id, skill_nodes)
 						cb.worldmap_frame.gather_records[map_id][skill_id] = {};
 					end
 					
-					local rank = node_data["rank"];
+					local rank = node_data["rank"] + 1;
 					gather_data = {
 						["item_id"] = node_data["item_id"],
 						["name"] = node_name,

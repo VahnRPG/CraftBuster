@@ -72,22 +72,23 @@ function cb:ADDON_LOADED(self, ...)
 end
 
 function cb:SKILL_LINES_CHANGED(reload)
+	local settings = cb.settings:get();
 	local skills = cb:getProfessions(reload);
 	for skill, index in pairs(skills) do
 		if (index and skill ~= "lockpicking") then
 			local skill_name, skill_texture, skill_level, skill_max_level, skill_num_spells, _, skill_id, skill_bonus = GetProfessionInfo(index);
-			if (not CraftBusterOptions[CraftBusterEntry].skills[skill] or (CraftBusterOptions[CraftBusterEntry].skills[skill].id ~= skill_id)) then
-				CraftBusterOptions[CraftBusterEntry].skills[skill] = {};
-				CraftBusterOptions[CraftBusterEntry].skills[skill].index = index;
-				CraftBusterOptions[CraftBusterEntry].skills[skill].id = skill_id;
-				CraftBusterOptions[CraftBusterEntry].skills[skill].name = skill_name;
-				CraftBusterOptions[CraftBusterEntry].skills[skill].texture = skill_texture;
+			if (not settings.skills[skill] or (settings.skills[skill].id ~= skill_id)) then
+				settings.skills[skill] = {};
+				settings.skills[skill].index = index;
+				settings.skills[skill].id = skill_id;
+				settings.skills[skill].name = skill_name;
+				settings.skills[skill].texture = skill_texture;
 			end
-			CraftBusterOptions[CraftBusterEntry].skills[skill].profession_level = cb:getProfessionLevel(skill_max_level);
-			CraftBusterOptions[CraftBusterEntry].skills[skill].level = skill_level;
-			CraftBusterOptions[CraftBusterEntry].skills[skill].bonus = skill_bonus;
-			CraftBusterOptions[CraftBusterEntry].skills[skill].max_level = skill_max_level;
-			CraftBusterOptions[CraftBusterEntry].skills[skill].num_spells = skill_num_spells;
+			settings.skills[skill].profession_level = cb:getProfessionLevel(skill_max_level);
+			settings.skills[skill].level = skill_level;
+			settings.skills[skill].bonus = skill_bonus;
+			settings.skills[skill].max_level = skill_max_level;
+			settings.skills[skill].num_spells = skill_num_spells;
 			cb.professions:handleSkill(skill);
 		end
 	end
@@ -100,19 +101,19 @@ function cb:SKILL_LINES_CHANGED(reload)
 		skills.lockpicking = skill_id;
 
 		local skill_name, _, skill_texture = GetSpellInfo(index);
-		if (not CraftBusterOptions[CraftBusterEntry].skills[skill] or (CraftBusterOptions[CraftBusterEntry].skills[skill].id ~= skill_id)) then
-			CraftBusterOptions[CraftBusterEntry].skills[skill] = {};
-			CraftBusterOptions[CraftBusterEntry].skills[skill].index = index;
-			CraftBusterOptions[CraftBusterEntry].skills[skill].id = skill_id;
-			CraftBusterOptions[CraftBusterEntry].skills[skill].name = skill_name;
-			CraftBusterOptions[CraftBusterEntry].skills[skill].texture = skill_texture;
+		if (not settings.skills[skill] or (settings.skills[skill].id ~= skill_id)) then
+			settings.skills[skill] = {};
+			settings.skills[skill].index = index;
+			settings.skills[skill].id = skill_id;
+			settings.skills[skill].name = skill_name;
+			settings.skills[skill].texture = skill_texture;
 		end
 		local skill_level = (UnitLevel("player") * 5);
 		local skill_max_level = 425;
-		CraftBusterOptions[CraftBusterEntry].skills[skill].profession_level = cb:getProfessionLevel(skill_max_level);
-		CraftBusterOptions[CraftBusterEntry].skills[skill].level = (UnitLevel("player") * 5);
-		CraftBusterOptions[CraftBusterEntry].skills[skill].max_level = skill_max_level;
-		CraftBusterOptions[CraftBusterEntry].skills[skill].num_spells = 1;
+		settings.skills[skill].profession_level = cb:getProfessionLevel(skill_max_level);
+		settings.skills[skill].level = (UnitLevel("player") * 5);
+		settings.skills[skill].max_level = skill_max_level;
+		settings.skills[skill].num_spells = 1;
 		cb.professions:handleSkill(skill);
 	end
 
@@ -151,7 +152,7 @@ end
 function cb:handleNode(line_one, line_two, line_three)
 	if (cb.professions.modules and next(cb.professions.modules)) then
 		for module_id, module_data in cb.omg:sortedpairs(cb.professions.modules) do
-			if (module_data.node_function ~= nil and CraftBusterOptions[CraftBusterEntry].modules[module_id].show_tooltips) then
+			if (module_data.node_function ~= nil and cb.settings:get().modules[module_id].show_tooltips) then
 				if (module_data.node_function(line_one, line_two, line_three)) then
 					return;
 				end
@@ -200,7 +201,7 @@ function cb:getSkillLevel(skill_id)
 	};
 
 	for i, skill in pairs(skills) do
-		local skill_data = CraftBusterOptions[CraftBusterEntry].skills[skill];
+		local skill_data = cb.settings:get().skills[skill];
 		if (skill_data ~= nil and skill_data.id == skill_id) then
 			return (skill_data.level + skill_data.bonus);
 		end
@@ -236,7 +237,7 @@ hook_frame:SetScript("OnEvent", function(self, event, addon)
 				return;
 			end
 			
-			for skill, skill_data in cb.omg:sortedpairs(CraftBusterOptions[CraftBusterEntry].skills) do
+			for skill, skill_data in cb.omg:sortedpairs(cb.settings:get().skills) do
 				local skill_id = skill_data.id;
 				if (skill_id == tradeskill_id) then
 					if (cb.professions.modules[skill_id] and next(cb.professions.modules[skill_id])) then

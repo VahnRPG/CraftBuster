@@ -63,7 +63,7 @@ function cb.settings:initSettings(reset)
 		CraftBusterOptions = {};
 	end
 	if (not CraftBusterOptions[CraftBusterEntry] or reset == "character") then
-		CraftBusterOptions[CraftBusterEntry] = cb.settings:default();
+		CraftBusterOptions[CraftBusterEntry] = cb.omg:clone_table(cb.settings:default());
 	end
 
 	local _, player_class = UnitClass("player");
@@ -127,6 +127,15 @@ end
 
 function cb.settings:default()
 	local settings = {
+		["skills"] = {
+			["skill_1"] = nil,
+			["skill_2"] = nil,
+			["cooking"] = nil,
+			["first_aid"] = nil,
+			["fishing"] = nil,
+			["archaeology"] = nil,
+			["lockpicking"] = nil,
+		};
 		["alerts"] = {},
 		["bustables"] = {},
 		["minimap"] = {

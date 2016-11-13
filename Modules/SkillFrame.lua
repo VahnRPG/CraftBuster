@@ -151,49 +151,47 @@ function cb.skill_frame:update()
 								bar_frame:SetScript("OnLeave", nil);
 							end
 
-							if (not InCombatLockdown()) then
-								local spell_buster_frame = _G[bar_frame:GetName() .. "_buster"];
-								spell_buster_frame:Hide();
-								if (module_data.spell_buster ~= nil and spell_buster_frame and CraftBusterOptions[CraftBusterEntry].modules[skill_id].show_buster) then
-									local spell_name, _, button_texture = GetSpellInfo(module_data.spell_buster);
-									_G[spell_buster_frame:GetName() .. "Icon"]:SetTexture(button_texture);
-									spell_buster_frame.spell_id = module_data.spell_buster_id;
-									spell_buster_frame:SetScript("OnClick", function(self)
-										CraftBusterOptions[CraftBusterEntry].buster_frame.show = not cb.buster_frame.mover_frame:IsVisible();
-										cb.buster_frame:updateSkill(skill, skill_id, self.spell_id);
-										cb.buster_frame:update();
-									end);
-									spell_buster_frame:SetScript("OnEnter", function(self)
-										GameTooltip_SetDefaultAnchor(GameTooltip, self);
-										GameTooltip:SetSpellByID(self.spell_id);
-										GameTooltip:AppendText(CBL["BUSTER_SPELL_TOOLTIP_APPEND"]);
-										GameTooltip:AddLine(CBL["BUSTER_SPELL_TOOLTIP_LINE1"]);
-										GameTooltip:Show();
-									end);
-									spell_buster_frame:Show();
-								end
+							local spell_buster_frame = _G[bar_frame:GetName() .. "_buster"];
+							spell_buster_frame:Hide();
+							if (module_data.spell_buster ~= nil and spell_buster_frame and CraftBusterOptions[CraftBusterEntry].modules[skill_id].show_buster) then
+								local spell_name, _, button_texture = GetSpellInfo(module_data.spell_buster);
+								_G[spell_buster_frame:GetName() .. "Icon"]:SetTexture(button_texture);
+								spell_buster_frame.spell_id = module_data.spell_buster_id;
+								spell_buster_frame:SetScript("OnClick", function(self)
+									CraftBusterOptions[CraftBusterEntry].buster_frame.show = not cb.buster_frame.mover_frame:IsVisible();
+									cb.buster_frame:updateSkill(skill, skill_id, self.spell_id);
+									cb.buster_frame:update();
+								end);
+								spell_buster_frame:SetScript("OnEnter", function(self)
+									GameTooltip_SetDefaultAnchor(GameTooltip, self);
+									GameTooltip:SetSpellByID(self.spell_id);
+									GameTooltip:AppendText(CBL["BUSTER_SPELL_TOOLTIP_APPEND"]);
+									GameTooltip:AddLine(CBL["BUSTER_SPELL_TOOLTIP_LINE1"]);
+									GameTooltip:Show();
+								end);
+								spell_buster_frame:Show();
+							end
 
-								local spell_1_frame = _G[bar_frame:GetName() .. "_spell_1"];
-								spell_1_frame:Hide();
-								if (module_data.spell_1 ~= nil and spell_1_frame) then
-									spell_1_frame:SetAttribute("type", "spell");
-									spell_1_frame:SetAttribute("spell", module_data.spell_1);
-									local _, _, button_texture = GetSpellInfo(module_data.spell_1);
-									_G[spell_1_frame:GetName() .. "Icon"]:SetTexture(button_texture);
-									spell_1_frame.spell_id = module_data.spell_1_id;
-									spell_1_frame:Show();
-								end
+							local spell_1_frame = _G[bar_frame:GetName() .. "_spell_1"];
+							spell_1_frame:Hide();
+							if (module_data.spell_1 ~= nil and spell_1_frame) then
+								spell_1_frame:SetAttribute("type", "spell");
+								spell_1_frame:SetAttribute("spell", module_data.spell_1);
+								local _, _, button_texture = GetSpellInfo(module_data.spell_1);
+								_G[spell_1_frame:GetName() .. "Icon"]:SetTexture(button_texture);
+								spell_1_frame.spell_id = module_data.spell_1_id;
+								spell_1_frame:Show();
+							end
 
-								local spell_2_frame = _G[bar_frame:GetName() .. "_spell_2"];
-								spell_2_frame:Hide();
-								if (module_data.spell_2 ~= nil and spell_2_frame) then
-									spell_2_frame:SetAttribute("type", "spell");
-									spell_2_frame:SetAttribute("spell", module_data.spell_2);
-									local _, _, button_texture = GetSpellInfo(module_data.spell_2);
-									_G[spell_2_frame:GetName() .. "Icon"]:SetTexture(button_texture);
-									spell_2_frame.spell_id = module_data.spell_2_id;
-									spell_2_frame:Show();
-								end
+							local spell_2_frame = _G[bar_frame:GetName() .. "_spell_2"];
+							spell_2_frame:Hide();
+							if (module_data.spell_2 ~= nil and spell_2_frame) then
+								spell_2_frame:SetAttribute("type", "spell");
+								spell_2_frame:SetAttribute("spell", module_data.spell_2);
+								local _, _, button_texture = GetSpellInfo(module_data.spell_2);
+								_G[spell_2_frame:GetName() .. "Icon"]:SetTexture(button_texture);
+								spell_2_frame.spell_id = module_data.spell_2_id;
+								spell_2_frame:Show();
 							end
 							bar_frame:Show();
 						end
