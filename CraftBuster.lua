@@ -32,14 +32,14 @@ SlashCmdList["CBUSTER"] = function(cmd)
 		CraftBuster_Config_Show();
 	elseif (cmd == "reset") then
 		cb.settings:initSettings("character");
-		cb:SKILL_LINES_CHANGED(true);
+		cb:updateSkills(true);
 	elseif (cmd == "fullreset") then
 		cb.settings:initSettings(true);
-		cb:SKILL_LINES_CHANGED(true);
+		cb:updateSkills(true);
 	elseif (cmd == "clearignore") then
 		cb.buster_frame:clearIgnore();
 	elseif (cmd == "update") then
-		cb:SKILL_LINES_CHANGED(true);
+		cb:updateSkills(true);
 	elseif (cmd == "where") then
 		cb.map_icons:displayPosition();
 	end
@@ -62,7 +62,7 @@ cb.leave_combat_commands = {};
 
 function cb:ADDON_LOADED(self, ...)
 	cb.omg:create_timer(2, function()
-		cb:SKILL_LINES_CHANGED(true);
+		cb:updateSkills(true);
 	end);
 	cb:ZONE_CHANGED_NEW_AREA();
 
@@ -71,7 +71,38 @@ function cb:ADDON_LOADED(self, ...)
 	cb.frame:UnregisterEvent("ADDON_LOADED");
 end
 
-function cb:SKILL_LINES_CHANGED(reload)
+function cb:SKILL_LINES_CHANGED(self, ...)
+	cb:updateSkills(true);
+end
+
+function cb:ZONE_CHANGED_NEW_AREA()
+	cb.gather_frame:reset();
+	local map_id = GetCurrentMapAreaID();
+	if (map_id ~= nil) then
+		if (cb.professions.modules and next(cb.professions.modules)) then
+			for module_id, module_data in cb.omg:sortedpairs(cb.professions.modules) do
+				if (cb.professions.modules[module_id].nodes ~= nil) then
+					cb.professions:handleGather(module_id, map_id);
+				end
+			end
+		end
+	end
+	cb.gather_frame:update();
+	cb.gather_frame:updatePosition();
+
+	cb.map_icons:update();
+end
+
+function cb:PLAYER_REGEN_ENABLED()
+	if (cb.leave_combat_commands and next(cb.leave_combat_commands)) then
+		for i, command in pairs(cb.leave_combat_commands) do
+			command();
+			table.remove(cb.leave_combat_commands, i);
+		end
+	end
+end
+
+function cb:updateSkills(reload)
 	local settings = cb.settings:get();
 	local skills = cb:getProfessions(reload);
 	for skill, index in pairs(skills) do
@@ -120,33 +151,6 @@ function cb:SKILL_LINES_CHANGED(reload)
 	cb.skill_frame:update();
 	cb.skill_frame:updatePosition();
 	cb:ZONE_CHANGED_NEW_AREA();
-end
-
-function cb:ZONE_CHANGED_NEW_AREA()
-	cb.gather_frame:reset();
-	local map_id = GetCurrentMapAreaID();
-	if (map_id ~= nil) then
-		if (cb.professions.modules and next(cb.professions.modules)) then
-			for module_id, module_data in cb.omg:sortedpairs(cb.professions.modules) do
-				if (cb.professions.modules[module_id].nodes ~= nil) then
-					cb.professions:handleGather(module_id, map_id);
-				end
-			end
-		end
-	end
-	cb.gather_frame:update();
-	cb.gather_frame:updatePosition();
-
-	cb.map_icons:update();
-end
-
-function cb:PLAYER_REGEN_ENABLED()
-	if (cb.leave_combat_commands and next(cb.leave_combat_commands)) then
-		for i, command in pairs(cb.leave_combat_commands) do
-			command();
-			table.remove(cb.leave_combat_commands, i);
-		end
-	end
 end
 
 function cb:handleNode(line_one, line_two, line_three)

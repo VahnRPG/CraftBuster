@@ -39,7 +39,7 @@ function cb.settings:PLAYER_LEVEL_UP(player_level)
 		player_level = UnitLevel("player");
 	end
 	cb.settings.player.level = player_level;
-	cb:SKILL_LINES_CHANGED(false);
+	cb:updateSkills(false);
 end
 
 function cb.settings:get(entry)

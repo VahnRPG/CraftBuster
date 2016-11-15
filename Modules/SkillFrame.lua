@@ -64,7 +64,7 @@ function cb.skill_frame:update()
 		cb:addLeaveCombatCommand(function() cb.skill_frame:update(); end);
 		return;
 	end
-
+	
 	local skills = cb:getProfessions(false);
 	local _, player_class = UnitClass("player");
 	local player_level = UnitLevel("player");
@@ -82,119 +82,119 @@ function cb.skill_frame:update()
 			if (player_class == "ROGUE" and player_level >= CBG_LOCKPICKING_LEVEL) then
 				rank_skills[7] = "lockpicking";
 			end
+			
 			for rank, skill in cb.omg:sortedpairs(rank_skills) do
-				local index = skills[skill];
-				if (index) then
-					local bar_frame = cb.skill_frame.skill_frames[rank];
-					if (bar_frame) then
-						bar_frame:Hide();
-						if (CraftBusterOptions[CraftBusterEntry].skills_frame.bars[skill]) then
-							count = count + 1;
+				local bar_frame = cb.skill_frame.skill_frames[rank];
+				if (bar_frame) then
+					bar_frame:Hide();
+					
+					local index = skills[skill];
+					if (index and CraftBusterOptions[CraftBusterEntry].skills_frame.bars[skill]) then
+						count = count + 1;
 
-							local skill_name, skill_texture, skill_level, skill_max_level, skill_num_spells, _, skill_id, skill_bonus = GetProfessionInfo(index);
-							if (player_class == "ROGUE" and skill == "lockpicking" and player_level >= CBG_LOCKPICKING_LEVEL) then
-								skill_name, _, skill_texture = GetSpellInfo(index);
-								skill_level = (player_level * 5);
-								skill_max_level = CBG_LOCKPICKING_MAX_SKILL_LEVEL;
-								skill_num_spells = 1;
-								skill_id = index;
-							end
+						local skill_name, skill_texture, skill_level, skill_max_level, skill_num_spells, _, skill_id, skill_bonus = GetProfessionInfo(index);
+						if (player_class == "ROGUE" and skill == "lockpicking" and player_level >= CBG_LOCKPICKING_LEVEL) then
+							skill_name, _, skill_texture = GetSpellInfo(index);
+							skill_level = (player_level * 5);
+							skill_max_level = CBG_LOCKPICKING_MAX_SKILL_LEVEL;
+							skill_num_spells = 1;
+							skill_id = index;
+						end
 
-							local skill_bonus_text = "";
-							if (skill_bonus ~= nil and skill_bonus > 0) then
-								skill_bonus_text = CBG_CLR_OFFBLUE .. " + " .. skill_bonus .. CBG_CLR_WHITE;
-							end
+						local skill_bonus_text = "";
+						if (skill_bonus ~= nil and skill_bonus > 0) then
+							skill_bonus_text = CBG_CLR_OFFBLUE .. " + " .. skill_bonus .. CBG_CLR_WHITE;
+						end
 
-							bar_frame:SetPoint("TOPLEFT", cb.skill_frame.frame, "TOPLEFT", 5, -(count * 18) - 5);
-							bar_frame:SetValue(skill_level / skill_max_level);
-							local module_data = cb.professions.modules[skill_id];
-							if ((skill_level >= (skill_max_level - 25)) and (skill_max_level < CBG_PROFESSION_RANKS[CBG_MAX_PROFESSIONS][2])) then
-								local profession_level = cb:getProfessionLevel(skill_max_level) + 1;
-								local profession_ply_lvl;
-								if (module_data.skill_type == CBG_SKILL_NORMAL) then
-									profession_ply_lvl = CBG_SKILL_PLY_LEVELS[profession_level][1];
-								else
-									profession_ply_lvl = CBG_SKILL_PLY_LEVELS[profession_level][2];
-								end
-								local title = CBG_PROFESSION_RANKS[profession_level][3];
-
-								if (profession_ply_lvl <= cb.settings.player.level) then
-									bar_frame:SetStatusBarColor(0.7, 0.0, 0.0, 1.0);
-									bar_frame:SetBackdropColor(0.7, 0.0, 0.0, 0.5);
-									_G[bar_frame:GetName() .. "Text"]:SetText(CBG_CLR_RED .. skill_name .. ": " .. CBG_CLR_WHITE .. skill_level .. skill_bonus_text .. "/" .. skill_max_level);
-									bar_frame:SetScript("OnEnter", function(self)
-										GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
-										GameTooltip:SetText(string.format(CBL["SKILL_FRAME_VISIT_TRAINER"], skill_name, title));
-										GameTooltip:Show();
-									end);
-									bar_frame:SetScript("OnLeave", function(self)
-										GameTooltip:Hide();
-									end);
-								else
-									bar_frame:SetStatusBarColor(0.0, 0.0, 0.7, 1.0);
-									bar_frame:SetBackdropColor(0.0, 0.0, 0.7, 0.5);
-									_G[bar_frame:GetName() .. "Text"]:SetText(CBG_CLR_BLUE .. skill_name .. ": " .. CBG_CLR_WHITE .. skill_level .. skill_bonus_text .. "/" .. skill_max_level);
-									bar_frame:SetScript("OnEnter", function(self)
-										GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
-										GameTooltip:SetText(string.format(CBL["SKILL_FRAME_LEVEL_UP"], profession_ply_lvl, skill_name, title));
-										GameTooltip:Show();
-									end);
-									bar_frame:SetScript("OnLeave", function(self)
-										GameTooltip:Hide();
-									end);
-								end
+						bar_frame:SetPoint("TOPLEFT", cb.skill_frame.frame, "TOPLEFT", 5, -(count * 18) - 5);
+						bar_frame:SetValue(skill_level / skill_max_level);
+						local module_data = cb.professions.modules[skill_id];
+						if ((skill_level >= (skill_max_level - 25)) and (skill_max_level < CBG_PROFESSION_RANKS[CBG_MAX_PROFESSIONS][2])) then
+							local profession_level = cb:getProfessionLevel(skill_max_level) + 1;
+							local profession_ply_lvl;
+							if (module_data.skill_type == CBG_SKILL_NORMAL) then
+								profession_ply_lvl = CBG_SKILL_PLY_LEVELS[profession_level][1];
 							else
-								bar_frame:SetStatusBarColor(0.0, 0.7, 0.0, 1.0);
-								bar_frame:SetBackdropColor(0.0, 0.7, 0.0, 0.5);
-								_G[bar_frame:GetName() .. "Text"]:SetText(CBG_CLR_DEFAULT .. skill_name .. ": " .. CBG_CLR_WHITE .. skill_level .. skill_bonus_text .. "/" .. skill_max_level);
-								bar_frame:SetScript("OnEnter", nil);
-								bar_frame:SetScript("OnLeave", nil);
+								profession_ply_lvl = CBG_SKILL_PLY_LEVELS[profession_level][2];
 							end
+							local title = CBG_PROFESSION_RANKS[profession_level][3];
 
-							local spell_buster_frame = _G[bar_frame:GetName() .. "_buster"];
-							spell_buster_frame:Hide();
-							if (module_data.spell_buster ~= nil and spell_buster_frame and CraftBusterOptions[CraftBusterEntry].modules[skill_id].show_buster) then
-								local spell_name, _, button_texture = GetSpellInfo(module_data.spell_buster);
-								_G[spell_buster_frame:GetName() .. "Icon"]:SetTexture(button_texture);
-								spell_buster_frame.spell_id = module_data.spell_buster_id;
-								spell_buster_frame:SetScript("OnClick", function(self)
-									CraftBusterOptions[CraftBusterEntry].buster_frame.show = not cb.buster_frame.mover_frame:IsVisible();
-									cb.buster_frame:updateSkill(skill, skill_id, self.spell_id);
-									cb.buster_frame:update();
-								end);
-								spell_buster_frame:SetScript("OnEnter", function(self)
-									GameTooltip_SetDefaultAnchor(GameTooltip, self);
-									GameTooltip:SetSpellByID(self.spell_id);
-									GameTooltip:AppendText(CBL["BUSTER_SPELL_TOOLTIP_APPEND"]);
-									GameTooltip:AddLine(CBL["BUSTER_SPELL_TOOLTIP_LINE1"]);
+							if (profession_ply_lvl <= cb.settings.player.level) then
+								bar_frame:SetStatusBarColor(0.7, 0.0, 0.0, 1.0);
+								bar_frame:SetBackdropColor(0.7, 0.0, 0.0, 0.5);
+								_G[bar_frame:GetName() .. "Text"]:SetText(CBG_CLR_RED .. skill_name .. ": " .. CBG_CLR_WHITE .. skill_level .. skill_bonus_text .. "/" .. skill_max_level);
+								bar_frame:SetScript("OnEnter", function(self)
+									GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+									GameTooltip:SetText(string.format(CBL["SKILL_FRAME_VISIT_TRAINER"], skill_name, title));
 									GameTooltip:Show();
 								end);
-								spell_buster_frame:Show();
+								bar_frame:SetScript("OnLeave", function(self)
+									GameTooltip:Hide();
+								end);
+							else
+								bar_frame:SetStatusBarColor(0.0, 0.0, 0.7, 1.0);
+								bar_frame:SetBackdropColor(0.0, 0.0, 0.7, 0.5);
+								_G[bar_frame:GetName() .. "Text"]:SetText(CBG_CLR_BLUE .. skill_name .. ": " .. CBG_CLR_WHITE .. skill_level .. skill_bonus_text .. "/" .. skill_max_level);
+								bar_frame:SetScript("OnEnter", function(self)
+									GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
+									GameTooltip:SetText(string.format(CBL["SKILL_FRAME_LEVEL_UP"], profession_ply_lvl, skill_name, title));
+									GameTooltip:Show();
+								end);
+								bar_frame:SetScript("OnLeave", function(self)
+									GameTooltip:Hide();
+								end);
 							end
-
-							local spell_1_frame = _G[bar_frame:GetName() .. "_spell_1"];
-							spell_1_frame:Hide();
-							if (module_data.spell_1 ~= nil and spell_1_frame) then
-								spell_1_frame:SetAttribute("type", "spell");
-								spell_1_frame:SetAttribute("spell", module_data.spell_1);
-								local _, _, button_texture = GetSpellInfo(module_data.spell_1);
-								_G[spell_1_frame:GetName() .. "Icon"]:SetTexture(button_texture);
-								spell_1_frame.spell_id = module_data.spell_1_id;
-								spell_1_frame:Show();
-							end
-
-							local spell_2_frame = _G[bar_frame:GetName() .. "_spell_2"];
-							spell_2_frame:Hide();
-							if (module_data.spell_2 ~= nil and spell_2_frame) then
-								spell_2_frame:SetAttribute("type", "spell");
-								spell_2_frame:SetAttribute("spell", module_data.spell_2);
-								local _, _, button_texture = GetSpellInfo(module_data.spell_2);
-								_G[spell_2_frame:GetName() .. "Icon"]:SetTexture(button_texture);
-								spell_2_frame.spell_id = module_data.spell_2_id;
-								spell_2_frame:Show();
-							end
-							bar_frame:Show();
+						else
+							bar_frame:SetStatusBarColor(0.0, 0.7, 0.0, 1.0);
+							bar_frame:SetBackdropColor(0.0, 0.7, 0.0, 0.5);
+							_G[bar_frame:GetName() .. "Text"]:SetText(CBG_CLR_DEFAULT .. skill_name .. ": " .. CBG_CLR_WHITE .. skill_level .. skill_bonus_text .. "/" .. skill_max_level);
+							bar_frame:SetScript("OnEnter", nil);
+							bar_frame:SetScript("OnLeave", nil);
 						end
+
+						local spell_buster_frame = _G[bar_frame:GetName() .. "_buster"];
+						spell_buster_frame:Hide();
+						if (module_data.spell_buster ~= nil and spell_buster_frame and CraftBusterOptions[CraftBusterEntry].modules[skill_id].show_buster) then
+							local spell_name, _, button_texture = GetSpellInfo(module_data.spell_buster);
+							_G[spell_buster_frame:GetName() .. "Icon"]:SetTexture(button_texture);
+							spell_buster_frame.spell_id = module_data.spell_buster_id;
+							spell_buster_frame:SetScript("OnClick", function(self)
+								CraftBusterOptions[CraftBusterEntry].buster_frame.show = not cb.buster_frame.mover_frame:IsVisible();
+								cb.buster_frame:updateSkill(skill, skill_id, self.spell_id);
+								cb.buster_frame:update();
+							end);
+							spell_buster_frame:SetScript("OnEnter", function(self)
+								GameTooltip_SetDefaultAnchor(GameTooltip, self);
+								GameTooltip:SetSpellByID(self.spell_id);
+								GameTooltip:AppendText(CBL["BUSTER_SPELL_TOOLTIP_APPEND"]);
+								GameTooltip:AddLine(CBL["BUSTER_SPELL_TOOLTIP_LINE1"]);
+								GameTooltip:Show();
+							end);
+							spell_buster_frame:Show();
+						end
+
+						local spell_1_frame = _G[bar_frame:GetName() .. "_spell_1"];
+						spell_1_frame:Hide();
+						if (module_data.spell_1 ~= nil and spell_1_frame) then
+							spell_1_frame:SetAttribute("type", "spell");
+							spell_1_frame:SetAttribute("spell", module_data.spell_1);
+							local _, _, button_texture = GetSpellInfo(module_data.spell_1);
+							_G[spell_1_frame:GetName() .. "Icon"]:SetTexture(button_texture);
+							spell_1_frame.spell_id = module_data.spell_1_id;
+							spell_1_frame:Show();
+						end
+
+						local spell_2_frame = _G[bar_frame:GetName() .. "_spell_2"];
+						spell_2_frame:Hide();
+						if (module_data.spell_2 ~= nil and spell_2_frame) then
+							spell_2_frame:SetAttribute("type", "spell");
+							spell_2_frame:SetAttribute("spell", module_data.spell_2);
+							local _, _, button_texture = GetSpellInfo(module_data.spell_2);
+							_G[spell_2_frame:GetName() .. "Icon"]:SetTexture(button_texture);
+							spell_2_frame.spell_id = module_data.spell_2_id;
+							spell_2_frame:Show();
+						end
+						bar_frame:Show();
 					end
 				end
 			end
