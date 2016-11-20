@@ -1,3 +1,8 @@
+v 1.1.0
+	- Rebuild of codebase for easier modification
+	- Initial work for 'global' profile
+	- Added locking to buster & other frames
+
 v 1.0.33
 	- Added lock/unlock button to move frame
 	- Added 'Select Mine' for map icons
