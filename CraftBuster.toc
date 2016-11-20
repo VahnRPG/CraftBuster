@@ -1,8 +1,8 @@
-## Interface: 70000
+## Interface: 70100
 ## Title: CraftBuster
 ## Author: Lord Vashtal
 ## Version: 1.0.33
-## X-Date: 2016-09-18
+## X-Date: 2016-11-07
 ## Notes: Provides versatile functionality for professions
 ## SavedVariables: CraftBusterOptions
 ## DefaultState: Enabled
@@ -14,14 +14,9 @@
 Libs\HereBeDragons-1.0\HereBeDragons-1.0.lua
 Libs\HereBeDragons-1.0\HereBeDragons-Pins-1.0.lua
 
-CraftBuster_Utils.xml
-CraftBuster_Locales.xml
+Utils\Utils.xml
+Locales\Locales.xml
+Templates\Templates.xml
+Modules\Modules.xml
+Professions\Professions.xml
 CraftBuster.xml
-CraftBuster_Config.xml
-CraftBuster_MapIcons.xml
-CraftBuster_WorldMap.xml
-CraftBuster_SkillFrame.xml
-CraftBuster_GatherFrame.xml
-CraftBuster_BusterFrame.xml
-CraftBuster_Minimap.xml
-CraftBuster_Modules.xml
