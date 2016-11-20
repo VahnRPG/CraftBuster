@@ -1,0 +1,20 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\FrameXML\UI.xsd">
+	<Script file="Professions.lua" />
+
+	<Script file="Alchemy.lua" />
+	<Script file="Blacksmithing.lua" />
+	<Script file="Enchanting.lua" />
+	<Script file="Engineering.lua" />
+	<Script file="Herbalism.lua" />
+	<Script file="Inscription.lua" />
+	<Script file="Jewelcrafting.lua" />
+	<Script file="Leatherworking.lua" />
+	<Script file="Lockpicking.lua" />
+	<Script file="Mining.lua" />
+	<Script file="Skinning.lua" />
+	<Script file="Tailoring.lua" />
+	<Script file="Cooking.lua" />
+	<Script file="FirstAid.lua" />
+	<Script file="Fishing.lua" />
+	<Script file="Archaeology.lua" />
+</Ui>
