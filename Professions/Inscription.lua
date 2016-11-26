@@ -482,7 +482,7 @@ local profession_data = {
 						results[item_id].total = 0;
 					end
 					local _,item_count = GetContainerItemInfo(bag, slot);
-					results[item_id].total = results[item_id].total + item_count;		--really? no += in lua? LAAAAAAAAAME
+					results[item_id].total = results[item_id].total + item_count;
 				end
 			end
 		end

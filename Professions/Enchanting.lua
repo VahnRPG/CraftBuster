@@ -22,6 +22,7 @@ function cb.professions.enchanting:build_button()
 	cb.professions.enchanting.tradeskill_button:Hide();
 end
 
+local time_count = 0;
 local SKILL_ID = CBT_SKILL_ENCH;
 local SKILL_SHORT_CODE = "ench";
 local profession_data = {
@@ -31,7 +32,7 @@ local profession_data = {
 	["type"] = CBG_SKILL_NORMAL,
 	["spell_1"] = 7411,		--Enchanting
 	["spell_2"] = 13262,	--Disenchant
-	["spell_buster"] = 1804,
+	["spell_buster"] = 13262,
 	["bustable_function"] = function()
 		local results = {};
 		local count = 0;
@@ -40,11 +41,19 @@ local profession_data = {
 				local item_id = GetContainerItemID(bag, slot);
 				if (item_id ~= nil) then
 					local item_name,item_link,item_quality,_,_,item_type,item_sub_type = GetItemInfo(item_id);
-					if (item_quality > 1 and (item_type == "Weapon" or item_type == "Armor")) then
-						item_id = tonumber(item_id);
+					if (not item_name) then
+						if (time_count < 5) then
+							time_count = time_count + 1;
+							cb.omg:create_timer(2, function()
+								cb.buster_frame:update();
+							end);
+						else
+							cb.omg:echo(CBL["ERRORS_BUSTER_FRAME"]);
+						end
+					elseif (item_quality > 1 and (item_type == "Weapon" or item_type == "Armor")) then
 						count = count + 1;
 						results[count] = {};
-						results[count].item_id = item_id;
+						results[count].item_id = tonumber(item_id);
 						results[count].bag = bag;
 						results[count].slot = slot;
 						results[count].total = 1;
