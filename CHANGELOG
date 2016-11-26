@@ -1,3 +1,6 @@
+v 1.1.1
+	- Fixed enchanting buster functionality
+
 v 1.1.0
 	- Rebuild of codebase for easier modification
 	- Initial work for 'global' profile

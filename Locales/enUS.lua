@@ -131,4 +131,6 @@
 	-- World Map Frame Localization
 	CBL["WORLDMAP_FRAME_HEADER"] = "Zone Nodes";
 	CBL["WORLDMAP_FRAME_NONE_FOUND"] = "None Found!";
+
+	CBL["ERRORS_BUSTER_FRAME"] = CBG_CLR_RED .. "Error with buster frame functionality. Please report.";
 --end
