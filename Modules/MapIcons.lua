@@ -180,7 +180,7 @@ function cb.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, 
 		end
 
 		if (self.icon:IsShown() and (self.icon_data.map_id ~= GetCurrentMapAreaID())) then
-			--echo("Minimap OnClick: " .. self.icon_data.label);
+			--cb.omg:echo("Minimap OnClick: " .. self.icon_data.label);
 		end
 	end);
 	
@@ -251,7 +251,7 @@ function cb.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, 
 	end);
 	worldmap_icon_frame:SetScript("OnClick", function(self, button, down)
 		if (self.icon:IsShown()) then
-			--echo("World OnClick: " .. self.icon_data.label);
+			--cb.omg:echo("World OnClick: " .. self.icon_data.label);
 		end
 	end);
 	
@@ -348,5 +348,5 @@ end
 
 function cb.map_icons:displayPosition()
 	local x, y, map_id, floor = HBD:GetPlayerZonePosition();
-	cb.omg:echo("Map: " .. GetMapNameByID(map_id) .. " (" .. map_id .. "), Floor: " .. floor .. " -> " .. round(x * 100, 1) .. ", " .. round(y * 100, 1));
+	cb.omg:echo("Map: " .. GetMapNameByID(map_id) .. " (" .. map_id .. "), Floor: " .. floor .. " -> " .. cb.omg:round(x * 100, 1) .. ", " .. cb.omg:round(y * 100, 1));
 end

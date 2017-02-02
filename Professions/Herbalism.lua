@@ -756,7 +756,7 @@ local function add_tooltip_info(frame, item_link)
 
 					found = true;
 					count = count + 1;
-					if (tcount(zones) <= 10) then
+					if (cb.omg:tcount(zones) <= 10) then
 						--let items with only a few zones to display them all
 					elseif (zone_limit > 0 and count >= zone_limit) then
 						break;
