@@ -1,14 +1,14 @@
 ## Interface: 70100
 ## Title: CraftBuster
 ## Author: Lord Vashtal
-## Version: 1.1.3
-## X-Date: 2017-01-29
+## Version: 1.1.4a
+## X-Date: 2017-02-02
 ## Notes: Provides versatile functionality for professions
 ## SavedVariables: CraftBusterOptions
 ## DefaultState: Enabled
 ## LoadOnDemand: 0
 ## OptionalDeps: HereBeDragons-1.0
-## X-Curse-Packaged-Version: v1.1.3
+## X-Curse-Packaged-Version: v1.1.4a
 ## X-Curse-Project-Name: CraftBuster
 ## X-Curse-Project-ID: craftbuster
 Libs\HereBeDragons-1.0\HereBeDragons-1.0.lua
