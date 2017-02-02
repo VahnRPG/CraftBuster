@@ -180,17 +180,17 @@ function cb.config:updateFields()
 	show_zone_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_zone_nodes);
 	show_skillup_nodes:SetChecked(CraftBusterOptions[CraftBusterEntry].gather_frame.show_skill_nodes);
 
-	position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.x, 2));
-	position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.y, 2));
+	position_x:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.x, 2));
+	position_y:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.y, 2));
 
-	worldmap_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.x, 2));
-	worldmap_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.y, 2));
+	worldmap_position_x:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.x, 2));
+	worldmap_position_y:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.y, 2));
 
-	gatherer_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.x, 2));
-	gatherer_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.y, 2));
+	gatherer_position_x:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.x, 2));
+	gatherer_position_y:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.y, 2));
 
-	buster_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.x, 2));
-	buster_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.y, 2));
+	buster_position_x:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.x, 2));
+	buster_position_y:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.y, 2));
 end
 
 local config_frame_name = "CraftBuster_ConfigFrame";
@@ -666,7 +666,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	position_x = CreateFrame("EditBox", config_frame_name .. "PositionX", child_positioning_frame, "InputBoxTemplate");
 	position_x:SetPoint("TOPLEFT", position_x_label, "TOPRIGHT", 10, 0);
 	position_x:SetSize(64, 16);
-	position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.x, 2));
+	position_x:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.x, 2));
 	position_x:SetAutoFocus(false);
 	position_x:SetFontObject(ChatFontNormal);
 	position_x:SetCursorPosition(0);
@@ -676,7 +676,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	set_position_x:SetText(CBL["CONFIG_POSITION_SET"]);
 	set_position_x:SetSize(48, 20);
 	set_position_x:SetScript("OnClick", function()
-		CraftBusterOptions[CraftBusterEntry].skills_frame.position.x = round(position_x:GetText(), 2);
+		CraftBusterOptions[CraftBusterEntry].skills_frame.position.x = cb.omg:round(position_x:GetText(), 2);
 		cb.skill_frame:updatePosition();
 	end);
 	
@@ -687,7 +687,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	position_y = CreateFrame("EditBox", config_frame_name .. "PositionY", child_positioning_frame, "InputBoxTemplate");
 	position_y:SetPoint("TOPLEFT", position_y_label, "TOPRIGHT", 10, 0);
 	position_y:SetSize(64, 16);
-	position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.y, 2));
+	position_y:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.y, 2));
 	position_y:SetAutoFocus(false);
 	position_y:SetFontObject(ChatFontNormal);
 	position_y:SetCursorPosition(0);
@@ -697,7 +697,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	set_position_y:SetText(CBL["CONFIG_POSITION_SET"]);
 	set_position_y:SetSize(48, 20);
 	set_position_y:SetScript("OnClick", function()
-		CraftBusterOptions[CraftBusterEntry].skills_frame.position.y = round(position_y:GetText(), 2);
+		CraftBusterOptions[CraftBusterEntry].skills_frame.position.y = cb.omg:round(position_y:GetText(), 2);
 		cb.skill_frame:updatePosition();
 	end);
 	
@@ -759,7 +759,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	worldmap_position_x = CreateFrame("EditBox", config_frame_name .. "WorldMapPositionX", child_positioning_frame, "InputBoxTemplate");
 	worldmap_position_x:SetPoint("TOPLEFT", worldmap_position_x_label, "TOPRIGHT", 10, 0);
 	worldmap_position_x:SetSize(64, 16);
-	worldmap_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.x, 2));
+	worldmap_position_x:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.x, 2));
 	worldmap_position_x:SetAutoFocus(false);
 	worldmap_position_x:SetFontObject(ChatFontNormal);
 	worldmap_position_x:SetCursorPosition(0);
@@ -769,7 +769,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	set_worldmap_position_x:SetText(CBL["CONFIG_POSITION_SET"]);
 	set_worldmap_position_x:SetSize(48, 20);
 	set_worldmap_position_x:SetScript("OnClick", function()
-		CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.x = round(worldmap_position_x:GetText(), 2);
+		CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.x = cb.omg:round(worldmap_position_x:GetText(), 2);
 		cb.worldmap_frame:updatePosition();
 	end);
 	
@@ -780,7 +780,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	worldmap_position_y = CreateFrame("EditBox", config_frame_name .. "WorldMapPositionY", child_positioning_frame, "InputBoxTemplate");
 	worldmap_position_y:SetPoint("TOPLEFT", worldmap_position_y_label, "TOPRIGHT", 10, 0);
 	worldmap_position_y:SetSize(64, 16);
-	worldmap_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.y, 2));
+	worldmap_position_y:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.y, 2));
 	worldmap_position_y:SetAutoFocus(false);
 	worldmap_position_y:SetFontObject(ChatFontNormal);
 	worldmap_position_y:SetCursorPosition(0);
@@ -790,7 +790,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	set_worldmap_position_y:SetText(CBL["CONFIG_POSITION_SET"]);
 	set_worldmap_position_y:SetSize(48, 20);
 	set_worldmap_position_y:SetScript("OnClick", function()
-		CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.y = round(worldmap_position_y:GetText(), 2);
+		CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.y = cb.omg:round(worldmap_position_y:GetText(), 2);
 		cb.worldmap_frame:updatePosition();
 	end);
 	
@@ -852,7 +852,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	gatherer_position_x = CreateFrame("EditBox", config_frame_name .. "GathererPositionX", child_positioning_frame, "InputBoxTemplate");
 	gatherer_position_x:SetPoint("TOPLEFT", gatherer_position_x_label, "TOPRIGHT", 10, 0);
 	gatherer_position_x:SetSize(64, 16);
-	gatherer_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.x, 2));
+	gatherer_position_x:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.x, 2));
 	gatherer_position_x:SetAutoFocus(false);
 	gatherer_position_x:SetFontObject(ChatFontNormal);
 	gatherer_position_x:SetCursorPosition(0);
@@ -862,7 +862,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	set_gatherer_position_x:SetText(CBL["CONFIG_POSITION_SET"]);
 	set_gatherer_position_x:SetSize(48, 20);
 	set_gatherer_position_x:SetScript("OnClick", function()
-		CraftBusterOptions[CraftBusterEntry].gather_frame.position.x = round(gatherer_position_x:GetText(), 2);
+		CraftBusterOptions[CraftBusterEntry].gather_frame.position.x = cb.omg:round(gatherer_position_x:GetText(), 2);
 		cb.gather_frame:updatePosition();
 	end);
 	
@@ -873,7 +873,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	gatherer_position_y = CreateFrame("EditBox", config_frame_name .. "GathererPositionY", child_positioning_frame, "InputBoxTemplate");
 	gatherer_position_y:SetPoint("TOPLEFT", gatherer_position_y_label, "TOPRIGHT", 10, 0);
 	gatherer_position_y:SetSize(64, 16);
-	gatherer_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.y, 2));
+	gatherer_position_y:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.y, 2));
 	gatherer_position_y:SetAutoFocus(false);
 	gatherer_position_y:SetFontObject(ChatFontNormal);
 	gatherer_position_y:SetCursorPosition(0);
@@ -883,7 +883,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	set_gatherer_position_y:SetText(CBL["CONFIG_POSITION_SET"]);
 	set_gatherer_position_y:SetSize(48, 20);
 	set_gatherer_position_y:SetScript("OnClick", function()
-		CraftBusterOptions[CraftBusterEntry].gather_frame.position.y = round(gatherer_position_y:GetText(), 2);
+		CraftBusterOptions[CraftBusterEntry].gather_frame.position.y = cb.omg:round(gatherer_position_y:GetText(), 2);
 		cb.gather_frame:updatePosition();
 	end);
 	
@@ -945,7 +945,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	buster_position_x = CreateFrame("EditBox", config_frame_name .. "BusterPositionX", child_positioning_frame, "InputBoxTemplate");
 	buster_position_x:SetPoint("TOPLEFT", buster_position_x_label, "TOPRIGHT", 10, 0);
 	buster_position_x:SetSize(64, 16);
-	buster_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.x, 2));
+	buster_position_x:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.x, 2));
 	buster_position_x:SetAutoFocus(false);
 	buster_position_x:SetFontObject(ChatFontNormal);
 	buster_position_x:SetCursorPosition(0);
@@ -955,7 +955,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	set_buster_position_x:SetText(CBL["CONFIG_POSITION_SET"]);
 	set_buster_position_x:SetSize(48, 20);
 	set_buster_position_x:SetScript("OnClick", function()
-		CraftBusterOptions[CraftBusterEntry].buster_frame.position.x = round(buster_position_x:GetText(), 2);
+		CraftBusterOptions[CraftBusterEntry].buster_frame.position.x = cb.omg:round(buster_position_x:GetText(), 2);
 		cb.buster_frame:updatePosition();
 	end);
 	
@@ -966,7 +966,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	buster_position_y = CreateFrame("EditBox", config_frame_name .. "BusterPositionY", child_positioning_frame, "InputBoxTemplate");
 	buster_position_y:SetPoint("TOPLEFT", buster_position_y_label, "TOPRIGHT", 10, 0);
 	buster_position_y:SetSize(64, 16);
-	buster_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.y, 2));
+	buster_position_y:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.y, 2));
 	buster_position_y:SetAutoFocus(false);
 	buster_position_y:SetFontObject(ChatFontNormal);
 	buster_position_y:SetCursorPosition(0);
@@ -976,7 +976,7 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 	set_buster_position_y:SetText(CBL["CONFIG_POSITION_SET"]);
 	set_buster_position_y:SetSize(48, 20);
 	set_buster_position_y:SetScript("OnClick", function()
-		CraftBusterOptions[CraftBusterEntry].buster_frame.position.y = round(buster_position_y:GetText(), 2);
+		CraftBusterOptions[CraftBusterEntry].buster_frame.position.y = cb.omg:round(buster_position_y:GetText(), 2);
 		cb.buster_frame:updatePosition();
 	end);
 	
@@ -1037,23 +1037,23 @@ child_positioning_frame:SetScript("OnShow", function(child_positioning_frame)
 		cb.gather_frame:resetPosition();
 		cb.worldmap_frame:resetPosition();
 
-		position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.x, 2));
-		position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.y, 2));
+		position_x:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.x, 2));
+		position_y:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].skills_frame.position.y, 2));
 		UIDropDownMenu_SetSelectedValue(position_point, CraftBusterOptions[CraftBusterEntry].skills_frame.position.point);
 		UIDropDownMenu_SetSelectedValue(position_relative_point, CraftBusterOptions[CraftBusterEntry].skills_frame.position.relative_point);
 
-		worldmap_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.x, 2));
-		worldmap_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.y, 2));
+		worldmap_position_x:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.x, 2));
+		worldmap_position_y:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.y, 2));
 		UIDropDownMenu_SetSelectedValue(worldmap_position_point, CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.point);
 		UIDropDownMenu_SetSelectedValue(worldmap_position_relative_point, CraftBusterOptions[CraftBusterEntry].worldmap_frame.position.relative_point);
 
-		gatherer_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.x, 2));
-		gatherer_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.y, 2));
+		gatherer_position_x:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.x, 2));
+		gatherer_position_y:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].gather_frame.position.y, 2));
 		UIDropDownMenu_SetSelectedValue(gatherer_position_point, CraftBusterOptions[CraftBusterEntry].gather_frame.position.point);
 		UIDropDownMenu_SetSelectedValue(gatherer_position_relative_point, CraftBusterOptions[CraftBusterEntry].gather_frame.position.relative_point);
 
-		buster_position_x:SetText(round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.x, 2));
-		buster_position_y:SetText(round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.y, 2));
+		buster_position_x:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.x, 2));
+		buster_position_y:SetText(cb.omg:round(CraftBusterOptions[CraftBusterEntry].buster_frame.position.y, 2));
 		UIDropDownMenu_SetSelectedValue(buster_position_point, CraftBusterOptions[CraftBusterEntry].buster_frame.position.point);
 		UIDropDownMenu_SetSelectedValue(buster_position_relative_point, CraftBusterOptions[CraftBusterEntry].buster_frame.position.relative_point);
 	end);

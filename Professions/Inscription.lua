@@ -597,7 +597,7 @@ local function parse_output(color, header, table_data)
 		if (i > 1) then
 			output_txt = output_txt .. ", ";
 		end
-		if (i % 3 == 0 and tcount(table_data) > 3) then
+		if (i % 3 == 0 and cb.omg:tcount(table_data) > 3) then
 			output_txt = output_txt .. "\n";
 		end
 		output_txt = output_txt .. name;
