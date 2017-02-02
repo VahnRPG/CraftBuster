@@ -284,7 +284,7 @@ function cb.buster_frame:scrollFrameUpdate()
 		end
 	end
 
-	FauxScrollFrame_Update(cb.buster_frame.frame.scroll_frame, ceil(tcount(cb.buster_frame.items) / BUSTER_ITEM_WRAP), MAX_BUSTER_LINES, BUSTER_ICON_ROW_HEIGHT);
+	FauxScrollFrame_Update(cb.buster_frame.frame.scroll_frame, ceil(cb.omg:tcount(cb.buster_frame.items) / BUSTER_ITEM_WRAP), MAX_BUSTER_LINES, BUSTER_ICON_ROW_HEIGHT);
 end
 
 function cb.buster_frame:clearIgnore()
