@@ -1,14 +1,16 @@
 local _, cb = ...;
 
 local VELLUM_ID = 38682; --Enchanting Vellum
+local SELECTED_RECIPE_ID = nil;
 
 cb.professions.enchanting = {};
-function cb.professions.enchanting:build_button(tradeskill_id, recipe_id)
+function cb.professions.enchanting:build_button(tradeskill_id)
 	cb.professions.enchanting.tradeskill_button = CreateFrame("BUTTON", "CraftBuster_Profession_Enchanting_Tradeskill_Button", TradeSkillFrame, "MagicButtonTemplate");
 	cb.professions.enchanting.tradeskill_button:SetPoint("TOPRIGHT", TradeSkillFrame.DetailsFrame.CreateButton, "TOPLEFT", 0, 0);
 	cb.professions.enchanting.tradeskill_button:SetText(CBL["TRADESKILL_ENCHANTING"]);
 	cb.professions.enchanting.tradeskill_button:SetScript("OnClick", function()
-		C_TradeSkillUI.CraftRecipe(recipe_id, 1);
+		C_TradeSkillUI.SetRecipeRepeatCount(SELECTED_RECIPE_ID, 1);
+		C_TradeSkillUI.CraftRecipe(SELECTED_RECIPE_ID, 1);
 		UseItemByName(VELLUM_ID);
 	end);
 	cb.professions.enchanting.tradeskill_button:SetScript("OnEnter", function(self)
@@ -195,9 +197,10 @@ local profession_data = {
 	},
 	["tradeskill_function"] = function(tradeskill_id, recipe_id)
 		if (not cb.professions.enchanting.tradeskill_button) then
-			cb.professions.enchanting:build_button(tradeskill_id, recipe_id);
+			cb.professions.enchanting:build_button(tradeskill_id);
 		end
 		
+		SELECTED_RECIPE_ID = recipe_id;
 		local recipe_info = C_TradeSkillUI.GetRecipeInfo(recipe_id);
 		if (GetItemCount(VELLUM_ID) > 0 and recipe_info.alternateVerb == ENSCRIBE and recipe_info.numAvailable > 0) then
 			cb.professions.enchanting.tradeskill_button:Show();
