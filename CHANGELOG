@@ -1,3 +1,6 @@
+v 1.1.6
+	- Updated for patch 7.2, fixed Legion lockboxes in buster
+
 v 1.1.5
 	- Initial fix for enchanting vellums via button in tradeskill frame. Sometimes doesn't pick up the 'use item' for the vellum
 

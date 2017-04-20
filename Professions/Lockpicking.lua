@@ -24,7 +24,9 @@ local PICK_BOXES = {
 	[68729] = "Elementium Lockbox",
 	[88567] = "Ghost Iron Lockbox",
 	[88165] = "Vine-Cracked Junkbox",
+	[106895] = "Iron-Bound Junkbox",
 	[116920] = "True Steel Lockbox",
+	[121331] = "Leystone Lockbox",
 };
 
 local SKILL_ID = CBT_SKILL_PICK;
