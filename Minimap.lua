@@ -52,17 +52,17 @@ cb.minimap.frame.button:SetScript("OnClick", function(self, button, down)
 end);
 
 function cb.minimap:ADDON_LOADED()
-	if (cb.settings:get().minimap.show) then
-		cb.minimap.frame:Show();
-	else
-		cb.minimap.frame:Hide();
-	end
-	cb.minimap:updatePosition();
+	cb.minimap:update();
 
 	cb.minimap.frame:UnregisterEvent("ADDON_LOADED");
 end
 
 function cb.minimap:update()
+	if (cb.settings:get().minimap.show) then
+		cb.minimap.frame:Show();
+	else
+		cb.minimap.frame:Hide();
+	end
 	cb.minimap:updatePosition();
 end
 
