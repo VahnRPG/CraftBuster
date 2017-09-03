@@ -104,7 +104,11 @@ function mod.omg:trim(text)
 end
 
 function mod.omg:ucwords(text)
-	return string.gsub(" " .. text, "%W%l", string.upper):sub(2);
+	local function ucwords_helper(first, rest)
+		return first:upper() .. rest:lower();
+	end
+
+	return text:gsub("(%a)([%w_']*)", ucwords_helper);
 end
 
 function mod.omg:sortedpairs(t, comparator)

@@ -1,4 +1,5 @@
 local _, cb = ...;
+
 local SKILL_NODES = {
 	--vanilla
 	["Peacebloom"] = {
@@ -522,6 +523,7 @@ local profession_data = {
 	["show_tooltips"] = true,
 	["nodes"] = SKILL_NODES,
 	["node_function"] = true,
+	["spell_1"] = 193290,		--Herbalism Skills
 	["trainer_map_icons"] = {
 		[36] = {		--Redridge Mountains
 			["Alliance"] = {

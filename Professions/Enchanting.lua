@@ -42,8 +42,9 @@ local profession_data = {
 			for slot=1, GetContainerNumSlots(bag) do
 				local item_id = GetContainerItemID(bag, slot);
 				if (item_id ~= nil) then
-					local item_name,item_link,item_quality,_,_,item_type,item_sub_type = GetItemInfo(item_id);
+					local item_name, item_link, item_quality, _, _, item_type, item_sub_type = GetItemInfo(item_id);
 					if (not item_name) then
+						--[[
 						if (time_count < 5) then
 							time_count = time_count + 1;
 							cb.omg:create_timer(2, function()
@@ -52,6 +53,7 @@ local profession_data = {
 						else
 							cb.omg:echo(CBL["ERRORS_BUSTER_FRAME"]);
 						end
+						]]--
 					elseif (item_quality > 1 and (item_type == "Weapon" or item_type == "Armor")) then
 						count = count + 1;
 						results[count] = {};
@@ -201,11 +203,13 @@ local profession_data = {
 		end
 		
 		SELECTED_RECIPE_ID = recipe_id;
-		local recipe_info = C_TradeSkillUI.GetRecipeInfo(recipe_id);
-		if (GetItemCount(VELLUM_ID) > 0 and recipe_info.alternateVerb == ENSCRIBE and recipe_info.numAvailable > 0) then
-			cb.professions.enchanting.tradeskill_button:Show();
-		else
-			cb.professions.enchanting.tradeskill_button:Hide();
+		local recipe_info = recipe_id and C_TradeSkillUI.GetRecipeInfo(recipe_id);
+		if (recipe_info) then
+			if (GetItemCount(VELLUM_ID) > 0 and recipe_info.alternateVerb == ENSCRIBE and recipe_info.numAvailable > 0) then
+				cb.professions.enchanting.tradeskill_button:Show();
+			else
+				cb.professions.enchanting.tradeskill_button:Hide();
+			end
 		end
 	end,
 };
