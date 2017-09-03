@@ -49,6 +49,7 @@ local profession_data = {
 
 		return results;
 	end,
+	["spell_1"] = 194174,		--Skinning Skills
 	["trainer_map_icons"] = {
 		[301] = {		--Stormwind City
 			["Alliance"] = {

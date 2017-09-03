@@ -56,6 +56,7 @@ cb.buster_frame.frame:SetScript("OnShow", function(self, ...)
 	self:RegisterEvent("UNIT_SPELLCAST_FAILED");
 	self:RegisterEvent("UNIT_SPELLCAST_STOP");
 	self:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED");
+	self:RegisterEvent("GET_ITEM_INFO_RECEIVED");
 	cb.buster_frame:updatePosition();
 end);
 cb.buster_frame.frame:SetScript("OnHide", function(self, ...)
@@ -66,6 +67,7 @@ cb.buster_frame.frame:SetScript("OnHide", function(self, ...)
 	self:UnregisterEvent("UNIT_SPELLCAST_FAILED");
 	self:UnregisterEvent("UNIT_SPELLCAST_STOP");
 	self:UnregisterEvent("UNIT_SPELLCAST_INTERRUPTED");
+	self:UnregisterEvent("GET_ITEM_INFO_RECEIVED");
 end);
 cb.buster_frame.frame:Hide();
 
@@ -146,6 +148,10 @@ function cb.buster_frame:handleSpellFinish(self, ...)
 	if (spell_id == cb.buster_frame.skill_data["spell_id"] or spell_name == "Pick Lock") then
 		cb.buster_frame:update();
 	end
+end
+
+function cb.buster_frame:GET_ITEM_INFO_RECEIVED(self, ...)
+	cb.buster_frame:update();
 end
 
 function cb.buster_frame:updateSkill(skill, skill_id, spell_id)
@@ -229,17 +235,19 @@ function cb.buster_frame:scrollFrameInit()
 		end
 		cb.buster_frame.item_buttons[i]:SetID(i);
 		cb.buster_frame.item_buttons[i]:SetScript("OnEnter", function(self, ...)
-			local x = self:GetRight();
-			if (x >= (GetScreenWidth() / 2)) then
-				GameTooltip:SetOwner(self, "ANCHOR_LEFT");
-			else
-				GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+			if (self.item_link) then
+				local x = self:GetRight();
+				if (x >= (GetScreenWidth() / 2)) then
+					GameTooltip:SetOwner(self, "ANCHOR_LEFT");
+				else
+					GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+				end
+				GameTooltip:SetHyperlink(self.item_link);
+				GameTooltip:AddLine(" ");
+				GameTooltip:AddLine(CBL["BUSTER_FRAME_CLICK"] .. GetSpellLink(self.spell_id));
+				GameTooltip:AddLine(CBL["BUSTER_FRAME_IGNORE"]);
+				GameTooltip:Show();
 			end
-			GameTooltip:SetHyperlink(self.item_link);
-			GameTooltip:AddLine(" ");
-			GameTooltip:AddLine(CBL["BUSTER_FRAME_CLICK"] .. GetSpellLink(self.spell_id));
-			GameTooltip:AddLine(CBL["BUSTER_FRAME_IGNORE"]);
-			GameTooltip:Show();
 		end);
 	end
 end
