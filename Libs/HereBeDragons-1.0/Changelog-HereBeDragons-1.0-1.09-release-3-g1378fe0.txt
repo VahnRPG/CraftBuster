@@ -1,9 +1,0 @@
-Hendrik Leppkes:
-	- Add a fallback for GetNumDungeonMapLevels, which can return nil on the Legion Alpha.
-	Minor intentionally not bumped since this change is only needed on the alpha,
-	but would need a full data update to take effect, which would only add overhead on live.
-	
-	Reported by Gethe and MysticalOS on IRC, fix tested by MysticalOS.
-	- Add the confirmed Draenor zone finale scenarios to the instance overrides
-	- Add the proper Garrison Level 2 instance IDs
-	Fixes ticket 5.

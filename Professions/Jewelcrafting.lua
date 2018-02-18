@@ -2,7 +2,7 @@ local _, cb = ...;
 
 local JEWL_ORES = {
 	--vanilla
-	[2840] = "Copper Ore",
+	[2770] = "Copper Ore",
 	[2771] = "Tin Ore",
 	[2772] = "Iron Ore",
 	[3858] = "Mithril Ore",
