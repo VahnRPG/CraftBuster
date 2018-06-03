@@ -217,7 +217,7 @@ end
 function cb:getProfessionLevel(max_level)
 	local profession_level;
 	for i=1,#CBG_PROFESSION_RANKS do
-		local min_skill_level, max_skill_level, title = CBG_PROFESSION_RANKS[i][1], CBG_PROFESSION_RANKS[i][2], CBG_PROFESSION_RANKS[i][3];
+		local max_skill_level = CBG_PROFESSION_RANKS[i][2];
 		if (max_level < max_skill_level) then
 			break;
 		end

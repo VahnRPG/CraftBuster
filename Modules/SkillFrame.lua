@@ -100,17 +100,24 @@ function cb.skill_frame:update()
 							skill_num_spells = 1;
 							skill_id = index;
 						end
+						local module_data = cb.professions.modules[skill_id];
+
+						bar_frame:SetPoint("TOPLEFT", cb.skill_frame.frame, "TOPLEFT", 5, -(count * 18) - 5);
+						bar_frame:SetValue(skill_level / skill_max_level);
 
 						local skill_bonus_text = "";
 						if (skill_bonus ~= nil and skill_bonus > 0) then
 							skill_bonus_text = CBG_CLR_OFFBLUE .. " + " .. skill_bonus .. CBG_CLR_WHITE;
 						end
 
-						bar_frame:SetPoint("TOPLEFT", cb.skill_frame.frame, "TOPLEFT", 5, -(count * 18) - 5);
-						bar_frame:SetValue(skill_level / skill_max_level);
-						local module_data = cb.professions.modules[skill_id];
-						if ((skill_level >= (skill_max_level - 25)) and (skill_max_level < CBG_PROFESSION_RANKS[CBG_MAX_PROFESSIONS][2])) then
-							local profession_level = cb:getProfessionLevel(skill_max_level) + 1;
+						local profession_level = cb:getProfessionLevel(skill_max_level) + 1;
+						local min_skill_level = 0;
+						local max_skill_level = 0;
+						if (profession_level < CBG_MAX_PROFESSIONS) then
+							min_skill_level = CBG_PROFESSION_RANKS[profession_level][1];
+							max_skill_level = CBG_PROFESSION_RANKS[profession_level][2];
+						end
+						if ((skill_level >= min_skill_level) and (skill_level <= max_skill_level) and (skill_max_level < CBG_PROFESSION_RANKS[CBG_MAX_PROFESSIONS][2])) then
 							local profession_ply_lvl;
 							if (module_data.skill_type == CBG_SKILL_NORMAL) then
 								profession_ply_lvl = CBG_SKILL_PLY_LEVELS[profession_level][1];
