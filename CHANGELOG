@@ -1,3 +1,7 @@
+v 1.2.0
+	- Initial work on global settings functionality
+	- Removed 'gather' frames
+
 v 1.1.9
 	- Updated HereBeDragons, fixed Copper Ore id in jewelcrafting prospecting buster
 
