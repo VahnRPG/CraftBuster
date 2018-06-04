@@ -1,75 +1,75 @@
 local _, cb = ...;
 
-cb.skill_frame = {};
-cb.skill_frame.mover_frame = CreateFrame("Frame", "CraftBuster_SkillFrame_MoverFrame", UIParent, "CraftBuster_MoverBar_Template");
-cb.skill_frame.mover_frame:SetSize(234, 10);
-cb.skill_frame.mover_frame:RegisterForDrag("LeftButton");
-cb.skill_frame.mover_frame:SetScript("OnDragStart", function(self)
-	if (not CraftBusterOptions[CraftBusterEntry].skills_frame.locked) then
+cb.modules.skill_frame = {};
+cb.modules.skill_frame.mover_frame = CreateFrame("Frame", "CraftBuster_SkillFrame_MoverFrame", UIParent, "CraftBuster_MoverBar_Template");
+cb.modules.skill_frame.mover_frame:SetSize(234, 10);
+cb.modules.skill_frame.mover_frame:RegisterForDrag("LeftButton");
+cb.modules.skill_frame.mover_frame:SetScript("OnDragStart", function(self)
+	if (not cb.settings:get().skills_frame.locked) then
 		self.dragging = true;
 		self:StartMoving();
 	end
 end);
-cb.skill_frame.mover_frame:SetScript("OnDragStop", function(self)
-	if (not CraftBusterOptions[CraftBusterEntry].skills_frame.locked) then
+cb.modules.skill_frame.mover_frame:SetScript("OnDragStop", function(self)
+	if (not cb.settings:get().skills_frame.locked) then
 		self.dragging = false;
 		self:StopMovingOrSizing();
 	end
 end);
-cb.skill_frame.mover_frame:SetScript("OnUpdate", function(self)
+cb.modules.skill_frame.mover_frame:SetScript("OnUpdate", function(self)
 	if (self.dragging) then
-		cb.skill_frame:dragFrame();
+		cb.modules.skill_frame:dragFrame();
 	end
 end);
 CraftBuster_SkillFrame_MoverFrameTexture:SetSize(234, 16);
 CraftBuster_SkillFrame_MoverFrameLabel:SetText(CBL["SKILL_FRAME_HEADER"]);
 CraftBuster_SkillFrame_MoverFrame_LockFrame:SetScript("OnClick", function(self)
-	cb.skill_frame:lockFrame();
+	cb.modules.skill_frame:lockFrame();
 end);
 CraftBuster_SkillFrame_MoverFrame_CollapseFrame:SetScript("OnClick", function(self)
-	cb.skill_frame:collapseFrame();
+	cb.modules.skill_frame:collapseFrame();
 end);
 CraftBuster_SkillFrame_MoverFrame_CloseFrame:SetScript("OnClick", function(self)
-	cb.skill_frame:closeFrame();
+	cb.modules.skill_frame:closeFrame();
 end);
 
-cb.skill_frame.frame = CreateFrame("Frame", "CraftBuster_SkillFrame_Frame", UIParent, "CraftBuster_ContainerFrame_Template");
-cb.skill_frame.frame:SetSize(234, 10);
-cb.skill_frame.frame:SetPoint("TOPLEFT", cb.skill_frame.mover_frame, "BOTTOMLEFT", 0, 2);
-cb.skill_frame.frame:RegisterEvent("ADDON_LOADED");
-cb.skill_frame.frame:SetScript("OnEvent", function(self, event, ...)
+cb.modules.skill_frame.frame = CreateFrame("Frame", "CraftBuster_SkillFrame_Frame", UIParent, "CraftBuster_ContainerFrame_Template");
+cb.modules.skill_frame.frame:SetSize(234, 10);
+cb.modules.skill_frame.frame:SetPoint("TOPLEFT", cb.modules.skill_frame.mover_frame, "BOTTOMLEFT", 0, 2);
+cb.modules.skill_frame.frame:RegisterEvent("ADDON_LOADED");
+cb.modules.skill_frame.frame:SetScript("OnEvent", function(self, event, ...)
 	if (cb.settings.init) then
-		return cb.skill_frame[event] and cb.skill_frame[event](cb, ...)
+		return cb.modules.skill_frame[event] and cb.modules.skill_frame[event](cb, ...)
 	end
 end);
-cb.skill_frame.skill_frames = {};
+cb.modules.skill_frame.skill_frames = {};
 
-function cb.skill_frame:ADDON_LOADED()
-	cb.skill_frame.skill_frames = {};
+function cb.modules.skill_frame:ADDON_LOADED()
+	cb.modules.skill_frame.skill_frames = {};
 	for rank, skill in cb.omg:sortedpairs(CBG_SKILL_FRAMES) do
-		local frame = CreateFrame("StatusBar", "CraftBuster_SkillFrame_" .. skill .. "Frame", cb.skill_frame.frame, "CraftBuster_SkillBar_Template");
-		frame:SetPoint("TOPLEFT", cb.skill_frame.frame, "TOPLEFT", 5, -5);
+		local frame = CreateFrame("StatusBar", "CraftBuster_SkillFrame_" .. skill .. "Frame", cb.modules.skill_frame.frame, "CraftBuster_SkillBar_Template");
+		frame:SetPoint("TOPLEFT", cb.modules.skill_frame.frame, "TOPLEFT", 5, -5);
 		frame:SetMinMaxValues(0, 1);
 		frame:SetValue(0);
 		frame:Hide();
 		
-		cb.skill_frame.skill_frames[rank] = frame;
+		cb.modules.skill_frame.skill_frames[rank] = frame;
 	end
 	
-	cb.skill_frame.frame:UnregisterEvent("ADDON_LOADED");
+	cb.modules.skill_frame.frame:UnregisterEvent("ADDON_LOADED");
 end
 
-function cb.skill_frame:update()
+function cb.modules.skill_frame:update()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand(function() cb.skill_frame:update(); end);
+		cb:addLeaveCombatCommand(function() cb.modules.skill_frame:update(); end);
 		return;
 	end
 	
 	local skills = cb:getProfessions(false);
 	local _, player_class = UnitClass("player");
 	local player_level = UnitLevel("player");
-	if (CraftBusterOptions[CraftBusterEntry].skills_frame.show) then
-		if (CraftBusterOptions[CraftBusterEntry].skills_frame.state == "expanded") then
+	if (cb.settings:get().skills_frame.show) then
+		if (cb.settings:get().skills_frame.state == "expanded") then
 			local count = -1;
 			local rank_skills = {
 				[1] = "skill_1",
@@ -84,12 +84,12 @@ function cb.skill_frame:update()
 			end
 			
 			for rank, skill in cb.omg:sortedpairs(rank_skills) do
-				local bar_frame = cb.skill_frame.skill_frames[rank];
+				local bar_frame = cb.modules.skill_frame.skill_frames[rank];
 				if (bar_frame) then
 					bar_frame:Hide();
 					
 					local index = skills[skill];
-					if (index and CraftBusterOptions[CraftBusterEntry].skills_frame.bars[skill]) then
+					if (index and cb.settings:get().skills_frame.bars[skill]) then
 						count = count + 1;
 
 						local skill_name, skill_texture, skill_level, skill_max_level, skill_num_spells, _, skill_id, skill_bonus = GetProfessionInfo(index);
@@ -102,7 +102,7 @@ function cb.skill_frame:update()
 						end
 						local module_data = cb.professions.modules[skill_id];
 
-						bar_frame:SetPoint("TOPLEFT", cb.skill_frame.frame, "TOPLEFT", 5, -(count * 18) - 5);
+						bar_frame:SetPoint("TOPLEFT", cb.modules.skill_frame.frame, "TOPLEFT", 5, -(count * 18) - 5);
 						bar_frame:SetValue(skill_level / skill_max_level);
 
 						local skill_bonus_text = "";
@@ -132,7 +132,7 @@ function cb.skill_frame:update()
 								_G[bar_frame:GetName() .. "Text"]:SetText(CBG_CLR_RED .. skill_name .. ": " .. CBG_CLR_WHITE .. skill_level .. skill_bonus_text .. "/" .. skill_max_level);
 								bar_frame:SetScript("OnEnter", function(self)
 									GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
-									GameTooltip:SetText(string.format(CBL["SKILL_FRAME_VISIT_TRAINER"], skill_name, title));
+									GameTooltip:SetText(format(CBL["SKILL_FRAME_VISIT_TRAINER"], skill_name, title));
 									GameTooltip:Show();
 								end);
 								bar_frame:SetScript("OnLeave", function(self)
@@ -144,7 +144,7 @@ function cb.skill_frame:update()
 								_G[bar_frame:GetName() .. "Text"]:SetText(CBG_CLR_BLUE .. skill_name .. ": " .. CBG_CLR_WHITE .. skill_level .. skill_bonus_text .. "/" .. skill_max_level);
 								bar_frame:SetScript("OnEnter", function(self)
 									GameTooltip:SetOwner(self, "ANCHOR_CURSOR");
-									GameTooltip:SetText(string.format(CBL["SKILL_FRAME_LEVEL_UP"], profession_ply_lvl, skill_name, title));
+									GameTooltip:SetText(format(CBL["SKILL_FRAME_LEVEL_UP"], profession_ply_lvl, skill_name, title));
 									GameTooltip:Show();
 								end);
 								bar_frame:SetScript("OnLeave", function(self)
@@ -161,14 +161,14 @@ function cb.skill_frame:update()
 
 						local spell_buster_frame = _G[bar_frame:GetName() .. "_buster"];
 						spell_buster_frame:Hide();
-						if (module_data.spell_buster ~= nil and spell_buster_frame and CraftBusterOptions[CraftBusterEntry].modules[skill_id].show_buster) then
+						if (module_data.spell_buster ~= nil and spell_buster_frame and cb.settings:get().modules[skill_id].show_buster) then
 							local spell_name, _, button_texture = GetSpellInfo(module_data.spell_buster);
 							_G[spell_buster_frame:GetName() .. "Icon"]:SetTexture(button_texture);
 							spell_buster_frame.spell_id = module_data.spell_buster_id;
 							spell_buster_frame:SetScript("OnClick", function(self)
-								CraftBusterOptions[CraftBusterEntry].buster_frame.show = not cb.buster_frame.mover_frame:IsVisible();
-								cb.buster_frame:updateSkill(skill, skill_id, self.spell_id);
-								cb.buster_frame:update();
+								cb.settings:get().buster_frame.show = not cb.modules.buster_frame.mover_frame:IsVisible();
+								cb.modules.buster_frame:updateSkill(skill, skill_id, self.spell_id);
+								cb.modules.buster_frame:update();
 							end);
 							spell_buster_frame:SetScript("OnEnter", function(self)
 								GameTooltip_SetDefaultAnchor(GameTooltip, self);
@@ -206,98 +206,98 @@ function cb.skill_frame:update()
 				end
 			end
 			if (count > -1) then
-				cb.skill_frame.mover_frame:Show();
-				_G[cb.skill_frame.mover_frame:GetName() .. "_CollapseFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Collapse");
-				cb.skill_frame.frame:SetHeight(28 + (count * 18));
-				cb.skill_frame.frame:Show();
+				cb.modules.skill_frame.mover_frame:Show();
+				_G[cb.modules.skill_frame.mover_frame:GetName() .. "_CollapseFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Collapse");
+				cb.modules.skill_frame.frame:SetHeight(28 + (count * 18));
+				cb.modules.skill_frame.frame:Show();
 			else
-				cb.skill_frame.mover_frame:Hide();
-				cb.skill_frame.frame:Hide();
+				cb.modules.skill_frame.mover_frame:Hide();
+				cb.modules.skill_frame.frame:Hide();
 			end
 		else
-			cb.skill_frame.mover_frame:Show();
-			_G[cb.skill_frame.mover_frame:GetName() .. "_CollapseFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Expand");
-			cb.skill_frame.frame:Hide();
+			cb.modules.skill_frame.mover_frame:Show();
+			_G[cb.modules.skill_frame.mover_frame:GetName() .. "_CollapseFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Expand");
+			cb.modules.skill_frame.frame:Hide();
 		end
 
-		if (not CraftBusterOptions[CraftBusterEntry].skills_frame.locked) then
-			_G[cb.skill_frame.mover_frame:GetName() .. "_LockFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Unlocked");
+		if (not cb.settings:get().skills_frame.locked) then
+			_G[cb.modules.skill_frame.mover_frame:GetName() .. "_LockFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Unlocked");
 		else
-			_G[cb.skill_frame.mover_frame:GetName() .. "_LockFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Locked");
+			_G[cb.modules.skill_frame.mover_frame:GetName() .. "_LockFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Locked");
 		end
 	else
-		cb.skill_frame.mover_frame:Hide();
-		cb.skill_frame.frame:Hide();
+		cb.modules.skill_frame.mover_frame:Hide();
+		cb.modules.skill_frame.frame:Hide();
 	end
 end
 
-function cb.skill_frame:lockFrame()
-	if (not CraftBusterOptions[CraftBusterEntry].skills_frame.locked) then
-		CraftBusterOptions[CraftBusterEntry].skills_frame.locked = true;
+function cb.modules.skill_frame:lockFrame()
+	if (not cb.settings:get().skills_frame.locked) then
+		cb.settings:get().skills_frame.locked = true;
 	else
-		CraftBusterOptions[CraftBusterEntry].skills_frame.locked = false;
+		cb.settings:get().skills_frame.locked = false;
 	end
-	cb.skill_frame:update();
+	cb.modules.skill_frame:update();
 end
 
-function cb.skill_frame:collapseFrame()
+function cb.modules.skill_frame:collapseFrame()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand(function() cb.skill_frame:collapseFrame(); end);
+		cb:addLeaveCombatCommand(function() cb.modules.skill_frame:collapseFrame(); end);
 		return;
 	end
 	
-	if (cb.skill_frame.frame:IsShown()) then
-		cb.skill_frame.frame:Hide();
-		CraftBusterOptions[CraftBusterEntry].skills_frame.state = "collapsed";
+	if (cb.modules.skill_frame.frame:IsShown()) then
+		cb.modules.skill_frame.frame:Hide();
+		cb.settings:get().skills_frame.state = "collapsed";
 	else
-		cb.skill_frame.frame:Show();
-		CraftBusterOptions[CraftBusterEntry].skills_frame.state = "expanded";
+		cb.modules.skill_frame.frame:Show();
+		cb.settings:get().skills_frame.state = "expanded";
 	end
-	cb.skill_frame:update();
+	cb.modules.skill_frame:update();
 end
 
 function CraftBuster_SkillFrame_Collapse_OnClick()
-	cb.skill_frame:collapseFrame();
+	cb.modules.skill_frame:collapseFrame();
 end
 
-function cb.skill_frame:closeFrame()
+function cb.modules.skill_frame:closeFrame()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand(function() cb.skill_frame:closeFrame(); end);
+		cb:addLeaveCombatCommand(function() cb.modules.skill_frame:closeFrame(); end);
 		return;
 	end
 	
-	cb.skill_frame.mover_frame:Hide();
-	cb.skill_frame.frame:Hide();
-	if (not cb.skill_frame.mover_frame:IsShown()) then
-		CraftBusterOptions[CraftBusterEntry].skills_frame.show = false;
+	cb.modules.skill_frame.mover_frame:Hide();
+	cb.modules.skill_frame.frame:Hide();
+	if (not cb.modules.skill_frame.mover_frame:IsShown()) then
+		cb.settings:get().skills_frame.show = false;
 	end
 end
 
-function cb.skill_frame:dragFrame()
-	local point, _, relative_point, x, y = cb.skill_frame.mover_frame:GetPoint();
-	CraftBusterOptions[CraftBusterEntry].skills_frame.position.point = point;
-	CraftBusterOptions[CraftBusterEntry].skills_frame.position.relative_point = relative_point;
-	CraftBusterOptions[CraftBusterEntry].skills_frame.position.x = x;
-	CraftBusterOptions[CraftBusterEntry].skills_frame.position.y = y;
-	cb.skill_frame:updatePosition();
+function cb.modules.skill_frame:dragFrame()
+	local point, _, relative_point, x, y = cb.modules.skill_frame.mover_frame:GetPoint();
+	cb.settings:get().skills_frame.position.point = point;
+	cb.settings:get().skills_frame.position.relative_point = relative_point;
+	cb.settings:get().skills_frame.position.x = x;
+	cb.settings:get().skills_frame.position.y = y;
+	cb.modules.skill_frame:updatePosition();
 end
 
-function cb.skill_frame:updatePosition()
+function cb.modules.skill_frame:updatePosition()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand(function() cb.skill_frame:updatePosition(); end);
+		cb:addLeaveCombatCommand(function() cb.modules.skill_frame:updatePosition(); end);
 		return;
 	end
-	local position = CraftBusterOptions[CraftBusterEntry].skills_frame.position;
-	cb.skill_frame.mover_frame:ClearAllPoints();
-	cb.skill_frame.mover_frame:SetPoint(position.point, nil, position.relative_point, position.x, position.y);
+	local position = cb.settings:get().skills_frame.position;
+	cb.modules.skill_frame.mover_frame:ClearAllPoints();
+	cb.modules.skill_frame.mover_frame:SetPoint(position.point, nil, position.relative_point, position.x, position.y);
 end
 
-function cb.skill_frame:resetPosition()
-	CraftBusterOptions[CraftBusterEntry].skills_frame.position = {
+function cb.modules.skill_frame:resetPosition()
+	cb.settings:get().skills_frame.position = {
 		point = "TOPLEFT",
 		relative_point = "TOPLEFT",
 		x = 490,
 		y = -330,
 	};
-	cb.skill_frame:updatePosition();
+	cb.modules.skill_frame:updatePosition();
 end

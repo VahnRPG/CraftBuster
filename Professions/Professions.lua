@@ -14,18 +14,17 @@ function cb.professions:registerModule(module_options)
 	cb.professions.modules[module_id].station_map_icons = nil;
 	if (module_options["station_map_icons"]) then
 		cb.professions.modules[module_id].station_map_icons = module_options["station_map_icons"];
-		cb.map_icons:registerModule(module_id, module_options["station_map_icons"], CBT_MAP_ICON_STATION);
+		cb.modules.map_icons:registerModule(module_id, module_options["station_map_icons"], CBT_MAP_ICON_STATION);
 	end
 	cb.professions.modules[module_id].trainer_map_icons = nil;
 	if (module_options["trainer_map_icons"]) then
 		cb.professions.modules[module_id].trainer_map_icons = module_options["trainer_map_icons"];
-		cb.map_icons:registerModule(module_id, module_options["trainer_map_icons"], CBT_MAP_ICON_TRAINER);
+		cb.modules.map_icons:registerModule(module_id, module_options["trainer_map_icons"], CBT_MAP_ICON_TRAINER);
 	end
 	cb.professions.modules[module_id].show_tooltips = module_options["show_tooltips"];
 	cb.professions.modules[module_id].nodes = module_options["nodes"];
 	cb.professions.modules[module_id].node_function = nil;
 	if (module_options["node_function"]) then
-		cb.worldmap_frame:addGatherData(module_id, module_options["nodes"]);
 		if (type(module_options["node_function"]) == "function") then
 			cb.professions.modules[module_id].node_function = function(line_one, line_two, line_three)
 				local skill_nodes = module_options["node_function"](line_one, line_two, line_three);
@@ -72,7 +71,7 @@ function cb.professions:buildMessages(skill_type, skill_name, skill_short_code, 
 			["min_skill_level"] = min_skill_level,
 			["max_skill_level"] = max_skill_level,
 			["action"] = CBT_NEXT_LEVEL,
-			["message"] = string.format(CBL["TRAINER_ACTION"], skill_name, title),
+			["message"] = format(CBL["TRAINER_ACTION"], skill_name, title),
 			["fields"] = { skill_name, title },
 		};
 	end
@@ -127,49 +126,8 @@ function cb.professions:handleNode(skill_nodes, line_one, line_two, line_three)
 	return false;
 end
 
-function cb.professions:handleGather(skill_id, zone_map_id)
-	local found = false;
-	local gather_data = {
-		["zones"] = {},
-		["skill"] = {},
-	};
-	
-	if (cb.professions.modules[skill_id].nodes and next(cb.professions.modules[skill_id].nodes)) then
-		local skill_level = cb:getSkillLevel(skill_id);
-		for node_name, node_data in cb.omg:sortedpairs(cb.professions.modules[skill_id].nodes) do
-			for _,map_id in pairs(node_data["map_ids"]) do
-				if (map_id == zone_map_id) then
-					local rank = node_data["rank"];
-					gather_data["zones"][rank] = {
-						["item_id"] = node_data["item_id"],
-						["name"] = node_name,
-						["levels"] = node_data["node_levels"],
-					};
-					found = true;
-				end
-			end
-			
-			if (skill_level ~= nil and skill_level < CBG_MAX_PROFESSION_RANK) then
-				if (skill_level >= node_data["node_levels"][1] and skill_level < node_data["node_levels"][4]) then
-					local rank = node_data["rank"];
-					gather_data["skill"][rank] = {
-						["item_id"] = node_data["item_id"],
-						["name"] = node_name,
-						["levels"] = node_data["node_levels"],
-					};
-					found = true;
-				end
-			end
-		end
-	end
-	
-	if (CraftBusterOptions[CraftBusterEntry].modules[skill_id].show_gather and found) then
-		cb.gather_frame:addGatherData(gather_data);
-	end
-end
-
 function cb.professions:handleSkill(skill)
-	local skill_data = CraftBusterOptions[CraftBusterEntry].skills[skill];
+	local skill_data = cb.settings:get().skills[skill];
 	if (skill_data ~= nil) then
 		if (cb.professions.modules[skill_data.id].messages and next(cb.professions.modules[skill_data.id].messages)) then
 			cb.professions:processAction(skill_data.id, skill_data);
@@ -178,15 +136,15 @@ function cb.professions:handleSkill(skill)
 end
 
 function cb.professions:processAction(module_id, skill_data)
-	if (not CraftBusterOptions[CraftBusterEntry].alerts[module_id]) then
-		CraftBusterOptions[CraftBusterEntry].alerts[module_id] = {};
+	if (not cb.settings:get(CraftBusterEntry_Personal).alerts[module_id]) then
+		cb.settings:get(CraftBusterEntry_Personal).alerts[module_id] = {};
 	end
 	
 	for message_id, message_data in cb.omg:sortedpairs(cb.professions.modules[module_id].messages) do
-		if (not CraftBusterOptions[CraftBusterEntry].alerts[module_id][message_id]) then
+		if (not cb.settings:get(CraftBusterEntry_Personal).alerts[module_id][message_id]) then
 			if (cb.settings.player.level >= message_data.ply_level and skill_data.level >= message_data.skill_level) then
 				cb.omg:echo(message_data.message);
-				CraftBusterOptions[CraftBusterEntry].alerts[module_id][message_id] = true;
+				cb.settings:get(CraftBusterEntry_Personal).alerts[module_id][message_id] = true;
 			end
 		end
 	end
@@ -195,13 +153,13 @@ end
 function cb.professions:translateActionText(color_code, name, level)
 	local output_txt = "";
 	if (color_code == ORANGE_FONT_COLOR_CODE) then
-		output_txt = string.format(CBL["ORANGE_ACTION"], color_code, level, name);
+		output_txt = format(CBL["ORANGE_ACTION"], color_code, level, name);
 	elseif (color_code == YELLOW_FONT_COLOR_CODE) then
-		output_txt = string.format(CBL["YELLOW_ACTION"], color_code, name, level);
+		output_txt = format(CBL["YELLOW_ACTION"], color_code, name, level);
 	elseif (color_code == GREEN_FONT_COLOR_CODE) then
-		output_txt = string.format(CBL["GREEN_ACTION"], color_code, name, level);
+		output_txt = format(CBL["GREEN_ACTION"], color_code, name, level);
 	elseif (color_code == GRAY_FONT_COLOR_CODE) then
-		output_txt = string.format(CBL["GREY_ACTION"], color_code, name, level);
+		output_txt = format(CBL["GREY_ACTION"], color_code, name, level);
 	end
 
 	return output_txt;

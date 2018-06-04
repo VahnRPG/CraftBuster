@@ -1,7 +1,8 @@
-local DB_VERSION = 0.05;
+local DB_VERSION = 0.06;
 
 CraftBusterOptions = {};
 CraftBusterEntry = nil;
+CraftBusterEntry_Personal = nil;
 
 local _, cb = ...;
 
@@ -25,10 +26,18 @@ function cb.settings:ADDON_LOADED(self, ...)
 	if (not CraftBusterOptions) then
 		CraftBusterOptions = {};
 	end
+	if (not CraftBusterOptions.globals) then
+		CraftBusterOptions.globals = {};
+	end
 	cb.settings.player.name = UnitName("player");
 	cb.settings.player.level = UnitLevel("player");
 	cb.settings.player.server = GetRealmName();
-	CraftBusterEntry = cb.settings.player.name .. "@" .. cb.settings.player.server;
+	CraftBusterEntry_Personal = cb.settings.player.name .. "@" .. cb.settings.player.server;
+	CraftBusterEntry = CraftBusterEntry_Personal;
+	if (not CraftBusterOptions.globals[CraftBusterEntry_Personal]) then
+		CraftBusterOptions.globals[CraftBusterEntry_Personal] = "global";
+	end
+	CraftBusterEntry = CraftBusterOptions.globals[CraftBusterEntry_Personal];
 	
 	cb.settings:initSettings();
 	cb.settings.init = true;
@@ -61,6 +70,9 @@ function cb.settings:initSettings(reset)
 
 	if (not CraftBusterOptions or reset == true) then
 		CraftBusterOptions = {};
+		CraftBusterOptions.globals = {};
+		CraftBusterOptions.globals[CraftBusterEntry_Personal] = "global";
+		CraftBusterEntry = CraftBusterOptions.globals[CraftBusterEntry_Personal];
 	end
 	if (not CraftBusterOptions[CraftBusterEntry] or reset == "character") then
 		CraftBusterOptions[CraftBusterEntry] = cb.omg:clone_table(cb.settings:default());
@@ -76,19 +88,7 @@ end
 
 function cb.settings:versionSettings()
 	local settings = cb.settings:get();
-	if (not settings.db_version or settings.db_version < 0.01) then
-		settings.gather_frame.auto_hide = true;
-
-		if (cb.professions.modules and next(cb.professions.modules)) then
-			for module_id, module_data in cb.omg:sortedpairs(cb.professions.modules) do
-				settings.modules[module_id].show_gather = true;
-			end
-		end
-	end
-
 	if (not settings.db_version or settings.db_version < 0.02) then
-		settings.gather_frame.auto_hide = true;
-
 		if (cb.professions.modules and next(cb.professions.modules)) then
 			for module_id, module_data in cb.omg:sortedpairs(cb.professions.modules) do
 				settings.modules[module_id].show_trainer_map_icons = true;
@@ -111,8 +111,12 @@ function cb.settings:versionSettings()
 
 	if (not settings.db_version or settings.db_version < 0.05) then
 		settings.buster_frame.locked = false;
-		settings.gather_frame.locked = false;
-		settings.worldmap_frame.locked = false;
+	end
+
+	if (not settings.db_version or settings.db_version < 0.06) then
+		CraftBusterOptions.globals = {};
+		CraftBusterOptions.globals[CraftBusterEntry_Personal] = "global";
+		CraftBusterEntry = CraftBusterOptions.globals[CraftBusterEntry_Personal];
 	end
 
 	settings.db_version = DB_VERSION;
@@ -162,6 +166,7 @@ function cb.settings:default()
 				["lockpicking"] = false,
 			},
 		},
+		["zone_limit"] = 10,
 		["buster_frame"] = {
 			["show"] = true,
 			["locked"] = true,
@@ -174,35 +179,10 @@ function cb.settings:default()
 			},
 			["ignored_items"] = {},
 		},
-		["gather_frame"] = {
-			["show"] = true,
-			["locked"] = true,
-			["state"] = "expanded",
-			["position"] = {
-				point = "TOPLEFT",
-				relative_point = "TOPLEFT",
-				x = 490,
-				y = -330,
-			},
-			["show_zone_nodes"] = true,
-			["show_skill_nodes"] = true,
-			["auto_hide"] = true,
-		},
-		["zone_limit"] = 10,
-		["worldmap_frame"] = {
-			["show"] = true,
-			["locked"] = true,
-			["state"] = "expanded",
-			["position"] = {
-				point = "TOPLEFT",
-				relative_point = "TOPLEFT",
-				x = 490,
-				y = -330,
-			},
-		},
 		["map_icons"] = {
 			["show_world_map"] = true,
-			["show_mini_map"] = true,
+			["show_mini_map"] = false,
+			["show_skills_only"] = false,
 		},
 		["modules"] = {},
 	};
@@ -211,7 +191,6 @@ function cb.settings:default()
 		for module_id, module_data in cb.omg:sortedpairs(cb.professions.modules) do
 			settings.modules[module_id] = {};
 			settings.modules[module_id].show_tooltips = true;
-			settings.modules[module_id].show_gather = true;
 			settings.modules[module_id].show_buster = true;
 			settings.modules[module_id].show_trainer_map_icons = true;
 			settings.modules[module_id].show_station_map_icons = true;
