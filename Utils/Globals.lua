@@ -5,8 +5,6 @@ CBG_MOD_NAME = "CraftBuster";
 CBG_VERSION = GetAddOnMetadata(CBG_MOD_NAME, "Version");
 CBG_LAST_UPDATED = GetAddOnMetadata(CBG_MOD_NAME, "X-Date");
 
-CBG_GLOBAL_PROFILE = "CraftBuster-Global-Profile";
-
 CBG_LOCKPICKING_LEVEL = 24;
 CBG_LOCKPICKING_MAX_SKILL_LEVEL = 800;
 
@@ -17,8 +15,12 @@ CBG_PROFESSION_RANKS = {
 	[3] = { 125, 225, EXPERT },
 	[4] = { 200, 300, ARTISAN },
 	[5] = { 275, 375, MASTER },
+	--[[
 	[6] = { 350, 450, GRAND_MASTER },
 	[7] = { 425, 525, ILLUSTRIOUS },
+	]]--
+	[6] = { 275, 450, GRAND_MASTER },
+	[7] = { 350, 525, ILLUSTRIOUS },
 	[8] = { 500, 600, ZEN_MASTER },
 	[9] = { 600, 700, DRAENOR_MASTER },
 	[10] = { 700, 800, LEGION_MASTER },
@@ -35,7 +37,8 @@ CBG_SKILL_PLY_LEVELS = {
 	[3] = { 20, 10 },		--Expert
 	[4] = { 35, 25 },		--Artisan
 	[5] = { 50, 40 },		--Master
-	[6] = { 65, 55 },		--Grand Master
+	--[6] = { 65, 55 },		--Grand Master
+	[6] = { 58, 55 },		--Grand Master
 	[7] = { 75, 75 },		--Illustrious Grand Master
 	[8] = { 80, 80 },		--Zen Master
 	[9] = { 90, 90 },		--Draenor Master

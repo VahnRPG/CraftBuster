@@ -14,6 +14,11 @@ local profession_data = {
 				["The Silken Fields"] = { ["name"] = "The Silken Fields", ["floor"] = 0, ["pos"] = { 61, 57.9 } },
 			},
 		},
+		[1033] = {		--Suramar
+			["Neutral"] = {
+				["Queen's Grace Loom"] = { ["name"] = "Queen's Grace Loom", ["floor"] = 0, ["pos"] = { 40.4, 69.6 } },
+			},
+		},
 	},
 	["trainer_map_icons"] = {
 		[30] = {		--Elwynn Forest

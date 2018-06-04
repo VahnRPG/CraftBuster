@@ -61,25 +61,25 @@ local SKILL_ALL_PROFESSIONS_TRAINERS_MAP_ICONS = {
 local CACHED_ICONS = {};
 local last_update = 0;
 
-cb.map_icons = {};
-cb.map_icons.frame = CreateFrame("Frame", "CraftBuster_MapIcons_Frame", UIParent);
-cb.map_icons.frame:RegisterEvent("ADDON_LOADED");
-cb.map_icons.frame:SetScript("OnEvent", function(self, event, ...)
-	return cb.map_icons[event] and cb.map_icons[event](cb, ...)
+cb.modules.map_icons = {};
+cb.modules.map_icons.frame = CreateFrame("Frame", "CraftBuster_MapIcons_Frame", UIParent);
+cb.modules.map_icons.frame:RegisterEvent("ADDON_LOADED");
+cb.modules.map_icons.frame:SetScript("OnEvent", function(self, event, ...)
+	return cb.modules.map_icons[event] and cb.modules.map_icons[event](cb, ...)
 end);
 
-cb.map_icons.tooltip_frame = CreateFrame("GameTooltip", "CraftBuster_MapIcons_Tooltip", nil, "GameTooltipTemplate");
+cb.modules.map_icons.tooltip_frame = CreateFrame("GameTooltip", "CraftBuster_MapIcons_Tooltip", nil, "GameTooltipTemplate");
 
-function cb.map_icons:ADDON_LOADED(self, ...)
-	cb.map_icons:registerModule("all", SKILL_ALL_PROFESSIONS_TRAINERS_MAP_ICONS, CBT_MAP_ICON_TRAINER);
-	cb.map_icons.frame:UnregisterEvent("ADDON_LOADED");
+function cb.modules.map_icons:ADDON_LOADED(self, ...)
+	cb.modules.map_icons:registerModule("all", SKILL_ALL_PROFESSIONS_TRAINERS_MAP_ICONS, CBT_MAP_ICON_TRAINER);
+	cb.modules.map_icons.frame:UnregisterEvent("ADDON_LOADED");
 end
 
-function cb.map_icons:setTooltipText(icon_data, floor_label)
+function cb.modules.map_icons:setTooltipText(icon_data, floor_label)
 	if (icon_data.icon_type == CBT_MAP_ICON_TRAINER) then
-		cb.map_icons.tooltip_frame:SetText(CBL["MAPICON_TITLE_TRAINER"]);
+		cb.modules.map_icons.tooltip_frame:SetText(CBL["MAPICON_TITLE_TRAINER"]);
 	elseif (icon_data.icon_type == CBT_MAP_ICON_STATION) then
-		cb.map_icons.tooltip_frame:SetText(CBL["MAPICON_TITLE_STATION"]);
+		cb.modules.map_icons.tooltip_frame:SetText(CBL["MAPICON_TITLE_STATION"]);
 	end
 
 	local profession_label = CBL[icon_data.module_id];
@@ -87,10 +87,10 @@ function cb.map_icons:setTooltipText(icon_data, floor_label)
 		profession_label = CBL["SKILL_ALL_PROFESSIONS"];
 	end
 
-	cb.map_icons.tooltip_frame:AddLine(floor_label .. CBG_CLR_WHITE .. icon_data.npc_data["name"] .. " - " .. profession_label);
+	cb.modules.map_icons.tooltip_frame:AddLine(floor_label .. CBG_CLR_WHITE .. icon_data.npc_data["name"] .. " - " .. profession_label);
 end
 
-function cb.map_icons:updateMinimap(self, elapsed)
+function cb.modules.map_icons:updateMinimap(self, elapsed)
 	local angle, distance = HBDPins:GetVectorToIcon(self);
 	if (not angle) then
 		self:Hide();
@@ -117,7 +117,7 @@ function cb.map_icons:updateMinimap(self, elapsed)
 	end
 end
 
-function cb.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, npc_data)
+function cb.modules.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, npc_data)
 	local label = map_id .. "_" .. icon_type .. "_" .. module_id .. "_" .. side .. "_" .. npc_id;
 	
 	local x1, x2, y1, y2 = unpack(CBG_MAP_ICON_TEXTURES[icon_type][module_id]);
@@ -138,7 +138,7 @@ function cb.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, 
 		end
 	end);
 	minimap_icon_frame:SetScript("OnUpdate", function(self, elapsed)
-		cb.map_icons:updateMinimap(self, elapsed);
+		cb.modules.map_icons:updateMinimap(self, elapsed);
 	end);
 	minimap_icon_frame:SetScript("OnEnter", function(self, event, ...)
 		if (not self.icon_data.label) then
@@ -147,11 +147,11 @@ function cb.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, 
 
 		if (self.icon:IsShown()) then
 			if (UIParent:IsVisible()) then
-				cb.map_icons.tooltip_frame:SetParent(UIParent);
+				cb.modules.map_icons.tooltip_frame:SetParent(UIParent);
 			else
-				cb.map_icons.tooltip_frame:SetParent(self);
+				cb.modules.map_icons.tooltip_frame:SetParent(self);
 			end
-			cb.map_icons.tooltip_frame:SetOwner(self, "ANCHOR_BOTTOMLEFT");
+			cb.modules.map_icons.tooltip_frame:SetOwner(self, "ANCHOR_BOTTOMLEFT");
 
 			local floor_label = "";
 			local _, _, _, floor = HBD:GetPlayerZonePosition();
@@ -161,8 +161,8 @@ function cb.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, 
 				floor_label = "|TInterface\\Minimap\\Minimap-PositionArrows:0:0:0:0:16:32:0:16:16:32|t";
 			end
 
-			cb.map_icons:setTooltipText(self.icon_data, floor_label);
-			cb.map_icons.tooltip_frame:Show();
+			cb.modules.map_icons:setTooltipText(self.icon_data, floor_label);
+			cb.modules.map_icons.tooltip_frame:Show();
 		end
 	end);
 	minimap_icon_frame:SetScript("OnLeave", function(self)
@@ -171,7 +171,7 @@ function cb.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, 
 		end
 
 		if (self.icon:IsShown()) then
-			cb.map_icons.tooltip_frame:Hide();
+			cb.modules.map_icons.tooltip_frame:Hide();
 		end
 	end);
 	minimap_icon_frame:SetScript("OnClick", function(self, button, down)
@@ -209,7 +209,7 @@ function cb.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, 
 
 			local show = false;
 			local icon_data = self.icon_data;
-			if (icon_data.worldmap_icon_frame and CraftBusterOptions[CraftBusterEntry].map_icons.show_world_map) then
+			if (icon_data.worldmap_icon_frame and cb.settings:get().map_icons.show_world_map) then
 				if (icon_data.map_id == GetCurrentMapAreaID()) then
 					HBDPins:AddWorldMapIconMF(CBG_MOD_NAME, self, icon_data.map_id, icon_data.npc_data["floor"], (icon_data.npc_data["pos"][1] / 100), (icon_data.npc_data["pos"][2] / 100));
 					show = true;
@@ -226,11 +226,11 @@ function cb.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, 
 	worldmap_icon_frame:SetScript("OnEnter", function(self, event, ...)
 		if (self.icon:IsShown()) then
 			if (UIParent:IsVisible()) then
-				cb.map_icons.tooltip_frame:SetParent(UIParent);
+				cb.modules.map_icons.tooltip_frame:SetParent(UIParent);
 			else
-				cb.map_icons.tooltip_frame:SetParent(self);
+				cb.modules.map_icons.tooltip_frame:SetParent(self);
 			end
-			cb.map_icons.tooltip_frame:SetOwner(self, "ANCHOR_BOTTOMLEFT");
+			cb.modules.map_icons.tooltip_frame:SetOwner(self, "ANCHOR_BOTTOMLEFT");
 
 			local floor_label = "";
 			local floor = GetCurrentMapDungeonLevel();
@@ -240,13 +240,13 @@ function cb.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, 
 				floor_label = "|TInterface\\Minimap\\Minimap-PositionArrows:0:0:0:0:16:32:0:16:16:32|t";
 			end
 
-			cb.map_icons:setTooltipText(self.icon_data, floor_label);
-			cb.map_icons.tooltip_frame:Show();
+			cb.modules.map_icons:setTooltipText(self.icon_data, floor_label);
+			cb.modules.map_icons.tooltip_frame:Show();
 		end
 	end);
 	worldmap_icon_frame:SetScript("OnLeave", function(self)
 		if (self.icon:IsShown()) then
-			cb.map_icons.tooltip_frame:Hide();
+			cb.modules.map_icons.tooltip_frame:Hide();
 		end
 	end);
 	worldmap_icon_frame:SetScript("OnClick", function(self, button, down)
@@ -279,22 +279,23 @@ function cb.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, 
 	HBDPins:AddWorldMapIconMF(CBG_MOD_NAME, icon.worldmap_icon_frame, icon.map_id, icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
 end
 
-function cb.map_icons:registerModule(module_id, map_icons, icon_type)
+function cb.modules.map_icons:registerModule(module_id, map_icons, icon_type)
 	for map_id, map_data in pairs(map_icons) do
 		for side, side_data in cb.omg:sortedpairs(map_data) do
 			for npc_id, npc_data in cb.omg:sortedpairs(side_data) do
-				cb.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, npc_data);
+				cb.modules.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, npc_data);
 			end
 		end
 	end
 end
 
-function cb.map_icons:update()
-	local map_icon_cfg = CraftBusterOptions[CraftBusterEntry].map_icons;
+function cb.modules.map_icons:update()
+	local map_icon_cfg = cb.settings:get().map_icons;
 	local current_map_id = GetCurrentMapAreaID();
 	local player_side = UnitFactionGroup("player");
+
 	local skills = {};
-	for skill, skill_data in cb.omg:sortedpairs(CraftBusterOptions[CraftBusterEntry].skills) do
+	for skill, skill_data in cb.omg:sortedpairs(cb.settings:get().skills) do
 		skills[skill] = skill_data.id;
 	end
 
@@ -303,13 +304,17 @@ function cb.map_icons:update()
 		if (icon.module_id == "all") then
 			show_map_icons = true;
 		elseif (icon.icon_type == CBT_MAP_ICON_TRAINER) then
-			show_map_icons = CraftBusterOptions[CraftBusterEntry].modules[icon.module_id].show_trainer_map_icons;
-			if (CraftBusterEntry ~= CBG_GLOBAL_PROFILE or cb.omg:in_array(icon.module_id, skills)) then
+			if (CraftBusterOptions.globals[CraftBusterEntry_Personal] == "global" and cb.settings:get().map_icons.show_skills_only) then
+				if (cb.omg:in_array(icon.module_id, skills)) then
+					show_map_icons = cb.settings:get().modules[icon.module_id].show_trainer_map_icons;
+				else
+					show_map_icons = false;
+				end
+			else
+				show_map_icons = cb.settings:get().modules[icon.module_id].show_trainer_map_icons;
 			end
 		elseif (icon.icon_type == CBT_MAP_ICON_STATION) then
-			show_map_icons = CraftBusterOptions[CraftBusterEntry].modules[icon.module_id].show_station_map_icons;
-			if (CraftBusterEntry ~= CBG_GLOBAL_PROFILE or cb.omg:in_array(icon.module_id, skills)) then
-			end
+			show_map_icons = cb.settings:get().modules[icon.module_id].show_station_map_icons;
 		end
 
 		if ((icon.side == player_side or icon.side == "Neutral") and show_map_icons) then
@@ -317,7 +322,7 @@ function cb.map_icons:update()
 				icon.minimap_icon_frame:Show();
 				icon.minimap_icon_frame.icon:Show();
 				icon.minimap_icon_frame:SetScript("OnUpdate", function(self, elapsed)
-					cb.map_icons:updateMinimap(self, elapsed);
+					cb.modules.map_icons:updateMinimap(self, elapsed);
 				end);
 			else
 				icon.minimap_icon_frame:Hide();
@@ -346,7 +351,7 @@ function cb.map_icons:update()
 	end
 end
 
-function cb.map_icons:displayPosition()
+function cb.modules.map_icons:displayPosition()
 	local x, y, map_id, floor = HBD:GetPlayerZonePosition();
 	cb.omg:echo("Map: " .. GetMapNameByID(map_id) .. " (" .. map_id .. "), Floor: " .. floor .. " -> " .. cb.omg:round(x * 100, 1) .. ", " .. cb.omg:round(y * 100, 1));
 end

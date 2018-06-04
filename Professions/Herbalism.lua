@@ -707,7 +707,7 @@ local profession_data = {
 cb.professions:registerModule(profession_data);
 
 local function add_tooltip_info(frame, item_link)
-	if (CraftBusterOptions[CraftBusterEntry].modules[SKILL_ID].show_tooltips ~= true) then
+	if (cb.settings:get().modules[SKILL_ID].show_tooltips ~= true) then
 		return;
 	end
 
@@ -735,7 +735,7 @@ local function add_tooltip_info(frame, item_link)
 
 			if (found_item) then
 				count = 0;
-				local zone_limit = CraftBusterOptions[CraftBusterEntry].zone_limit;
+				local zone_limit = cb.settings:get().zone_limit;
 				local output_txt = CBL["SKILL_HERB_ZONE"];
 
 				local found = false;

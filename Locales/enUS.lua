@@ -38,12 +38,11 @@
 
 	-- Config Localization
 	CBL["CONFIG_TITLE_TRACK_PROFESSION"] = "Track Professions";
-	CBL["CONFIG_TITLE_TRACK_GATHERING"] = "Gathering Info";
+	CBL["CONFIG_TITLE_TRACK_SKILL_1"] = "Skill 1 (%s)";
+	CBL["CONFIG_TITLE_TRACK_SKILL_2"] = "Skill 2 (%s)";
 	CBL["CONFIG_TITLE_TOOLTIP_INFO"] = "Display Tooltip Info";
 	CBL["CONFIG_TITLE_BUSTER_ICON"] = "Show Buster Icon";
 	CBL["CONFIG_TITLE_SHOW_NODES"] = "Show Nodes";
-	CBL["CONFIG_TITLE_SHOW_WORLDMAP_PROFESSIONS"] = "Professions in Nodes List";
-	CBL["CONFIG_TITLE_SHOW_PROFESSION_GATHERS"] = "Show Profession Gathers";
 	CBL["CONFIG_TITLE_OTHER"] = "Other";
 	CBL["CONFIG_ALERTS_TAB_TRAINER"] = "Trainer Alerts";
 	CBL["CONFIG_ALERTS_TAB_NODES"] = "Node Alerts";
@@ -51,6 +50,7 @@
 	CBL["CONFIG_SHOW_MINIMAP"] = "Show Minimap Button";
 	CBL["CONFIG_SHOW_WORLD_MAP_ICONS"] = "Show World Map Icons";
 	CBL["CONFIG_SHOW_MINIMAP_ICONS"] = "Show Minimap Icons";
+	CBL["CONFIG_SHOW_SKILLS_ONLY_MAP_ICONS"] = "Show Character Skills Only";
 	CBL["CONFIG_TITLE_TRAINER_MAP_ICONS"] = "Trainer Map Icons";
 	CBL["CONFIG_TITLE_STATION_MAP_ICONS"] = "Station Map Icons";
 	CBL["CONFIG_MAP_ICON_" .. CBL[CBT_SKILL_BLCK]] = "Anvil";
@@ -63,19 +63,10 @@
 	CBL["CONFIG_TRACKER_POSITION"] = "Tracker Position";
 	CBL["CONFIG_SHOW_WORLDMAP"] = "Show Nodes List";
 	CBL["CONFIG_EXPAND_WORLDMAP"] = "Expand Nodes List";
-	CBL["CONFIG_SHOW_GATHERER"] = "Show Gatherer";
-	CBL["CONFIG_SHOW_ZONE_NODES"] = "Show Zone Nodes";
-	CBL["CONFIG_SHOW_SKILLUP_NODES"] = "Show Skill-Up Nodes";
-	CBL["CONFIG_EXPAND_GATHERER"] = "Expand Gatherer";
-	CBL["CONFIG_AUTOHIDE_GATHERER"] = "Auto-Hide Gatherer";
-	CBL["CONFIG_WORLDMAP_POSITION"] = "World Map Nodes List Position";
-	CBL["CONFIG_GATHERER_POSITION"] = "Gatherer Position";
 	CBL["CONFIG_BUSTER_POSITION"] = "Buster Position";
 	CBL["CONFIG_POSITION_LOCKED"] = "Position Locked";
 	CBL["CONFIG_POSITION_X"] = "X:";
 	CBL["CONFIG_POSITION_Y"] = "Y:";
-	CBL["CONFIG_POSITION_POINT"] = "Point:";
-	CBL["CONFIG_POSITION_RELATIVE_POINT"] = "Relative To:";
 	CBL["CONFIG_POSITION_SET"] = "SET";
 	CBL["CONFIG_POSITIONS_RESET"] = "Reset Positions";
 
@@ -121,16 +112,6 @@
 	CBL["BUSTER_FRAME_NONE_FOUND"] = "None Found!";
 	CBL["BUSTER_FRAME_CLICK"] = CBG_CLR_WHITE .. "Left-click to use ";
 	CBL["BUSTER_FRAME_IGNORE"] = CBG_CLR_WHITE .. "CTRL + Right-click to " .. CBG_CLR_RED .. "ignore";
-
-	-- Gather Frame Localization
-	CBL["GATHER_FRAME_HEADER"] = "Gathering";
-	CBL["GATHER_FRAME_NONE_FOUND"] = "None Found!";
-	CBL["GATHER_FRAME_ZONE_NODES"] = "-- Zone Nodes --";
-	CBL["GATHER_FRAME_SKILL_NODES"] = "-- Skill-up Nodes --";
-
-	-- World Map Frame Localization
-	CBL["WORLDMAP_FRAME_HEADER"] = "Zone Nodes";
-	CBL["WORLDMAP_FRAME_NONE_FOUND"] = "None Found!";
 
 	CBL["ERRORS_BUSTER_FRAME"] = CBG_CLR_RED .. "Error with buster frame functionality. Please report.";
 --end

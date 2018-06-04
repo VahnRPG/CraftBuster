@@ -37,11 +37,11 @@ SlashCmdList["CBUSTER"] = function(cmd)
 		cb.settings:initSettings(true);
 		cb:updateSkills(true);
 	elseif (cmd == "clearignore") then
-		cb.buster_frame:clearIgnore();
+		cb.modules.buster_frame:clearIgnore();
 	elseif (cmd == "update") then
 		cb:updateSkills(true);
 	elseif (cmd == "where") then
-		cb.map_icons:displayPosition();
+		cb.modules.map_icons:displayPosition();
 	end
 end
 
@@ -57,7 +57,6 @@ cb.frame:SetScript("OnEvent", function(self, event, ...)
 	end
 end);
 
-cb.modules = {};
 cb.leave_combat_commands = {};
 
 function cb:ADDON_LOADED(self, ...)
@@ -76,21 +75,7 @@ function cb:SKILL_LINES_CHANGED(self, ...)
 end
 
 function cb:ZONE_CHANGED_NEW_AREA()
-	cb.gather_frame:reset();
-	local map_id = GetCurrentMapAreaID();
-	if (map_id ~= nil) then
-		if (cb.professions.modules and next(cb.professions.modules)) then
-			for module_id, module_data in cb.omg:sortedpairs(cb.professions.modules) do
-				if (cb.professions.modules[module_id].nodes ~= nil) then
-					cb.professions:handleGather(module_id, map_id);
-				end
-			end
-		end
-	end
-	cb.gather_frame:update();
-	cb.gather_frame:updatePosition();
-
-	cb.map_icons:update();
+	cb.modules.map_icons:update();
 end
 
 function cb:PLAYER_REGEN_ENABLED()
@@ -148,8 +133,8 @@ function cb:updateSkills(reload)
 		cb.professions:handleSkill(skill);
 	end
 
-	cb.skill_frame:update();
-	cb.skill_frame:updatePosition();
+	cb.modules.skill_frame:update();
+	cb.modules.skill_frame:updatePosition();
 	cb:ZONE_CHANGED_NEW_AREA();
 end
 
@@ -217,7 +202,7 @@ end
 function cb:getProfessionLevel(max_level)
 	local profession_level;
 	for i=1,#CBG_PROFESSION_RANKS do
-		local min_skill_level, max_skill_level, title = CBG_PROFESSION_RANKS[i][1], CBG_PROFESSION_RANKS[i][2], CBG_PROFESSION_RANKS[i][3];
+		local max_skill_level = CBG_PROFESSION_RANKS[i][2];
 		if (max_level < max_skill_level) then
 			break;
 		end

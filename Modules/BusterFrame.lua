@@ -5,50 +5,50 @@ BUSTER_ITEM_WRAP = 4;
 MAX_BUSTER_LINES = ceil(MAX_BUSTER_ITEMS / BUSTER_ITEM_WRAP);
 BUSTER_ICON_ROW_HEIGHT = 36;
 
-cb.buster_frame = {};
-cb.buster_frame.mover_frame = CreateFrame("Frame", "CraftBuster_BusterFrame_MoverFrame", UIParent, "CraftBuster_MoverBar_Template");
-cb.buster_frame.mover_frame:SetSize(180, 10);
-cb.buster_frame.mover_frame:RegisterForDrag("LeftButton");
-cb.buster_frame.mover_frame:SetScript("OnDragStart", function(self)
-	if (not CraftBusterOptions[CraftBusterEntry].buster_frame.locked) then
+cb.modules.buster_frame = {};
+cb.modules.buster_frame.mover_frame = CreateFrame("Frame", "CraftBuster_BusterFrame_MoverFrame", UIParent, "CraftBuster_MoverBar_Template");
+cb.modules.buster_frame.mover_frame:SetSize(180, 10);
+cb.modules.buster_frame.mover_frame:RegisterForDrag("LeftButton");
+cb.modules.buster_frame.mover_frame:SetScript("OnDragStart", function(self)
+	if (not cb.settings:get().buster_frame.locked) then
 		self.dragging = true;
 		self:StartMoving();
 	end
 end);
-cb.buster_frame.mover_frame:SetScript("OnDragStop", function(self)
-	if (not CraftBusterOptions[CraftBusterEntry].buster_frame.locked) then
+cb.modules.buster_frame.mover_frame:SetScript("OnDragStop", function(self)
+	if (not cb.settings:get().buster_frame.locked) then
 		self.dragging = false;
 		self:StopMovingOrSizing();
 	end
 end);
-cb.buster_frame.mover_frame:SetScript("OnUpdate", function(self)
+cb.modules.buster_frame.mover_frame:SetScript("OnUpdate", function(self)
 	if (self.dragging) then
-		cb.buster_frame:dragFrame();
+		cb.modules.buster_frame:dragFrame();
 	end
 end);
-cb.buster_frame.mover_frame:Hide();
+cb.modules.buster_frame.mover_frame:Hide();
 CraftBuster_BusterFrame_MoverFrameTexture:SetSize(180, 16);
 CraftBuster_BusterFrame_MoverFrameLabel:SetText(CBL["BUSTER_FRAME_HEADER"]);
 CraftBuster_BusterFrame_MoverFrame_LockFrame:SetScript("OnClick", function(self)
-	cb.buster_frame:lockFrame();
+	cb.modules.buster_frame:lockFrame();
 end);
 CraftBuster_BusterFrame_MoverFrame_CollapseFrame:SetScript("OnClick", function(self)
-	cb.buster_frame:collapseFrame();
+	cb.modules.buster_frame:collapseFrame();
 end);
 CraftBuster_BusterFrame_MoverFrame_CloseFrame:SetScript("OnClick", function(self)
-	cb.buster_frame:closeFrame();
+	cb.modules.buster_frame:closeFrame();
 end);
 
-cb.buster_frame.frame = CreateFrame("Frame", "CraftBuster_BusterFrame_Frame", UIParent, "CraftBuster_ContainerFrame_Template");
-cb.buster_frame.frame:SetSize(180, 185);
-cb.buster_frame.frame:SetPoint("TOPLEFT", cb.buster_frame.mover_frame, "BOTTOMLEFT", 0, 2);
-cb.buster_frame.frame:RegisterEvent("ADDON_LOADED");
-cb.buster_frame.frame:SetScript("OnEvent", function(self, event, ...)
+cb.modules.buster_frame.frame = CreateFrame("Frame", "CraftBuster_BusterFrame_Frame", UIParent, "CraftBuster_ContainerFrame_Template");
+cb.modules.buster_frame.frame:SetSize(180, 185);
+cb.modules.buster_frame.frame:SetPoint("TOPLEFT", cb.modules.buster_frame.mover_frame, "BOTTOMLEFT", 0, 2);
+cb.modules.buster_frame.frame:RegisterEvent("ADDON_LOADED");
+cb.modules.buster_frame.frame:SetScript("OnEvent", function(self, event, ...)
 	if (cb.settings.init) then
-		return cb.buster_frame[event] and cb.buster_frame[event](cb, ...)
+		return cb.modules.buster_frame[event] and cb.modules.buster_frame[event](cb, ...)
 	end
 end);
-cb.buster_frame.frame:SetScript("OnShow", function(self, ...)
+cb.modules.buster_frame.frame:SetScript("OnShow", function(self, ...)
 	self:RegisterEvent("BAG_UPDATE");
 	self:RegisterEvent("UNIT_SPELLCAST_START");
 	self:RegisterEvent("UNIT_SPELLCAST_SENT");
@@ -57,9 +57,9 @@ cb.buster_frame.frame:SetScript("OnShow", function(self, ...)
 	self:RegisterEvent("UNIT_SPELLCAST_STOP");
 	self:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED");
 	self:RegisterEvent("GET_ITEM_INFO_RECEIVED");
-	cb.buster_frame:updatePosition();
+	cb.modules.buster_frame:updatePosition();
 end);
-cb.buster_frame.frame:SetScript("OnHide", function(self, ...)
+cb.modules.buster_frame.frame:SetScript("OnHide", function(self, ...)
 	self:UnregisterEvent("BAG_UPDATE");
 	self:UnregisterEvent("UNIT_SPELLCAST_START");
 	self:UnregisterEvent("UNIT_SPELLCAST_SENT");
@@ -69,172 +69,172 @@ cb.buster_frame.frame:SetScript("OnHide", function(self, ...)
 	self:UnregisterEvent("UNIT_SPELLCAST_INTERRUPTED");
 	self:UnregisterEvent("GET_ITEM_INFO_RECEIVED");
 end);
-cb.buster_frame.frame:Hide();
+cb.modules.buster_frame.frame:Hide();
 
-cb.buster_frame.frame.none_found = cb.buster_frame.frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight");
-cb.buster_frame.frame.none_found:SetPoint("CENTER");
-cb.buster_frame.frame.none_found:SetText(CBL["BUSTER_FRAME_NONE_FOUND"]);
+cb.modules.buster_frame.frame.none_found = cb.modules.buster_frame.frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight");
+cb.modules.buster_frame.frame.none_found:SetPoint("CENTER");
+cb.modules.buster_frame.frame.none_found:SetText(CBL["BUSTER_FRAME_NONE_FOUND"]);
 
-cb.buster_frame.frame.scroll_frame = CreateFrame("ScrollFrame", cb.buster_frame.frame:GetName() .. "_ScrollFrame", cb.buster_frame.frame, "FauxScrollFrameTemplate");
-cb.buster_frame.frame.scroll_frame:SetSize(180, 170);
-cb.buster_frame.frame.scroll_frame:SetPoint("TOPLEFT", cb.buster_frame.frame, "TOPLEFT", 0, -11);
-cb.buster_frame.frame.scroll_frame:SetScript("OnVerticalScroll", function(self, offset, ...)
+cb.modules.buster_frame.frame.scroll_frame = CreateFrame("ScrollFrame", cb.modules.buster_frame.frame:GetName() .. "_ScrollFrame", cb.modules.buster_frame.frame, "FauxScrollFrameTemplate");
+cb.modules.buster_frame.frame.scroll_frame:SetSize(180, 170);
+cb.modules.buster_frame.frame.scroll_frame:SetPoint("TOPLEFT", cb.modules.buster_frame.frame, "TOPLEFT", 0, -11);
+cb.modules.buster_frame.frame.scroll_frame:SetScript("OnVerticalScroll", function(self, offset, ...)
 	FauxScrollFrame_OnVerticalScroll(self, offset, BUSTER_ICON_ROW_HEIGHT, function()
-		cb.buster_frame:scrollFrameUpdate();
+		cb.modules.buster_frame:scrollFrameUpdate();
 	end);
 end);
 
-cb.buster_frame.frame.scroll_frame.scroll_up = cb.buster_frame.frame.scroll_frame:CreateTexture("ARTWORK");
-cb.buster_frame.frame.scroll_frame.scroll_up:SetSize(31, 170);
-cb.buster_frame.frame.scroll_frame.scroll_up:SetPoint("TOPLEFT", cb.buster_frame.frame.scroll_frame, "TOPRIGHT", -2, 5);
-cb.buster_frame.frame.scroll_frame.scroll_up:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-ScrollBar");
-cb.buster_frame.frame.scroll_frame.scroll_up:SetTexCoord(0, 0.484375, 0, 1.0);
+cb.modules.buster_frame.frame.scroll_frame.scroll_up = cb.modules.buster_frame.frame.scroll_frame:CreateTexture("ARTWORK");
+cb.modules.buster_frame.frame.scroll_frame.scroll_up:SetSize(31, 170);
+cb.modules.buster_frame.frame.scroll_frame.scroll_up:SetPoint("TOPLEFT", cb.modules.buster_frame.frame.scroll_frame, "TOPRIGHT", -2, 5);
+cb.modules.buster_frame.frame.scroll_frame.scroll_up:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-ScrollBar");
+cb.modules.buster_frame.frame.scroll_frame.scroll_up:SetTexCoord(0, 0.484375, 0, 1.0);
 									
-cb.buster_frame.frame.scroll_frame.scroll_down = cb.buster_frame.frame.scroll_frame:CreateTexture("ARTWORK");
-cb.buster_frame.frame.scroll_frame.scroll_down:SetSize(31, 106);
-cb.buster_frame.frame.scroll_frame.scroll_down:SetPoint("BOTTOMLEFT", cb.buster_frame.frame.scroll_frame, "BOTTOMRIGHT", -2, -2);
-cb.buster_frame.frame.scroll_frame.scroll_down:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-ScrollBar");
-cb.buster_frame.frame.scroll_frame.scroll_down:SetTexCoord(0.515625, 1.0, 0, 0.4140625);
+cb.modules.buster_frame.frame.scroll_frame.scroll_down = cb.modules.buster_frame.frame.scroll_frame:CreateTexture("ARTWORK");
+cb.modules.buster_frame.frame.scroll_frame.scroll_down:SetSize(31, 106);
+cb.modules.buster_frame.frame.scroll_frame.scroll_down:SetPoint("BOTTOMLEFT", cb.modules.buster_frame.frame.scroll_frame, "BOTTOMRIGHT", -2, -2);
+cb.modules.buster_frame.frame.scroll_frame.scroll_down:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-ScrollBar");
+cb.modules.buster_frame.frame.scroll_frame.scroll_down:SetTexCoord(0.515625, 1.0, 0, 0.4140625);
 
-cb.buster_frame.item_buttons = {};
-cb.buster_frame.items = {};
-cb.buster_frame.skill_data = {
+cb.modules.buster_frame.item_buttons = {};
+cb.modules.buster_frame.items = {};
+cb.modules.buster_frame.skill_data = {
 	["skill"] = nil,
 	["skill_id"] = nil,
 	["spell_id"] = nil,
 };
 
-function cb.buster_frame:ADDON_LOADED()
-	cb.buster_frame.frame:UnregisterEvent("ADDON_LOADED");
+function cb.modules.buster_frame:ADDON_LOADED()
+	cb.modules.buster_frame.frame:UnregisterEvent("ADDON_LOADED");
 end
 
 local last_update = 0;
-function cb.buster_frame:BAG_UPDATE()
+function cb.modules.buster_frame:BAG_UPDATE()
 	if (time() >= last_update) then
 		last_update = time() + 1;
-		cb.buster_frame:update();
+		cb.modules.buster_frame:update();
 	end
 end
 
-function cb.buster_frame:UNIT_SPELLCAST_START(self, ...)
-	cb.buster_frame:handleSpellStart(self, ...);
+function cb.modules.buster_frame:UNIT_SPELLCAST_START(self, ...)
+	cb.modules.buster_frame:handleSpellStart(self, ...);
 end
-function cb.buster_frame:UNIT_SPELLCAST_SENT(self, ...)
-	cb.buster_frame:handleSpellStart(self, ...);
+function cb.modules.buster_frame:UNIT_SPELLCAST_SENT(self, ...)
+	cb.modules.buster_frame:handleSpellStart(self, ...);
 end
-function cb.buster_frame:handleSpellStart(self, ...)
+function cb.modules.buster_frame:handleSpellStart(self, ...)
 	local spell_name, rank, spell_line_id_counter, spell_id = ...;
-	if (spell_id == cb.buster_frame.skill_data["spell_id"] or spell_name == "Pick Lock") then
+	if (spell_id == cb.modules.buster_frame.skill_data["spell_id"] or spell_name == "Pick Lock") then
 		cb.omg:create_timer(2, function()
-			cb.buster_frame:update();
+			cb.modules.buster_frame:update();
 		end);
 	end
 end
 
-function cb.buster_frame:UNIT_SPELLCAST_SUCCEEDED(self, ...)
-	cb.buster_frame:handleSpellFinish(self, ...);
+function cb.modules.buster_frame:UNIT_SPELLCAST_SUCCEEDED(self, ...)
+	cb.modules.buster_frame:handleSpellFinish(self, ...);
 end
-function cb.buster_frame:UNIT_SPELLCAST_FAILED(self, ...)
-	cb.buster_frame:handleSpellFinish(self, ...);
+function cb.modules.buster_frame:UNIT_SPELLCAST_FAILED(self, ...)
+	cb.modules.buster_frame:handleSpellFinish(self, ...);
 end
-function cb.buster_frame:UNIT_SPELLCAST_STOP(self, ...)
-	cb.buster_frame:handleSpellFinish(self, ...);
+function cb.modules.buster_frame:UNIT_SPELLCAST_STOP(self, ...)
+	cb.modules.buster_frame:handleSpellFinish(self, ...);
 end
-function cb.buster_frame:UNIT_SPELLCAST_INTERRUPTED(self, ...)
-	cb.buster_frame:handleSpellFinish(self, ...);
+function cb.modules.buster_frame:UNIT_SPELLCAST_INTERRUPTED(self, ...)
+	cb.modules.buster_frame:handleSpellFinish(self, ...);
 end
-function cb.buster_frame:handleSpellFinish(self, ...)
+function cb.modules.buster_frame:handleSpellFinish(self, ...)
 	local spell_name, rank, spell_line_id_counter, spell_id = ...;
-	if (spell_id == cb.buster_frame.skill_data["spell_id"] or spell_name == "Pick Lock") then
-		cb.buster_frame:update();
+	if (spell_id == cb.modules.buster_frame.skill_data["spell_id"] or spell_name == "Pick Lock") then
+		cb.modules.buster_frame:update();
 	end
 end
 
-function cb.buster_frame:GET_ITEM_INFO_RECEIVED(self, ...)
-	cb.buster_frame:update();
+function cb.modules.buster_frame:GET_ITEM_INFO_RECEIVED(self, ...)
+	cb.modules.buster_frame:update();
 end
 
-function cb.buster_frame:updateSkill(skill, skill_id, spell_id)
-	cb.buster_frame.skill_data = {
+function cb.modules.buster_frame:updateSkill(skill, skill_id, spell_id)
+	cb.modules.buster_frame.skill_data = {
 		["skill"] = skill,
 		["skill_id"] = skill_id,
 		["spell_id"] = spell_id,
 	};
 end
 
-function cb.buster_frame:update()
+function cb.modules.buster_frame:update()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand(function() cb.buster_frame:update(); end);
+		cb:addLeaveCombatCommand(function() cb.modules.buster_frame:update(); end);
 		return;
 	end
 	
-	local skill_id = cb.buster_frame.skill_data["skill_id"];
-	if (skill_id and CraftBusterOptions[CraftBusterEntry].buster_frame.show) then
-		if (CraftBusterOptions[CraftBusterEntry].buster_frame.state == "expanded") then
+	local skill_id = cb.modules.buster_frame.skill_data["skill_id"];
+	if (skill_id and cb.settings:get().buster_frame.show) then
+		if (cb.settings:get().buster_frame.state == "expanded") then
 			local module_data = cb.professions.modules[skill_id];
 			local count = 0;
-			cb.buster_frame.items = {};
+			cb.modules.buster_frame.items = {};
 
 			bustables = module_data.bustable_function();
 			if (bustables and next(bustables)) then
 				for i,item_data in cb.omg:sortedpairs(bustables) do
-					local ignored = CraftBusterOptions[CraftBusterEntry].buster_frame.ignored_items[item_data.item_id];
+					local ignored = cb.settings:get().buster_frame.ignored_items[item_data.item_id];
 					if (not ignored and (item_data.total >= 5 or skill_id == CBT_SKILL_PICK or skill_id == CBT_SKILL_ENCH)) then
 						count = count + 1;
-						cb.buster_frame.items[count] = {};
-						cb.buster_frame.items[count].item_id = item_data.item_id;
+						cb.modules.buster_frame.items[count] = {};
+						cb.modules.buster_frame.items[count].item_id = item_data.item_id;
 						if (item_data.bag ~= nil and item_data.slot ~= nil) then
-							cb.buster_frame.items[count].bag = item_data.bag;
-							cb.buster_frame.items[count].slot = item_data.slot;
+							cb.modules.buster_frame.items[count].bag = item_data.bag;
+							cb.modules.buster_frame.items[count].slot = item_data.slot;
 						end
-						cb.buster_frame.items[count].total = item_data.total;
+						cb.modules.buster_frame.items[count].total = item_data.total;
 					end
 				end
 			end
 
-			cb.buster_frame.mover_frame:Show();
-			_G[cb.buster_frame.mover_frame:GetName() .. "_CollapseFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Collapse");
-			cb.buster_frame.frame:Show();
+			cb.modules.buster_frame.mover_frame:Show();
+			_G[cb.modules.buster_frame.mover_frame:GetName() .. "_CollapseFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Collapse");
+			cb.modules.buster_frame.frame:Show();
 			if (count > 0) then
-				cb.buster_frame.frame.none_found:Hide();
+				cb.modules.buster_frame.frame.none_found:Hide();
 			else
-				cb.buster_frame.frame.none_found:Show();
+				cb.modules.buster_frame.frame.none_found:Show();
 				for i=1, MAX_BUSTER_ITEMS do
 					_G["CraftBuster_BusterFrame_Item" .. i]:Hide();
 				end
 			end
-			cb.buster_frame:scrollFrameUpdate();
+			cb.modules.buster_frame:scrollFrameUpdate();
 		else
-			cb.buster_frame.mover_frame:Show();
-			_G[cb.buster_frame.mover_frame:GetName() .. "_CollapseFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Expand");
-			cb.buster_frame.frame:Hide();
+			cb.modules.buster_frame.mover_frame:Show();
+			_G[cb.modules.buster_frame.mover_frame:GetName() .. "_CollapseFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Expand");
+			cb.modules.buster_frame.frame:Hide();
 		end
 
-		if (not CraftBusterOptions[CraftBusterEntry].buster_frame.locked) then
-			_G[cb.buster_frame.mover_frame:GetName() .. "_LockFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Unlocked");
+		if (not cb.settings:get().buster_frame.locked) then
+			_G[cb.modules.buster_frame.mover_frame:GetName() .. "_LockFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Unlocked");
 		else
-			_G[cb.buster_frame.mover_frame:GetName() .. "_LockFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Locked");
+			_G[cb.modules.buster_frame.mover_frame:GetName() .. "_LockFrame"]:SetNormalTexture("Interface\\AddOns\\CraftBuster\\Images\\CraftBuster_Mover_Locked");
 		end
 	else
-		cb.buster_frame.mover_frame:Hide();
-		cb.buster_frame.frame:Hide();
+		cb.modules.buster_frame.mover_frame:Hide();
+		cb.modules.buster_frame.frame:Hide();
 	end
 end
 
-function cb.buster_frame:scrollFrameInit()
-	FauxScrollFrame_SetOffset(cb.buster_frame.frame.scroll_frame, 0);
+function cb.modules.buster_frame:scrollFrameInit()
+	FauxScrollFrame_SetOffset(cb.modules.buster_frame.frame.scroll_frame, 0);
 	
 	for i=1, MAX_BUSTER_ITEMS do
-		cb.buster_frame.item_buttons[i] = CreateFrame("Button", "CraftBuster_BusterFrame_Item" .. i, cb.buster_frame.frame, "CraftBuster_BusterFrame_Button_Template");
+		cb.modules.buster_frame.item_buttons[i] = CreateFrame("Button", "CraftBuster_BusterFrame_Item" .. i, cb.modules.buster_frame.frame, "CraftBuster_BusterFrame_Button_Template");
 		if (i == 1) then
-			cb.buster_frame.item_buttons[i]:SetPoint("TOPLEFT", cb.buster_frame.frame.scroll_frame, "TOPLEFT", 11, 0);
+			cb.modules.buster_frame.item_buttons[i]:SetPoint("TOPLEFT", cb.modules.buster_frame.frame.scroll_frame, "TOPLEFT", 11, 0);
 		elseif (mod(i, BUSTER_ITEM_WRAP) == 1) then
-			cb.buster_frame.item_buttons[i]:SetPoint("TOPLEFT", "CraftBuster_BusterFrame_Item" .. (i - BUSTER_ITEM_WRAP), "BOTTOMLEFT", 0, -5);
+			cb.modules.buster_frame.item_buttons[i]:SetPoint("TOPLEFT", "CraftBuster_BusterFrame_Item" .. (i - BUSTER_ITEM_WRAP), "BOTTOMLEFT", 0, -5);
 		else
-			cb.buster_frame.item_buttons[i]:SetPoint("TOPLEFT", "CraftBuster_BusterFrame_Item" .. (i - 1), "TOPRIGHT", 5, 0);
+			cb.modules.buster_frame.item_buttons[i]:SetPoint("TOPLEFT", "CraftBuster_BusterFrame_Item" .. (i - 1), "TOPRIGHT", 5, 0);
 		end
-		cb.buster_frame.item_buttons[i]:SetID(i);
-		cb.buster_frame.item_buttons[i]:SetScript("OnEnter", function(self, ...)
+		cb.modules.buster_frame.item_buttons[i]:SetID(i);
+		cb.modules.buster_frame.item_buttons[i]:SetScript("OnEnter", function(self, ...)
 			if (self.item_link) then
 				local x = self:GetRight();
 				if (x >= (GetScreenWidth() / 2)) then
@@ -251,23 +251,23 @@ function cb.buster_frame:scrollFrameInit()
 		end);
 	end
 end
-cb.buster_frame:scrollFrameInit();
+cb.modules.buster_frame:scrollFrameInit();
 
-function cb.buster_frame:scrollFrameUpdate()
-	local offset = FauxScrollFrame_GetOffset(cb.buster_frame.frame.scroll_frame);
+function cb.modules.buster_frame:scrollFrameUpdate()
+	local offset = FauxScrollFrame_GetOffset(cb.modules.buster_frame.frame.scroll_frame);
 	
 	for i=1, MAX_BUSTER_ITEMS do
 		local button_frame_name = "CraftBuster_BusterFrame_Item" .. i;
 		local button_frame = _G[button_frame_name];
 		local index = (offset * BUSTER_ITEM_WRAP) + i;
-		if (cb.buster_frame.items[index] and next(cb.buster_frame.items[index])) then
-			local item_data = cb.buster_frame.items[index];
+		if (cb.modules.buster_frame.items[index] and next(cb.modules.buster_frame.items[index])) then
+			local item_data = cb.modules.buster_frame.items[index];
 
-			local spell_name = GetSpellInfo(cb.buster_frame.skill_data["spell_id"]);
+			local spell_name = GetSpellInfo(cb.modules.buster_frame.skill_data["spell_id"]);
 			local item_name,item_link,_,_,_,_,_,_,_,item_texture = GetItemInfo(item_data.item_id);
 			SetItemButtonTexture(button_frame, item_texture);
 			SetItemButtonCount(button_frame, item_data.total);
-			button_frame.spell_id = cb.buster_frame.skill_data["spell_id"];
+			button_frame.spell_id = cb.modules.buster_frame.skill_data["spell_id"];
 			button_frame.item_id = item_data.item_id;
 			button_frame.item_link = item_link;
 			button_frame:SetAttribute("type1", "spell");
@@ -282,8 +282,8 @@ function cb.buster_frame:scrollFrameUpdate()
 			button_frame:SetAttribute("ctrl-type2", "function");
 			button_frame:SetAttribute("_function", function()
 				if (not InCombatLockdown() and IsControlKeyDown()) then
-					CraftBusterOptions[CraftBusterEntry].buster_frame.ignored_items[item_data.item_id] = true;
-					cb.buster_frame:update();
+					cb.settings:get().buster_frame.ignored_items[item_data.item_id] = true;
+					cb.modules.buster_frame:update();
 				end
 			end);
 			button_frame:Show();
@@ -292,81 +292,81 @@ function cb.buster_frame:scrollFrameUpdate()
 		end
 	end
 
-	FauxScrollFrame_Update(cb.buster_frame.frame.scroll_frame, ceil(cb.omg:tcount(cb.buster_frame.items) / BUSTER_ITEM_WRAP), MAX_BUSTER_LINES, BUSTER_ICON_ROW_HEIGHT);
+	FauxScrollFrame_Update(cb.modules.buster_frame.frame.scroll_frame, ceil(cb.omg:tcount(cb.modules.buster_frame.items) / BUSTER_ITEM_WRAP), MAX_BUSTER_LINES, BUSTER_ICON_ROW_HEIGHT);
 end
 
-function cb.buster_frame:clearIgnore()
-	CraftBusterOptions[CraftBusterEntry].buster_frame.ignored_items = {};
-	cb.buster_frame:update();
+function cb.modules.buster_frame:clearIgnore()
+	cb.settings:get().buster_frame.ignored_items = {};
+	cb.modules.buster_frame:update();
 end
 
-function cb.buster_frame:lockFrame()
-	if (not CraftBusterOptions[CraftBusterEntry].buster_frame.locked) then
-		CraftBusterOptions[CraftBusterEntry].buster_frame.locked = true;
+function cb.modules.buster_frame:lockFrame()
+	if (not cb.settings:get().buster_frame.locked) then
+		cb.settings:get().buster_frame.locked = true;
 	else
-		CraftBusterOptions[CraftBusterEntry].buster_frame.locked = false;
+		cb.settings:get().buster_frame.locked = false;
 	end
-	cb.buster_frame:update();
+	cb.modules.buster_frame:update();
 end
 
-function cb.buster_frame:collapseFrame()
+function cb.modules.buster_frame:collapseFrame()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand(function() cb.buster_frame:collapseFrame(); end);
+		cb:addLeaveCombatCommand(function() cb.modules.buster_frame:collapseFrame(); end);
 		return;
 	end
 	
-	if (cb.buster_frame.frame:IsShown()) then
-		cb.buster_frame.frame:Hide();
-		CraftBusterOptions[CraftBusterEntry].buster_frame.state = "collapsed";
+	if (cb.modules.buster_frame.frame:IsShown()) then
+		cb.modules.buster_frame.frame:Hide();
+		cb.settings:get().buster_frame.state = "collapsed";
 	else
-		cb.buster_frame.frame:Show();
-		CraftBusterOptions[CraftBusterEntry].buster_frame.state = "expanded";
+		cb.modules.buster_frame.frame:Show();
+		cb.settings:get().buster_frame.state = "expanded";
 	end
-	cb.buster_frame:update();
+	cb.modules.buster_frame:update();
 end
 
 function CraftBuster_BusterFrame_Collapse_OnClick()
-	cb.buster_frame:collapseFrame();
+	cb.modules.buster_frame:collapseFrame();
 end
 
-function cb.buster_frame:closeFrame()
+function cb.modules.buster_frame:closeFrame()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand(function() cb.buster_frame:closeFrame(); end);
+		cb:addLeaveCombatCommand(function() cb.modules.buster_frame:closeFrame(); end);
 		return;
 	end
 	
-	cb.buster_frame.mover_frame:Hide();
-	cb.buster_frame.frame:Hide();
-	if (not cb.buster_frame.mover_frame:IsShown()) then
-		CraftBusterOptions[CraftBusterEntry].buster_frame.show = false;
+	cb.modules.buster_frame.mover_frame:Hide();
+	cb.modules.buster_frame.frame:Hide();
+	if (not cb.modules.buster_frame.mover_frame:IsShown()) then
+		cb.settings:get().buster_frame.show = false;
 	end
 end
 
-function cb.buster_frame:dragFrame()
-	local point, _, relative_point, x, y = cb.buster_frame.mover_frame:GetPoint();
-	CraftBusterOptions[CraftBusterEntry].buster_frame.position.point = point;
-	CraftBusterOptions[CraftBusterEntry].buster_frame.position.relative_point = relative_point;
-	CraftBusterOptions[CraftBusterEntry].buster_frame.position.x = x;
-	CraftBusterOptions[CraftBusterEntry].buster_frame.position.y = y;
-	cb.buster_frame:updatePosition();
+function cb.modules.buster_frame:dragFrame()
+	local point, _, relative_point, x, y = cb.modules.buster_frame.mover_frame:GetPoint();
+	cb.settings:get().buster_frame.position.point = point;
+	cb.settings:get().buster_frame.position.relative_point = relative_point;
+	cb.settings:get().buster_frame.position.x = x;
+	cb.settings:get().buster_frame.position.y = y;
+	cb.modules.buster_frame:updatePosition();
 end
 
-function cb.buster_frame:updatePosition()
+function cb.modules.buster_frame:updatePosition()
 	if (InCombatLockdown()) then
-		cb:addLeaveCombatCommand(function() cb.buster_frame:updatePosition(); end);
+		cb:addLeaveCombatCommand(function() cb.modules.buster_frame:updatePosition(); end);
 		return;
 	end
-	local position = CraftBusterOptions[CraftBusterEntry].buster_frame.position;
-	cb.buster_frame.mover_frame:ClearAllPoints();
-	cb.buster_frame.mover_frame:SetPoint(position.point, nil, position.relative_point, position.x, position.y);
+	local position = cb.settings:get().buster_frame.position;
+	cb.modules.buster_frame.mover_frame:ClearAllPoints();
+	cb.modules.buster_frame.mover_frame:SetPoint(position.point, nil, position.relative_point, position.x, position.y);
 end
 
-function cb.buster_frame:resetPosition()
-	CraftBusterOptions[CraftBusterEntry].buster_frame.position = {
+function cb.modules.buster_frame:resetPosition()
+	cb.settings:get().buster_frame.position = {
 		point = "TOPLEFT",
 		relative_point = "TOPLEFT",
 		x = 490,
 		y = -330,
 	};
-	cb.buster_frame:updatePosition();
+	cb.modules.buster_frame:updatePosition();
 end
