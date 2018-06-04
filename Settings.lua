@@ -74,6 +74,9 @@ function cb.settings:initSettings(reset)
 		CraftBusterOptions.globals[CraftBusterEntry_Personal] = "global";
 		CraftBusterEntry = CraftBusterOptions.globals[CraftBusterEntry_Personal];
 	end
+	if (not CraftBusterOptions[CraftBusterEntry_Personal] or reset == "character") then
+		CraftBusterOptions[CraftBusterEntry_Personal] = cb.omg:clone_table(cb.settings:default());
+	end
 	if (not CraftBusterOptions[CraftBusterEntry] or reset == "character") then
 		CraftBusterOptions[CraftBusterEntry] = cb.omg:clone_table(cb.settings:default());
 	end
