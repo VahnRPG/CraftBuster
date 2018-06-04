@@ -1,3 +1,7 @@
+v 1.2.1
+	- Fixed alerts for new characters
+	- Fixed libraries for when CraftBuster is the only thing installed
+
 v 1.2.0
 	- Initial work on global settings functionality
 	- Removed 'gather' frames
