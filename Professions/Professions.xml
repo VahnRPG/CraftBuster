@@ -14,7 +14,6 @@
 	<Script file="Skinning.lua" />
 	<Script file="Tailoring.lua" />
 	<Script file="Cooking.lua" />
-	<Script file="FirstAid.lua" />
 	<Script file="Fishing.lua" />
 	<Script file="Archaeology.lua" />
 </Ui>

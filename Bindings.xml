@@ -17,9 +17,6 @@
 	<Binding category="ADDONS" name="CB_OPEN_COOKING">
 		_G["CraftBuster_SkillFrame_cookingFrame_spell_1"]:Click();
 	</Binding>
-	<Binding category="ADDONS" name="CB_OPEN_FIRST_AID">
-		_G["CraftBuster_SkillFrame_first_aidFrame_spell_1"]:Click();
-	</Binding>
 	<Binding category="ADDONS" name="CB_OPEN_ARCHAEOLOGY">
 		_G["CraftBuster_SkillFrame_archaeologyFrame_spell_1"]:Click();
 	</Binding>

@@ -15,7 +15,6 @@ CBT_SKILL_JEWL = 755;	--Jewelcrafting
 CBT_SKILL_INSC = 773;	--Inscription
 --Secondary
 CBT_SKILL_COOK = 185;	--Cooking
-CBT_SKILL_FRST = 129;	--First Aid
 CBT_SKILL_FISH = 356;	--Fishing
 CBT_SKILL_ARCH = 794;	--Archaeology
 --Rogue-only

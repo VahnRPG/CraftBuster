@@ -4,9 +4,10 @@
 CBL = {};
 CBL["MAP_NAMES"] = {};
 for _,map_id in pairs(CBG_MAP_IDS) do
-	if (GetMapNameByID(map_id) ~= nil) then
-		CBL["MAP_NAMES"][map_id] = GetMapNameByID(map_id);
+	local map_info = C_Map.GetMapInfo(map_id);
+	if (map_info ~= nil) then
+		CBL["MAP_NAMES"][map_id] = map_info.name;
 	else
-		CBL["MAP_NAMES"][map_id] = "Nil map id: " .. map_id;
+		CBL["MAP_NAMES"][map_id] = "Invalid map info for id: " .. map_id;
 	end
 end
