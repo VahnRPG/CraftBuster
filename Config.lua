@@ -26,7 +26,6 @@ local skills = {
 	["skill_1"] = nil,
 	["skill_2"] = nil,
 	["cooking"] = nil,
-	["first_aid"] = nil,
 	["fishing"] = nil,
 	["archaeology"] = nil,
 	["lockpicking"] = nil,
@@ -35,9 +34,8 @@ local rank_skills = {
 	[1] = "skill_1",
 	[2] = "skill_2",
 	[3] = "cooking",
-	[4] = "first_aid",
-	[5] = "fishing",
-	[6] = "archaeology",
+	[4] = "fishing",
+	[5] = "archaeology",
 };
 local _, player_class = UnitClass("player");
 if (player_class == "ROGUE") then
@@ -151,7 +149,7 @@ config_frame:SetScript("OnShow", function(config_frame)
 	
 	local settings_label = config_frame:CreateFontString(nil, "ARTWORK", "GameFontNormal");
 	settings_label:SetPoint("TOPLEFT", title_label, "BOTTOMLEFT", 0, -20);
-	settings_label:SetText(QBL["CONFIG_SETTINGS_TYPE"]);
+	settings_label:SetText(CBL["CONFIG_SETTINGS_TYPE"]);
 	
 	settings_menu = CreateFrame("Frame", config_frame_name .. "SetSettings", config_frame, "UIDropDownMenuTemplate");
 	settings_menu:SetPoint("TOPLEFT", settings_label, "TOPRIGHT", 0, 4);

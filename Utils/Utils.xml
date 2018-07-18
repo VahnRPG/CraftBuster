@@ -2,5 +2,4 @@
 	<Script file="OmgLib.lua" />
 	<Script file="Tokens.lua" />
 	<Script file="Globals.lua" />
-	<Script file="Localization.lua" />
 </Ui>

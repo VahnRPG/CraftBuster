@@ -18,7 +18,6 @@
 	-- Secondary
 	CBL[CBT_SKILL_ARCH] = "Archaeology";
 	CBL[CBT_SKILL_COOK] = "Cooking";
-	CBL[CBT_SKILL_FRST] = "First Aid";
 	CBL[CBT_SKILL_FISH] = "Fishing";
 	-- Rogue Only
 	CBL[CBT_SKILL_PICK] = "Lockpicking";
@@ -32,7 +31,6 @@
 	CBL["BINDING_OPEN_SKILL_2"] = "Toggle Skill 2 Window";
 	CBL["BINDING_OPEN_SKILL_2_BUSTER"] = "Toggle Skill 2 Buster Window";
 	CBL["BINDING_OPEN_COOKING"] = "Toggle Cooking Window";
-	CBL["BINDING_OPEN_FIRST_AID"] = "Toggle First Aid Window";
 	CBL["BINDING_OPEN_ARCHAEOLOGY"] = "Toggle Archaeology Window";
 	CBL["BINDING_OPEN_LOCKPICKING_BUSTER"] = "Toggle Lockpicking Buster Window";
 
