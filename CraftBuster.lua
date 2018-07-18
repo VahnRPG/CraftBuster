@@ -1,8 +1,5 @@
-local DB_VERSION = 0.05;
-
-CraftBusterPlayerSkills = {};
-
 local _, cb = ...;
+cb.player_skills = {};
 
 --==BINDING==--
 BINDING_HEADER_CRAFTBUSTER = CBG_MOD_NAME;
@@ -12,7 +9,6 @@ BINDING_NAME_CB_OPEN_SKILL_1_BUSTER = CBL["BINDING_OPEN_SKILL_1_BUSTER"];
 BINDING_NAME_CB_OPEN_SKILL_2 = CBL["BINDING_OPEN_SKILL_2"];
 BINDING_NAME_CB_OPEN_SKILL_2_BUSTER = CBL["BINDING_OPEN_SKILL_2_BUSTER"];
 BINDING_NAME_CB_OPEN_COOKING = CBL["BINDING_OPEN_COOKING"];
-BINDING_NAME_CB_OPEN_FIRST_AID = CBL["BINDING_OPEN_FIRST_AID"];
 BINDING_NAME_CB_OPEN_ARCHAEOLOGY = CBL["BINDING_OPEN_ARCHAEOLOGY"];
 BINDING_NAME_CB_OPEN_LOCKPICKING_BUSTER = CBL["BINDING_OPEN_LOCKPICKING_BUSTER"];
 
@@ -155,25 +151,24 @@ function cb:addLeaveCombatCommand(callback)
 end
 
 function cb:getProfessions(reload)
-	if (CraftBusterPlayerSkills and next(CraftBusterPlayerSkills) and not reload) then
-		return CraftBusterPlayerSkills;
+	if (cb.player_skills and next(cb.player_skills) and not reload) then
+		return cb.player_skills;
 	end
 
 	local skills = {
 		["skill_1"] = nil,
 		["skill_2"] = nil,
 		["cooking"] = nil,
-		["first_aid"] = nil,
 		["fishing"] = nil,
 		["archaeology"] = nil,
 		["lockpicking"] = nil,
 	};
-	skills.skill_1, skills.skill_2, skills.archaeology, skills.fishing, skills.cooking, skills.first_aid = GetProfessions();
+	skills.skill_1, skills.skill_2, skills.archaeology, skills.fishing, skills.cooking = GetProfessions();
 	local _, player_class = UnitClass("player");
 	if (player_class == "ROGUE" and UnitLevel("player") >= CBG_LOCKPICKING_LEVEL) then
 		skills.lockpicking = CBT_SKILL_PICK;
 	end
-	CraftBusterPlayerSkills = skills;
+	cb.player_skills = skills;
 	
 	return skills;
 end
@@ -183,10 +178,9 @@ function cb:getSkillLevel(skill_id)
 		[1] = "skill_1",
 		[2] = "skill_2",
 		[3] = "cooking",
-		[4] = "first_aid",
-		[5] = "fishing",
-		[6] = "archaeology",
-		[7] = "lockpicking",
+		[4] = "fishing",
+		[5] = "archaeology",
+		[6] = "lockpicking",
 	};
 
 	for i, skill in pairs(skills) do

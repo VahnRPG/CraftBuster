@@ -75,12 +75,11 @@ function cb.modules.skill_frame:update()
 				[1] = "skill_1",
 				[2] = "skill_2",
 				[3] = "cooking",
-				[4] = "first_aid",
-				[5] = "fishing",
-				[6] = "archaeology",
+				[4] = "fishing",
+				[5] = "archaeology",
 			};
 			if (player_class == "ROGUE" and player_level >= CBG_LOCKPICKING_LEVEL) then
-				rank_skills[7] = "lockpicking";
+				rank_skills[6] = "lockpicking";
 			end
 			
 			for rank, skill in cb.omg:sortedpairs(rank_skills) do

@@ -1,7 +1,7 @@
 local _, cb = ...;
 
-local HBD = LibStub("HereBeDragons-1.0");
-local HBDPins = LibStub("HereBeDragons-Pins-1.0");
+local HBD = LibStub("HereBeDragons-2.0");
+local HBDPins = LibStub("HereBeDragons-Pins-2.0");
 
 local SKILL_ALL_PROFESSIONS_TRAINERS_MAP_ICONS = {
 	[30] = {		--Elwynn Forest
@@ -133,7 +133,7 @@ function cb.modules.map_icons:createMapIcon(map_id, icon_type, module_id, side, 
 			end
 
 			local icon_data = self.icon_data;
-			HBDPins:AddMinimapIconMF(CBG_MOD_NAME, self, icon_data.map_id, icon_data.npc_data["floor"], (icon_data.npc_data["pos"][1] / 100), (icon_data.npc_data["pos"][2] / 100));
+			HBDPins:AddMinimapIconMap(CBG_MOD_NAME, self, icon_data.map_id, (icon_data.npc_data["pos"][1] / 100), (icon_data.npc_data["pos"][2] / 100), true, true);
 			minimap_icon_frame:UnregisterEvent("PLAYER_ENTERING_WORLD");
 		end
 	end);
@@ -200,27 +200,27 @@ function cb.modules.map_icons:createMapIcon(map_id, icon_type, module_id, side, 
 	worldmap_icon_frame:SetHeight(14);
 	worldmap_icon_frame:SetWidth(14);
 	worldmap_icon_frame:RegisterForClicks("RightButtonUp");
-	worldmap_icon_frame:RegisterEvent("WORLD_MAP_UPDATE");
+	worldmap_icon_frame:RegisterEvent("ZONE_CHANGED_NEW_AREA");
+	worldmap_icon_frame:RegisterEvent("ZONE_CHANGED");
+	worldmap_icon_frame:RegisterEvent("ZONE_CHANGED_INDOORS");
 	worldmap_icon_frame:SetScript("OnEvent", function(self, event, ...)
-		if (event == "WORLD_MAP_UPDATE") then
-			if (not self.icon_data.label or not CraftBusterEntry) then
-				return;
-			end
+		if (not self.icon_data.label or not CraftBusterEntry) then
+			return;
+		end
 
-			local show = false;
-			local icon_data = self.icon_data;
-			if (icon_data.worldmap_icon_frame and cb.settings:get().map_icons.show_world_map) then
-				if (icon_data.map_id == GetCurrentMapAreaID()) then
-					HBDPins:AddWorldMapIconMF(CBG_MOD_NAME, self, icon_data.map_id, icon_data.npc_data["floor"], (icon_data.npc_data["pos"][1] / 100), (icon_data.npc_data["pos"][2] / 100));
-					show = true;
-				end
+		local show = false;
+		local icon_data = self.icon_data;
+		if (icon_data.worldmap_icon_frame and cb.settings:get().map_icons.show_world_map) then
+			if (icon_data.map_id == GetCurrentMapAreaID()) then
+				HBDPins:AddWorldMapIconMap(CBG_MOD_NAME, self, icon_data.map_id, (icon_data.npc_data["pos"][1] / 100), (icon_data.npc_data["pos"][2] / 100), HBD_PINS_WORLDMAP_SHOW_WORLD);
+				show = true;
 			end
+		end
 
-			if (show) then
-				self:Show();
-			else
-				self:Hide();
-			end
+		if (show) then
+			self:Show();
+		else
+			self:Hide();
 		end
 	end);
 	worldmap_icon_frame:SetScript("OnEnter", function(self, event, ...)
@@ -275,15 +275,15 @@ function cb.modules.map_icons:createMapIcon(map_id, icon_type, module_id, side, 
 	icon.worldmap_icon_frame.icon_data = icon;
 	CACHED_ICONS[label] = icon;
 
-	HBDPins:AddMinimapIconMF(CBG_MOD_NAME, icon.minimap_icon_frame, icon.map_id, icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
-	HBDPins:AddWorldMapIconMF(CBG_MOD_NAME, icon.worldmap_icon_frame, icon.map_id, icon.npc_data["floor"], (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
+	HBDPins:AddMinimapIconMap(CBG_MOD_NAME, icon.minimap_icon_frame, icon.map_id, (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100), true, true);
+	HBDPins:AddWorldMapIconMap(CBG_MOD_NAME, icon.worldmap_icon_frame, icon.map_id, (icon.npc_data["pos"][1] / 100), (icon.npc_data["pos"][2] / 100));
 end
 
 function cb.modules.map_icons:registerModule(module_id, map_icons, icon_type)
 	for map_id, map_data in pairs(map_icons) do
 		for side, side_data in cb.omg:sortedpairs(map_data) do
 			for npc_id, npc_data in cb.omg:sortedpairs(side_data) do
-				cb.modules.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, npc_data);
+				--cb.modules.map_icons:createMapIcon(map_id, icon_type, module_id, side, npc_id, npc_data);
 			end
 		end
 	end
@@ -291,7 +291,7 @@ end
 
 function cb.modules.map_icons:update()
 	local map_icon_cfg = cb.settings:get().map_icons;
-	local current_map_id = GetCurrentMapAreaID();
+	local current_map_id = C_Map.GetBestMapForUnit("player");
 	local player_side = UnitFactionGroup("player");
 
 	local skills = {};
@@ -333,11 +333,15 @@ function cb.modules.map_icons:update()
 			if (map_icon_cfg.show_world_map) then
 				icon.worldmap_icon_frame:Show();
 				icon.worldmap_icon_frame.icon:Show();
-				icon.worldmap_icon_frame:RegisterEvent("WORLD_MAP_UPDATE");
+				icon.worldmap_icon_frame:RegisterEvent("ZONE_CHANGED_NEW_AREA");
+				icon.worldmap_icon_frame:RegisterEvent("ZONE_CHANGED");
+				icon.worldmap_icon_frame:RegisterEvent("ZONE_CHANGED_INDOORS");
 			else
 				icon.worldmap_icon_frame:Hide();
 				icon.worldmap_icon_frame.icon:Hide();
-				icon.worldmap_icon_frame:UnregisterEvent("WORLD_MAP_UPDATE");
+				icon.worldmap_icon_frame:UnregisterEvent("ZONE_CHANGED_NEW_AREA");
+				icon.worldmap_icon_frame:UnregisterEvent("ZONE_CHANGED");
+				icon.worldmap_icon_frame:UnregisterEvent("ZONE_CHANGED_INDOORS");
 			end
 		else
 			icon.minimap_icon_frame:Hide();
@@ -346,7 +350,9 @@ function cb.modules.map_icons:update()
 
 			icon.worldmap_icon_frame:Hide();
 			icon.worldmap_icon_frame.icon:Hide();
-			icon.worldmap_icon_frame:UnregisterEvent("WORLD_MAP_UPDATE");
+			icon.worldmap_icon_frame:UnregisterEvent("ZONE_CHANGED_NEW_AREA");
+			icon.worldmap_icon_frame:UnregisterEvent("ZONE_CHANGED");
+			icon.worldmap_icon_frame:UnregisterEvent("ZONE_CHANGED_INDOORS");
 		end
 	end
 end
