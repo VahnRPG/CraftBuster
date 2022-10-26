@@ -22,20 +22,9 @@
 		</Scripts>
 	</Button>
 
-	<StatusBar name="CraftBuster_SkillBar_Template" minValue="0" maxValue="1" frameStrata="LOW" virtual="true">
+	<StatusBar name="CraftBuster_SkillBar_Template" minValue="0" maxValue="1" frameStrata="LOW" virtual="true" inherits="BackdropTemplate">
 		<Size x="224" y="18" />
-		<Backdrop bgFile="Interface\PaperDollInfoFrame\UI-Character-Skills-Bar" tile="false">
-			<EdgeSize>
-				<AbsValue val="0"/>
-			</EdgeSize>
-			<TileSize>
-				<AbsValue val="32"/>
-			</TileSize>
-			<BackgroundInsets>
-				<AbsInset left="0" right="0" top="0" bottom="0"/>
-			</BackgroundInsets>
-		</Backdrop>
-		<BarTexture name="$parentBar" urgency="5" file="Interface\PaperDollInfoFrame\UI-Character-Skills-Bar"/>
+		<BarTexture name="$parentBar" file="Interface\PaperDollInfoFrame\UI-Character-Skills-Bar"/>
 		<BarColor r="0.0" g="0.7" b="0.0" a="1.0" />
 		<Layers>
 			<Layer level="ARTWORK">
@@ -67,5 +56,17 @@
 				</Anchors>
 			</Button>
 		</Frames>
+		<Scripts>
+			<OnLoad>
+				if BackdropTemplateMixin then Mixin(self, BackdropTemplateMixin) end
+				self:SetBackdrop({
+					bgFile = "Interface\\PaperDollInfoFrame\\UI-Character-Skills-Bar",
+					tile = false,
+					tileSize = 32,
+					edgeSize = 0,
+					insets = { left = 0, right = 0, top = 0, bottom = 0 },
+				})
+			</OnLoad>
+		</Scripts>
 	</StatusBar>
 </Ui>

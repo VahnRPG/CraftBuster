@@ -36,6 +36,8 @@ SlashCmdList["CBUSTER"] = function(cmd)
 		cb.modules.buster_frame:clearIgnore();
 	elseif (cmd == "update") then
 		cb:updateSkills(true);
+	elseif (cmd == "dump") then
+		cb:dumpProfession();
 	elseif (cmd == "where") then
 		cb.modules.map_icons:displayPosition();
 	end
@@ -88,7 +90,7 @@ function cb:updateSkills(reload)
 	local skills = cb:getProfessions(reload);
 	for skill, index in pairs(skills) do
 		if (index and skill ~= "lockpicking") then
-			local skill_name, skill_texture, skill_level, skill_max_level, skill_num_spells, _, skill_id, skill_bonus = GetProfessionInfo(index);
+			local skill_name, skill_texture, skill_level, skill_max_level, skill_num_spells, skill_offset, skill_id, skill_bonus = GetProfessionInfo(index);
 			if (not settings.skills[skill] or (settings.skills[skill].id ~= skill_id)) then
 				settings.skills[skill] = {};
 				settings.skills[skill].index = index;
@@ -101,6 +103,8 @@ function cb:updateSkills(reload)
 			settings.skills[skill].bonus = skill_bonus;
 			settings.skills[skill].max_level = skill_max_level;
 			settings.skills[skill].num_spells = skill_num_spells;
+			settings.skills[skill].offset = skill_offset;
+			--cb.omg:echo("Profession: " .. skill_name .. " - " .. skill_offset .. " - " .. skill_id);
 			cb.professions:handleSkill(skill);
 		end
 	end
@@ -206,6 +210,28 @@ function cb:getProfessionLevel(max_level)
 	return profession_level;
 end
 
+function cb:dumpProfession()
+	TradeSkillFrame_LoadUI();
+	if (C_TradeSkillUI.OpenTradeSkill(182)) then
+		local categories = { C_TradeSkillUI.GetCategoryInfo(1044) };
+		cb.omg:print_r(categories);
+	end
+	--CraftBusterOptions["dump_skills"] = nil;
+	--[[
+	if (not CraftBusterOptions["dump_skills"]) then
+		CraftBusterOptions["dump_skills"] = {};
+	end
+
+	local skill_id = C_TradeSkillUI.GetTradeSkillLine();
+	CraftBusterOptions["dump_skills"][skill_id] = {};
+
+	local categories = { C_TradeSkillUI.GetCategories() };
+	for _, category_id in ipairs(categories) do
+		CraftBusterOptions["dump_skills"][skill_id][category_id] = C_TradeSkillUI.GetCategoryInfo(category_id);
+	end
+	]]--
+end
+
 -------------------------------------------------------------------------------
 -- Hooks in Warcraft code
 -------------------------------------------------------------------------------
@@ -241,7 +267,7 @@ hook_frame:RegisterEvent("ADDON_LOADED");
 local function HookFrame(frame)
 	frame:HookScript("OnShow", function(self, ...)
 		if (not self.show_frame or self.show_frame ~= true) then		--something weird happening to cause this to duplicate itself
-			cb:handleNode(GameTooltipTextLeft1:GetText(), GameTooltipTextLeft2:GetText(), GameTooltipTextLeft3:GetText());
+			cb:handleNode(GameTooltipTextLeft1:GetText(), GameTooltipTextLeft2:GetText(), "");
 			self.show_frame = true;
 		end
 	end);

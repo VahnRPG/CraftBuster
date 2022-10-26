@@ -11,6 +11,10 @@ function cb.professions:registerModule(module_options)
 	cb.professions.modules[module_id].name = module_options["name"];
 	cb.professions.modules[module_id].short_code = module_options["short_code"];
 	cb.professions.modules[module_id].skill_type = module_options["type"];
+	cb.professions.modules[module_id].legacy_profession = false;
+	if (module_options["legacy"]) then
+		cb.professions.modules[module_id].legacy_profession = true;
+	end
 	cb.professions.modules[module_id].station_map_icons = nil;
 	if (module_options["station_map_icons"]) then
 		cb.professions.modules[module_id].station_map_icons = module_options["station_map_icons"];

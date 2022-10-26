@@ -8,7 +8,29 @@ CBG_LAST_UPDATED = GetAddOnMetadata(CBG_MOD_NAME, "X-Date");
 CBG_LOCKPICKING_LEVEL = 24;
 CBG_LOCKPICKING_MAX_SKILL_LEVEL = 800;
 
-CBG_MAX_PROFESSIONS = 10;
+--[[
+EXPANSION_NAME0 = "Classic";
+EXPANSION_NAME1 = "The Burning Crusade";
+EXPANSION_NAME2 = "Wrath of the Lich King";
+EXPANSION_NAME3 = "Cataclysm";
+EXPANSION_NAME4 = "Mists of Pandaria";
+EXPANSION_NAME5 = "Warlords of Draenor";
+EXPANSION_NAME6 = "Legion";
+EXPANSION_NAME7 = "Battle for Azeroth";
+]]--
+
+CBG_PROFESSION_LEVELS = {
+	[1] = { 5,   300, EXPANSION_NAME0 },	--Classic
+	[2] = { 58,   75, EXPANSION_NAME1 },	--The Burning Crusade
+	[3] = { 58,   75, EXPANSION_NAME2 },	--Wrath of the Lich King
+	[4] = { 78,   75, EXPANSION_NAME3 },	--Cataclysm
+	[5] = { 78,   75, EXPANSION_NAME4 },	--Mists of Pandaria
+	[6] = { 88,  100, EXPANSION_NAME5 },	--Warlords of Draenor
+	[7] = { 98,  100, EXPANSION_NAME6 },	--Legion
+	[8] = { 108, 150, EXPANSION_NAME7 },	--Battle for Azeroth
+};
+
+CBG_MAX_PROFESSIONS = 11;
 CBG_PROFESSION_RANKS = {
 	[1] = { 0, 75, APPRENTICE },
 	[2] = { 50, 150, JOURNEYMAN },
@@ -24,6 +46,7 @@ CBG_PROFESSION_RANKS = {
 	[8] = { 500, 600, ZEN_MASTER },
 	[9] = { 600, 700, DRAENOR_MASTER },
 	[10] = { 700, 800, LEGION_MASTER },
+	[11] = { 800, 950, BATTLE_FOR_AZEROTH_MASTER },
 };
 CBG_MAX_PROFESSION_RANK = CBG_PROFESSION_RANKS[CBG_MAX_PROFESSIONS][2];
 
@@ -43,6 +66,7 @@ CBG_SKILL_PLY_LEVELS = {
 	[8] = { 80, 80 },		--Zen Master
 	[9] = { 90, 90 },		--Draenor Master
 	[10] = { 100, 100 },	--Legion Master
+	[11] = { 110, 110 },	--Battle for Azeroth Master
 };
 
 CBG_MAP_ICON_TEXTURES = {

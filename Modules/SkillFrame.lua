@@ -182,8 +182,17 @@ function cb.modules.skill_frame:update()
 						local spell_1_frame = _G[bar_frame:GetName() .. "_spell_1"];
 						spell_1_frame:Hide();
 						if (module_data.spell_1 ~= nil and spell_1_frame) then
+							spell_1_frame:SetScript("OnClick", function(self)
+								if (true) then
+									C_TradeSkillUI.OpenTradeSkill(skill_id);
+								elseif (TradeSkillFrame:IsVisible()) then 
+									C_TradeSkillUI.CloseTradeSkill()
+								end
+							end);
+							--[[
 							spell_1_frame:SetAttribute("type", "spell");
 							spell_1_frame:SetAttribute("spell", module_data.spell_1);
+							]]--
 							local _, _, button_texture = GetSpellInfo(module_data.spell_1);
 							_G[spell_1_frame:GetName() .. "Icon"]:SetTexture(button_texture);
 							spell_1_frame.spell_id = module_data.spell_1_id;

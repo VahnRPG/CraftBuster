@@ -6,6 +6,7 @@ local profession_data = {
 	["id"] = SKILL_ID,
 	["name"] = CBL[SKILL_ID],
 	["short_code"] = SKILL_SHORT_CODE,
+	["legacy"] = true,
 	["type"] = CBG_SKILL_NORMAL,
 	["spell_1"] = 78670,		--Archaeology
 	["spell_2"] = 80451,		--Survey
