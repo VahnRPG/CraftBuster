@@ -2,7 +2,7 @@
 ## Title: CraftBuster
 ## Author: VahnRPG
 ## Version: 1.3.0
-## X-Date: 2018-07-18
+## X-Date: 2022-10-27
 ## Notes: Provides versatile functionality for professions
 ## SavedVariables: CraftBusterOptions
 ## DefaultState: Enabled
