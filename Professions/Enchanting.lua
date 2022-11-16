@@ -51,7 +51,7 @@ local profession_data = {
 								cb.buster_frame:update();
 							end);
 						else
-							cb.omg:echo(CBL["ERRORS_BUSTER_FRAME"]);
+							cb.omg:echo(CBL["BUSTER_FRAME_ERRORS"]);
 						end
 						]]--
 					elseif (item_quality > 1 and (item_type == "Weapon" or item_type == "Armor")) then

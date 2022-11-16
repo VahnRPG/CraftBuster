@@ -111,5 +111,28 @@
 	CBL["BUSTER_FRAME_CLICK"] = CBG_CLR_WHITE .. "Left-click to use ";
 	CBL["BUSTER_FRAME_IGNORE"] = CBG_CLR_WHITE .. "CTRL + Right-click to " .. CBG_CLR_RED .. "ignore";
 
-	CBL["ERRORS_BUSTER_FRAME"] = CBG_CLR_RED .. "Error with buster frame functionality. Please report.";
+	CBL["BUSTER_FRAME_ERRORS"] = CBG_CLR_RED .. "Error with buster frame functionality. Please report.";
+
+	-- Broker Localization
+	CBL["BROKER_INFO_DISABLED"] = "Disabled";
+	CBL["BROKER_INFO_QUEST_LABEL"] = "Q: ";
+	CBL["BROKER_INFO_LOW_LEVEL_LABEL"] = " L: ";
+	CBL["BROKER_INFO_REWARD_LABEL"] = " R: ";
+	CBL["BROKER_INFO_DAILIES"] = "Dailies";
+	CBL["BROKER_INFO_ALL"] = "All";
+	CBL["BROKER_INFO_YES"] = "Yes";
+	CBL["BROKER_INFO_NO"] = "No";
+	
+	CBL["BROKER_SETTINGS_PERSON"] = CBG_CLR_LIGHTGREY .. "   (personal settings)";
+	CBL["BROKER_SETTINGS_GLOBAL"] = CBG_CLR_LIGHTGREY .. "   (global settings)";
+	CBL["BROKER_QUESTS"] = CBG_CLR_LIGHTGREEN .. "Activate on Quests: " .. CBG_CLR_WHITE;
+	CBL["BROKER_LOW_LEVEL"] = CBG_CLR_LIGHTGREEN .. "Also Low Level: " .. CBG_CLR_WHITE;
+	CBL["BROKER_REWARD"] = CBG_CLR_LIGHTGREEN .. "Reward Selection: " .. CBG_CLR_WHITE;
+	CBL["BROKER_MODIFIER"] = CBG_CLR_WHITE .. "Disable Key: ";
+	CBL["BROKER_TOGGLE"] = CBG_CLR_WHITE .. "Left-click for " .. CBG_CLR_OFFBLUE .. "Toggle";
+	CBL["BROKER_CONFIG"] = CBG_CLR_WHITE .. "Right-click for " .. CBG_CLR_OFFBLUE .. "Config";
+	
+	CBL["BROKER_WORLD_QUEST_COUNT"] = CBG_CLR_LIGHTGREEN .. "World Quests Available: ";
+	CBL["BROKER_WORLD_QUEST_EMISSARY"] = CBG_CLR_LIGHTGREEN .. "Emissary Quests:";
+	CBL["BROKER_WORLD_QUEST_MENU"] = CBG_CLR_WHITE .. "Left-click for " .. CBG_CLR_OFFBLUE .. "World Quests";
 --end

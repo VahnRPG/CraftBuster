@@ -773,16 +773,23 @@ local function add_tooltip_info(frame, item_link)
 	frame:Show();
 end
 
-local function HookFrame(frame)
-	frame:HookScript("OnTooltipSetItem",
-		function(self, ...)
-			local item_link = select(2, self:GetItem());
-			if (item_link and GetItemInfo(item_link)) then
-				add_tooltip_info(self, item_link);
-			end
+local function tooltip_hook(self)
+	if (self ~= GameTooltip and self ~= ItemRefTooltip and self ~= ItemRefShoppingTooltip1 and self ~= ItemRefShoppingTooltip2 and self ~= ShoppingTooltip1 and self ~= ShoppingTooltip2) then
+		return;
+	end
+
+	local item_link = "";
+	if (self == ShoppingTooltip1 or self == ShoppingTooltip2) then
+		if (self.info and self.info.tooltipData and self.info.tooltipData.guid) then
+			item_link = C_Item.GetItemLinkByGUID(self.info.tooltipData.guid);
 		end
-	);
+	else
+		item_link = select(2, self:GetItem());
+	end
+	
+	if (item_link and GetItemInfo(item_link)) then
+		add_tooltip_info(self, item_link);
+	end
 end
 
-HookFrame(GameTooltip);
-HookFrame(ItemRefTooltip);
+TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item, tooltip_hook);
